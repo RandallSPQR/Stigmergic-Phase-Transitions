@@ -71,10 +71,12 @@ def cmd_create(a):
     driver = (HERE / "box_identity.sh").read_bytes()
     body = {"name": f"stpt-s0-box-identity-{run_id}", "imageName": IMAGE, "cloudType": "SECURE",
             "gpuTypeIds": GPU_SETS[a.gpu_set][0], "gpuTypePriority": "custom", "gpuCount": 1,
-            "containerDiskInGb": a.disk, "volumeInGb": 0, "allowedCudaVersions": ["12.8", "12.9", "13.0"],
+            "containerDiskInGb": a.disk, "volumeInGb": 0,
             "ports": [], "dockerEntrypoint": ["bash", "-c"], "dockerStartCmd": [start_cmd(a.hours)],
             "env": {"HF_TOKEN": "{{ RUNPOD_SECRET_HF_TOKEN }}", "STPT_RESULTS_REPO": a.repo, "STPT_RUN_ID": run_id,
                     "PIPE_COMMIT": PIPE_COMMIT, "STPT_DRIVER_B64": base64.b64encode(driver).decode()}}
+    if a.gpu_set == "a100":            # torch 2.10 cu128 needs a CUDA 12.8+ driver; every Blackwell host has one already
+        body["allowedCudaVersions"] = ["12.8", "12.9", "13.0"]
     if os.environ.get("RUNPOD_API_KEY", "\0") in json.dumps(body):
         sys.exit("REFUSED: the account API key appears in the pod body")
     if a.dry_run:
