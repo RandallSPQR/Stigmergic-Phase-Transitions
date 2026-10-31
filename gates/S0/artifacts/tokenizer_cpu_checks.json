@@ -1,0 +1,142 @@
+{
+ "llama-3.1-8b-it": {
+  "check_tokenizer": {
+   "stop_token_ids": [
+    128009
+   ],
+   "end_of_turn_id": 128009,
+   "turn_suffix_ids": [
+    128009
+   ]
+  },
+  "template_agreement": {
+   "agree": true,
+   "ours_sha": "6dea33cf64d24c74",
+   "template_sha": "6dea33cf64d24c74"
+  },
+  "options": {
+   "A": 32,
+   "B": 33
+  },
+  "prompt_tokens": 52,
+  "prompt_tail": " or B.<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n",
+  "system_free_agreement": [
+   true,
+   true,
+   true
+  ]
+ },
+ "gemma-2-9b-it": {
+  "check_tokenizer": {
+   "stop_token_ids": [
+    1,
+    107
+   ],
+   "end_of_turn_id": 107,
+   "turn_suffix_ids": [
+    107,
+    108
+   ]
+  },
+  "template_agreement": {
+   "agree": null,
+   "error": "TemplateError: System role not supported"
+  },
+  "options": {
+   "A": 235280,
+   "B": 235305
+  },
+  "prompt_tokens": 26,
+  "prompt_tail": " or B.<end_of_turn>\n<start_of_turn>model\n",
+  "system_free_agreement": [
+   true,
+   true,
+   true
+  ]
+ },
+ "gemma-3-27b-it": {
+  "check_tokenizer": {
+   "stop_token_ids": [
+    1,
+    106
+   ],
+   "end_of_turn_id": 106,
+   "turn_suffix_ids": [
+    106,
+    107
+   ]
+  },
+  "template_agreement": {
+   "agree": true,
+   "ours_sha": "df9855efa4d5d53a",
+   "template_sha": "df9855efa4d5d53a"
+  },
+  "options": {
+   "A": 236776,
+   "B": 236799
+  },
+  "prompt_tokens": 26,
+  "prompt_tail": " or B.<end_of_turn>\n<start_of_turn>model\n",
+  "system_free_agreement": [
+   true,
+   true,
+   true
+  ]
+ },
+ "qwen3.5-9b": {
+  "check_tokenizer": {
+   "stop_token_ids": [
+    248046
+   ],
+   "end_of_turn_id": 248046,
+   "turn_suffix_ids": [
+    248046,
+    198
+   ]
+  },
+  "template_agreement": {
+   "agree": true,
+   "ours_sha": "9c0fcda9a34e00e4",
+   "template_sha": "9c0fcda9a34e00e4"
+  },
+  "options": {
+   "A": 32,
+   "B": 33
+  },
+  "prompt_tokens": 29,
+  "prompt_tail": "\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+  "system_free_agreement": [
+   true,
+   true,
+   true
+  ]
+ },
+ "qwen3.5-27b": {
+  "check_tokenizer": {
+   "stop_token_ids": [
+    248046
+   ],
+   "end_of_turn_id": 248046,
+   "turn_suffix_ids": [
+    248046,
+    198
+   ]
+  },
+  "template_agreement": {
+   "agree": true,
+   "ours_sha": "9c0fcda9a34e00e4",
+   "template_sha": "9c0fcda9a34e00e4"
+  },
+  "options": {
+   "A": 32,
+   "B": 33
+  },
+  "prompt_tokens": 29,
+  "prompt_tail": "\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+  "system_free_agreement": [
+   true,
+   true,
+   true
+  ]
+ }
+}
