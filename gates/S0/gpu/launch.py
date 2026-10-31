@@ -26,8 +26,10 @@ REG = HERE / "registry.json"
 API = "https://rest.runpod.io/v1/pods"
 UA = "stpt-s0/1.0"
 IMAGE = "runpod/pytorch:1.0.2-cu1281-torch280-ubuntu2404"
-GPUS = ["NVIDIA A100-SXM4-80GB", "NVIDIA A100 80GB PCIe"]       # one GPU type family; the report names the one served
-PRICE_CAP = 1.79                                               # secure-cloud $/h for either, read 2026-10-31
+GPU_SETS = {   # secure-cloud $/h read 2026-10-31; one GPU type family per run; the report names the one served
+    "a100": (["NVIDIA A100-SXM4-80GB", "NVIDIA A100 80GB PCIe"], 1.79),
+    "rtxpro6000": (["NVIDIA RTX PRO 6000 Blackwell Server Edition"], 2.49),   # owner's fallback when no A100 (2026-10-31)
+}
 PIPE_COMMIT = "5ca15f56a71f35d5818d0392f7f3b4acb2d85d1b"
 
 
@@ -68,7 +70,7 @@ def cmd_create(a):
     run_id = now.strftime("%Y%m%dT%H%MZ")
     driver = (HERE / "box_identity.sh").read_bytes()
     body = {"name": f"stpt-s0-box-identity-{run_id}", "imageName": IMAGE, "cloudType": "SECURE",
-            "gpuTypeIds": GPUS, "gpuTypePriority": "custom", "gpuCount": 1,
+            "gpuTypeIds": GPU_SETS[a.gpu_set][0], "gpuTypePriority": "custom", "gpuCount": 1,
             "containerDiskInGb": a.disk, "volumeInGb": 0, "allowedCudaVersions": ["12.8", "12.9", "13.0"],
             "ports": [], "dockerEntrypoint": ["bash", "-c"], "dockerStartCmd": [start_cmd(a.hours)],
             "env": {"HF_TOKEN": "{{ RUNPOD_SECRET_HF_TOKEN }}", "STPT_RESULTS_REPO": a.repo, "STPT_RUN_ID": run_id,
@@ -83,8 +85,8 @@ def cmd_create(a):
         sys.exit(f"create failed: {code} {resp}")
     pid = resp["id"]
     reg["pods"][pid] = {"name": body["name"], "run_id": run_id, "created": now.isoformat(), "hours_cap": a.hours,
-                        "deadline": (now + dt.timedelta(hours=a.hours)).isoformat(), "price_cap_usd_h": PRICE_CAP,
-                        "max_cost_usd": round(a.hours * PRICE_CAP, 2), "gpu": (resp.get("machine") or {}).get("gpuTypeId"),
+                        "deadline": (now + dt.timedelta(hours=a.hours)).isoformat(), "gpu_set": a.gpu_set,
+                        "price_cap_usd_h": GPU_SETS[a.gpu_set][1], "max_cost_usd": round(a.hours * GPU_SETS[a.gpu_set][1], 2), "gpu": (resp.get("machine") or {}).get("gpuTypeId"),
                         "cost_per_hr": resp.get("costPerHr"), "repo": a.repo}
     save(reg)
     print(json.dumps({"id": pid, **reg["pods"][pid]}, indent=1))
@@ -124,6 +126,7 @@ def main(argv=None):
     sub = ap.add_subparsers(dest="cmd", required=True)
     c = sub.add_parser("create"); c.add_argument("--repo", required=True); c.add_argument("--hours", type=float, default=4.0)
     c.add_argument("--disk", type=int, default=200); c.add_argument("--dry-run", action="store_true")
+    c.add_argument("--gpu-set", choices=sorted(GPU_SETS), default="a100")
     sub.add_parser("status")
     t = sub.add_parser("terminate"); t.add_argument("--why", required=True)
     a = ap.parse_args(argv)
