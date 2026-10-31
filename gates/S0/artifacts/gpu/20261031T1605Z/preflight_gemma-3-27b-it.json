@@ -1,0 +1,20 @@
+{
+ "generated": "2026-10-31T16:17:51Z",
+ "hash_bytes": true,
+ "repos": [
+  {
+   "repo": "google/gemma-3-27b-it",
+   "revision_requested": "005ad3404e59d6023443cb575daa05336842228a",
+   "metadata_source": "hub",
+   "ok": false,
+   "files_expected": 0,
+   "files_verified": 0,
+   "lfs_files": 0,
+   "missing": [],
+   "mismatch": [],
+   "verified_by": "sha256",
+   "revision_resolved": "005ad3404e59d6023443cb575daa05336842228a",
+   "error": "no local snapshot for google/gemma-3-27b-it@005ad3404e59: IncompleteSnapshotError"
+  }
+ ]
+}

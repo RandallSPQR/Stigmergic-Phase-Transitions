@@ -1,0 +1,70 @@
+{
+ "model": "gemma-3-27b-it",
+ "identity_block": {
+  "pipeline": {
+   "version": "1.2.0",
+   "commit": "5ca15f56a71f35d5818d0392f7f3b4acb2d85d1b",
+   "tag": "5ca15f56a71f35d5818d0392f7f3b4acb2d85d1b",
+   "dirty": false,
+   "how": "direct_url.json"
+  },
+  "lineup": {
+   "version": "1.2.0",
+   "locked": true,
+   "sha256": "74327b48de5c741f42199b8428d896c8ef5dec4743d9d13c2a8e0d5e0a6fa192"
+  },
+  "model": {
+   "name": "gemma-3-27b-it",
+   "hf_id": "google/gemma-3-27b-it",
+   "revision": "005ad3404e59d6023443cb575daa05336842228a",
+   "weight_hash": "34f745e7c6ef5b7b",
+   "chat_template_hash": "7de1c58e208eda46",
+   "family": "gemma3",
+   "identity_status": "pod_pinned"
+  },
+  "profile": {
+   "file": "models_gemma-3-27b-it.yaml",
+   "sha256": "74d99a850162e8b84a38dcb3dda66b9aedb855d3e2a726dc176d9a30a60f0fe8"
+  },
+  "serializer": {
+   "family": "gemma3",
+   "module": "model_io.gemma3",
+   "sha256": "aa6be3136e0ae843d9ef258eacc36f4b4cd75d2bd54df5ae2663a1d08dbe4038",
+   "generation_prompt": "<start_of_turn>model\n"
+  },
+  "serving": {
+   "pins": {
+    "vllm": "0.19.1",
+    "torch": "2.10.0",
+    "transformers": "5.5.3",
+    "tokenizers": "0.22.2",
+    "huggingface-hub": "1.10.2"
+   },
+   "flags": [
+    "--max-num-seqs 1",
+    "--no-enable-prefix-caching",
+    "--max-num-batched-tokens 8192",
+    "--seed 0",
+    "--logprobs-mode raw_logprobs",
+    "--dtype bfloat16"
+   ],
+   "env": {
+    "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+    "PYTHONHASHSEED": "0",
+    "TOKENIZERS_PARALLELISM": "false"
+   },
+   "batch_size": 1
+  }
+ },
+ "weight_hash": null,
+ "weight_hash_ok": false,
+ "files_verified": "0/0",
+ "verified_by": "sha256",
+ "tokenizer_ok": true,
+ "template_agreement": true,
+ "bit_identical_repeats": false,
+ "fallback_consistent": false,
+ "identical_across_restart": false,
+ "max_restart_diff_nats": null,
+ "pass": false
+}

@@ -1,14 +1,16 @@
 # Gate S0: pipeline and harness (2026-10-31)
 
-**Verdict: the CPU parts PASS. S0 is NOT complete:** the pipeline's box identity check (GPU) has not run. It needs
-the owner's OK for GPU spend. Gate S1 does not start until it passes, or the owner rules otherwise.
+**Verdict (2026-10-31, final): S0 PASSES.** One finding needs the owner's decision before S4 (section 4).
 
-**Update (2026-10-31, later the same day).**
-- The pipeline release is published: branch `release/v1.2.0`, and a lightweight tag `v1.2.0` at the pinned commit
+- The CPU parts passed first.
+- The GPU box identity check then passed for all five models, on two pods the same day (section 1b).
+- The pipeline release, the SPT replay and the inherited code are as reported below.
+
+**Publication.**
+- The pipeline release is published: branch `release/v1.2.0` and a lightweight tag `v1.2.0` at the pinned commit
   `5ca15f56a71f`. `main` took it by merge `4632409` (PR #16), with the same tree.
 - A clean `pip install` at the pinned commit from GitHub passes `stpt.manifest.check_environment` for all five models.
-- The coordination record is published, and StPT now pins it at `2383272292359758` (amendment A2 there).
-- Open items 1 and 2 below are done.
+- The coordination record is published, and StPT pins its latest commit (`pins.yaml`).
 
 All numbers below are read from the files in `artifacts/`.
 
@@ -22,18 +24,48 @@ All numbers below are read from the files in `artifacts/`.
 | Lineup tests at the tagged commit (Qwen serializer = Qwen's own template on 22 renderings, strings and token ids; profiles through `modelcfg`; serve command; readout; identity block) | 59 passed | `pipeline_lineup_tests.txt` |
 | Existing pipeline suites after the additive changes | registry 6/6, gemma3 12/12, modelcfg 24/24, Llama model_io 30 | pipeline `RELEASE_NOTES.md` |
 | Wheel built from the tag, clean venv: imports; `qwen3_5` resolves by entry point; ships lineup data, no tests or data | pass | pipeline `RELEASE_NOTES.md` |
-| **Box identity check** (`pipeline/lineup/pod/serve_lineup.sh`, once per model) | **NOT RUN** | none |
+| **Box identity check** (GPU, all five models) | **PASS 5/5** (section 1b) | `artifacts/gpu/box_identity_summary.json` |
 
-The box identity check, per model, covers:
-- the weight bytes re-hashed to the pin;
-- the tokenizer facts;
-- template agreement on the box;
-- 8 identical readouts, bit-identical;
-- exact-fallback consistency.
+## 1b. Box identity check (GPU)
 
-Until it runs:
-- The two Qwen weight hashes are metadata-pinned. Their bytes have not been read.
-- "Deterministic kernels" on the vLLM 0.19.1 stack is a requirement, not a result, for all five models.
+**Hardware and stack.**
+- One NVIDIA RTX PRO 6000 Blackwell Server Edition (96 GB), driver 595.91, RunPod secure cloud.
+- This was the owner's fallback: no A100 80GB was available in 15 attempts over 30 minutes.
+- Serving stack: Python 3.11.13, vLLM 0.19.1, torch 2.10.0+cu128, transformers 5.5.3. Pipeline 1.2.0 installed from
+  GitHub at the pinned commit.
+- Driver: `gpu/box_identity.sh`, committed before the run. Launcher: `gpu/launch.py`.
+- The driver performs the steps of the pipeline's `pod/serve_lineup.sh`. That script was not used because of a v1.2.0
+  defect (`python -m lineup.serve` cannot import `lineup`; coordination record A3).
+
+**Results, per model.** Each model was served twice; the server was restarted between the two starts.
+- Within one server start, 8 identical requests on each of 3 prompts gave bit-identical logprobs.
+- "Restart" is the largest change in any option's log-probability between the two server starts.
+- Every option was read from the top 20, and the restricted-request fallback reproduced each of those reads exactly
+  (`fallback_consistency`).
+
+| model | weights re-hashed = pin | template | bit-identical within a start | fallback exact | restart: max Δ log P | non-A/B mass (plain / board / lopsided) |
+|---|---|---|---|---|---|---|
+| Llama-3.1-8B-Instruct | 495b73750141622d, 11/11 files | agree | yes | yes | 0.115 | 0.20 / 0.24 / 0.01 |
+| Gemma-2-9B-IT | 7055bc8c5f456ced, 11/11 | system-free 3/3 (official template refuses system role) | yes | yes | **0.0** | 0.89 / 0.21 / 0.002 |
+| Qwen3.5-9B | 4b570a1e6e5db4b9, 11/11 | agree | yes | yes | 0.123 | 0.01 / 0.02 / 0.001 |
+| Gemma-3-27B-IT | 34f745e7c6ef5b7b, 23/23 | agree | yes | yes | 0.250 | 0.999 / 0.000 / 0.000 |
+| Qwen3.5-27B | 5e536c8708a9430b, 19/19 | agree | yes | yes | 0.226 | 0.03 / 0.006 / 0.001 |
+
+Notes:
+- The two Qwen weight hashes, pinned at Step 0 from Hugging Face metadata alone, are now confirmed from the bytes.
+  All five models are byte-verified.
+- Files: `artifacts/gpu/20261031T1605Z/` (first pod) and `artifacts/gpu/20261031T1621Z/` (rerun). Per-model files:
+  `summary_*`, `readout_*`, `preflight_*`, `tokenizer_*`, logs. Collated in `artifacts/gpu/box_identity_summary.json`.
+
+**Run record.** These were operational failures, not model failures.
+- **First pod** (`xnbyb65lcj7ock`, 16:05–16:20 UTC): the three 9B-class models passed. Both 27B downloads failed with
+  "No space left on device": the 120 GB disk I chose filled with Hugging Face's xet chunk cache.
+- **Rerun** (`akcajq9m33o9wl`, 16:21–16:32 UTC): the two 27B models only, 200 GB disk, xet cache cleared after each
+  model.
+- **Self-delete:** the first pod's self-delete did not work. The REST DELETE with the pod's own key returns 403, so I
+  terminated that pod from here. The rerun removed itself through the `runpodctl` fallback.
+- **Lesson:** the in-pod hard deadline cannot rely on the REST delete. Watchers here must enforce it.
+- **Cost:** about 26 pod-minutes at $2.49/h, roughly $1.10.
 
 ## 2. SPT harness replay against the tagged release
 
@@ -76,13 +108,36 @@ uncommitted S0 files).
 
 Reproduce: `bash gates/S0/run_s0.sh WORKDIR`.
 
-## Open items for the owner (S0 cannot close without them)
+## 4. Finding for the owner: logprobs are not bit-identical across a server restart (4 of 5 models)
+
+**What was seen.**
+- Within one server start, every model is bit-identical (8 of 8 requests, 3 prompts).
+- Across a restart, Llama-8B, Qwen-9B, Gemma-3-27B and Qwen-27B move by one or two bf16 steps on the logit (0.125 or
+  0.25 nats). Gemma-2-9B does not move.
+- The largest moves (0.25) occur where A and B are both far in the tail. Gemma-3's plain prompt is the example: 99.9% of
+  the mass is elsewhere.
+- Every start used the FLASH_ATTN backend and ran vLLM's kernel autotuner. A plausible cause, **not established**, is
+  that the autotuner picks different kernels on different starts.
+
+**Why it matters.**
+- StPT runs will span many server starts. A per-start shift of up to 0.25 nats is a nuisance factor close to S4's
+  0.3-nat repeat-noise limit.
+- "Deterministic kernels" is established within a start, not across starts.
+
+**Options.**
+- **(a) Accept it.** Record the server start in every manifest and spread runs over starts; S4 then measures repeat noise
+  across starts, not only within one.
+- **(b) Test candidate settings for v1.2.1 on one pod (about $1–2), then re-pin both studies.** For example: disable
+  the autotuner, `--enforce-eager`, or vLLM's batch-invariant mode.
+- Recommendation: (b), before S4.
+
+## Open items for the owner
 
 1. ~~Push the pipeline release.~~ Done 2026-10-31 (see the update at the top).
 2. ~~Create `RandallSPQR/StPT-MP-Coordination` and push the record.~~ Done 2026-10-31. Location accepted (D7).
-3. **GPU for the box identity check:** about one pod-hour per model on one 48–80 GB GPU (5 models). Needs an OK.
-4. **Proposals awaiting a decision** (coordination record `DECISIONS.md` P1–P4, P6):
-   - the Qwen pair (Qwen3.5-9B/27B, dense, thinking off);
-   - the vLLM 0.19.1 stack;
-   - bf16 for all five models;
-   - the SPT tag.
+3. ~~GPU for the box identity check.~~ Approved and done 2026-10-31 (section 1b).
+5. **GPU type for all StPT serving.** Determinism was checked on the RTX PRO 6000 Blackwell, so StPT should serve on that
+   type, or re-run this check on another.
+6. **The restart finding** (section 4): option (a) or (b).
+4. **Proposal awaiting a decision:** P6, the SPT tag v1.0.1 for the replay. The Qwen pair, the stack and bf16 were
+   accepted (D8–D10).

@@ -1,0 +1,2 @@
+[ERR] Qwen/Qwen3.5-27B@fc05daec18b0  files 0/0  by sha256  meta=hub  no local snapshot for Qwen/Qwen3.5-27B@fc05daec18b0: IncompleteSnapshotError
+report: /root/out/20261031T1605Z/preflight_qwen3.5-27b.json

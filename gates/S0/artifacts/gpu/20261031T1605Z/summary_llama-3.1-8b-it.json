@@ -1,0 +1,70 @@
+{
+ "model": "llama-3.1-8b-it",
+ "identity_block": {
+  "pipeline": {
+   "version": "1.2.0",
+   "commit": "5ca15f56a71f35d5818d0392f7f3b4acb2d85d1b",
+   "tag": "5ca15f56a71f35d5818d0392f7f3b4acb2d85d1b",
+   "dirty": false,
+   "how": "direct_url.json"
+  },
+  "lineup": {
+   "version": "1.2.0",
+   "locked": true,
+   "sha256": "74327b48de5c741f42199b8428d896c8ef5dec4743d9d13c2a8e0d5e0a6fa192"
+  },
+  "model": {
+   "name": "llama-3.1-8b-it",
+   "hf_id": "meta-llama/Llama-3.1-8B-Instruct",
+   "revision": "0e9e39f249a16976918f6564b8830bc894c89659",
+   "weight_hash": "495b73750141622d",
+   "chat_template_hash": "e10ca381b1ccc5cf",
+   "family": "llama3",
+   "identity_status": "pod_pinned"
+  },
+  "profile": {
+   "file": "models_llama-3.1-8b-it.yaml",
+   "sha256": "38b41c276be0619479ba844f3c106875978369f4041a63bba866cf3ddfbc85c1"
+  },
+  "serializer": {
+   "family": "llama3",
+   "module": "llama8b_it_base_probe.model_io.llama3",
+   "sha256": "135d450d2ae7109349853a36feb11293a632fdbc52e2e7e48828ec9add6552aa",
+   "generation_prompt": "<|start_header_id|>assistant<|end_header_id|>\n\n"
+  },
+  "serving": {
+   "pins": {
+    "vllm": "0.19.1",
+    "torch": "2.10.0",
+    "transformers": "5.5.3",
+    "tokenizers": "0.22.2",
+    "huggingface-hub": "1.10.2"
+   },
+   "flags": [
+    "--max-num-seqs 1",
+    "--no-enable-prefix-caching",
+    "--max-num-batched-tokens 8192",
+    "--seed 0",
+    "--logprobs-mode raw_logprobs",
+    "--dtype bfloat16"
+   ],
+   "env": {
+    "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+    "PYTHONHASHSEED": "0",
+    "TOKENIZERS_PARALLELISM": "false"
+   },
+   "batch_size": 1
+  }
+ },
+ "weight_hash": "495b73750141622d",
+ "weight_hash_ok": true,
+ "files_verified": "11/11",
+ "verified_by": "sha256",
+ "tokenizer_ok": true,
+ "template_agreement": true,
+ "bit_identical_repeats": true,
+ "fallback_consistent": true,
+ "identical_across_restart": false,
+ "max_restart_diff_nats": 0.11510229110717773,
+ "pass": true
+}

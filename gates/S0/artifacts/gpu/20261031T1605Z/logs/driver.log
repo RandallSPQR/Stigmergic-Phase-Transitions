@@ -1,0 +1,151 @@
+=== 2026-10-31T16:05:46Z stack
+NVIDIA RTX PRO 6000 Blackwell Server Edition, 595.91.07, 97887 MiB
+3.11.13 vllm 0.19.1 torch 2.10.0+cu128 cuda 12.8 transformers 5.5.3 NVIDIA RTX PRO 6000 Blackwell Server Edition
+1.2.0
+uploaded main
+=== 2026-10-31T16:06:23Z llama-3.1-8b-it: weights
+llama-3.1-8b-it weight_hash got=495b73750141622d want=495b73750141622d
+=== 2026-10-31T16:06:46Z llama-3.1-8b-it: tokenizer
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+{"check_tokenizer": {"stop_token_ids": [128009], "end_of_turn_id": 128009, "turn_suffix_ids": [128009]}, "template_agreement": {"agree": true, "ours_sha": "6dea33cf64d24c74", "template_sha": "6dea33cf64d24c74"}, "system_free_agreement": [true, true, true]}
+=== 2026-10-31T16:06:48Z llama-3.1-8b-it: serve
+=== 2026-10-31T16:08:04Z llama-3.1-8b-it: readouts (server start 1)
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+{'plain': (True, True, 2.25, 0.2038), 'board': (True, True, 0.375, 0.2397), 'lopsided': (True, True, 10.0, 0.0126)}
+=== 2026-10-31T16:09:03Z llama-3.1-8b-it: readouts (server start 2)
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+{'plain': (True, True, 2.125, 0.2016), 'board': (True, True, 0.375, 0.2414), 'lopsided': (True, True, 10.0625, 0.0133)}
+=== 2026-10-31T16:09:16Z llama-3.1-8b-it: summary
+{"model": "llama-3.1-8b-it", "weight_hash": "495b73750141622d", "weight_hash_ok": true, "files_verified": "11/11", "verified_by": "sha256", "tokenizer_ok": true, "template_agreement": true, "bit_identical_repeats": true, "fallback_consistent": true, "identical_across_restart": false, "max_restart_diff_nats": 0.11510229110717773, "pass": true}
+uploaded main
+=== 2026-10-31T16:09:25Z gemma-2-9b-it: weights
+gemma-2-9b-it weight_hash got=7055bc8c5f456ced want=7055bc8c5f456ced
+=== 2026-10-31T16:10:40Z gemma-2-9b-it: tokenizer
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+{"check_tokenizer": {"stop_token_ids": [1, 107], "end_of_turn_id": 107, "turn_suffix_ids": [107, 108]}, "template_agreement": {"agree": null, "error": "TemplateError: System role not supported"}, "system_free_agreement": [true, true, true]}
+=== 2026-10-31T16:10:42Z gemma-2-9b-it: serve
+=== 2026-10-31T16:12:17Z gemma-2-9b-it: readouts (server start 1)
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+{'plain': (True, True, 2.625, 0.8855), 'board': (True, True, -2.375, 0.2149), 'lopsided': (True, True, 9.625, 0.0022)}
+=== 2026-10-31T16:12:55Z gemma-2-9b-it: readouts (server start 2)
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+{'plain': (True, True, 2.625, 0.8855), 'board': (True, True, -2.375, 0.2149), 'lopsided': (True, True, 9.625, 0.0022)}
+=== 2026-10-31T16:13:07Z gemma-2-9b-it: summary
+{"model": "gemma-2-9b-it", "weight_hash": "7055bc8c5f456ced", "weight_hash_ok": true, "files_verified": "11/11", "verified_by": "sha256", "tokenizer_ok": true, "template_agreement": null, "bit_identical_repeats": true, "fallback_consistent": true, "identical_across_restart": true, "max_restart_diff_nats": 0.0, "pass": true}
+uploaded main
+=== 2026-10-31T16:13:20Z qwen3.5-9b: weights
+qwen3.5-9b weight_hash got=4b570a1e6e5db4b9 want=4b570a1e6e5db4b9
+=== 2026-10-31T16:13:50Z qwen3.5-9b: tokenizer
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+{"check_tokenizer": {"stop_token_ids": [248046], "end_of_turn_id": 248046, "turn_suffix_ids": [248046, 198]}, "template_agreement": {"agree": true, "ours_sha": "9c0fcda9a34e00e4", "template_sha": "9c0fcda9a34e00e4"}, "system_free_agreement": [true, true, true]}
+=== 2026-10-31T16:13:51Z qwen3.5-9b: serve
+=== 2026-10-31T16:15:36Z qwen3.5-9b: readouts (server start 1)
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+{'plain': (True, True, 0.5, 0.0127), 'board': (True, True, 0.375, 0.0234), 'lopsided': (True, True, 4.25, 0.0014)}
+=== 2026-10-31T16:17:09Z qwen3.5-9b: readouts (server start 2)
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+{'plain': (True, True, 0.5, 0.0131), 'board': (True, True, 0.5, 0.0243), 'lopsided': (True, True, 4.375, 0.0016)}
+=== 2026-10-31T16:17:22Z qwen3.5-9b: summary
+{"model": "qwen3.5-9b", "weight_hash": "4b570a1e6e5db4b9", "weight_hash_ok": true, "files_verified": "11/11", "verified_by": "sha256", "tokenizer_ok": true, "template_agreement": true, "bit_identical_repeats": true, "fallback_consistent": true, "identical_across_restart": false, "max_restart_diff_nats": 0.12348365783691406, "pass": true}
+uploaded main
+=== 2026-10-31T16:17:27Z gemma-3-27b-it: weights
+gemma-3-27b-it weight_hash got= want=34f745e7c6ef5b7b
+=== 2026-10-31T16:17:51Z gemma-3-27b-it: tokenizer
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+{"check_tokenizer": {"stop_token_ids": [1, 106], "end_of_turn_id": 106, "turn_suffix_ids": [106, 107]}, "template_agreement": {"agree": true, "ours_sha": "df9855efa4d5d53a", "template_sha": "df9855efa4d5d53a"}, "system_free_agreement": [true, true, true]}
+=== 2026-10-31T16:17:53Z gemma-3-27b-it: serve
+STOP for gemma-3-27b-it: vLLM did not come up (start 1)
+(APIServer pid=6244)     await run_server_worker(listen_address, sock, args, **uvicorn_kwargs)
+(APIServer pid=6244)   File "/root/venv_vllm_lineup/lib/python3.11/site-packages/vllm/entrypoints/openai/api_server.py", line 686, in run_server_worker
+(APIServer pid=6244)     async with build_async_engine_client(
+(APIServer pid=6244)   File "/usr/lib/python3.11/contextlib.py", line 210, in __aenter__
+(APIServer pid=6244)     return await anext(self.gen)
+(APIServer pid=6244)            ^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=6244)   File "/root/venv_vllm_lineup/lib/python3.11/site-packages/vllm/entrypoints/openai/api_server.py", line 100, in build_async_engine_client
+(APIServer pid=6244)     async with build_async_engine_client_from_engine_args(
+(APIServer pid=6244)   File "/usr/lib/python3.11/contextlib.py", line 210, in __aenter__
+(APIServer pid=6244)     return await anext(self.gen)
+(APIServer pid=6244)            ^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=6244)   File "/root/venv_vllm_lineup/lib/python3.11/site-packages/vllm/entrypoints/openai/api_server.py", line 136, in build_async_engine_client_from_engine_args
+(APIServer pid=6244)     async_llm = AsyncLLM.from_vllm_config(
+(APIServer pid=6244)                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=6244)   File "/root/venv_vllm_lineup/lib/python3.11/site-packages/vllm/v1/engine/async_llm.py", line 225, in from_vllm_config
+(APIServer pid=6244)     return cls(
+(APIServer pid=6244)            ^^^^
+(APIServer pid=6244)   File "/root/venv_vllm_lineup/lib/python3.11/site-packages/vllm/v1/engine/async_llm.py", line 154, in __init__
+(APIServer pid=6244)     self.engine_core = EngineCoreClient.make_async_mp_client(
+(APIServer pid=6244)                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=6244)   File "/root/venv_vllm_lineup/lib/python3.11/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(APIServer pid=6244)     return func(*args, **kwargs)
+(APIServer pid=6244)            ^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=6244)   File "/root/venv_vllm_lineup/lib/python3.11/site-packages/vllm/v1/engine/core_client.py", line 130, in make_async_mp_client
+(APIServer pid=6244)     return AsyncMPClient(*client_args)
+(APIServer pid=6244)            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=6244)   File "/root/venv_vllm_lineup/lib/python3.11/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(APIServer pid=6244)     return func(*args, **kwargs)
+(APIServer pid=6244)            ^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=6244)   File "/root/venv_vllm_lineup/lib/python3.11/site-packages/vllm/v1/engine/core_client.py", line 887, in __init__
+(APIServer pid=6244)     super().__init__(
+(APIServer pid=6244)   File "/root/venv_vllm_lineup/lib/python3.11/site-packages/vllm/v1/engine/core_client.py", line 535, in __init__
+(APIServer pid=6244)     with launch_core_engines(
+(APIServer pid=6244)   File "/usr/lib/python3.11/contextlib.py", line 144, in __exit__
+(APIServer pid=6244)     next(self.gen)
+(APIServer pid=6244)   File "/root/venv_vllm_lineup/lib/python3.11/site-packages/vllm/v1/engine/utils.py", line 998, in launch_core_engines
+(APIServer pid=6244)     wait_for_engine_startup(
+(APIServer pid=6244)   File "/root/venv_vllm_lineup/lib/python3.11/site-packages/vllm/v1/engine/utils.py", line 1057, in wait_for_engine_startup
+(APIServer pid=6244)     raise RuntimeError(
+(APIServer pid=6244) RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+=== 2026-10-31T16:18:38Z gemma-3-27b-it: summary
+{"model": "gemma-3-27b-it", "weight_hash": null, "weight_hash_ok": false, "files_verified": "0/0", "verified_by": "sha256", "tokenizer_ok": true, "template_agreement": true, "bit_identical_repeats": false, "fallback_consistent": false, "identical_across_restart": false, "max_restart_diff_nats": null, "pass": false}
+uploaded main
+=== 2026-10-31T16:18:42Z qwen3.5-27b: weights
+qwen3.5-27b weight_hash got= want=5e536c8708a9430b
+=== 2026-10-31T16:19:14Z qwen3.5-27b: tokenizer
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+{"check_tokenizer": {"stop_token_ids": [248046], "end_of_turn_id": 248046, "turn_suffix_ids": [248046, 198]}, "template_agreement": {"agree": true, "ours_sha": "9c0fcda9a34e00e4", "template_sha": "9c0fcda9a34e00e4"}, "system_free_agreement": [true, true, true]}
+=== 2026-10-31T16:19:16Z qwen3.5-27b: serve
+STOP for qwen3.5-27b: vLLM did not come up (start 1)
+(APIServer pid=7233)     await run_server_worker(listen_address, sock, args, **uvicorn_kwargs)
+(APIServer pid=7233)   File "/root/venv_vllm_lineup/lib/python3.11/site-packages/vllm/entrypoints/openai/api_server.py", line 686, in run_server_worker
+(APIServer pid=7233)     async with build_async_engine_client(
+(APIServer pid=7233)   File "/usr/lib/python3.11/contextlib.py", line 210, in __aenter__
+(APIServer pid=7233)     return await anext(self.gen)
+(APIServer pid=7233)            ^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=7233)   File "/root/venv_vllm_lineup/lib/python3.11/site-packages/vllm/entrypoints/openai/api_server.py", line 100, in build_async_engine_client
+(APIServer pid=7233)     async with build_async_engine_client_from_engine_args(
+(APIServer pid=7233)   File "/usr/lib/python3.11/contextlib.py", line 210, in __aenter__
+(APIServer pid=7233)     return await anext(self.gen)
+(APIServer pid=7233)            ^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=7233)   File "/root/venv_vllm_lineup/lib/python3.11/site-packages/vllm/entrypoints/openai/api_server.py", line 136, in build_async_engine_client_from_engine_args
+(APIServer pid=7233)     async_llm = AsyncLLM.from_vllm_config(
+(APIServer pid=7233)                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=7233)   File "/root/venv_vllm_lineup/lib/python3.11/site-packages/vllm/v1/engine/async_llm.py", line 225, in from_vllm_config
+(APIServer pid=7233)     return cls(
+(APIServer pid=7233)            ^^^^
+(APIServer pid=7233)   File "/root/venv_vllm_lineup/lib/python3.11/site-packages/vllm/v1/engine/async_llm.py", line 154, in __init__
+(APIServer pid=7233)     self.engine_core = EngineCoreClient.make_async_mp_client(
+(APIServer pid=7233)                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=7233)   File "/root/venv_vllm_lineup/lib/python3.11/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(APIServer pid=7233)     return func(*args, **kwargs)
+(APIServer pid=7233)            ^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=7233)   File "/root/venv_vllm_lineup/lib/python3.11/site-packages/vllm/v1/engine/core_client.py", line 130, in make_async_mp_client
+(APIServer pid=7233)     return AsyncMPClient(*client_args)
+(APIServer pid=7233)            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=7233)   File "/root/venv_vllm_lineup/lib/python3.11/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(APIServer pid=7233)     return func(*args, **kwargs)
+(APIServer pid=7233)            ^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=7233)   File "/root/venv_vllm_lineup/lib/python3.11/site-packages/vllm/v1/engine/core_client.py", line 887, in __init__
+(APIServer pid=7233)     super().__init__(
+(APIServer pid=7233)   File "/root/venv_vllm_lineup/lib/python3.11/site-packages/vllm/v1/engine/core_client.py", line 535, in __init__
+(APIServer pid=7233)     with launch_core_engines(
+(APIServer pid=7233)   File "/usr/lib/python3.11/contextlib.py", line 144, in __exit__
+(APIServer pid=7233)     next(self.gen)
+(APIServer pid=7233)   File "/root/venv_vllm_lineup/lib/python3.11/site-packages/vllm/v1/engine/utils.py", line 998, in launch_core_engines
+(APIServer pid=7233)     wait_for_engine_startup(
+(APIServer pid=7233)   File "/root/venv_vllm_lineup/lib/python3.11/site-packages/vllm/v1/engine/utils.py", line 1057, in wait_for_engine_startup
+(APIServer pid=7233)     raise RuntimeError(
+(APIServer pid=7233) RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+=== 2026-10-31T16:20:01Z qwen3.5-27b: summary
+{"model": "qwen3.5-27b", "weight_hash": null, "weight_hash_ok": false, "files_verified": "0/0", "verified_by": "sha256", "tokenizer_ok": true, "template_agreement": true, "bit_identical_repeats": false, "fallback_consistent": false, "identical_across_restart": false, "max_restart_diff_nats": null, "pass": false}
+uploaded main
+=== 2026-10-31T16:20:11Z done

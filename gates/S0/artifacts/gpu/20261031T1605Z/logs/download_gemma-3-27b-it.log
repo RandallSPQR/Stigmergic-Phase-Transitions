@@ -1,0 +1,40 @@
+Fetching 23 files:   0%|          | 0/23 [00:00<?, ?it/s]Fetching 23 files:  22%|██▏       | 5/23 [00:14<00:51,  2.85s/it]Fetching 23 files:  26%|██▌       | 6/23 [00:15<00:42,  2.52s/it]Fetching 23 files:  30%|███       | 7/23 [00:15<00:31,  1.97s/it]Fetching 23 files:  35%|███▍      | 8/23 [00:16<00:22,  1.53s/it]Fetching 23 files:  39%|███▉      | 9/23 [00:17<00:21,  1.55s/it]Fetching 23 files:  48%|████▊     | 11/23 [00:17<00:10,  1.10it/s]Fetching 23 files:  57%|█████▋    | 13/23 [00:17<00:05,  1.72it/s]Fetching 23 files:  65%|██████▌   | 15/23 [00:18<00:04,  1.97it/s]Fetching 23 files:  74%|███████▍  | 17/23 [00:19<00:02,  2.43it/s]Fetching 23 files:  78%|███████▊  | 18/23 [00:19<00:02,  2.30it/s]Fetching 23 files:  87%|████████▋ | 20/23 [00:21<00:01,  1.69it/s]Fetching 23 files:  91%|█████████▏| 21/23 [00:21<00:01,  1.92it/s]Fetching 23 files:  91%|█████████▏| 21/23 [00:23<00:02,  1.11s/it]
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/root/venv/lib/python3.11/site-packages/huggingface_hub/utils/_validators.py", line 89, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/root/venv/lib/python3.11/site-packages/huggingface_hub/utils/_http.py", line 266, in _inner
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/root/venv/lib/python3.11/site-packages/huggingface_hub/_snapshot_download.py", line 532, in snapshot_download
+    hf_thread_map(
+  File "/root/venv/lib/python3.11/site-packages/huggingface_hub/utils/tqdm.py", line 441, in hf_thread_map
+    results[future_to_index[future]] = future.result()
+                                       ^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/usr/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/venv/lib/python3.11/site-packages/huggingface_hub/_snapshot_download.py", line 512, in _inner_hf_hub_download
+    hf_hub_download(  # type: ignore
+  File "/root/venv/lib/python3.11/site-packages/huggingface_hub/utils/_validators.py", line 89, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/root/venv/lib/python3.11/site-packages/huggingface_hub/utils/_http.py", line 266, in _inner
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/root/venv/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 1047, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/venv/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 1285, in _hf_hub_download_to_cache_dir
+    _download_to_tmp_and_move(
+  File "/root/venv/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 2016, in _download_to_tmp_and_move
+    xet_get(
+  File "/root/venv/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 589, in xet_get
+    with session.new_file_download_group(
+RuntimeError: Task error: File reconstruction error: IO Error: No space left on device (os error 28)

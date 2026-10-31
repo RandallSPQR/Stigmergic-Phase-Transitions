@@ -1,0 +1,240 @@
+{
+ "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition, 595.91.07, 97887 MiB",
+ "stack": "3.11.13 vllm 0.19.1 torch 2.10.0+cu128 cuda 12.8 transformers 5.5.3 NVIDIA RTX PRO 6000 Blackwell Server Edition\n1.2.0",
+ "pods": {
+  "20261031T1605Z": "xnbyb65lcj7ock",
+  "20261031T1621Z": "akcajq9m33o9wl"
+ },
+ "models": {
+  "llama-3.1-8b-it": {
+   "run": "20261031T1605Z",
+   "weight_hash": "495b73750141622d",
+   "weight_hash_ok": true,
+   "files_verified": "11/11",
+   "template_agreement": true,
+   "tokenizer_ok": true,
+   "bit_identical_repeats": true,
+   "fallback_consistent": true,
+   "identical_across_restart": false,
+   "max_restart_diff_nats": 0.11510229110717773,
+   "pass": true,
+   "logit_AB": {
+    "plain": [
+     2.249999910593033,
+     2.125000089406967
+    ],
+    "board": [
+     0.3750000596046448,
+     0.375
+    ],
+    "lopsided": [
+     10.000000294297934,
+     10.062499550171196
+    ]
+   },
+   "non_option_mass": {
+    "plain": 0.2038,
+    "board": 0.2397,
+    "lopsided": 0.0126
+   },
+   "read_by": {
+    "plain": {
+     "A": "top",
+     "B": "top"
+    },
+    "board": {
+     "A": "top",
+     "B": "top"
+    },
+    "lopsided": {
+     "A": "top",
+     "B": "top"
+    }
+   }
+  },
+  "gemma-2-9b-it": {
+   "run": "20261031T1605Z",
+   "weight_hash": "7055bc8c5f456ced",
+   "weight_hash_ok": true,
+   "files_verified": "11/11",
+   "template_agreement": null,
+   "tokenizer_ok": true,
+   "bit_identical_repeats": true,
+   "fallback_consistent": true,
+   "identical_across_restart": true,
+   "max_restart_diff_nats": 0.0,
+   "pass": true,
+   "logit_AB": {
+    "plain": [
+     2.625,
+     2.625
+    ],
+    "board": [
+     -2.3750001192092896,
+     -2.3750001192092896
+    ],
+    "lopsided": [
+     9.624999941326678,
+     9.624999941326678
+    ]
+   },
+   "non_option_mass": {
+    "plain": 0.8855,
+    "board": 0.2149,
+    "lopsided": 0.0022
+   },
+   "read_by": {
+    "plain": {
+     "A": "top",
+     "B": "top"
+    },
+    "board": {
+     "A": "top",
+     "B": "top"
+    },
+    "lopsided": {
+     "A": "top",
+     "B": "top"
+    }
+   }
+  },
+  "qwen3.5-9b": {
+   "run": "20261031T1605Z",
+   "weight_hash": "4b570a1e6e5db4b9",
+   "weight_hash_ok": true,
+   "files_verified": "11/11",
+   "template_agreement": true,
+   "tokenizer_ok": true,
+   "bit_identical_repeats": true,
+   "fallback_consistent": true,
+   "identical_across_restart": false,
+   "max_restart_diff_nats": 0.12348365783691406,
+   "pass": true,
+   "logit_AB": {
+    "plain": [
+     0.4999999701976776,
+     0.5
+    ],
+    "board": [
+     0.375,
+     0.5
+    ],
+    "lopsided": [
+     4.24999990593642,
+     4.375000010244548
+    ]
+   },
+   "non_option_mass": {
+    "plain": 0.0127,
+    "board": 0.0234,
+    "lopsided": 0.0014
+   },
+   "read_by": {
+    "plain": {
+     "A": "top",
+     "B": "top"
+    },
+    "board": {
+     "A": "top",
+     "B": "top"
+    },
+    "lopsided": {
+     "A": "top",
+     "B": "top"
+    }
+   }
+  },
+  "gemma-3-27b-it": {
+   "run": "20261031T1621Z",
+   "weight_hash": "34f745e7c6ef5b7b",
+   "weight_hash_ok": true,
+   "files_verified": "23/23",
+   "template_agreement": true,
+   "tokenizer_ok": true,
+   "bit_identical_repeats": true,
+   "fallback_consistent": true,
+   "identical_across_restart": false,
+   "max_restart_diff_nats": 0.2498002052307129,
+   "pass": true,
+   "logit_AB": {
+    "plain": [
+     0.5,
+     0.75
+    ],
+    "board": [
+     9.750000240153895,
+     9.750000240153895
+    ],
+    "lopsided": [
+     28.375,
+     28.5
+    ]
+   },
+   "non_option_mass": {
+    "plain": 0.9989,
+    "board": 0.0,
+    "lopsided": 0.0
+   },
+   "read_by": {
+    "plain": {
+     "A": "top",
+     "B": "top"
+    },
+    "board": {
+     "A": "top",
+     "B": "top"
+    },
+    "lopsided": {
+     "A": "top",
+     "B": "top"
+    }
+   }
+  },
+  "qwen3.5-27b": {
+   "run": "20261031T1621Z",
+   "weight_hash": "5e536c8708a9430b",
+   "weight_hash_ok": true,
+   "files_verified": "19/19",
+   "template_agreement": true,
+   "tokenizer_ok": true,
+   "bit_identical_repeats": true,
+   "fallback_consistent": true,
+   "identical_across_restart": false,
+   "max_restart_diff_nats": 0.22573637962341309,
+   "pass": true,
+   "logit_AB": {
+    "plain": [
+     2.1249999701976776,
+     2.375000052154064
+    ],
+    "board": [
+     0.375,
+     0.5
+    ],
+    "lopsided": [
+     6.625000105937943,
+     6.625000069150701
+    ]
+   },
+   "non_option_mass": {
+    "plain": 0.0299,
+    "board": 0.0061,
+    "lopsided": 0.0013
+   },
+   "read_by": {
+    "plain": {
+     "A": "top",
+     "B": "top"
+    },
+    "board": {
+     "A": "top",
+     "B": "top"
+    },
+    "lopsided": {
+     "A": "top",
+     "B": "top"
+    }
+   }
+  }
+ }
+}

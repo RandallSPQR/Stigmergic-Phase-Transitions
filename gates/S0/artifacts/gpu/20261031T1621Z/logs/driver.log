@@ -1,0 +1,41 @@
+=== 2026-10-31T16:21:11Z stack
+NVIDIA RTX PRO 6000 Blackwell Server Edition, 595.91.07, 97887 MiB
+3.11.13 vllm 0.19.1 torch 2.10.0+cu128 cuda 12.8 transformers 5.5.3 NVIDIA RTX PRO 6000 Blackwell Server Edition
+1.2.0
+uploaded main
+=== 2026-10-31T16:21:54Z gemma-3-27b-it: weights
+overlay         200G   22G  179G  11% /
+gemma-3-27b-it weight_hash got=34f745e7c6ef5b7b want=34f745e7c6ef5b7b
+=== 2026-10-31T16:22:57Z gemma-3-27b-it: tokenizer
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+{"check_tokenizer": {"stop_token_ids": [1, 106], "end_of_turn_id": 106, "turn_suffix_ids": [106, 107]}, "template_agreement": {"agree": true, "ours_sha": "df9855efa4d5d53a", "template_sha": "df9855efa4d5d53a"}, "system_free_agreement": [true, true, true]}
+=== 2026-10-31T16:23:00Z gemma-3-27b-it: serve
+=== 2026-10-31T16:24:10Z gemma-3-27b-it: readouts (server start 1)
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+{'plain': (True, True, 0.5, 0.9989), 'board': (True, True, 9.75, 0.0), 'lopsided': (True, True, 28.375, 0.0)}
+=== 2026-10-31T16:25:09Z gemma-3-27b-it: readouts (server start 2)
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+{'plain': (True, True, 0.75, 0.9987), 'board': (True, True, 9.75, 0.0), 'lopsided': (True, True, 28.5, 0.0)}
+=== 2026-10-31T16:25:24Z gemma-3-27b-it: summary
+{"model": "gemma-3-27b-it", "weight_hash": "34f745e7c6ef5b7b", "weight_hash_ok": true, "files_verified": "23/23", "verified_by": "sha256", "tokenizer_ok": true, "template_agreement": true, "bit_identical_repeats": true, "fallback_consistent": true, "identical_across_restart": false, "max_restart_diff_nats": 0.2498002052307129, "pass": true}
+overlay         200G   73G  128G  37% /
+uploaded main
+=== 2026-10-31T16:25:42Z qwen3.5-27b: weights
+overlay         200G   73G  128G  37% /
+qwen3.5-27b weight_hash got=5e536c8708a9430b want=5e536c8708a9430b
+=== 2026-10-31T16:26:37Z qwen3.5-27b: tokenizer
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+{"check_tokenizer": {"stop_token_ids": [248046], "end_of_turn_id": 248046, "turn_suffix_ids": [248046, 198]}, "template_agreement": {"agree": true, "ours_sha": "9c0fcda9a34e00e4", "template_sha": "9c0fcda9a34e00e4"}, "system_free_agreement": [true, true, true]}
+=== 2026-10-31T16:26:38Z qwen3.5-27b: serve
+=== 2026-10-31T16:29:19Z qwen3.5-27b: readouts (server start 1)
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+{'plain': (True, True, 2.125, 0.0299), 'board': (True, True, 0.375, 0.0061), 'lopsided': (True, True, 6.625, 0.0013)}
+=== 2026-10-31T16:31:23Z qwen3.5-27b: readouts (server start 2)
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+{'plain': (True, True, 2.375, 0.0295), 'board': (True, True, 0.5, 0.0064), 'lopsided': (True, True, 6.625, 0.0013)}
+=== 2026-10-31T16:31:37Z qwen3.5-27b: summary
+{"model": "qwen3.5-27b", "weight_hash": "5e536c8708a9430b", "weight_hash_ok": true, "files_verified": "19/19", "verified_by": "sha256", "tokenizer_ok": true, "template_agreement": true, "bit_identical_repeats": true, "fallback_consistent": true, "identical_across_restart": false, "max_restart_diff_nats": 0.22573637962341309, "pass": true}
+overlay         200G  125G   76G  63% /
+uploaded main
+=== 2026-10-31T16:31:39Z done
+uploaded main

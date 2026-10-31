@@ -1,0 +1,21 @@
+{
+ "check_tokenizer": {
+  "stop_token_ids": [
+   128009
+  ],
+  "end_of_turn_id": 128009,
+  "turn_suffix_ids": [
+   128009
+  ]
+ },
+ "template_agreement": {
+  "agree": true,
+  "ours_sha": "6dea33cf64d24c74",
+  "template_sha": "6dea33cf64d24c74"
+ },
+ "system_free_agreement": [
+  true,
+  true,
+  true
+ ]
+}

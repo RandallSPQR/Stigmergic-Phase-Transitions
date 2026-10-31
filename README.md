@@ -3,7 +3,7 @@
 **Question.** Agents see only their contacts' current votes. Do those votes change how memoryless LLM agents use
 dispersed private evidence? And does a temporary change to what agents see leave a lasting mark on the board?
 
-**Status (2026-10-31): Step 0 done and published; gate S0 partly done (CPU parts pass, GPU part not run).**
+**Status (2026-10-31): Step 0 done and published; gate S0 PASSED (all five models byte-verified on GPU); one finding awaits the owner before S4.**
 - Not frozen. No paid collection. Nothing confirmatory.
 - Brief: https://claude.ai/artifact/Q36cWtMumtJPs3semD76ni (revision 3).
 - Missing Piece is the complementary study. Both share the pipeline and the coordination record below.
@@ -14,7 +14,7 @@ dispersed private evidence? And does a temporary change to what agents see leave
 |---|---|---|---|
 | Shared five-model pipeline (LOCKED) | RandallSPQR/SAE-Ethos-Calibration | `v1.2.0` | `5ca15f56a71f35d5818d0392f7f3b4acb2d85d1b` |
 | SPT release (harness + simulator source; S0 replay) | RandallSPQR/social-phase-transitions-public | `v1.0.1` | `c37a91d2d2561fdf78fc61af500ea000aac3ea2f` |
-| Shared coordination record | RandallSPQR/StPT-MP-Coordination | none | `2383272292359758b3f55ce4ebe80b0362d337d0` |
+| Shared coordination record | RandallSPQR/StPT-MP-Coordination | none | `0fecf4090691f135f81181f47f2c195108c48c5a` |
 
 Models (pipeline v1.2.0):
 - Llama-3.1-8B-Instruct, Gemma-2-9B-IT, Gemma-3-27B-IT.
@@ -46,7 +46,7 @@ across the two; a TOST for each.
 | gate | status |
 |---|---|
 | Step 0: shared pipeline built, tagged, locked, published; SPT release pinned | **done** |
-| S0: pipeline + SPT harness replay | **CPU parts pass; GPU box identity not run** (`gates/S0/S0_REPORT.md`) |
+| S0: pipeline + SPT harness replay | **PASS**; restart-determinism finding open (`gates/S0/S0_REPORT.md` section 4) |
 | S1–S10 | not started |
 
 ## Layout
