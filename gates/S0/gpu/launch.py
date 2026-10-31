@@ -56,9 +56,10 @@ def save(reg):
 def start_cmd(hours: float) -> str:
     secs = int(hours * 3600)
     return (f"(sleep {secs}; curl -s -X DELETE -H \"Authorization: Bearer $RUNPOD_API_KEY\" "
-            f"https://rest.runpod.io/v1/pods/$RUNPOD_POD_ID) > /tmp/selfstop.log 2>&1 & "
+            f"https://rest.runpod.io/v1/pods/$RUNPOD_POD_ID; runpodctl remove pod $RUNPOD_POD_ID || runpodctl stop pod $RUNPOD_POD_ID) "
+            "> /tmp/selfstop.log 2>&1 & "
             "echo \"$STPT_DRIVER_B64\" | base64 -d > /root/box_identity.sh && bash /root/box_identity.sh; "
-            "sleep 60; curl -s -X DELETE -H \"Authorization: Bearer $RUNPOD_API_KEY\" https://rest.runpod.io/v1/pods/$RUNPOD_POD_ID")
+            "sleep 60; runpodctl remove pod $RUNPOD_POD_ID || runpodctl stop pod $RUNPOD_POD_ID")
 
 
 def cmd_create(a):
@@ -70,8 +71,8 @@ def cmd_create(a):
         sys.exit(f"REFUSED: a registered pod is still live: {live}")
     now = dt.datetime.now(dt.timezone.utc)
     run_id = now.strftime("%Y%m%dT%H%MZ")
-    driver = (HERE / "box_identity.sh").read_bytes()
-    body = {"name": f"stpt-s0-box-identity-{run_id}", "imageName": IMAGE, "cloudType": "SECURE",
+    driver = (HERE / a.driver).read_bytes()
+    body = {"name": f"stpt-s0-{a.driver.split('.')[0].replace('_', '-')}-{run_id}", "imageName": IMAGE, "cloudType": "SECURE",
             "gpuTypeIds": GPU_SETS[a.gpu_set][0], "gpuTypePriority": "custom", "gpuCount": 1,
             "containerDiskInGb": a.disk, "volumeInGb": 0,
             "ports": [], "dockerEntrypoint": ["bash", "-c"], "dockerStartCmd": [start_cmd(a.hours)],
@@ -134,6 +135,7 @@ def main(argv=None):
     c.add_argument("--disk", type=int, default=200); c.add_argument("--dry-run", action="store_true")
     c.add_argument("--gpu-set", choices=sorted(GPU_SETS), default="a100")
     c.add_argument("--models", nargs="*", help="lineup model names (default: all five)")
+    c.add_argument("--driver", default="box_identity.sh", choices=["box_identity.sh", "restart_test.sh"])
     sub.add_parser("status")
     t = sub.add_parser("terminate"); t.add_argument("--why", required=True)
     a = ap.parse_args(argv)
