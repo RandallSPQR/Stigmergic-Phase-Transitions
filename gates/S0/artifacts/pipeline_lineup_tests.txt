@@ -1,0 +1,2 @@
+pipeline HEAD 5ca15f56a71f35d5818d0392f7f3b4acb2d85d1b tag v1.2.0
+59 passed in 16.98s

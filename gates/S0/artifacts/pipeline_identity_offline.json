@@ -1,0 +1,71 @@
+{
+ "checked": "2026-10-31T14:51:45Z",
+ "models": {
+  "llama-3.1-8b-it": {
+   "hf_id": "meta-llama/Llama-3.1-8B-Instruct",
+   "revision": "0e9e39f249a16976918f6564b8830bc894c89659",
+   "identity_status": "pod_pinned",
+   "revision_resolves": true,
+   "weight_hash_recomputed": "495b73750141622d",
+   "weight_hash_ok": true,
+   "n_weight_files": 4,
+   "bytes": 16060556376,
+   "chat_template_hash_recomputed": "e10ca381b1ccc5cf",
+   "chat_template_hash_ok": true,
+   "ok": true
+  },
+  "gemma-2-9b-it": {
+   "hf_id": "google/gemma-2-9b-it",
+   "revision": "11c9b309abf73637e4b6f9a3fa1e92e615547819",
+   "identity_status": "pod_pinned",
+   "revision_resolves": true,
+   "weight_hash_recomputed": "7055bc8c5f456ced",
+   "weight_hash_ok": true,
+   "n_weight_files": 4,
+   "bytes": 18483466448,
+   "chat_template_hash_recomputed": "ecd6ae513fe103f0",
+   "chat_template_hash_ok": true,
+   "ok": true
+  },
+  "gemma-3-27b-it": {
+   "hf_id": "google/gemma-3-27b-it",
+   "revision": "005ad3404e59d6023443cb575daa05336842228a",
+   "identity_status": "pod_pinned",
+   "revision_resolves": true,
+   "weight_hash_recomputed": "34f745e7c6ef5b7b",
+   "weight_hash_ok": true,
+   "n_weight_files": 12,
+   "bytes": 54864980440,
+   "chat_template_hash_recomputed": "7de1c58e208eda46",
+   "chat_template_hash_ok": true,
+   "ok": true
+  },
+  "qwen3.5-9b": {
+   "hf_id": "Qwen/Qwen3.5-9B",
+   "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+   "identity_status": "metadata_pinned",
+   "revision_resolves": true,
+   "weight_hash_recomputed": "4b570a1e6e5db4b9",
+   "weight_hash_ok": true,
+   "n_weight_files": 4,
+   "bytes": 19306310880,
+   "chat_template_hash_recomputed": "a4aee8afcf2e0711",
+   "chat_template_hash_ok": true,
+   "ok": true
+  },
+  "qwen3.5-27b": {
+   "hf_id": "Qwen/Qwen3.5-27B",
+   "revision": "fc05daec18b0a78c049392ed2e771dde82bdf654",
+   "identity_status": "metadata_pinned",
+   "revision_resolves": true,
+   "weight_hash_recomputed": "5e536c8708a9430b",
+   "weight_hash_ok": true,
+   "n_weight_files": 11,
+   "bytes": 55563022432,
+   "chat_template_hash_recomputed": "a4aee8afcf2e0711",
+   "chat_template_hash_ok": true,
+   "ok": true
+  }
+ },
+ "ok": true
+}

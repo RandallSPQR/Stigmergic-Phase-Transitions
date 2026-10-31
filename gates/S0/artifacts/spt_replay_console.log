@@ -1,0 +1,33 @@
+14:54:45 python 3.13.18 on Linux-6.18.44-fc-v185-x86_64-with-glibc2.39, 4 CPUs; mode fast
+14:55:24 cache: 31 snapshots, all verified
+units: sim_units/amplification_units.tar verified, 1782 files unpacked
+units: sim_units/confirm_units.tar verified, 2169 files unpacked
+14:57:12 reference snapshot: 37 new files in replication/out/reference
+14:57:12 ---- qc.canary: Comparator canary: a one-byte change in a base.sim array, a raw byte flip, and a 1-ulp change in a CSV and a JSON value must each be rejected; unmodified copies must pass
+14:57:13 PASS qc.canary         0.0 min  0 files compared, 0 differ
+14:57:13 ---- s1.cache: Stage 1: rebuild every API request and check every committed CSV row against the cache
+15:00:32 PASS s1.cache          3.3 min  0 files compared, 0 differ
+15:00:32 ---- s1.fits: Stage 1: response-function fits (bootstrap B = 1000) for every endpoint
+15:08:01 PASS s1.fits           7.5 min  20 files compared, 0 differ
+15:08:01 ---- s1.summary: Stage 1: comprehension gate, hypothesis verdicts H1-H5, secondary contrasts, bridge
+15:08:14 PASS s1.summary        0.2 min  17 files compared, 0 differ
+15:08:14 all steps done in 11.0 min; largest process 4649 MB
+
+====================================================================================================
+claim  result    files differ  units  headline  description
+QC  PASS          0      0      0       0/0  The comparator detects the smallest corruption: one flipped 
+C0  not run       0      0      0     11/11  Baseline: the simulator reproduces the Viana-Bray transition
+C1  PASS         37      0      0     10/10  LLM response functions are not Ising-like: H1 9 of 12 (12 of
+C2  not run       0      0      0       6/6  Trait summaries fail live (surrogate 0 of 4); order-averaged
+C3  not run       0      0      0       4/4  Small per-step differences are amplified collectively (K_fix
+C4  not run       0      0      0     11/11  Near a tipping point amplification exceeds controls: Stage B
+C5  not run       0      0      0       2/7  Whether a tipping point exists is model-dependent: two clear
+S1  not run       0      0      0       0/4  Residual persistence excess does not replicate (Stouffer Z =
+E1  not run       0      0      0       0/0  Exploratory probes on Gemma-4 activations (paper §4.2; no cl
+X   not run       0      0      0       0/0  Illustrations in figures/substack/ (not part of the analysis
+====================================================================================================
+report: replication/out/REPORT.md
+
+real	13m28.932s
+user	32m20.506s
+sys	0m39.884s

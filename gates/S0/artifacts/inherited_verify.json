@@ -1,0 +1,82 @@
+{
+ "source": {
+  "repo": "https://github.com/RandallSPQR/social-phase-transitions-public",
+  "tag": "v1.0.1",
+  "commit": "c37a91d2d2561fdf78fc61af500ea000aac3ea2f"
+ },
+ "files": {
+  "llm/battery.py": {
+   "blob_ok": true,
+   "sha256_ok": true,
+   "matches_spt_tag": true,
+   "ok": true
+  },
+  "llm/client.py": {
+   "blob_ok": true,
+   "sha256_ok": true,
+   "matches_spt_tag": true,
+   "ok": true
+  },
+  "llm/confirm_sim.py": {
+   "blob_ok": true,
+   "sha256_ok": true,
+   "matches_spt_tag": true,
+   "ok": true
+  },
+  "llm/fetch_cache.py": {
+   "blob_ok": true,
+   "sha256_ok": true,
+   "matches_spt_tag": true,
+   "ok": true
+  },
+  "llm/k_avg.py": {
+   "blob_ok": true,
+   "sha256_ok": true,
+   "matches_spt_tag": true,
+   "ok": true
+  },
+  "llm/kernel_test.py": {
+   "blob_ok": true,
+   "sha256_ok": true,
+   "matches_spt_tag": true,
+   "ok": true
+  },
+  "llm/stage2.py": {
+   "blob_ok": true,
+   "sha256_ok": true,
+   "matches_spt_tag": true,
+   "ok": true
+  },
+  "llm/stage3.py": {
+   "blob_ok": true,
+   "sha256_ok": true,
+   "matches_spt_tag": true,
+   "ok": true
+  },
+  "llm/surrogate.py": {
+   "blob_ok": true,
+   "sha256_ok": true,
+   "matches_spt_tag": true,
+   "ok": true
+  },
+  "llm/test_stage3.py": {
+   "blob_ok": true,
+   "sha256_ok": true,
+   "matches_spt_tag": true,
+   "ok": true
+  },
+  "sim/asym.py": {
+   "blob_ok": true,
+   "sha256_ok": true,
+   "matches_spt_tag": true,
+   "ok": true
+  },
+  "sim/vbsim.py": {
+   "blob_ok": true,
+   "sha256_ok": true,
+   "matches_spt_tag": true,
+   "ok": true
+  }
+ },
+ "ok": true
+}

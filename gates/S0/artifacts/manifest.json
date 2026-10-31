@@ -1,0 +1,35 @@
+{
+ "created": "2026-10-31T15:08:53Z",
+ "stpt": {
+  "commit": "1a8efe7e02e072c2c08a3902aaa88adebe02cf12",
+  "dirty": true
+ },
+ "pins": {
+  "pipeline": {
+   "name": "sae-ethos-pipeline",
+   "repo": "https://github.com/RandallSPQR/SAE-Ethos-Calibration",
+   "tag": "v1.2.0",
+   "commit": "5ca15f56a71f35d5818d0392f7f3b4acb2d85d1b",
+   "tag_object": "aedd002b6a2050547011aef210562e15ef588b51"
+  },
+  "spt": {
+   "repo": "https://github.com/RandallSPQR/social-phase-transitions-public",
+   "tag": "v1.0.1",
+   "commit": "c37a91d2d2561fdf78fc61af500ea000aac3ea2f",
+   "private_source_commit": "3a26daf",
+   "doi": "10.5281/zenodo.23821962",
+   "data": "https://huggingface.co/datasets/RandallSPQR/social-phase-transitions-data"
+  },
+  "coordination": {
+   "repo": "https://github.com/RandallSPQR/StPT-MP-Coordination",
+   "commit": "93a9ee77429df76840999aab86daac5cc36734a6"
+  },
+  "brief": {
+   "url": "https://claude.ai/artifact/Q36cWtMumtJPs3semD76ni",
+   "revision": 3
+  }
+ },
+ "pins_sha256": "463fde3d119a75f70e0dca3ae057a6e31e81dde40143cd2aa51e0195ac704666",
+ "gate": "S0",
+ "note": "CPU parts; pipeline checkout at the pinned commit (scratch clone), not yet installable from GitHub"
+}

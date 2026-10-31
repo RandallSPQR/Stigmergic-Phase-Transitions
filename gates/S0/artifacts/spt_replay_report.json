@@ -1,0 +1,953 @@
+{
+ "mode": "fast",
+ "env": {
+  "python": "3.13.18",
+  "platform": "Linux-6.18.44-fc-v185-x86_64-with-glibc2.39",
+  "cpus": 4,
+  "packages": {
+   "numpy": "2.5.3",
+   "pandas": "3.0.5",
+   "scipy": "1.18.1",
+   "numba": "0.68.0",
+   "llvmlite": "0.50.0",
+   "networkx": "3.7",
+   "matplotlib": "3.11.2",
+   "pillow": "12.3.0",
+   "scikit-learn": "1.9.1",
+   "requests": "2.34.2",
+   "imageio-ffmpeg": "0.6.0",
+   "pyparsing": "3.1.1",
+   "narwhals": "2.26.0",
+   "fonttools": "4.66.1",
+   "charset-normalizer": "3.5.1"
+  }
+ },
+ "claims": [
+  {
+   "claim": "QC",
+   "text": "The comparator detects the smallest corruption: one flipped byte in a base.sim array and a one-ulp change in a CSV and a JSON result are each rejected, unmodified copies pass (replication/canary.py)",
+   "ok": true,
+   "ran": true,
+   "steps": [
+    "qc.canary"
+   ],
+   "files": 0,
+   "files_differ": 0,
+   "spot": 0,
+   "headlines": "0/0",
+   "minutes": 0.0
+  },
+  {
+   "claim": "C0",
+   "text": "Baseline: the simulator reproduces the Viana-Bray transitions (6 of 6 within 95% CIs) and the melting of frozen camps under non-reciprocity (paper \u00a74.1)",
+   "ok": false,
+   "ran": false,
+   "steps": [],
+   "files": 0,
+   "files_differ": 0,
+   "spot": 0,
+   "headlines": "11/11",
+   "minutes": 0.0
+  },
+  {
+   "claim": "C1",
+   "text": "LLM response functions are not Ising-like: H1 9 of 12 (12 of 15, 15 of 18), H2 supported, H3 2 of 12, H4 not supported, H5 7 of 12 (paper \u00a74.2)",
+   "ok": true,
+   "ran": true,
+   "steps": [
+    "s1.cache",
+    "s1.fits",
+    "s1.summary"
+   ],
+   "files": 37,
+   "files_differ": 0,
+   "spot": 0,
+   "headlines": "10/10",
+   "minutes": 11.0
+  },
+  {
+   "claim": "C2",
+   "text": "Trait summaries fail live (surrogate 0 of 4); order-averaged tables succeed per step (K_avg |dP| <= 0.004) (paper \u00a74.3-4.4)",
+   "ok": false,
+   "ran": false,
+   "steps": [],
+   "files": 0,
+   "files_differ": 0,
+   "spot": 0,
+   "headlines": "6/6",
+   "minutes": 0.0
+  },
+  {
+   "claim": "C3",
+   "text": "Small per-step differences are amplified collectively (K_fixed vs K_live 3.4 SD from |dP| 0.002) (paper \u00a74.4, \u00a74.7.1)",
+   "ok": false,
+   "ran": false,
+   "steps": [],
+   "files": 0,
+   "files_differ": 0,
+   "spot": 0,
+   "headlines": "4/4",
+   "minutes": 0.0
+  },
+  {
+   "claim": "C4",
+   "text": "Near a tipping point amplification exceeds controls: Stage B refuted; corrected Rule A 3 of 3 shapes for both models with a transition; GPT-4o-mini below floor (paper \u00a74.7)",
+   "ok": false,
+   "ran": false,
+   "steps": [],
+   "files": 0,
+   "files_differ": 0,
+   "spot": 0,
+   "headlines": "11/11",
+   "minutes": 0.0
+  },
+  {
+   "claim": "C5",
+   "text": "Whether a tipping point exists is model-dependent: two clear transitions, GPT-4o-mini none, Gemma unresolved (paper \u00a74.8)",
+   "ok": false,
+   "ran": false,
+   "steps": [],
+   "files": 0,
+   "files_differ": 0,
+   "spot": 0,
+   "headlines": "2/7",
+   "minutes": 0.0
+  },
+  {
+   "claim": "S1",
+   "text": "Residual persistence excess does not replicate (Stouffer Z = -0.42) (paper \u00a74.5-4.6)",
+   "ok": false,
+   "ran": false,
+   "steps": [],
+   "files": 0,
+   "files_differ": 0,
+   "spot": 0,
+   "headlines": "0/4",
+   "minutes": 0.0
+  },
+  {
+   "claim": "E1",
+   "text": "Exploratory probes on Gemma-4 activations (paper \u00a74.2; no claim rests on them; full mode only)",
+   "ok": false,
+   "ran": false,
+   "steps": [],
+   "files": 0,
+   "files_differ": 0,
+   "spot": 0,
+   "headlines": "0/0",
+   "minutes": 0.0
+  },
+  {
+   "claim": "X",
+   "text": "Illustrations in figures/substack/ (not part of the analysis)",
+   "ok": false,
+   "ran": false,
+   "steps": [],
+   "files": 0,
+   "files_differ": 0,
+   "spot": 0,
+   "headlines": "0/0",
+   "minutes": 0.0
+  }
+ ],
+ "headlines": [
+  {
+   "claim": "C0",
+   "what": "transitions within their 95% CI of theory (of 6)",
+   "paper": 6,
+   "got": 6.0,
+   "ok": true
+  },
+  {
+   "claim": "C0",
+   "what": "consensus rho=0: simulated T",
+   "paper": 3.917,
+   "got": 3.9168,
+   "ok": true
+  },
+  {
+   "claim": "C0",
+   "what": "consensus rho=0.2: simulated T",
+   "paper": 2.156,
+   "got": 2.1556,
+   "ok": true
+  },
+  {
+   "claim": "C0",
+   "what": "glass c=4: simulated T",
+   "paper": 1.813,
+   "got": 1.8131,
+   "ok": true
+  },
+  {
+   "claim": "C0",
+   "what": "glass c=6: simulated T",
+   "paper": 2.233,
+   "got": 2.2331,
+   "ok": true
+  },
+  {
+   "claim": "C0",
+   "what": "glass persistence at eps=0 (N = 4000)",
+   "paper": 0.51,
+   "got": 0.5122,
+   "ok": true
+  },
+  {
+   "claim": "C0",
+   "what": "glass persistence at eps=0.1",
+   "paper": 0.28,
+   "got": 0.2831,
+   "ok": true
+  },
+  {
+   "claim": "C0",
+   "what": "glass persistence at eps=0.2",
+   "paper": 0.11,
+   "got": 0.1086,
+   "ok": true
+  },
+  {
+   "claim": "C0",
+   "what": "glass persistence at eps=0.35",
+   "paper": 0.01,
+   "got": 0.0144,
+   "ok": true
+  },
+  {
+   "claim": "C0",
+   "what": "consensus |m| at eps=0",
+   "paper": 0.62,
+   "got": 0.6225,
+   "ok": true
+  },
+  {
+   "claim": "C0",
+   "what": "consensus |m| at eps=1",
+   "paper": 0.55,
+   "got": 0.5482,
+   "ok": true
+  },
+  {
+   "claim": "C1",
+   "what": "H1 supported (of 12 confirmatory cells)",
+   "paper": 9,
+   "got": 9.0,
+   "ok": true
+  },
+  {
+   "claim": "C1",
+   "what": "H1 supported with Amendment 4 (of 15)",
+   "paper": 12,
+   "got": 12.0,
+   "ok": true
+  },
+  {
+   "claim": "C1",
+   "what": "H1 supported with Amendment 5 (of 18)",
+   "paper": 15,
+   "got": 15.0,
+   "ok": true
+  },
+  {
+   "claim": "C1",
+   "what": "H2 letter field (of 12)",
+   "paper": 10,
+   "got": 10.0,
+   "ok": true
+  },
+  {
+   "claim": "C1",
+   "what": "H2 content field (of 8 content cells)",
+   "paper": 8,
+   "got": 8.0,
+   "ok": true
+  },
+  {
+   "claim": "C1",
+   "what": "H3 pairwise supported (of 12)",
+   "paper": 2,
+   "got": 2.0,
+   "ok": true
+  },
+  {
+   "claim": "C1",
+   "what": "H3 cubic supported (of 12)",
+   "paper": 0,
+   "got": 0.0,
+   "ok": true
+  },
+  {
+   "claim": "C1",
+   "what": "H5 departs from summation (of 12)",
+   "paper": 7,
+   "got": 7.0,
+   "ok": true
+  },
+  {
+   "claim": "C1",
+   "what": "H1 gate-relaxed (of 21)",
+   "paper": 18,
+   "got": 18.0,
+   "ok": true
+  },
+  {
+   "claim": "C1",
+   "what": "H4 verdict",
+   "paper": "not supported",
+   "got": "not supported",
+   "ok": true
+  },
+  {
+   "claim": "C2",
+   "what": "surrogate: P1-P4 points passing both primary measures",
+   "paper": 0,
+   "got": 0.0,
+   "ok": true
+  },
+  {
+   "claim": "C2",
+   "what": "kernel test: K_avg points passing (of P1-P4)",
+   "paper": 2,
+   "got": 2.0,
+   "ok": true
+  },
+  {
+   "claim": "C2",
+   "what": "kernel test: A3 points passing (of P1-P4)",
+   "paper": 1,
+   "got": 1.0,
+   "ok": true
+  },
+  {
+   "claim": "C2",
+   "what": "K_avg vs K_live |dP| at P1",
+   "paper": 0.004,
+   "got": 0.00376,
+   "ok": true
+  },
+  {
+   "claim": "C2",
+   "what": "K_avg vs K_live |dP| at P4",
+   "paper": 0.003,
+   "got": 0.00302,
+   "ok": true
+  },
+  {
+   "claim": "C2",
+   "what": "K_avg vs K_live |dlogit| at P4 (nats)",
+   "paper": 0.07,
+   "got": 0.0688,
+   "ok": true
+  },
+  {
+   "claim": "C3",
+   "what": "K_fixed vs K_live |dP| at P3",
+   "paper": 0.002,
+   "got": 0.00212,
+   "ok": true
+  },
+  {
+   "claim": "C3",
+   "what": "K_fixed vs K_live persistence difference at P3 (SD)",
+   "paper": -3.4,
+   "got": -3.365,
+   "ok": true
+  },
+  {
+   "claim": "C3",
+   "what": "same-N table: per nat at T_c, N = 1600",
+   "paper": 1.27,
+   "got": 1.2725,
+   "ok": true
+  },
+  {
+   "claim": "C3",
+   "what": "same-N table: per nat at T = 1, N = 100",
+   "paper": 0.009,
+   "got": 0.00905,
+   "ok": true
+  },
+  {
+   "claim": "C4",
+   "what": "Stage B: T_c of P1",
+   "paper": 1.93,
+   "got": 1.9346,
+   "ok": true
+  },
+  {
+   "claim": "C4",
+   "what": "Stage B: H1 growth G, noise shape",
+   "paper": 5.5,
+   "got": 5.501,
+   "ok": true
+  },
+  {
+   "claim": "C4",
+   "what": "Stage B: pre-registered verdict (H2 for majority shift)",
+   "paper": false,
+   "got": false,
+   "ok": true
+  },
+  {
+   "claim": "C4",
+   "what": "confirmatory: Rule A passes for P1 (of 3 shapes)",
+   "paper": 3,
+   "got": 3.0,
+   "ok": true
+  },
+  {
+   "claim": "C4",
+   "what": "confirmatory: Rule A passes for Gemini (of 3 shapes)",
+   "paper": 3,
+   "got": 3.0,
+   "ok": true
+  },
+  {
+   "claim": "C4",
+   "what": "confirmatory: D, P1 stay-bias",
+   "paper": 0.15,
+   "got": 0.1523,
+   "ok": true
+  },
+  {
+   "claim": "C4",
+   "what": "confirmatory: D, P1 noise",
+   "paper": 2.03,
+   "got": 2.0319,
+   "ok": true
+  },
+  {
+   "claim": "C4",
+   "what": "confirmatory: D, Gemini majority",
+   "paper": 1.03,
+   "got": 1.0327,
+   "ok": true
+  },
+  {
+   "claim": "C4",
+   "what": "confirmatory: Rule B growth G, P1 noise",
+   "paper": 11.7,
+   "got": 11.712,
+   "ok": true
+  },
+  {
+   "claim": "C4",
+   "what": "GPT-4o-mini control: max |m| amplification, stay",
+   "paper": 0.075,
+   "got": 0.07452,
+   "ok": true
+  },
+  {
+   "claim": "C4",
+   "what": "GPT-4o-mini control: max |m| amplification, noise",
+   "paper": 0.096,
+   "got": 0.0963,
+   "ok": true
+  },
+  {
+   "claim": "C5",
+   "what": "T_c of P1 (confirmatory)",
+   "paper": 2.01,
+   "got": "error: FileNotFoundError: [Errno 2] No such file or directory: '/tmp/claude-0/-home-user-Social-Phase-Transitions/287669",
+   "ok": false
+  },
+  {
+   "claim": "C5",
+   "what": "T_c of Gemini",
+   "paper": 1.83,
+   "got": "error: FileNotFoundError: [Errno 2] No such file or directory: '/tmp/claude-0/-home-user-Social-Phase-Transitions/287669",
+   "ok": false
+  },
+  {
+   "claim": "C5",
+   "what": "GPT-4o-mini: transition located",
+   "paper": null,
+   "got": "error: FileNotFoundError: [Errno 2] No such file or directory: '/tmp/claude-0/-home-user-Social-Phase-Transitions/287669",
+   "ok": false
+  },
+  {
+   "claim": "C5",
+   "what": "GPT-4o-mini: highest Binder cumulant at N = 1600",
+   "paper": 0.47,
+   "got": "error: FileNotFoundError: [Errno 2] No such file or directory: '/tmp/claude-0/-home-user-Social-Phase-Transitions/287669",
+   "ok": false
+  },
+  {
+   "claim": "C5",
+   "what": "Gemma-31B: transition located (pre-registered verdict)",
+   "paper": null,
+   "got": "error: FileNotFoundError: [Errno 2] No such file or directory: '/tmp/claude-0/-home-user-Social-Phase-Transitions/287669",
+   "ok": false
+  },
+  {
+   "claim": "C5",
+   "what": "Gemma rival knockout |m| (N = 1600)",
+   "paper": 0.77,
+   "got": 0.7678,
+   "ok": true
+  },
+  {
+   "claim": "C5",
+   "what": "Gemma additive projection |m| (N = 1600)",
+   "paper": 0.09,
+   "got": 0.0891,
+   "ok": true
+  },
+  {
+   "claim": "S1",
+   "what": "replicate: Stouffer Z (actual graphs)",
+   "paper": -0.42,
+   "got": "error: FileNotFoundError: [Errno 2] No such file or directory: '/tmp/claude-0/-home-user-Social-Phase-Transitions/287669",
+   "ok": false
+  },
+  {
+   "claim": "S1",
+   "what": "combined effect, original run",
+   "paper": 0.0116,
+   "got": "error: FileNotFoundError: [Errno 2] No such file or directory: '/tmp/claude-0/-home-user-Social-Phase-Transitions/287669",
+   "ok": false
+  },
+  {
+   "claim": "S1",
+   "what": "combined effect, pooled",
+   "paper": 0.0033,
+   "got": "error: FileNotFoundError: [Errno 2] No such file or directory: '/tmp/claude-0/-home-user-Social-Phase-Transitions/287669",
+   "ok": false
+  },
+  {
+   "claim": "S1",
+   "what": "heterogeneity between runs, Cochran Q",
+   "paper": 7.6,
+   "got": "error: FileNotFoundError: [Errno 2] No such file or directory: '/tmp/claude-0/-home-user-Social-Phase-Transitions/287669",
+   "ok": false
+  }
+ ],
+ "steps": [
+  {
+   "id": "qc.canary",
+   "title": "Comparator canary: a one-byte change in a base.sim array, a raw byte flip, and a 1-ulp change in a CSV and a JSON value must each be rejected; unmodified copies must pass",
+   "claims": [
+    "QC"
+   ],
+   "mode": "fast",
+   "exit": 0,
+   "seconds": 0.9,
+   "peak_child_rss_mb": 108,
+   "compared": [],
+   "spot": [],
+   "ok": true,
+   "log": "replication/out/logs/qc.canary.log"
+  },
+  {
+   "id": "s1.cache",
+   "title": "Stage 1: rebuild every API request and check every committed CSV row against the cache",
+   "claims": [
+    "C1"
+   ],
+   "mode": "fast",
+   "exit": 0,
+   "seconds": 198.6,
+   "peak_child_rss_mb": 4649,
+   "compared": [],
+   "spot": [],
+   "ok": true,
+   "log": "replication/out/logs/s1.cache.log"
+  },
+  {
+   "id": "s1.fits",
+   "title": "Stage 1: response-function fits (bootstrap B = 1000) for every endpoint",
+   "claims": [
+    "C1"
+   ],
+   "mode": "fast",
+   "exit": 0,
+   "seconds": 448.5,
+   "peak_child_rss_mb": 4649,
+   "compared": [
+    {
+     "file": "results/llm/fits/main/gemini-lite.json",
+     "n": 10230,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "extra": [],
+     "ok": true,
+     "profile": "fit"
+    },
+    {
+     "file": "results/llm/fits/main/gemma-26b-cw.json",
+     "n": 24594,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "extra": [],
+     "ok": true,
+     "profile": "fit"
+    },
+    {
+     "file": "results/llm/fits/main/gemma-26b-local-bs1.json",
+     "n": 24594,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "extra": [],
+     "ok": true,
+     "profile": "fit"
+    },
+    {
+     "file": "results/llm/fits/main/gemma-26b-local.json",
+     "n": 24594,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "extra": [],
+     "ok": true,
+     "profile": "fit"
+    },
+    {
+     "file": "results/llm/fits/main/gemma-26b.json",
+     "n": 24594,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "extra": [],
+     "ok": true,
+     "profile": "fit"
+    },
+    {
+     "file": "results/llm/fits/main/gemma-31b-local.json",
+     "n": 24594,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "extra": [],
+     "ok": true,
+     "profile": "fit"
+    },
+    {
+     "file": "results/llm/fits/main/gemma-31b.json",
+     "n": 24594,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "extra": [],
+     "ok": true,
+     "profile": "fit"
+    },
+    {
+     "file": "results/llm/fits/main/gpt4o-mini.json",
+     "n": 24594,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "extra": [],
+     "ok": true,
+     "profile": "fit"
+    },
+    {
+     "file": "results/llm/fits/main/gpt4o-mini_sampled.json",
+     "n": 10230,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "extra": [],
+     "ok": true,
+     "profile": "fit"
+    },
+    {
+     "file": "results/llm/fits/main/gpt6-luna.json",
+     "n": 10230,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "extra": [],
+     "ok": true,
+     "profile": "fit"
+    },
+    {
+     "file": "results/llm/fits/main/haiku.json",
+     "n": 10230,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "extra": [],
+     "ok": true,
+     "profile": "fit"
+    },
+    {
+     "file": "results/llm/fits/main/llama-70b-pa.json",
+     "n": 9229,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "extra": [],
+     "ok": true,
+     "profile": "fit"
+    },
+    {
+     "file": "results/llm/fits/main/llama-70b.json",
+     "n": 24594,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "extra": [],
+     "ok": true,
+     "profile": "fit"
+    },
+    {
+     "file": "results/llm/fits/main/llama-8b.json",
+     "n": 24594,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "extra": [],
+     "ok": true,
+     "profile": "fit"
+    },
+    {
+     "file": "results/llm/fits/main/mistral-large.json",
+     "n": 24594,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "extra": [],
+     "ok": true,
+     "profile": "fit"
+    },
+    {
+     "file": "results/llm/fits/main/mistral-small.json",
+     "n": 24594,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "extra": [],
+     "ok": true,
+     "profile": "fit"
+    },
+    {
+     "file": "results/llm/fits/main/nemo-12b.json",
+     "n": 24594,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "extra": [],
+     "ok": true,
+     "profile": "fit"
+    },
+    {
+     "file": "results/llm/fits/main/qwen-122b.json",
+     "n": 24594,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "extra": [],
+     "ok": true,
+     "profile": "fit"
+    },
+    {
+     "file": "results/llm/fits/main/qwen-9b.json",
+     "n": 24594,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "extra": [],
+     "ok": true,
+     "profile": "fit"
+    },
+    {
+     "file": "results/llm/fits/pilot/llama-8b.json",
+     "n": 477,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "extra": [
+      "/arms[0]/draws",
+      "/arms[1]/draws",
+      "/arms[2]/draws",
+      "/arms[3]/draws"
+     ],
+     "ok": true,
+     "profile": "fit"
+    }
+   ],
+   "spot": [],
+   "ok": true,
+   "log": "replication/out/logs/s1.fits.log"
+  },
+  {
+   "id": "s1.summary",
+   "title": "Stage 1: comprehension gate, hypothesis verdicts H1-H5, secondary contrasts, bridge",
+   "claims": [
+    "C1"
+   ],
+   "mode": "fast",
+   "exit": 0,
+   "seconds": 12.6,
+   "peak_child_rss_mb": 4649,
+   "compared": [
+    {
+     "file": "results/llm/comprehension_summary.csv",
+     "n": 165,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "ok": true,
+     "profile": "exact"
+    },
+    {
+     "file": "results/llm/comprehension_local.csv",
+     "n": 30,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "ok": true,
+     "profile": "exact"
+    },
+    {
+     "file": "results/llm/comprehension_local_bs1.csv",
+     "n": 15,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "ok": true,
+     "profile": "exact"
+    },
+    {
+     "file": "results/llm/stage1_cells.csv",
+     "n": 4550,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "ok": true,
+     "profile": "fit"
+    },
+    {
+     "file": "results/llm/stage1_cells_amendment4.csv",
+     "n": 5250,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "ok": true,
+     "profile": "fit"
+    },
+    {
+     "file": "results/llm/stage1_cells_amendment5_rescue.csv",
+     "n": 5600,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "ok": true,
+     "profile": "fit"
+    },
+    {
+     "file": "results/llm/stage1_cells_sensitivity_gate_relaxed.csv",
+     "n": 4550,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "ok": true,
+     "profile": "fit"
+    },
+    {
+     "file": "results/llm/stage1_H4.csv",
+     "n": 120,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "ok": true,
+     "profile": "fit"
+    },
+    {
+     "file": "results/llm/stage1_H4_amendment4.csv",
+     "n": 132,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "ok": true,
+     "profile": "fit"
+    },
+    {
+     "file": "results/llm/stage1_H4_amendment5_rescue.csv",
+     "n": 132,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "ok": true,
+     "profile": "fit"
+    },
+    {
+     "file": "results/llm/stage1_H4_sensitivity_gate_relaxed.csv",
+     "n": 120,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "ok": true,
+     "profile": "fit"
+    },
+    {
+     "file": "results/llm/stage1_verdicts.json",
+     "n": 1,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "extra": [],
+     "ok": true,
+     "profile": "fit"
+    },
+    {
+     "file": "results/llm/stage1_verdicts_amendment4.json",
+     "n": 4,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "extra": [],
+     "ok": true,
+     "profile": "fit"
+    },
+    {
+     "file": "results/llm/stage1_verdicts_amendment5_rescue.json",
+     "n": 19,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "extra": [],
+     "ok": true,
+     "profile": "fit"
+    },
+    {
+     "file": "results/llm/stage1_verdicts_sensitivity_gate_relaxed.json",
+     "n": 1,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "extra": [],
+     "ok": true,
+     "profile": "fit"
+    },
+    {
+     "file": "results/llm/stage1_secondary.csv",
+     "n": 2016,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "ok": true,
+     "profile": "fit"
+    },
+    {
+     "file": "results/llm/bridge_comparison.csv",
+     "n": 136,
+     "bad": 0,
+     "worst": 0.0,
+     "probs": [],
+     "ok": true,
+     "profile": "fit"
+    }
+   ],
+   "spot": [],
+   "ok": true,
+   "log": "replication/out/logs/s1.summary.log"
+  }
+ ],
+ "all_ok": true
+}
