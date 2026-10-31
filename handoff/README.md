@@ -1,5 +1,12 @@
 # Handoff: two repositories this session could not push
 
+**Done 2026-10-31.** Both are published.
+- Pipeline: `release/v1.2.0` and a lightweight tag `v1.2.0` at `5ca15f56a71f`; `main` via merge `4632409`.
+  The annotated tag object in the bundle was not used.
+- Coordination record: `main` published at `93a9ee7`, now `2383272`.
+
+The bundles are kept as the build-time record. The instructions below are historical.
+
 Git bundles keep every commit and tag hash exactly, so the pins in `pins.yaml` stay valid once these are pushed.
 
 ## 1. Pipeline release v1.2.0 → RandallSPQR/SAE-Ethos-Calibration

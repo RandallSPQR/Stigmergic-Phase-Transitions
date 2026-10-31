@@ -3,7 +3,7 @@
 **Question.** Agents see only their contacts' current votes. Do those votes change how memoryless LLM agents use
 dispersed private evidence? And does a temporary change to what agents see leave a lasting mark on the board?
 
-**Status (2026-10-31): Step 0 done; gate S0 partly done (CPU parts pass, GPU part not run).**
+**Status (2026-10-31): Step 0 done and published; gate S0 partly done (CPU parts pass, GPU part not run).**
 - Not frozen. No paid collection. Nothing confirmatory.
 - Brief: https://claude.ai/artifact/Q36cWtMumtJPs3semD76ni (revision 3).
 - Missing Piece is the complementary study. Both share the pipeline and the coordination record below.
@@ -14,7 +14,7 @@ dispersed private evidence? And does a temporary change to what agents see leave
 |---|---|---|---|
 | Shared five-model pipeline (LOCKED) | RandallSPQR/SAE-Ethos-Calibration | `v1.2.0` | `5ca15f56a71f35d5818d0392f7f3b4acb2d85d1b` |
 | SPT release (harness + simulator source; S0 replay) | RandallSPQR/social-phase-transitions-public | `v1.0.1` | `c37a91d2d2561fdf78fc61af500ea000aac3ea2f` |
-| Shared coordination record | RandallSPQR/StPT-MP-Coordination | none | `93a9ee77429df76840999aab86daac5cc36734a6` |
+| Shared coordination record | RandallSPQR/StPT-MP-Coordination | none | `2383272292359758b3f55ce4ebe80b0362d337d0` |
 
 Models (pipeline v1.2.0):
 - Llama-3.1-8B-Instruct, Gemma-2-9B-IT, Gemma-3-27B-IT.
@@ -45,7 +45,7 @@ across the two; a TOST for each.
 
 | gate | status |
 |---|---|
-| Step 0: shared pipeline built, tagged, locked; SPT release pinned | **done** (pipeline push pending, see below) |
+| Step 0: shared pipeline built, tagged, locked, published; SPT release pinned | **done** |
 | S0: pipeline + SPT harness replay | **CPU parts pass; GPU box identity not run** (`gates/S0/S0_REPORT.md`) |
 | S1–S10 | not started |
 
@@ -57,5 +57,5 @@ across the two; a TOST for each.
   - `inherit.py`: verify the inherited files.
 - `inherited/spt_v1.0.1/`: SPT harness and simulator, verbatim, blob-verified.
 - `gates/S0/`: the S0 script (`run_s0.sh`), report and artifacts.
-- `handoff/`: git bundles of the pipeline release and the coordination record, kept until both are on GitHub.
+- `handoff/`: git bundles used to publish the pipeline release and the coordination record (both now on GitHub; kept for provenance).
 - `CLAUDE.md`: standing rules.

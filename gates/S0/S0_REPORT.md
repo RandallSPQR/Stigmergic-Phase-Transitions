@@ -1,10 +1,14 @@
 # Gate S0: pipeline and harness (2026-10-31)
 
-**Verdict: the CPU parts PASS. S0 is NOT complete:**
-- The pipeline's box identity check (GPU) has not run. It needs the owner's OK for GPU spend.
-- The pipeline release is not yet on GitHub (push refused to this session).
+**Verdict: the CPU parts PASS. S0 is NOT complete:** the pipeline's box identity check (GPU) has not run. It needs
+the owner's OK for GPU spend. Gate S1 does not start until it passes, or the owner rules otherwise.
 
-Gate S1 does not start until both are resolved, or the owner rules otherwise.
+**Update (2026-10-31, later the same day).**
+- The pipeline release is published: branch `release/v1.2.0`, and a lightweight tag `v1.2.0` at the pinned commit
+  `5ca15f56a71f`. `main` took it by merge `4632409` (PR #16), with the same tree.
+- A clean `pip install` at the pinned commit from GitHub passes `stpt.manifest.check_environment` for all five models.
+- The coordination record is published, and StPT now pins it at `2383272292359758` (amendment A2 there).
+- Open items 1 and 2 below are done.
 
 All numbers below are read from the files in `artifacts/`.
 
@@ -70,19 +74,15 @@ simulators, transition locator and Viana–Bray / heat-bath simulators. Each equ
 It was written before this report was committed, so it records StPT commit `1a8efe7` with `dirty: true` (the
 uncommitted S0 files).
 
-Reproduce: `bash gates/S0/run_s0.sh WORKDIR`. It needs the pipeline on GitHub.
+Reproduce: `bash gates/S0/run_s0.sh WORKDIR`.
 
 ## Open items for the owner (S0 cannot close without them)
 
-1. **Push the pipeline release.** This session was refused push access to `RandallSPQR/SAE-Ethos-Calibration`.
-   `handoff/sae-ethos-pipeline_v1.2.0.bundle` holds branch `release/v1.2.0` and tag `v1.2.0` with the exact hashes
-   (see `handoff/README.md`).
-2. **Create `RandallSPQR/StPT-MP-Coordination`** and push `handoff/stpt-mp-coordination.bundle`. Alternatively choose
-   another location; the pin in `pins.yaml` then changes and the change is logged.
+1. ~~Push the pipeline release.~~ Done 2026-10-31 (see the update at the top).
+2. ~~Create `RandallSPQR/StPT-MP-Coordination` and push the record.~~ Done 2026-10-31. Location accepted (D7).
 3. **GPU for the box identity check:** about one pod-hour per model on one 48–80 GB GPU (5 models). Needs an OK.
-4. **Proposals awaiting a decision** (coordination record `DECISIONS.md` P1–P6):
+4. **Proposals awaiting a decision** (coordination record `DECISIONS.md` P1–P4, P6):
    - the Qwen pair (Qwen3.5-9B/27B, dense, thinking off);
    - the vLLM 0.19.1 stack;
    - bf16 for all five models;
-   - the coordination location;
    - the SPT tag.

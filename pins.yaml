@@ -6,7 +6,7 @@ pipeline:                      # Step 0: the shared five-model pipeline, LOCKED
   repo: https://github.com/RandallSPQR/SAE-Ethos-Calibration
   tag: v1.2.0
   commit: 5ca15f56a71f35d5818d0392f7f3b4acb2d85d1b
-  tag_object: aedd002b6a2050547011aef210562e15ef588b51
+  tag_form: lightweight         # the GitHub tag points at the commit itself; main has it via merge 4632409 (PR #16), same tree
 spt:                           # the SPT release StPT inherits harness and simulator from, and that S0 replays
   repo: https://github.com/RandallSPQR/social-phase-transitions-public
   tag: v1.0.1
@@ -16,7 +16,7 @@ spt:                           # the SPT release StPT inherits harness and simul
   data: https://huggingface.co/datasets/RandallSPQR/social-phase-transitions-data
 coordination:                  # the shared coordination record (StPT + Missing Piece)
   repo: https://github.com/RandallSPQR/StPT-MP-Coordination
-  commit: 93a9ee77429df76840999aab86daac5cc36734a6
+  commit: 2383272292359758b3f55ce4ebe80b0362d337d0   # amendment A2; first published version 93a9ee7
 brief:
   url: https://claude.ai/artifact/Q36cWtMumtJPs3semD76ni
   revision: 3                  # document rev 34, read 2026-10-31
