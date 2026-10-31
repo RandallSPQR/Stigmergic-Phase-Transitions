@@ -80,6 +80,8 @@ def cmd_create(a):
                     "PIPE_COMMIT": PIPE_COMMIT, "STPT_DRIVER_B64": base64.b64encode(driver).decode()}}
     if a.models:
         body["env"]["STPT_MODELS"] = " ".join(a.models)
+    for k, v in (a.extra_env or []):
+        body["env"][k] = v
     if a.gpu_set == "a100":            # torch 2.10 cu128 needs a CUDA 12.8+ driver; every Blackwell host has one already
         body["allowedCudaVersions"] = ["12.8", "12.9", "13.0"]
     if os.environ.get("RUNPOD_API_KEY", "\0") in json.dumps(body):
@@ -136,6 +138,8 @@ def main(argv=None):
     c.add_argument("--gpu-set", choices=sorted(GPU_SETS), default="a100")
     c.add_argument("--models", nargs="*", help="lineup model names (default: all five)")
     c.add_argument("--driver", default="box_identity.sh", choices=["box_identity.sh", "restart_test.sh"])
+    c.add_argument("--env", dest="extra_env", nargs=2, action="append", metavar=("NAME", "VALUE"),
+                   help="extra pod env (non-secret values only)")
     sub.add_parser("status")
     t = sub.add_parser("terminate"); t.add_argument("--why", required=True)
     a = ap.parse_args(argv)

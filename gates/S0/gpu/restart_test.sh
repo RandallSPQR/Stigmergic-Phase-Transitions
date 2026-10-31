@@ -39,6 +39,10 @@ CONFIGS = {
     "C2_batchinv": ({"VLLM_BATCH_INVARIANT": "1"}, []),
     "C3_eager": ({}, ["--enforce-eager"]),
 }
+if os.environ.get("STPT_CONFIGS"):          # follow-up runs name their own configs: {"name": [env, flags], ...}
+    CONFIGS = {k: (v[0], v[1]) for k, v in json.loads(os.environ["STPT_CONFIGS"]).items()}
+SCREEN = (os.environ.get("STPT_SCREEN_MODELS") or "llama-3.1-8b-it qwen3.5-9b").split()
+PHASE2 = os.environ.get("STPT_PHASE2", "1") == "1"
 PROMPTS = {"plain": "Two options, A and B. Evidence: the left door is warm. Answer with one letter: A or B.",
            "board": "Your evidence: the left door is warm.\nYour current vote: B.\nYour contacts' votes: A, B, A, A.\n\nWhich option do you vote for now? Answer with one letter: A or B.",
            "lopsided": "Option A is correct. Answer with one letter: A or B."}
@@ -128,14 +132,14 @@ def maxdiff(recs):
 
 results = {}
 over = lambda: time.time() - T0 > BUDGET_S
-for model in ["llama-3.1-8b-it", "qwen3.5-9b"]:                                       # phase 1
+for model in SCREEN:                                                                 # phase 1
     ids, opt, served = setup(model)
     for cfg in CONFIGS:
         results[(model, cfg)] = [one_start(model, cfg, n, ids, opt, served) for n in (1, 2)]
     upload()
-winner = next((c for c in CONFIGS if all(identical(results[(m, c)]) for m in ("llama-3.1-8b-it", "qwen3.5-9b"))), None)
+winner = next((c for c in CONFIGS if all(identical(results[(m, c)]) for m in SCREEN)), None)
 log("phase 1 winner:", winner)
-if winner:                                                                           # phase 2
+if winner and PHASE2:                                                                 # phase 2
     for model in ["llama-3.1-8b-it", "qwen3.5-9b", "gemma-2-9b-it", "gemma-3-27b-it", "qwen3.5-27b"]:
         if over():
             log("budget reached; phase 2 stops before", model); break
