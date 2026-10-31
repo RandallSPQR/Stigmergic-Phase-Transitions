@@ -56,8 +56,9 @@ $VPY -c "import sys, vllm, torch, transformers; print(sys.version.split()[0], 'v
 $PY -c "import sae_ethos_pipeline as s; print(s.__version__)" | tee -a "$OUT/stack.txt"
 upload
 
-for M in llama-3.1-8b-it gemma-2-9b-it qwen3.5-9b gemma-3-27b-it qwen3.5-27b; do
-  step "$M: weights"
+# STPT_MODELS selects a subset (rerun after the first pod's disk filled on the 27B models; see the S0 report)
+for M in ${STPT_MODELS:-llama-3.1-8b-it gemma-2-9b-it qwen3.5-9b gemma-3-27b-it qwen3.5-27b}; do
+  step "$M: weights"; df -h / | tail -1
   export MODEL_PROFILE_FILE=$($PY -c "import sae_ethos_pipeline, lineup; print(lineup.profile_path('$M'))")
   read HFID REV WANT < <($PY -c "import sae_ethos_pipeline, lineup; e=lineup.models()['$M']; print(e['hf_id'], e['revision'], e['weight_hash'])")
   $PY -c "from huggingface_hub import snapshot_download as s; s('$HFID', revision='$REV', allow_patterns=['*.json','*.safetensors','tokenizer*','*.jinja','*.model','merges.txt','vocab.json'])" \
@@ -140,9 +141,14 @@ s["pass"] = bool(s["weight_hash_ok"] and s["tokenizer_ok"] and s["bit_identical_
 json.dump(s, open(f"{out}/summary_{m}.json", "w"), indent=1)
 print(json.dumps({k: v for k, v in s.items() if k != "identity_block"}))
 PYX
-  rm -rf "$HF_HOME/hub/models--${HFID//\//--}"
+  rm -rf "$HF_HOME/hub/models--${HFID//\//--}" "$HF_HOME/xet"     # weights AND the xet chunk cache (it filled the first pod)
+  df -h / | tail -1
   upload
 done
 step "done"; touch "$OUT/DONE"; upload
 # self-terminate (pod-scoped key RunPod injects); the launcher also terminates once it sees DONE
-curl -s -X DELETE -H "Authorization: Bearer $RUNPOD_API_KEY" "https://rest.runpod.io/v1/pods/$RUNPOD_POD_ID"
+# (on the first pod this DELETE did not take effect; log why, then try runpodctl remove / stop)
+echo "pod key present: $([ -n "${RUNPOD_API_KEY:-}" ] && echo yes || echo no)" >> "$OUT/logs/selfstop.log"
+curl -s -w ' http %{http_code}\n' -X DELETE -H "Authorization: Bearer $RUNPOD_API_KEY" "https://rest.runpod.io/v1/pods/$RUNPOD_POD_ID" >> "$OUT/logs/selfstop.log" 2>&1
+upload
+runpodctl remove pod "$RUNPOD_POD_ID" >> /root/selfstop_fallback.log 2>&1 || runpodctl stop pod "$RUNPOD_POD_ID" >> /root/selfstop_fallback.log 2>&1

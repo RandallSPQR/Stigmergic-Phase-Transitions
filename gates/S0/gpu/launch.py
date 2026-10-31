@@ -64,6 +64,8 @@ def start_cmd(hours: float) -> str:
 def cmd_create(a):
     reg = load()
     live = [p for p, v in reg["pods"].items() if not v.get("ended")]
+    if live:                       # refresh: a pod that deleted itself is not live
+        cmd_status(a); reg = load(); live = [p for p, v in reg["pods"].items() if not v.get("ended")]
     if live:
         sys.exit(f"REFUSED: a registered pod is still live: {live}")
     now = dt.datetime.now(dt.timezone.utc)
@@ -75,6 +77,8 @@ def cmd_create(a):
             "ports": [], "dockerEntrypoint": ["bash", "-c"], "dockerStartCmd": [start_cmd(a.hours)],
             "env": {"HF_TOKEN": "{{ RUNPOD_SECRET_HF_TOKEN }}", "STPT_RESULTS_REPO": a.repo, "STPT_RUN_ID": run_id,
                     "PIPE_COMMIT": PIPE_COMMIT, "STPT_DRIVER_B64": base64.b64encode(driver).decode()}}
+    if a.models:
+        body["env"]["STPT_MODELS"] = " ".join(a.models)
     if a.gpu_set == "a100":            # torch 2.10 cu128 needs a CUDA 12.8+ driver; every Blackwell host has one already
         body["allowedCudaVersions"] = ["12.8", "12.9", "13.0"]
     if os.environ.get("RUNPOD_API_KEY", "\0") in json.dumps(body):
@@ -129,6 +133,7 @@ def main(argv=None):
     c = sub.add_parser("create"); c.add_argument("--repo", required=True); c.add_argument("--hours", type=float, default=4.0)
     c.add_argument("--disk", type=int, default=200); c.add_argument("--dry-run", action="store_true")
     c.add_argument("--gpu-set", choices=sorted(GPU_SETS), default="a100")
+    c.add_argument("--models", nargs="*", help="lineup model names (default: all five)")
     sub.add_parser("status")
     t = sub.add_parser("terminate"); t.add_argument("--why", required=True)
     a = ap.parse_args(argv)
