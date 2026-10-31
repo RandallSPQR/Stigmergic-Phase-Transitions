@@ -1,0 +1,91 @@
+{
+ "model": "qwen3.5-9b",
+ "config": "C1_notune",
+ "start": 2,
+ "argv": [
+  "-m",
+  "vllm.entrypoints.openai.api_server",
+  "--model",
+  "Qwen/Qwen3.5-9B",
+  "--revision",
+  "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+  "--tokenizer-revision",
+  "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+  "--served-model-name",
+  "qwen3.5-9b",
+  "--max-model-len",
+  "8192",
+  "--tensor-parallel-size",
+  "1",
+  "--gpu-memory-utilization",
+  "0.9",
+  "--port",
+  "8000",
+  "--max-num-seqs",
+  "1",
+  "--max-num-batched-tokens",
+  "8192",
+  "--no-enable-prefix-caching",
+  "--logprobs-mode",
+  "raw_logprobs",
+  "--limit-mm-per-prompt.image",
+  "0",
+  "--limit-mm-per-prompt.video",
+  "0",
+  "--seed",
+  "0",
+  "--dtype",
+  "bfloat16",
+  "--kernel-config",
+  "{\"enable_flashinfer_autotune\": false}"
+ ],
+ "env": {
+  "VLLM_ENABLE_INDUCTOR_MAX_AUTOTUNE": "0",
+  "VLLM_ENABLE_INDUCTOR_COORDINATE_DESCENT_TUNING": "0"
+ },
+ "up": true,
+ "startup_s": 140.0,
+ "logp": {
+  "plain": {
+   "A": -0.4419824182987213,
+   "B": -1.066982388496399
+  },
+  "board": {
+   "A": -0.5497304201126099,
+   "B": -0.9247304201126099
+  },
+  "lopsided": {
+   "A": -0.015729757025837898,
+   "B": -4.265729904174805
+  }
+ },
+ "within_identical": true,
+ "non_option_mass": {
+  "plain": 0.013193916660057647,
+  "board": 0.026256304208074233,
+  "lopsided": 0.0015650761527316037
+ },
+ "latency_ms_median": 25.71,
+ "latency_ms": [
+  25.72,
+  25.8,
+  25.41,
+  25.71,
+  25.72,
+  25.67,
+  25.59,
+  25.77,
+  25.55,
+  25.88,
+  25.96,
+  26.71,
+  25.88,
+  25.78,
+  25.66,
+  25.68,
+  25.45,
+  25.71,
+  25.63,
+  25.96
+ ]
+}

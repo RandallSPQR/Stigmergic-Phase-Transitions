@@ -1,0 +1,83 @@
+{
+ "model": "llama-3.1-8b-it",
+ "config": "C3_eager",
+ "start": 1,
+ "argv": [
+  "-m",
+  "vllm.entrypoints.openai.api_server",
+  "--model",
+  "meta-llama/Llama-3.1-8B-Instruct",
+  "--revision",
+  "0e9e39f249a16976918f6564b8830bc894c89659",
+  "--tokenizer-revision",
+  "0e9e39f249a16976918f6564b8830bc894c89659",
+  "--served-model-name",
+  "llama-3.1-8b-instruct",
+  "--max-model-len",
+  "8192",
+  "--tensor-parallel-size",
+  "1",
+  "--gpu-memory-utilization",
+  "0.9",
+  "--port",
+  "8000",
+  "--no-enable-prefix-caching",
+  "--max-num-seqs",
+  "1",
+  "--max-num-batched-tokens",
+  "8192",
+  "--seed",
+  "0",
+  "--logprobs-mode",
+  "raw_logprobs",
+  "--dtype",
+  "bfloat16",
+  "--enforce-eager"
+ ],
+ "env": {},
+ "up": true,
+ "startup_s": 25.0,
+ "logp": {
+  "plain": {
+   "A": -0.3346216678619385,
+   "B": -2.5846216678619385
+  },
+  "board": {
+   "A": -0.8004956245422363,
+   "B": -1.1754956245422363
+  },
+  "lopsided": {
+   "A": -0.011652620509266853,
+   "B": -10.074152946472168
+  }
+ },
+ "within_identical": true,
+ "non_option_mass": {
+  "plain": 0.2089666173005822,
+  "board": 0.2422277198206082,
+  "lopsided": 0.011542836484503383
+ },
+ "latency_ms_median": 15.48,
+ "latency_ms": [
+  15.49,
+  15.46,
+  15.44,
+  15.39,
+  15.41,
+  15.37,
+  15.47,
+  15.7,
+  15.69,
+  15.59,
+  15.61,
+  15.65,
+  15.57,
+  15.55,
+  15.45,
+  15.54,
+  15.44,
+  15.51,
+  15.47,
+  15.48
+ ]
+}

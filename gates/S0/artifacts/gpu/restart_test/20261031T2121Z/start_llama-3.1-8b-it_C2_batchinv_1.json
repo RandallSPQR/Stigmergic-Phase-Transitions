@@ -1,0 +1,41 @@
+{
+ "model": "llama-3.1-8b-it",
+ "config": "C2_batchinv",
+ "start": 1,
+ "argv": [
+  "-m",
+  "vllm.entrypoints.openai.api_server",
+  "--model",
+  "meta-llama/Llama-3.1-8B-Instruct",
+  "--revision",
+  "0e9e39f249a16976918f6564b8830bc894c89659",
+  "--tokenizer-revision",
+  "0e9e39f249a16976918f6564b8830bc894c89659",
+  "--served-model-name",
+  "llama-3.1-8b-instruct",
+  "--max-model-len",
+  "8192",
+  "--tensor-parallel-size",
+  "1",
+  "--gpu-memory-utilization",
+  "0.9",
+  "--port",
+  "8000",
+  "--no-enable-prefix-caching",
+  "--max-num-seqs",
+  "1",
+  "--max-num-batched-tokens",
+  "8192",
+  "--seed",
+  "0",
+  "--logprobs-mode",
+  "raw_logprobs",
+  "--dtype",
+  "bfloat16"
+ ],
+ "env": {
+  "VLLM_BATCH_INVARIANT": "1"
+ },
+ "up": false,
+ "startup_s": 20.0
+}

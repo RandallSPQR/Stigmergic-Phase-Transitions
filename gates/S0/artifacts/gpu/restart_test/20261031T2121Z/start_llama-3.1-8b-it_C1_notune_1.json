@@ -1,0 +1,87 @@
+{
+ "model": "llama-3.1-8b-it",
+ "config": "C1_notune",
+ "start": 1,
+ "argv": [
+  "-m",
+  "vllm.entrypoints.openai.api_server",
+  "--model",
+  "meta-llama/Llama-3.1-8B-Instruct",
+  "--revision",
+  "0e9e39f249a16976918f6564b8830bc894c89659",
+  "--tokenizer-revision",
+  "0e9e39f249a16976918f6564b8830bc894c89659",
+  "--served-model-name",
+  "llama-3.1-8b-instruct",
+  "--max-model-len",
+  "8192",
+  "--tensor-parallel-size",
+  "1",
+  "--gpu-memory-utilization",
+  "0.9",
+  "--port",
+  "8000",
+  "--no-enable-prefix-caching",
+  "--max-num-seqs",
+  "1",
+  "--max-num-batched-tokens",
+  "8192",
+  "--seed",
+  "0",
+  "--logprobs-mode",
+  "raw_logprobs",
+  "--dtype",
+  "bfloat16",
+  "--kernel-config",
+  "{\"enable_flashinfer_autotune\": false}"
+ ],
+ "env": {
+  "VLLM_ENABLE_INDUCTOR_MAX_AUTOTUNE": "0",
+  "VLLM_ENABLE_INDUCTOR_COORDINATE_DESCENT_TUNING": "0"
+ },
+ "up": true,
+ "startup_s": 80.1,
+ "logp": {
+  "plain": {
+   "A": -0.3281143605709076,
+   "B": -2.5781142711639404
+  },
+  "board": {
+   "A": -0.7972175478935242,
+   "B": -1.172217607498169
+  },
+  "lopsided": {
+   "A": -0.012747470289468765,
+   "B": -10.012747764587402
+  }
+ },
+ "within_identical": true,
+ "non_option_mass": {
+  "plain": 0.20380232865335057,
+  "board": 0.23973962678020133,
+  "lopsided": 0.012621740576989615
+ },
+ "latency_ms_median": 15.38,
+ "latency_ms": [
+  15.49,
+  15.41,
+  15.43,
+  15.4,
+  15.4,
+  15.38,
+  15.34,
+  15.35,
+  15.43,
+  15.36,
+  15.3,
+  15.46,
+  15.35,
+  15.38,
+  15.39,
+  15.35,
+  15.37,
+  15.44,
+  15.57,
+  15.33
+ ]
+}

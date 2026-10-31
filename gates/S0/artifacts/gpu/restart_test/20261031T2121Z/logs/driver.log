@@ -1,0 +1,25 @@
+=== 2026-10-31T21:21:38Z stack
+NVIDIA RTX PRO 6000 Blackwell Server Edition, 595.91.07, 97887 MiB
+3.11.13 vllm 0.19.1 torch 2.10.0+cu128 NVIDIA RTX PRO 6000 Blackwell Server Edition
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Fetching 12 files:   0%|          | 0/12 [00:00<?, ?it/s]Fetching 12 files:  42%|████▏     | 5/12 [00:00<00:00, 34.22it/s]Fetching 12 files:  75%|███████▌  | 9/12 [00:07<00:02,  1.07it/s]Fetching 12 files:  83%|████████▎ | 10/12 [00:20<00:01,  1.07it/s]Fetching 12 files:  92%|█████████▏| 11/12 [00:20<00:02,  2.47s/it]Fetching 12 files: 100%|██████████| 12/12 [00:20<00:00,  2.16s/it]Fetching 12 files: 100%|██████████| 12/12 [00:20<00:00,  1.72s/it]
+21:24:32 llama-3.1-8b-it C1_notune 1 up 80.1 s 15.38 ms/call within True {'plain': 2.25, 'board': 0.375, 'lopsided': 10.0}
+21:26:14 llama-3.1-8b-it C1_notune 2 up 75.0 s 15.37 ms/call within True {'plain': 2.125, 'board': 0.375, 'lopsided': 10.0625}
+21:26:40 llama-3.1-8b-it C2_batchinv 1 DOWN 20.0 s None ms/call within None {}
+21:27:05 llama-3.1-8b-it C2_batchinv 2 DOWN 20.0 s None ms/call within None {}
+21:27:59 llama-3.1-8b-it C3_eager 1 up 25.0 s 15.48 ms/call within True {'plain': 2.25, 'board': 0.375, 'lopsided': 10.0625}
+21:28:54 llama-3.1-8b-it C3_eager 2 up 25.0 s 15.37 ms/call within True {'plain': 2.25, 'board': 0.375, 'lopsided': 10.0625}
+Fetching 13 files:   0%|          | 0/13 [00:00<?, ?it/s]Fetching 13 files:  31%|███       | 4/13 [00:00<00:00, 35.18it/s]Fetching 13 files:  69%|██████▉   | 9/13 [00:00<00:00, 26.57it/s]Fetching 13 files:  92%|█████████▏| 12/13 [00:07<00:00,  1.08it/s]Fetching 13 files: 100%|██████████| 13/13 [00:08<00:00,  1.51it/s]
+21:32:07 qwen3.5-9b C1_notune 1 up 145.1 s 25.74 ms/call within True {'plain': 0.625, 'board': 0.5, 'lopsided': 4.25}
+21:34:55 qwen3.5-9b C1_notune 2 up 140.0 s 25.71 ms/call within True {'plain': 0.625, 'board': 0.375, 'lopsided': 4.25}
+21:35:21 qwen3.5-9b C2_batchinv 1 DOWN 20.0 s None ms/call within None {}
+21:35:46 qwen3.5-9b C2_batchinv 2 DOWN 20.0 s None ms/call within None {}
+21:37:40 qwen3.5-9b C3_eager 1 up 85.0 s 29.55 ms/call within True {'plain': 0.5, 'board': 0.375, 'lopsided': 4.25}
+21:39:34 qwen3.5-9b C3_eager 2 up 85.0 s 29.19 ms/call within True {'plain': 0.5, 'board': 0.5, 'lopsided': 4.375}
+21:39:44 phase 1 winner: None
+21:39:44 {'model': 'llama-3.1-8b-it', 'config': 'C1_notune', 'starts': 2, 'up': 2, 'identical_across_starts': False, 'within_identical': True, 'max_diff_nats': 0.11510229110717773, 'latency_ms_median': 15.375}
+21:39:44 {'model': 'llama-3.1-8b-it', 'config': 'C2_batchinv', 'starts': 2, 'up': 0, 'identical_across_starts': False, 'within_identical': True, 'max_diff_nats': None, 'latency_ms_median': None}
+21:39:44 {'model': 'llama-3.1-8b-it', 'config': 'C3_eager', 'starts': 2, 'up': 2, 'identical_across_starts': True, 'within_identical': True, 'max_diff_nats': 0.0, 'latency_ms_median': 15.425}
+21:39:44 {'model': 'qwen3.5-9b', 'config': 'C1_notune', 'starts': 2, 'up': 2, 'identical_across_starts': False, 'within_identical': True, 'max_diff_nats': 0.07316780090332031, 'latency_ms_median': 25.725}
+21:39:44 {'model': 'qwen3.5-9b', 'config': 'C2_batchinv', 'starts': 2, 'up': 0, 'identical_across_starts': False, 'within_identical': True, 'max_diff_nats': None, 'latency_ms_median': None}
+21:39:44 {'model': 'qwen3.5-9b', 'config': 'C3_eager', 'starts': 2, 'up': 2, 'identical_across_starts': False, 'within_identical': True, 'max_diff_nats': 0.12347888946533203, 'latency_ms_median': 29.37}

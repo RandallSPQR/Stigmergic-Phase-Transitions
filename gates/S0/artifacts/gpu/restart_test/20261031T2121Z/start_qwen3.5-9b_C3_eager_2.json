@@ -1,0 +1,87 @@
+{
+ "model": "qwen3.5-9b",
+ "config": "C3_eager",
+ "start": 2,
+ "argv": [
+  "-m",
+  "vllm.entrypoints.openai.api_server",
+  "--model",
+  "Qwen/Qwen3.5-9B",
+  "--revision",
+  "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+  "--tokenizer-revision",
+  "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+  "--served-model-name",
+  "qwen3.5-9b",
+  "--max-model-len",
+  "8192",
+  "--tensor-parallel-size",
+  "1",
+  "--gpu-memory-utilization",
+  "0.9",
+  "--port",
+  "8000",
+  "--max-num-seqs",
+  "1",
+  "--max-num-batched-tokens",
+  "8192",
+  "--no-enable-prefix-caching",
+  "--logprobs-mode",
+  "raw_logprobs",
+  "--limit-mm-per-prompt.image",
+  "0",
+  "--limit-mm-per-prompt.video",
+  "0",
+  "--seed",
+  "0",
+  "--dtype",
+  "bfloat16",
+  "--enforce-eager"
+ ],
+ "env": {},
+ "up": true,
+ "startup_s": 85.0,
+ "logp": {
+  "plain": {
+   "A": -0.4869888722896576,
+   "B": -0.98698890209198
+  },
+  "board": {
+   "A": -0.5026856660842896,
+   "B": -1.0026856660842896
+  },
+  "lopsided": {
+   "A": -0.01422715000808239,
+   "B": -4.389226913452148
+  }
+ },
+ "within_identical": true,
+ "non_option_mass": {
+  "plain": 0.012828898405959022,
+  "board": 0.02820332830614236,
+  "lopsided": 0.0017161026002441293
+ },
+ "latency_ms_median": 29.19,
+ "latency_ms": [
+  29.19,
+  29.01,
+  29.01,
+  29.05,
+  28.95,
+  29.2,
+  29.91,
+  29.06,
+  28.95,
+  29.11,
+  28.89,
+  29.16,
+  29.39,
+  29.32,
+  29.37,
+  29.47,
+  29.42,
+  29.42,
+  29.91,
+  29.7
+ ]
+}
