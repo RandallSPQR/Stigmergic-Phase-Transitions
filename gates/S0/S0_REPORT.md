@@ -131,6 +131,49 @@ Reproduce: `bash gates/S0/run_s0.sh WORKDIR`.
   the autotuner, `--enforce-eager`, or vLLM's batch-invariant mode.
 - Recommendation: (b), before S4.
 
+### 4b. Restart test (owner's option b, 2026-10-31): a setting that removes the drift
+
+**Setup.**
+- GPU: RTX PRO 6000 Blackwell; StPT will keep serving on this type (owner, 2026-10-31).
+- Every server start was **cold**: all compile and autotune caches were cleared first, as on a fresh pod.
+- Screening models: the two that drifted at S0 (Llama-3.1-8B, Qwen3.5-9B), 2 cold starts per setting.
+- Each start ran 3 prompts × 4 identical requests and timed 20 calls.
+- Procedure: `gpu/restart_test.sh`, committed before each run.
+- Results: `artifacts/gpu/restart_test/20261031T2121Z/` and `.../20261031T2142Z/` (`summary.json`, `start_*.json`).
+
+| setting (on top of v1.2.0 serving) | Llama-8B across cold starts | Qwen3.5-9B across cold starts | ms per call, Llama / Qwen |
+|---|---|---|---|
+| C1: inductor max-autotune, coordinate descent and FlashInfer autotune off | drifts (0.115) | drifts (0.073) | 15.4 / 25.7 |
+| C3: `--enforce-eager` | identical | drifts (0.123) | 15.4 / 29.4 |
+| C2b: `VLLM_BATCH_INVARIANT=1` + `--attention-backend FLASH_ATTN` | drifts (0.115) | drifts (0.075) | 27.6 / 34.2 |
+| **C2e: C2b + `--enforce-eager`** | **identical (0.0)** | **identical (0.0)** | **28.4 / 34.5** |
+
+Notes:
+- Within a start, every setting was bit-identical.
+- C2 as first configured did not start: batch-invariant mode needs a named attention backend.
+- The autotuner hypothesis is refuted (C1).
+- Llama's drift comes from compilation or CUDA graphs: eager mode alone removes it.
+- Qwen3.5 needs vLLM's deterministic kernels as well.
+
+**Cost of C2e.** Per call it is +84% (Llama-8B) and +34% (Qwen3.5-9B) against the v1.2.0 settings.
+- At the brief's illustrative volume (150,000–250,000 calls per model), that is roughly +$15–40 over the whole study.
+  This is an estimate from these timings; the pilot (S8) measures it.
+- The values differ from the v1.2.0 settings by up to a few bf16 steps (for example, Llama's lopsided prompt reads 10.25
+  against 10.0625). That is expected with different kernels. It means everything must be collected under one setting.
+
+**Not yet established for C2e:**
+- the other three models (Gemma-2-9B, Gemma-3-27B, Qwen3.5-27B);
+- more than 2 cold starts.
+
+Confirmation (3 cold starts × five models, about 25 minutes, about $1) and a pipeline v1.2.1 release are the owner's
+call.
+
+**Pod record.**
+- `r8i7g5wr08yxog`: first run, about 19 min.
+- `0ox6pbyixwdeci`: ended about 1 min after launch by a launcher bug, which I fixed; `terminate` now names its pod.
+- `h6zot49xwv37a4`: follow-up, about 17 min.
+- Restart test total: about $1.55.
+
 ## Open items for the owner
 
 1. ~~Push the pipeline release.~~ Done 2026-10-31 (see the update at the top).
@@ -138,6 +181,7 @@ Reproduce: `bash gates/S0/run_s0.sh WORKDIR`.
 3. ~~GPU for the box identity check.~~ Approved and done 2026-10-31 (section 1b).
 5. **GPU type for all StPT serving.** Determinism was checked on the RTX PRO 6000 Blackwell, so StPT should serve on that
    type, or re-run this check on another.
-6. **The restart finding** (section 4): option (a) or (b).
+6. ~~The restart finding: option (a) or (b).~~ The owner chose (b). A working setting was found (section 4b). Still to
+   decide: confirm C2e on all five models, and release it as pipeline v1.2.1, with both studies re-pinned.
 4. **Proposal awaiting a decision:** P6, the SPT tag v1.0.1 for the replay. The Qwen pair, the stack and bf16 were
    accepted (D8–D10).

@@ -1,0 +1,19 @@
+=== 2026-10-31T21:42:13Z stack
+NVIDIA RTX PRO 6000 Blackwell Server Edition, 595.91.07, 97887 MiB
+3.11.13 vllm 0.19.1 torch 2.10.0+cu128 NVIDIA RTX PRO 6000 Blackwell Server Edition
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Fetching 13 files:   0%|          | 0/13 [00:00<?, ?it/s]Fetching 13 files:  15%|█▌        | 2/13 [00:00<00:00, 17.96it/s]Fetching 13 files:  46%|████▌     | 6/13 [00:00<00:00, 26.41it/s]Fetching 13 files:  69%|██████▉   | 9/13 [00:00<00:00,  7.87it/s]Fetching 13 files:  85%|████████▍ | 11/13 [00:16<00:04,  2.41s/it]Fetching 13 files:  92%|█████████▏| 12/13 [00:18<00:02,  2.37s/it]Fetching 13 files: 100%|██████████| 13/13 [00:19<00:00,  1.96s/it]Fetching 13 files: 100%|██████████| 13/13 [00:19<00:00,  1.47s/it]
+21:46:22 qwen3.5-9b C2b_batchinv_fa 1 up 165.0 s 34.14 ms/call within True {'plain': 0.5, 'board': 0.375, 'lopsided': 4.375}
+21:49:31 qwen3.5-9b C2b_batchinv_fa 2 up 160.0 s 34.29 ms/call within True {'plain': 0.5, 'board': 0.5, 'lopsided': 4.375}
+21:51:25 qwen3.5-9b C2e_batchinv_fa_eager 1 up 85.0 s 34.54 ms/call within True {'plain': 0.5, 'board': 0.375, 'lopsided': 4.375}
+21:53:20 qwen3.5-9b C2e_batchinv_fa_eager 2 up 85.0 s 34.43 ms/call within True {'plain': 0.5, 'board': 0.375, 'lopsided': 4.375}
+Fetching 12 files:   0%|          | 0/12 [00:00<?, ?it/s]Fetching 12 files:  17%|█▋        | 2/12 [00:00<00:00, 17.92it/s]Fetching 12 files:  58%|█████▊    | 7/12 [00:00<00:00, 16.87it/s]Fetching 12 files:  75%|███████▌  | 9/12 [00:05<00:02,  1.20it/s]Fetching 12 files:  83%|████████▎ | 10/12 [00:10<00:03,  1.65s/it]Fetching 12 files:  92%|█████████▏| 11/12 [00:12<00:01,  1.55s/it]Fetching 12 files: 100%|██████████| 12/12 [00:12<00:00,  1.01s/it]
+21:55:38 llama-3.1-8b-it C2b_batchinv_fa 1 up 90.0 s 27.68 ms/call within True {'plain': 2.25, 'board': 0.5, 'lopsided': 10.0625}
+21:57:37 llama-3.1-8b-it C2b_batchinv_fa 2 up 90.0 s 27.47 ms/call within True {'plain': 2.375, 'board': 0.375, 'lopsided': 10.0625}
+21:58:31 llama-3.1-8b-it C2e_batchinv_fa_eager 1 up 25.0 s 28.45 ms/call within True {'plain': 2.25, 'board': 0.5, 'lopsided': 10.25}
+21:59:26 llama-3.1-8b-it C2e_batchinv_fa_eager 2 up 25.0 s 28.34 ms/call within True {'plain': 2.25, 'board': 0.5, 'lopsided': 10.25}
+21:59:29 phase 1 winner: C2e_batchinv_fa_eager
+21:59:29 {'model': 'qwen3.5-9b', 'config': 'C2b_batchinv_fa', 'starts': 2, 'up': 2, 'identical_across_starts': False, 'within_identical': True, 'max_diff_nats': 0.07467007637023926, 'latency_ms_median': 34.215}
+21:59:29 {'model': 'qwen3.5-9b', 'config': 'C2e_batchinv_fa_eager', 'starts': 2, 'up': 2, 'identical_across_starts': True, 'within_identical': True, 'max_diff_nats': 0.0, 'latency_ms_median': 34.485}
+21:59:29 {'model': 'llama-3.1-8b-it', 'config': 'C2b_batchinv_fa', 'starts': 2, 'up': 2, 'identical_across_starts': False, 'within_identical': True, 'max_diff_nats': 0.11518597602844238, 'latency_ms_median': 27.575}
+21:59:29 {'model': 'llama-3.1-8b-it', 'config': 'C2e_batchinv_fa_eager', 'starts': 2, 'up': 2, 'identical_across_starts': True, 'within_identical': True, 'max_diff_nats': 0.0, 'latency_ms_median': 28.395}

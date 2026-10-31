@@ -1,0 +1,46 @@
+{
+ "winner": "C2e_batchinv_fa_eager",
+ "elapsed_min": 16.7,
+ "cells": [
+  {
+   "model": "qwen3.5-9b",
+   "config": "C2b_batchinv_fa",
+   "starts": 2,
+   "up": 2,
+   "identical_across_starts": false,
+   "within_identical": true,
+   "max_diff_nats": 0.07467007637023926,
+   "latency_ms_median": 34.215
+  },
+  {
+   "model": "qwen3.5-9b",
+   "config": "C2e_batchinv_fa_eager",
+   "starts": 2,
+   "up": 2,
+   "identical_across_starts": true,
+   "within_identical": true,
+   "max_diff_nats": 0.0,
+   "latency_ms_median": 34.485
+  },
+  {
+   "model": "llama-3.1-8b-it",
+   "config": "C2b_batchinv_fa",
+   "starts": 2,
+   "up": 2,
+   "identical_across_starts": false,
+   "within_identical": true,
+   "max_diff_nats": 0.11518597602844238,
+   "latency_ms_median": 27.575
+  },
+  {
+   "model": "llama-3.1-8b-it",
+   "config": "C2e_batchinv_fa_eager",
+   "starts": 2,
+   "up": 2,
+   "identical_across_starts": true,
+   "within_identical": true,
+   "max_diff_nats": 0.0,
+   "latency_ms_median": 28.395
+  }
+ ]
+}

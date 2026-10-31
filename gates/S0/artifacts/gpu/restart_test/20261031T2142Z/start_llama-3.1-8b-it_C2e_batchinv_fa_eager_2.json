@@ -1,0 +1,87 @@
+{
+ "model": "llama-3.1-8b-it",
+ "config": "C2e_batchinv_fa_eager",
+ "start": 2,
+ "argv": [
+  "-m",
+  "vllm.entrypoints.openai.api_server",
+  "--model",
+  "meta-llama/Llama-3.1-8B-Instruct",
+  "--revision",
+  "0e9e39f249a16976918f6564b8830bc894c89659",
+  "--tokenizer-revision",
+  "0e9e39f249a16976918f6564b8830bc894c89659",
+  "--served-model-name",
+  "llama-3.1-8b-instruct",
+  "--max-model-len",
+  "8192",
+  "--tensor-parallel-size",
+  "1",
+  "--gpu-memory-utilization",
+  "0.9",
+  "--port",
+  "8000",
+  "--no-enable-prefix-caching",
+  "--max-num-seqs",
+  "1",
+  "--max-num-batched-tokens",
+  "8192",
+  "--seed",
+  "0",
+  "--logprobs-mode",
+  "raw_logprobs",
+  "--dtype",
+  "bfloat16",
+  "--attention-backend",
+  "FLASH_ATTN",
+  "--enforce-eager"
+ ],
+ "env": {
+  "VLLM_BATCH_INVARIANT": "1"
+ },
+ "up": true,
+ "startup_s": 25.0,
+ "logp": {
+  "plain": {
+   "A": -0.3577691912651062,
+   "B": -2.607769250869751
+  },
+  "board": {
+   "A": -0.7445157170295715,
+   "B": -1.2445156574249268
+  },
+  "lopsided": {
+   "A": -0.011469262652099133,
+   "B": -10.261468887329102
+  }
+ },
+ "within_identical": true,
+ "non_option_mass": {
+  "plain": 0.22706679021770115,
+  "board": 0.23695533469360552,
+  "lopsided": 0.011368787085779486
+ },
+ "latency_ms_median": 28.34,
+ "latency_ms": [
+  28.78,
+  28.14,
+  27.95,
+  28.89,
+  28.18,
+  28.13,
+  28.04,
+  28.16,
+  28.47,
+  28.86,
+  28.9,
+  28.28,
+  28.32,
+  28.39,
+  28.37,
+  28.19,
+  28.72,
+  28.91,
+  28.36,
+  28.26
+ ]
+}
