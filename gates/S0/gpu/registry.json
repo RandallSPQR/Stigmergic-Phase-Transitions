@@ -53,7 +53,8 @@
    "max_cost_usd": 1.87,
    "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
    "cost_per_hr": 2.49,
-   "repo": "RandallSPQR/stpt-gate-artifacts"
+   "repo": "RandallSPQR/stpt-gate-artifacts",
+   "ended": "terminated 2026-10-31T21:41:34Z IN ERROR, about 1 min after launch: the previous run's watcher called `terminate`, which then ended every live registered pod. Fixed: terminate takes --pod. No results."
   }
  }
 }

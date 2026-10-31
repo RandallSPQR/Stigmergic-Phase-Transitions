@@ -120,7 +120,7 @@ def cmd_status(a):
 def cmd_terminate(a):
     reg = load()
     for pid, v in reg["pods"].items():
-        if v.get("ended"):
+        if v.get("ended") or pid != a.pod:          # only the named pod (a watcher must never end another run)
             continue
         code, resp = _req("DELETE", f"{API}/{pid}")
         print(pid, "DELETE", code, resp)
@@ -141,7 +141,7 @@ def main(argv=None):
     c.add_argument("--env", dest="extra_env", nargs=2, action="append", metavar=("NAME", "VALUE"),
                    help="extra pod env (non-secret values only)")
     sub.add_parser("status")
-    t = sub.add_parser("terminate"); t.add_argument("--why", required=True)
+    t = sub.add_parser("terminate"); t.add_argument("--why", required=True); t.add_argument("--pod", required=True)
     a = ap.parse_args(argv)
     return {"create": cmd_create, "status": cmd_status, "terminate": cmd_terminate}[a.cmd](a)
 
