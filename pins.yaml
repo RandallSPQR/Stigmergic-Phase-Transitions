@@ -1,0 +1,22 @@
+# StPT pins. Every StPT run manifest copies this block through stpt.manifest.header(); a run refuses to start when the
+# installed pipeline is not the pinned commit (stpt.manifest.check_environment). Changing a pin is a logged amendment in
+# the coordination record.
+pipeline:                      # Step 0: the shared five-model pipeline, LOCKED
+  name: sae-ethos-pipeline
+  repo: https://github.com/RandallSPQR/SAE-Ethos-Calibration
+  tag: v1.2.0
+  commit: 5ca15f56a71f35d5818d0392f7f3b4acb2d85d1b
+  tag_object: aedd002b6a2050547011aef210562e15ef588b51
+spt:                           # the SPT release StPT inherits harness and simulator from, and that S0 replays
+  repo: https://github.com/RandallSPQR/social-phase-transitions-public
+  tag: v1.0.1
+  commit: c37a91d2d2561fdf78fc61af500ea000aac3ea2f
+  private_source_commit: 3a26daf          # RandallSPQR/Social-Phase-Transitions (private); v1.0.1 = snapshot of it + doc commits
+  doi: 10.5281/zenodo.23821962            # v1.0.1; all versions 10.5281/zenodo.23821224
+  data: https://huggingface.co/datasets/RandallSPQR/social-phase-transitions-data
+coordination:                  # the shared coordination record (StPT + Missing Piece)
+  repo: https://github.com/RandallSPQR/StPT-MP-Coordination
+  commit: 93a9ee77429df76840999aab86daac5cc36734a6
+brief:
+  url: https://claude.ai/artifact/Q36cWtMumtJPs3semD76ni
+  revision: 3                  # document rev 34, read 2026-10-31
