@@ -62,7 +62,7 @@ def table(e, ws, b, g, T, live):
     return 1.0 / (1.0 + np.exp(-logit / T))
 
 
-def main():
+def main(per_board=False):
     OUT.mkdir(parents=True, exist_ok=True)
     t0 = time.time()
     rows, na = [], []
@@ -108,7 +108,13 @@ def main():
                              "blind": float(bl_a.mean()), "blind_se": float(bl_a.std(ddof=1) / math.sqrt(len(bl_a))),
                              "live": float(lv_a.mean()), "live_minus_blind": float((lv_a - bl_a).mean()),
                              "pooled_median": float(np.median([bd["pooled"] for bd in bl]))})
+                if per_board:
+                    rows[-1]["blind_boards"] = bl_a.tolist(); rows[-1]["live_boards"] = lv_a.tolist()
         print(f"f={f} set={sk} done ({time.time() - t0:.0f}s)", flush=True)
+    if per_board:      # POWER_PLAN.md: same seeds, per-board outputs, original files untouched
+        json.dump({"plan": "gates/S2/difficulty/POWER_PLAN.md", "kernels": len(KERNELS), "boards_per_cell": BOARDS,
+                   "rows": rows}, open(OUT / "per_board.json", "w"))
+        return
     json.dump({"plan": "gates/S2/difficulty/PLAN.md", "kernels": len(KERNELS), "boards_per_cell": BOARDS, "rows": rows,
                "challenge_na": na}, open(OUT / "grid.json", "w"), indent=1)
     summarise(rows, na)
@@ -149,4 +155,4 @@ def summarise(rows, na):
 
 
 if __name__ == "__main__":
-    main()
+    main(per_board="--per-board" in sys.argv)
