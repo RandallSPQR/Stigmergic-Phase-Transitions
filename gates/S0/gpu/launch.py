@@ -71,8 +71,9 @@ def cmd_create(a):
         sys.exit(f"REFUSED: a registered pod is still live: {live}")
     now = dt.datetime.now(dt.timezone.utc)
     run_id = now.strftime("%Y%m%dT%H%MZ")
-    driver = (HERE / a.driver).read_bytes()
-    body = {"name": f"stpt-s0-{a.driver.split('.')[0].replace('_', '-')}-{run_id}", "imageName": IMAGE, "cloudType": "SECURE",
+    dpath = (HERE.parents[2] / a.driver) if "/" in a.driver else (HERE / a.driver)
+    driver = dpath.read_bytes()
+    body = {"name": f"stpt-{Path(a.driver).stem.replace('_', '-')}-{run_id}", "imageName": IMAGE, "cloudType": "SECURE",
             "gpuTypeIds": GPU_SETS[a.gpu_set][0], "gpuTypePriority": "custom", "gpuCount": 1,
             "containerDiskInGb": a.disk, "volumeInGb": 0,
             "ports": [], "dockerEntrypoint": ["bash", "-c"], "dockerStartCmd": [start_cmd(a.hours)],
@@ -137,7 +138,8 @@ def main(argv=None):
     c.add_argument("--disk", type=int, default=200); c.add_argument("--dry-run", action="store_true")
     c.add_argument("--gpu-set", choices=sorted(GPU_SETS), default="a100")
     c.add_argument("--models", nargs="*", help="lineup model names (default: all five)")
-    c.add_argument("--driver", default="box_identity.sh", choices=["box_identity.sh", "restart_test.sh"])
+    c.add_argument("--driver", default="box_identity.sh",
+                   help="a driver in gates/S0/gpu/ by name, or a repository-relative path (e.g. gates/S3/gpu/s3_driver.sh)")
     c.add_argument("--env", dest="extra_env", nargs=2, action="append", metavar=("NAME", "VALUE"),
                    help="extra pod env (non-secret values only)")
     sub.add_parser("status")
