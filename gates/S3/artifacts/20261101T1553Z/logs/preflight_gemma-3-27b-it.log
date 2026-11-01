@@ -1,0 +1,2 @@
+[BAD] google/gemma-3-27b-it@005ad3404e59  files 9/23  by blob-name  meta=hub  mismatch=['model-00001-of-00012.safetensors', 'model-00002-of-00012.safetensors', 'model-00003-of-00012.safetensors']
+report: /root/out/20261101T1553Z/preflight_gemma-3-27b-it.json

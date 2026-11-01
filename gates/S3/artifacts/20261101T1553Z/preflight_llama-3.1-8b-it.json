@@ -1,0 +1,42 @@
+{
+ "generated": "2026-11-01T15:53:48Z",
+ "hash_bytes": false,
+ "repos": [
+  {
+   "repo": "meta-llama/Llama-3.1-8B-Instruct",
+   "revision_requested": "0e9e39f249a16976918f6564b8830bc894c89659",
+   "metadata_source": "hub",
+   "ok": false,
+   "files_expected": 11,
+   "files_verified": 7,
+   "lfs_files": 4,
+   "missing": [],
+   "mismatch": [
+    {
+     "file": "model-00001-of-00004.safetensors",
+     "expected": "2b1879f356aed350030bb40eb45ad362c89d9891096f79a3ab323d3ba5607668",
+     "got": "37e46c41d055c1b298309131cad034dba275c05a3215d27d33af8034753c8087"
+    },
+    {
+     "file": "model-00002-of-00004.safetensors",
+     "expected": "09d433f650646834a83c580877bd60c6d1f88f7755305c12576b5c7058f9af15",
+     "got": "34a702f221ae1d749c3b638c6e59e1590c44b7044bfffdcfd3f709633ce53be4"
+    },
+    {
+     "file": "model-00003-of-00004.safetensors",
+     "expected": "fc1cdddd6bfa91128d6e94ee73d0ce62bfcdb7af29e978ddcab30c66ae9ea7fa",
+     "got": "b85fa10bd12d4ea01487c18eae95c3261e97514648772d0b2883b67cb164c9d2"
+    },
+    {
+     "file": "model-00004-of-00004.safetensors",
+     "expected": "92ecfe1a2414458b4821ac8c13cf8cb70aed66b5eea8dc5ad9eeb4ff309d6d7b",
+     "got": "41dde9eee68695933ec2df79ba83ba26d296aa922d096f3d6cba7103fab06563"
+    }
+   ],
+   "verified_by": "blob-name",
+   "revision_resolved": "0e9e39f249a16976918f6564b8830bc894c89659",
+   "snapshot": "/root/hf/hub/models--meta-llama--Llama-3.1-8B-Instruct/snapshots/0e9e39f249a16976918f6564b8830bc894c89659",
+   "weight_hash": null
+  }
+ ]
+}

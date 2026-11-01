@@ -1,0 +1,47 @@
+{
+ "generated": "2026-11-01T15:54:04Z",
+ "hash_bytes": false,
+ "repos": [
+  {
+   "repo": "Qwen/Qwen3.5-9B",
+   "revision_requested": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+   "metadata_source": "hub",
+   "ok": false,
+   "files_expected": 11,
+   "files_verified": 6,
+   "lfs_files": 5,
+   "missing": [],
+   "mismatch": [
+    {
+     "file": "model.safetensors-00001-of-00004.safetensors",
+     "expected": "db6f444b43d318c92f360a13a25561a6a65b10c0631b8ed305a426dbaa6c380e",
+     "got": "7bcbd85ef394b0b8b10a242bb175c4b4e672a83fb3fc46da8319460de3edacce"
+    },
+    {
+     "file": "model.safetensors-00002-of-00004.safetensors",
+     "expected": "31c7d7e2dd5d207840b31cc59083c8f4c4718959149e0358c0364052bb9a0330",
+     "got": "7b709e3cdec6630a3c7b151efa17f03183489d03287bf9cb97454153f4ecb873"
+    },
+    {
+     "file": "model.safetensors-00003-of-00004.safetensors",
+     "expected": "7ec36ba3a4176a44c3c0876ad80c56a2f70c84bf008d82e9501df642f17dadec",
+     "got": "b56057d566829843f8688c32899ae599053cfb7766c2a94b3b6b2b805ad338b8"
+    },
+    {
+     "file": "model.safetensors-00004-of-00004.safetensors",
+     "expected": "b62b0c4cd7e44edee103ee8f4fe225f246d5e768e07bfd5f25b63a8aa1fdd0c6",
+     "got": "69e03ef8ea69638c0ef6360da111c81b8701efac19848c687038964a4b6ac250"
+    },
+    {
+     "file": "tokenizer.json",
+     "expected": "5f9e4d4901a92b997e463c1f46055088b6cca5ca61a6522d1b9f64c4bb81cb42",
+     "got": "8f06040c24d0d6efc263cf398806debbf20d732031ba128349d086f6a7b8bab2"
+    }
+   ],
+   "verified_by": "blob-name",
+   "revision_resolved": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+   "snapshot": "/root/hf/hub/models--Qwen--Qwen3.5-9B/snapshots/c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+   "weight_hash": null
+  }
+ ]
+}

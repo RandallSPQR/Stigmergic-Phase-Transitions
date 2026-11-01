@@ -1,0 +1,2 @@
+[BAD] Qwen/Qwen3.5-9B@c20223623576  files 6/11  by blob-name  meta=hub  mismatch=['model.safetensors-00001-of-00004.safetensors', 'model.safetensors-00002-of-00004.safetensors', 'model.safetensors-00003-of-00004.safetensors']
+report: /root/out/20261101T1553Z/preflight_qwen3.5-9b.json

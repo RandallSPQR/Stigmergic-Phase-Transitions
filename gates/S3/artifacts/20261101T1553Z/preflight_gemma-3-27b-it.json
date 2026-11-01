@@ -1,0 +1,92 @@
+{
+ "generated": "2026-11-01T15:54:25Z",
+ "hash_bytes": false,
+ "repos": [
+  {
+   "repo": "google/gemma-3-27b-it",
+   "revision_requested": "005ad3404e59d6023443cb575daa05336842228a",
+   "metadata_source": "hub",
+   "ok": false,
+   "files_expected": 23,
+   "files_verified": 9,
+   "lfs_files": 14,
+   "missing": [],
+   "mismatch": [
+    {
+     "file": "model-00001-of-00012.safetensors",
+     "expected": "4da0290139f018bdea488b556c136d0f0ca4506fe5f5555cd97c0f6f2e886add",
+     "got": "91689d6e270afa5f4be30abd3a60fff8d56c257163ea833884b5fc94a888f2cf"
+    },
+    {
+     "file": "model-00002-of-00012.safetensors",
+     "expected": "bf17dbadf9c7cd696e4768639601c3300ea659e49f018000956078cefd475cdf",
+     "got": "8e1e4e47058df9726722a5be046d913e245b9c44e5ea069395d9c00d810573a4"
+    },
+    {
+     "file": "model-00003-of-00012.safetensors",
+     "expected": "c12b9d629d07b4583e19a467713f92b5c1ae8c9d7ef11faf1bdb91c4c7b59efc",
+     "got": "c9bfedb7a65a388277c792d34f775ee7395b4b523525c835849882773682a4cd"
+    },
+    {
+     "file": "model-00004-of-00012.safetensors",
+     "expected": "7171ed512e46c90cb579a58f66851bad09b028220422ceb1ae85080ab4ffb958",
+     "got": "ce2235f7795d95cb24c0756e0b73a7e15132f4ee962360d73fe79eca1a64d4be"
+    },
+    {
+     "file": "model-00005-of-00012.safetensors",
+     "expected": "9fb9667695749e55d808f407d78f18f80bd8ff999175c2c480cad7075ff5b2cf",
+     "got": "e11a1ebc95f27eef7ff1142a4ddd3a13c734e34cae70edbc7d537453072ef7cf"
+    },
+    {
+     "file": "model-00006-of-00012.safetensors",
+     "expected": "91ae339063266e0c12da89af8aa0cfdb3f9dc9bb1b4b2678863793a28026dbe7",
+     "got": "edb5ab92c4e4bb0611e7f2126920959bf0158df096b6c7f93e15b2f67c759fb0"
+    },
+    {
+     "file": "model-00007-of-00012.safetensors",
+     "expected": "0497dda2b32df5d583caaffae35a96f3524a1e4305b850f4b1ce2e60fc354fe4",
+     "got": "0a4b969d506cdfd119094e6ca2a756827b90acc460d2df6b28da93f6b0d874eb"
+    },
+    {
+     "file": "model-00008-of-00012.safetensors",
+     "expected": "9061b71b9cc82e187bd72c8f4594c5c1d900b0bc98c416d72902209514cf8ac4",
+     "got": "5587ab9959a59330279056bf3c22c4b72fabe286dd0e84ae96763e601decba10"
+    },
+    {
+     "file": "model-00009-of-00012.safetensors",
+     "expected": "ebf2e19c3385d4b342e1517639293fe093ad793f41895862713e38603635c769",
+     "got": "020a0cb6ee0483165d39c1b568a54d028bf2f85ec1eadf586f6e3b390050fb70"
+    },
+    {
+     "file": "model-00010-of-00012.safetensors",
+     "expected": "d651ceb24678d80796a36f9a026f7178631b44e9d86f6f87e52093d915f702ad",
+     "got": "d76c2abd7b356bfe814f608467d63a698833118270289a9f1ad4755479afd91d"
+    },
+    {
+     "file": "model-00011-of-00012.safetensors",
+     "expected": "4a2de7fa772158381c7569a5699cadb9da3b06d92b802f54ac1c09f4a2c2e594",
+     "got": "6c3ef5020617f5ffa99c69904d3b2f8f771884e27bbdab78496fbc0134b9f48a"
+    },
+    {
+     "file": "model-00012-of-00012.safetensors",
+     "expected": "61f4d0c537a889d474396c6fb21ebb90946a64d70345403d47627ecb559e8e91",
+     "got": "ad43714500c30ea1efbfbc79d7f56e3b506f27997a090fa8b15400fc464c8a7f"
+    },
+    {
+     "file": "tokenizer.json",
+     "expected": "4667f2089529e8e7657cfb6d1c19910ae71ff5f28aa7ab2ff2763330affad795",
+     "got": "fa66c8c017ade193f7cc37a2b421a1fc461563e803f179a496f7bdda2ec42c21"
+    },
+    {
+     "file": "tokenizer.model",
+     "expected": "1299c11d7cf632ef3b4e11937501358ada021bbdf7c47638d13c0ee982f2e79c",
+     "got": "a81fa217b67ef4a1992b48a47651c27a2a19df419eafd1aad9c0bbd5ff49bde3"
+    }
+   ],
+   "verified_by": "blob-name",
+   "revision_resolved": "005ad3404e59d6023443cb575daa05336842228a",
+   "snapshot": "/root/hf/hub/models--google--gemma-3-27b-it/snapshots/005ad3404e59d6023443cb575daa05336842228a",
+   "weight_hash": null
+  }
+ ]
+}

@@ -1,0 +1,52 @@
+{
+ "generated": "2026-11-01T15:53:55Z",
+ "hash_bytes": false,
+ "repos": [
+  {
+   "repo": "google/gemma-2-9b-it",
+   "revision_requested": "11c9b309abf73637e4b6f9a3fa1e92e615547819",
+   "metadata_source": "hub",
+   "ok": false,
+   "files_expected": 11,
+   "files_verified": 5,
+   "lfs_files": 6,
+   "missing": [],
+   "mismatch": [
+    {
+     "file": "model-00001-of-00004.safetensors",
+     "expected": "a0d4eb4fcbddfe01b0dc7a58386a3980826ededaf0ecd67d1ef38995b89615ba",
+     "got": "e9e89e37f503a11bf02e90d31b7a95aaee1f2b0f66b8b968605a9d46b62f11b8"
+    },
+    {
+     "file": "model-00002-of-00004.safetensors",
+     "expected": "712a589c333f49f7b6f3870838a9e0ab4b3c0260abd5130e8c54316e6c99640b",
+     "got": "d6650228a13ae54c7dea9e0f2818f1fb396ecbe5ce6e677a65b7cb3e0843859a"
+    },
+    {
+     "file": "model-00003-of-00004.safetensors",
+     "expected": "5a9f84eb9846840802200c6502ccaaebf0a146ee89dcb8822fab795c392dd667",
+     "got": "fbe88fdbbfa8d0d753049e86ec363ed699dc46adcc14e0e8f3750c2f34e11ae5"
+    },
+    {
+     "file": "model-00004-of-00004.safetensors",
+     "expected": "3349b4960bbc0bf7e47a624e5c520881adb06e2da4bda6ed14b51c7f647fe26c",
+     "got": "4d8e49743616a897f7733dc77f94e941e9c67f75572bec4e75d2b5dd6e94dfc1"
+    },
+    {
+     "file": "tokenizer.json",
+     "expected": "3f289bc05132635a8bc7aca7aa21255efd5e18f3710f43e3cdb96bcd41be4922",
+     "got": "468f89786a084f976ebe64a0fb2ecf73029025701e08d5a125aa4239fff2908e"
+    },
+    {
+     "file": "tokenizer.model",
+     "expected": "61a7b147390c64585d6c3543dd6fc636906c9af3865a5548f27f31aee1d4c8e2",
+     "got": "fde8653f2f656fb4ab30c2a5db64ba86a916a86134355b76c3bf26a5b022b323"
+    }
+   ],
+   "verified_by": "blob-name",
+   "revision_resolved": "11c9b309abf73637e4b6f9a3fa1e92e615547819",
+   "snapshot": "/root/hf/hub/models--google--gemma-2-9b-it/snapshots/11c9b309abf73637e4b6f9a3fa1e92e615547819",
+   "weight_hash": null
+  }
+ ]
+}

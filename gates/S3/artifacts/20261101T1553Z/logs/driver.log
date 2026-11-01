@@ -1,0 +1,21 @@
+=== 2026-11-01T15:53:13Z stack
+NVIDIA RTX PRO 6000 Blackwell Server Edition, 595.91.07, 97887 MiB
+3.11.13 vllm 0.19.1 torch 2.10.0+cu128 NVIDIA RTX PRO 6000 Blackwell Server Edition
+=== 2026-11-01T15:53:40Z prompts
+prompt set verified 0495d0062e48b29a 720
+=== 2026-11-01T15:53:40Z llama-3.1-8b-it: weights
+overlay         200G   22G  179G  11% /
+STOP for llama-3.1-8b-it: weight_hash None != 495b73750141622d
+=== 2026-11-01T15:53:48Z gemma-2-9b-it: weights
+overlay         200G   37G  164G  19% /
+STOP for gemma-2-9b-it: weight_hash None != 7055bc8c5f456ced
+=== 2026-11-01T15:53:56Z qwen3.5-9b: weights
+overlay         200G   54G  147G  27% /
+STOP for qwen3.5-9b: weight_hash None != 4b570a1e6e5db4b9
+=== 2026-11-01T15:54:04Z gemma-3-27b-it: weights
+overlay         200G   72G  129G  36% /
+STOP for gemma-3-27b-it: weight_hash None != 34f745e7c6ef5b7b
+=== 2026-11-01T15:54:25Z qwen3.5-27b: weights
+overlay         200G  123G   78G  62% /
+STOP for qwen3.5-27b: weight_hash None != 5e536c8708a9430b
+=== 2026-11-01T15:54:45Z done

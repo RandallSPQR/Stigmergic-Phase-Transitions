@@ -1,0 +1,21 @@
+{
+ "generated": "2026-11-01T16:29:09Z",
+ "hash_bytes": true,
+ "repos": [
+  {
+   "repo": "google/gemma-3-27b-it",
+   "revision_requested": "005ad3404e59d6023443cb575daa05336842228a",
+   "metadata_source": "hub",
+   "ok": true,
+   "files_expected": 23,
+   "files_verified": 23,
+   "lfs_files": 14,
+   "missing": [],
+   "mismatch": [],
+   "verified_by": "sha256",
+   "revision_resolved": "005ad3404e59d6023443cb575daa05336842228a",
+   "snapshot": "/root/hf/hub/models--google--gemma-3-27b-it/snapshots/005ad3404e59d6023443cb575daa05336842228a",
+   "weight_hash": "34f745e7c6ef5b7b"
+  }
+ ]
+}
