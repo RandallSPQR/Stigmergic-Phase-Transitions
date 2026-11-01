@@ -42,9 +42,9 @@ for M in ${STPT_MODELS:-llama-3.1-8b-it gemma-2-9b-it qwen3.5-9b gemma-3-27b-it 
   read HFID REV WANT < <($PY -c "import sae_ethos_pipeline, lineup; e=lineup.models()['$M']; print(e['hf_id'], e['revision'], e['weight_hash'])")
   $PY -c "from huggingface_hub import snapshot_download as s; s('$HFID', revision='$REV', allow_patterns=['*.json','*.safetensors','tokenizer*','*.jinja','*.model','merges.txt','vocab.json'])" > "$OUT/logs/download_$M.log" 2>&1
   ROOTDIR=$($PY -c 'import sae_ethos_pipeline as s; print(s.ROOT)')
-  (cd "$ROOTDIR" && $PY -m calibrate.preflight_weights --repo "$HFID" --revision "$REV" --allow '*.json' '*.safetensors' 'tokenizer*' --out "$OUT/preflight_$M.json") > "$OUT/logs/preflight_$M.log" 2>&1
+  (cd "$ROOTDIR" && $PY -m calibrate.preflight_weights --repo "$HFID" --revision "$REV" --allow '*.json' '*.safetensors' 'tokenizer*' --hash --out "$OUT/preflight_$M.json")   # --hash: with huggingface-hub 1.x (xet) cache blob names are not the LFS sha256, so the blob-name mode cannot verify (S3 first pod) > "$OUT/logs/preflight_$M.log" 2>&1
   GOT=$($PY -c "import json; print(json.load(open('$OUT/preflight_$M.json'))['repos'][0]['weight_hash'])" 2>/dev/null)
-  if [ "$GOT" != "$WANT" ]; then echo "STOP for $M: weight_hash $GOT != $WANT"; continue; fi
+  if [ "$GOT" != "$WANT" ]; then echo "STOP for $M: weight_hash $GOT != $WANT"; rm -rf "$HF_HOME/hub/models--${HFID//\//--}" "$HF_HOME/xet"; upload; continue; fi
   step "$M: serve"
   STARTED=$(date -u +%FT%TZ)
   CMD=$(LINEUP_VLLM_PYTHON=$VPY /root/venv/bin/lineup-serve-cmd "$M"); echo "$CMD" > "$OUT/serve_cmd_$M.txt"

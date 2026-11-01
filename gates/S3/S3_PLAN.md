@@ -32,7 +32,7 @@ Also reported (not pass/fail):
   - the server-start ID;
   - the pipeline identity block, the StPT commit, and `pins.yaml`;
   - the prompt-set sha256.
-- Weights are verified at download by preflight (blob names = sha256) and deleted after each model.
+- Weights are verified at download by preflight `--hash` (bytes re-read; amended before any model was served: on the first pod the blob-name mode could not verify, because huggingface-hub 1.x cache blob names are not the LFS sha256) and deleted after each model.
 - Results upload to the private HF dataset after every model.
 - Hard cap 1.5 h (about $3.74); expected about 25 min, about $1. The watcher here terminates the pod on DONE or at the
   deadline.
