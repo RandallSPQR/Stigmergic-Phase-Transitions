@@ -1,0 +1,317 @@
+{
+ "band": [
+  0.6,
+  0.85
+ ],
+ "most": 0.6666666666666666,
+ "cells": [
+  {
+   "f": 0.3,
+   "set": "W",
+   "blind_representative": {
+    "median": 0.512,
+    "p10": 0.5005000000000001,
+    "p90": 0.5287499999999999,
+    "share_in_band": 0.0,
+    "in_region": false
+   },
+   "live_representative_median": 0.51625,
+   "live_minus_blind_median": 0.0022499999999999977,
+   "pooled_logodds_median": 4.0546510810816425
+  },
+  {
+   "f": 0.3,
+   "set": "WM",
+   "blind_representative": {
+    "median": 0.52225,
+    "p10": 0.509,
+    "p90": 0.5519999999999999,
+    "share_in_band": 0.0,
+    "in_region": false
+   },
+   "live_representative_median": 0.5395,
+   "live_minus_blind_median": 0.012499999999999994,
+   "pooled_logodds_median": 9.717611561217591
+  },
+  {
+   "f": 0.3,
+   "set": "WMS",
+   "blind_representative": {
+    "median": 0.5369999999999999,
+    "p10": 0.5115000000000001,
+    "p90": 0.56475,
+    "share_in_band": 0.0,
+    "in_region": false
+   },
+   "live_representative_median": 0.5645,
+   "live_minus_blind_median": 0.022,
+   "pooled_logodds_median": 24.895451048517042,
+   "blind_challenge": {
+    "median": 0.512,
+    "p10": 0.49350000000000005,
+    "p90": 0.53075,
+    "share_in_band": 0.0,
+    "in_region": false
+   },
+   "blind_mix_c0.25": {
+    "median": 0.5356875,
+    "p10": 0.5110625000000001,
+    "p90": 0.5531250000000001,
+    "share_in_band": 0.0,
+    "in_region": false
+   },
+   "blind_mix_c0.5": {
+    "median": 0.524875,
+    "p10": 0.5106250000000001,
+    "p90": 0.5411250000000001,
+    "share_in_band": 0.0,
+    "in_region": false
+   }
+  },
+  {
+   "f": 0.3,
+   "set": "MS",
+   "blind_representative": {
+    "median": 0.56525,
+    "p10": 0.53075,
+    "p90": 0.5967499999999999,
+    "share_in_band": 0.07407407407407407,
+    "in_region": false
+   },
+   "live_representative_median": 0.59975,
+   "live_minus_blind_median": 0.026750000000000006,
+   "pooled_logodds_median": 34.0569809487114
+  },
+  {
+   "f": 0.5,
+   "set": "W",
+   "blind_representative": {
+    "median": 0.5035000000000001,
+    "p10": 0.49375,
+    "p90": 0.52225,
+    "share_in_band": 0.0,
+    "in_region": false
+   },
+   "live_representative_median": 0.5117499999999999,
+   "live_minus_blind_median": 0.0049999999999999975,
+   "pooled_logodds_median": 5.2710464054061354
+  },
+  {
+   "f": 0.5,
+   "set": "WM",
+   "blind_representative": {
+    "median": 0.53425,
+    "p10": 0.51225,
+    "p90": 0.5635,
+    "share_in_band": 0.0,
+    "in_region": false
+   },
+   "live_representative_median": 0.55175,
+   "live_minus_blind_median": 0.014999999999999996,
+   "pooled_logodds_median": 15.498355077009917
+  },
+  {
+   "f": 0.5,
+   "set": "WMS",
+   "blind_representative": {
+    "median": 0.57875,
+    "p10": 0.5279999999999999,
+    "p90": 0.61175,
+    "share_in_band": 0.25925925925925924,
+    "in_region": false
+   },
+   "live_representative_median": 0.615,
+   "live_minus_blind_median": 0.03999999999999998,
+   "pooled_logodds_median": 40.39380612552698,
+   "blind_challenge": {
+    "median": 0.52525,
+    "p10": 0.4875,
+    "p90": 0.53625,
+    "share_in_band": 0.0,
+    "in_region": false
+   },
+   "blind_mix_c0.25": {
+    "median": 0.5668124999999999,
+    "p10": 0.5253124999999998,
+    "p90": 0.5854374999999999,
+    "share_in_band": 0.0,
+    "in_region": false
+   },
+   "blind_mix_c0.5": {
+    "median": 0.549,
+    "p10": 0.5226249999999999,
+    "p90": 0.5636249999999999,
+    "share_in_band": 0.0,
+    "in_region": false
+   }
+  },
+  {
+   "f": 0.5,
+   "set": "MS",
+   "blind_representative": {
+    "median": 0.5972500000000001,
+    "p10": 0.5255,
+    "p90": 0.6577500000000001,
+    "share_in_band": 0.4444444444444444,
+    "in_region": false
+   },
+   "live_representative_median": 0.6535,
+   "live_minus_blind_median": 0.04724999999999999,
+   "pooled_logodds_median": 61.522288165414146
+  },
+  {
+   "f": 0.7,
+   "set": "W",
+   "blind_representative": {
+    "median": 0.512,
+    "p10": 0.50025,
+    "p90": 0.5377500000000001,
+    "share_in_band": 0.0,
+    "in_region": false
+   },
+   "live_representative_median": 0.524,
+   "live_minus_blind_median": 0.007000000000000004,
+   "pooled_logodds_median": 5.676511513514301
+  },
+  {
+   "f": 0.7,
+   "set": "WM",
+   "blind_representative": {
+    "median": 0.5352499999999999,
+    "p10": 0.5065,
+    "p90": 0.60175,
+    "share_in_band": 0.1111111111111111,
+    "in_region": false
+   },
+   "live_representative_median": 0.5814999999999999,
+   "live_minus_blind_median": 0.018999999999999996,
+   "pooled_logodds_median": 22.266703362503158,
+   "blind_challenge": {
+    "median": 0.501,
+    "p10": 0.4885,
+    "p90": 0.51725,
+    "share_in_band": 0.0,
+    "in_region": false
+   },
+   "blind_mix_c0.25": {
+    "median": 0.5275624999999999,
+    "p10": 0.5034375,
+    "p90": 0.568875,
+    "share_in_band": 0.0,
+    "in_region": false
+   },
+   "blind_mix_c0.5": {
+    "median": 0.5226249999999999,
+    "p10": 0.502375,
+    "p90": 0.54925,
+    "share_in_band": 0.0,
+    "in_region": false
+   }
+  },
+  {
+   "f": 0.7,
+   "set": "WMS",
+   "blind_representative": {
+    "median": 0.594,
+    "p10": 0.529,
+    "p90": 0.66325,
+    "share_in_band": 0.48148148148148145,
+    "in_region": false
+   },
+   "live_representative_median": 0.65425,
+   "live_minus_blind_median": 0.04674999999999999,
+   "pooled_logodds_median": 54.27030077010424,
+   "blind_challenge": {
+    "median": 0.5335000000000001,
+    "p10": 0.48550000000000004,
+    "p90": 0.5654999999999999,
+    "share_in_band": 0.0,
+    "in_region": false
+   },
+   "blind_mix_c0.25": {
+    "median": 0.5811875,
+    "p10": 0.5276875000000001,
+    "p90": 0.6199375,
+    "share_in_band": 0.37037037037037035,
+    "in_region": false
+   },
+   "blind_mix_c0.5": {
+    "median": 0.5683750000000001,
+    "p10": 0.526375,
+    "p90": 0.5914999999999999,
+    "share_in_band": 0.037037037037037035,
+    "in_region": false
+   }
+  },
+  {
+   "f": 0.7,
+   "set": "MS",
+   "blind_representative": {
+    "median": 0.64275,
+    "p10": 0.5507500000000001,
+    "p90": 0.72675,
+    "share_in_band": 0.6666666666666666,
+    "in_region": true
+   },
+   "live_representative_median": 0.7157500000000001,
+   "live_minus_blind_median": 0.06499999999999999,
+   "pooled_logodds_median": 82.39592165010819
+  }
+ ],
+ "region_representative": [
+  [
+   0.7,
+   "MS"
+  ]
+ ],
+ "challenge_na": [
+  {
+   "f": 0.3,
+   "set": "W",
+   "challenge_boards": 0,
+   "why": "single accuracy level"
+  },
+  {
+   "f": 0.3,
+   "set": "WM",
+   "challenge_boards": 0,
+   "why": "profile misses the pooled margin"
+  },
+  {
+   "f": 0.3,
+   "set": "MS",
+   "challenge_boards": 0,
+   "why": "profile misses the pooled margin"
+  },
+  {
+   "f": 0.5,
+   "set": "W",
+   "challenge_boards": 0,
+   "why": "single accuracy level"
+  },
+  {
+   "f": 0.5,
+   "set": "WM",
+   "challenge_boards": 0,
+   "why": "profile misses the pooled margin"
+  },
+  {
+   "f": 0.5,
+   "set": "MS",
+   "challenge_boards": 0,
+   "why": "profile misses the pooled margin"
+  },
+  {
+   "f": 0.7,
+   "set": "W",
+   "challenge_boards": 0,
+   "why": "single accuracy level"
+  },
+  {
+   "f": 0.7,
+   "set": "MS",
+   "challenge_boards": 0,
+   "why": "profile misses the pooled margin"
+  }
+ ]
+}
