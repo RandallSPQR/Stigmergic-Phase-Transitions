@@ -75,18 +75,18 @@
  },
  "banks": {
   "confirmatory": {
-   "conf-ferry-A": "ae7f86470d1e7eb1b795feade6b2af049317e3ad1c191123fa668277aa5e5e33",
-   "conf-ferry-B": "ea0378341b03d7836a91d13bb816b1f9288f901f08ab8c9cdc6669424dad2355",
-   "conf-market-A": "fd54ad0d01c825864d0f1b12748fe27525a8ab01e017a127b6bdad19307d0923",
-   "conf-market-B": "d8f9a6173509956392ad445edff3beedd1bd7fbf2ba20f09d5dde488c0fe9042",
-   "conf-orchard-A": "e9a2ef0dc5cc740fdad4d49286014328ccd7fe554730b5a017e3a164e35d97fb",
-   "conf-orchard-B": "fea9a9dc2ce0d7d71bf34d9df1c3c74a2e0bc8431c9156277548a4a6db4348f3",
-   "conf-parcel-A": "d8ee4de2a7c43dd7a876db48b9a4fc3de2abba228d34e697653eb3c5e6ce9335",
-   "conf-parcel-B": "507ed323e5331911f0ac3852f363b9600b5dce4ec0e4b82c1035b0e29270dcf1",
-   "conf-train-A": "7d459deb570a656ed85c73d58265146011f4b299ba2f93c6ae87b2baaec228f6",
-   "conf-train-B": "668fbed0d9d320406cf3bacc409ccec97dccf6763d4383a971390e4418a00da7",
-   "conf-tunnel-A": "dc29c2c5f737fb4a1b2fd314cb5ed2a783e08268870259b18002c824a9632b40",
-   "conf-tunnel-B": "a06cae4437e4a821ac4ccf4e04708ba664b3b4d36796043b2e6e7bbf8b76fc84"
+   "conf-ferry-A": "f8dcaf86ddbd5e3ed6ee97e8a16c4b0527027cb96d277220bd90e396e9addefd",
+   "conf-ferry-B": "e482854d4f63876f8db2431ab018148056120e7b296b0ae421fa099ba58b77a1",
+   "conf-market-A": "259fcfe3158f32b09f53d5b920b9b912807e7e31bf7cf475309a97b2cad59f79",
+   "conf-market-B": "270d8d64867fd95463a4095b46d3f4f2195506401194dcff63fabc1ad1223410",
+   "conf-orchard-A": "c9caf63576b641ba16f4f963e7695b824639d4bab79066504a430f3af63303ce",
+   "conf-orchard-B": "729900a503e04ad88f2f75a1fc3da76a818275c1f06475b3900254bc6f0f0e3e",
+   "conf-parcel-A": "f530630c0bc8cc8e26c52424b54c3bb67de9f6215daa9158970b7b6b503df3e0",
+   "conf-parcel-B": "5aa05d2abe680bcd5d48e5dccefab753d018dd7406bbc8cd8d278bc2adfeba0f",
+   "conf-train-A": "2854266eab80c3fdf5b7135e6a7344e62f10f703c71abb59a8402f814725e089",
+   "conf-train-B": "63ed616d861e996368a1d3365ea9f88a46f252dc304c45577acaa5aa89e4b121",
+   "conf-tunnel-A": "47f72871057d34b3bb3ff2aa063f08ab744fce2970e759eb9f345b3c3277aa8b",
+   "conf-tunnel-B": "793372dfd3c812cd3cf709826126e42ea460635630cf1d724e0462259c4349cd"
   },
   "development": {
    "dev-bridge-A": "c60fd59f5e796bf9ae5a549ee1ca9b481b760ac241af131d50a880c167a05e02",

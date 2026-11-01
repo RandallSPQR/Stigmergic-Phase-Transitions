@@ -7,7 +7,7 @@ before the freeze (S10); a change is a prospective amendment, logged in the coor
 | convention | proposal | why |
 |---|---|---|
 | Evidence item | a report from a named source with a **stated accuracy in plain frequencies**, favouring one option ("A guard who is right 3 times out of 4 says the east bridge is open.") | The designed likelihood ratio follows from the text: LR = a/(1 − a) for a symmetric source. That makes it objective and separate from model responsiveness (S5). |
-| Accuracy levels | 3 in 5 (LR 1.5), 3 in 4 (LR 3), 9 in 10 (LR 9), equal weights | Weak, moderate and strong evidence, spaced about evenly in log LR (0.41, 1.10, 2.20) |
+| Accuracy levels | **Confirmatory: 3 in 4 (LR 3) and 9 in 10 (LR 9), equal weights, at informed fraction 0.5 (D18).** Development bank, until S8: 3 in 5 (LR 1.5), 3 in 4 (LR 3), 9 in 10 (LR 9), equal weights | Weak, moderate and strong evidence, spaced about evenly in log LR (0.41, 1.10, 2.20) |
 | Informed fraction | 0.5: 50 of 100 positions hold one report; the other 50 are told they have no report | The middle level. Rung 2 varies it (the dose). |
 | Reports per informed agent | 1 | Keeps the kernel's evidence input one-dimensional (an accuracy level and a direction). |
 | Report direction | drawn from the generative model: favours the true option with probability = its stated accuracy | Representative allocations. No selection on outcomes. |
@@ -24,7 +24,9 @@ before the freeze (S10); a change is a prospective amendment, logged in the coor
 **Decided 2026-11-01 (D15–D17):**
 - The accuracy levels, informed fraction 0.5 and margin 3.0 are accepted as provisional values.
 - The confirmatory bank has no shared-report variants.
-- Difficulty is chosen by blind-board accuracy only (`gates/S2/difficulty/`).
+- Difficulty is chosen by simulated power (D18, `gates/S2/difficulty/POWER_REPORT.md`): the **confirmatory source set is
+  {3/4, 9/10} at informed fraction 0.5**. The 12 confirmatory specs carry it; their hashes are in `banks/MANIFEST.json`.
+  The development bank keeps {3/5, 3/4, 9/10} until the S8 pilot, which tests settings from the D18 region.
 
 Still open: the bank sizes (after S9), and the difficulty setting (CPU grid now; measured kernels after S3–S5; S8
 pilots 2–3 settings).
