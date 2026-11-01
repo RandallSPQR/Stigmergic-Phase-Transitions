@@ -14,7 +14,7 @@ dispersed private evidence? And does a temporary change to what agents see leave
 |---|---|---|---|
 | Shared five-model pipeline (LOCKED) | RandallSPQR/SAE-Ethos-Calibration | `v1.2.0` | `5ca15f56a71f35d5818d0392f7f3b4acb2d85d1b` |
 | SPT release (harness + simulator source; S0 replay) | RandallSPQR/social-phase-transitions-public | `v1.0.1` | `c37a91d2d2561fdf78fc61af500ea000aac3ea2f` |
-| Shared coordination record | RandallSPQR/StPT-MP-Coordination | none | `094832f0298a13b6df49a1568a63bb23e9e6028e` |
+| Shared coordination record | RandallSPQR/StPT-MP-Coordination | none | `781a695a7bf29ef98c4a1d8e47fe90742d8c1e08` |
 
 Models (pipeline v1.2.0):
 - Llama-3.1-8B-Instruct, Gemma-2-9B-IT, Gemma-3-27B-IT.
@@ -48,8 +48,9 @@ across the two; a TOST for each.
 | Step 0: shared pipeline built, tagged, locked, published; SPT release pinned | **done** |
 | S0: pipeline + SPT harness replay | **CLOSED 2026-11-01**: passed; restart drift accepted on v1.2.0 with server-start blocking (D14; `gates/S0/S0_REPORT.md`) |
 | S1: simulator checks (CPU only) | **CLOSED 2026-11-01**: passes under Amendment 1 (DV1); original-plan failure kept on record (`gates/S1/S1_REPORT.md`) |
-| S2: evidence specifications | **passes** (28 specs before any model call; schema v1.0); conventions accepted as provisional (D15–D16); difficulty grid (CPU): no cell at f = 0.5 in the pre-stated band, owner to choose (`gates/S2/difficulty/REPORT.md`) |
-| S3–S10 | not started |
+| S2: evidence specifications | **passes** (28 specs before any model call; schema v1.0); conventions accepted as provisional (D15–D16); difficulty chosen by simulated power before live data: f 0.5, sources {3/4, 9/10}; S8 region adds {3/5, 3/4, 9/10} (D18; `gates/S2/difficulty/POWER_REPORT.md`) |
+| S3: comprehension (GPU) | in progress (owner-approved) |
+| S4–S10 | not started |
 
 ## Layout
 
