@@ -1,0 +1,38 @@
+{
+ "bank": "development",
+ "challenge_set": false,
+ "conventions": "gates/S2/CONVENTIONS.md (provisional)",
+ "evidence_model": {
+  "accuracy_mix": [
+   "3/5",
+   "3/4",
+   "9/10"
+  ],
+  "accuracy_weights": [
+   1,
+   1,
+   1
+  ],
+  "informed_fraction": 0.5,
+  "reports_per_informed_agent": 1,
+  "shared": [],
+  "type": "independent_reports"
+ },
+ "hidden_state": "A",
+ "pooled_margin_logodds": 3.0,
+ "prior": 0.5,
+ "scenario_id": "dev-crate-A",
+ "schema_version": "1.0",
+ "story": {
+  "options": {
+   "A": "the red crate",
+   "B": "the blue crate"
+  },
+  "question": "Which crate holds the spare parts: {A} or {B}?",
+  "report": "{source} who is right {freq} says {option} holds the spare parts.",
+  "source": "a warehouse clerk",
+  "uninformed": "You have no report about which crate holds the spare parts."
+ },
+ "story_key": "crate",
+ "study": "StPT"
+}

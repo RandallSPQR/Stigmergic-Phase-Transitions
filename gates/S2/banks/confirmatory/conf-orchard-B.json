@@ -1,0 +1,38 @@
+{
+ "bank": "confirmatory",
+ "challenge_set": false,
+ "conventions": "gates/S2/CONVENTIONS.md (provisional)",
+ "evidence_model": {
+  "accuracy_mix": [
+   "3/5",
+   "3/4",
+   "9/10"
+  ],
+  "accuracy_weights": [
+   1,
+   1,
+   1
+  ],
+  "informed_fraction": 0.5,
+  "reports_per_informed_agent": 1,
+  "shared": [],
+  "type": "independent_reports"
+ },
+ "hidden_state": "B",
+ "pooled_margin_logodds": 3.0,
+ "prior": 0.5,
+ "scenario_id": "conf-orchard-B",
+ "schema_version": "1.0",
+ "story": {
+  "options": {
+   "A": "the first row",
+   "B": "the last row"
+  },
+  "question": "Which orchard row is ready to pick: {A} or {B}?",
+  "report": "{source} who is right {freq} says {option} is ready to pick.",
+  "source": "a farmhand",
+  "uninformed": "You have no report about which orchard row is ready to pick."
+ },
+ "story_key": "orchard",
+ "study": "StPT"
+}

@@ -1,0 +1,38 @@
+{
+ "bank": "confirmatory",
+ "challenge_set": false,
+ "conventions": "gates/S2/CONVENTIONS.md (provisional)",
+ "evidence_model": {
+  "accuracy_mix": [
+   "3/5",
+   "3/4",
+   "9/10"
+  ],
+  "accuracy_weights": [
+   1,
+   1,
+   1
+  ],
+  "informed_fraction": 0.5,
+  "reports_per_informed_agent": 1,
+  "shared": [],
+  "type": "independent_reports"
+ },
+ "hidden_state": "A",
+ "pooled_margin_logodds": 3.0,
+ "prior": 0.5,
+ "scenario_id": "conf-market-A",
+ "schema_version": "1.0",
+ "story": {
+  "options": {
+   "A": "the corner stall",
+   "B": "the square stall"
+  },
+  "question": "Which stall still has bread: {A} or {B}?",
+  "report": "{source} who is right {freq} says {option} still has bread.",
+  "source": "a shopper",
+  "uninformed": "You have no report about which stall still has bread."
+ },
+ "story_key": "market",
+ "study": "StPT"
+}

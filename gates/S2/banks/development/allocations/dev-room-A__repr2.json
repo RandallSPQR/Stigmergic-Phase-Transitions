@@ -1,0 +1,620 @@
+{
+ "N": 100,
+ "alloc_seed": 382311441102101128,
+ "held_reports": 50,
+ "held_reports_favouring_truth": 39,
+ "holders": {
+  "0": [
+   "r0"
+  ],
+  "1": [
+   "r1"
+  ],
+  "10": [],
+  "11": [
+   "r7"
+  ],
+  "12": [],
+  "13": [],
+  "14": [
+   "r8"
+  ],
+  "15": [],
+  "16": [],
+  "17": [
+   "r9"
+  ],
+  "18": [],
+  "19": [],
+  "2": [],
+  "20": [],
+  "21": [],
+  "22": [
+   "r10"
+  ],
+  "23": [
+   "r11"
+  ],
+  "24": [],
+  "25": [
+   "r12"
+  ],
+  "26": [],
+  "27": [],
+  "28": [],
+  "29": [],
+  "3": [
+   "r2"
+  ],
+  "30": [],
+  "31": [],
+  "32": [
+   "r13"
+  ],
+  "33": [
+   "r14"
+  ],
+  "34": [
+   "r15"
+  ],
+  "35": [
+   "r16"
+  ],
+  "36": [
+   "r17"
+  ],
+  "37": [
+   "r18"
+  ],
+  "38": [
+   "r19"
+  ],
+  "39": [
+   "r20"
+  ],
+  "4": [
+   "r3"
+  ],
+  "40": [
+   "r21"
+  ],
+  "41": [],
+  "42": [
+   "r22"
+  ],
+  "43": [],
+  "44": [
+   "r23"
+  ],
+  "45": [],
+  "46": [],
+  "47": [
+   "r24"
+  ],
+  "48": [],
+  "49": [
+   "r25"
+  ],
+  "5": [
+   "r4"
+  ],
+  "50": [
+   "r26"
+  ],
+  "51": [
+   "r27"
+  ],
+  "52": [
+   "r28"
+  ],
+  "53": [
+   "r29"
+  ],
+  "54": [],
+  "55": [],
+  "56": [],
+  "57": [],
+  "58": [
+   "r30"
+  ],
+  "59": [],
+  "6": [
+   "r5"
+  ],
+  "60": [],
+  "61": [],
+  "62": [
+   "r31"
+  ],
+  "63": [
+   "r32"
+  ],
+  "64": [],
+  "65": [
+   "r33"
+  ],
+  "66": [
+   "r34"
+  ],
+  "67": [],
+  "68": [
+   "r35"
+  ],
+  "69": [],
+  "7": [
+   "r6"
+  ],
+  "70": [
+   "r36"
+  ],
+  "71": [
+   "r37"
+  ],
+  "72": [],
+  "73": [],
+  "74": [
+   "r38"
+  ],
+  "75": [],
+  "76": [],
+  "77": [
+   "r39"
+  ],
+  "78": [],
+  "79": [],
+  "8": [],
+  "80": [
+   "r40"
+  ],
+  "81": [],
+  "82": [
+   "r41"
+  ],
+  "83": [
+   "r42"
+  ],
+  "84": [],
+  "85": [],
+  "86": [],
+  "87": [
+   "r43"
+  ],
+  "88": [],
+  "89": [],
+  "9": [],
+  "90": [
+   "r44"
+  ],
+  "91": [],
+  "92": [
+   "r45"
+  ],
+  "93": [
+   "r46"
+  ],
+  "94": [],
+  "95": [],
+  "96": [
+   "r47"
+  ],
+  "97": [
+   "r48"
+  ],
+  "98": [],
+  "99": [
+   "r49"
+  ]
+ },
+ "informed_positions": 50,
+ "items": {
+  "r0": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 9 times out of 10 says the meeting is in room 12."
+  },
+  "r1": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 9 times out of 10 says the meeting is in room 12."
+  },
+  "r10": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 3 times out of 4 says the meeting is in room 12."
+  },
+  "r11": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 3 times out of 5 says the meeting is in room 12."
+  },
+  "r12": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 3 times out of 4 says the meeting is in room 12."
+  },
+  "r13": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 9 times out of 10 says the meeting is in room 12."
+  },
+  "r14": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 3 times out of 4 says the meeting is in room 12."
+  },
+  "r15": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 9 times out of 10 says the meeting is in room 12."
+  },
+  "r16": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 9 times out of 10 says the meeting is in room 12."
+  },
+  "r17": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 3.0,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 3 times out of 4 says the meeting is in room 14."
+  },
+  "r18": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 3 times out of 5 says the meeting is in room 12."
+  },
+  "r19": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 3.0,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 3 times out of 4 says the meeting is in room 14."
+  },
+  "r2": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 3 times out of 5 says the meeting is in room 12."
+  },
+  "r20": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 3 times out of 5 says the meeting is in room 14."
+  },
+  "r21": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 3 times out of 4 says the meeting is in room 12."
+  },
+  "r22": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 3 times out of 4 says the meeting is in room 12."
+  },
+  "r23": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 9 times out of 10 says the meeting is in room 12."
+  },
+  "r24": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 3 times out of 4 says the meeting is in room 12."
+  },
+  "r25": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 3 times out of 5 says the meeting is in room 12."
+  },
+  "r26": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 3 times out of 5 says the meeting is in room 12."
+  },
+  "r27": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 9 times out of 10 says the meeting is in room 12."
+  },
+  "r28": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 9 times out of 10 says the meeting is in room 12."
+  },
+  "r29": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 3 times out of 5 says the meeting is in room 14."
+  },
+  "r3": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 3 times out of 5 says the meeting is in room 12."
+  },
+  "r30": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 9.000000000000002,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 9 times out of 10 says the meeting is in room 14."
+  },
+  "r31": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 9 times out of 10 says the meeting is in room 12."
+  },
+  "r32": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 3 times out of 5 says the meeting is in room 14."
+  },
+  "r33": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 3 times out of 5 says the meeting is in room 12."
+  },
+  "r34": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 3 times out of 5 says the meeting is in room 12."
+  },
+  "r35": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 9 times out of 10 says the meeting is in room 12."
+  },
+  "r36": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 9 times out of 10 says the meeting is in room 12."
+  },
+  "r37": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 9 times out of 10 says the meeting is in room 12."
+  },
+  "r38": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 9 times out of 10 says the meeting is in room 12."
+  },
+  "r39": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 3.0,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 3 times out of 4 says the meeting is in room 14."
+  },
+  "r4": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 3 times out of 5 says the meeting is in room 12."
+  },
+  "r40": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 3 times out of 4 says the meeting is in room 12."
+  },
+  "r41": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 3.0,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 3 times out of 4 says the meeting is in room 14."
+  },
+  "r42": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 3 times out of 5 says the meeting is in room 12."
+  },
+  "r43": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 3.0,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 3 times out of 4 says the meeting is in room 14."
+  },
+  "r44": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 3 times out of 4 says the meeting is in room 12."
+  },
+  "r45": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 3 times out of 5 says the meeting is in room 12."
+  },
+  "r46": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 3 times out of 4 says the meeting is in room 12."
+  },
+  "r47": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 3 times out of 5 says the meeting is in room 12."
+  },
+  "r48": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 3.0,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 3 times out of 4 says the meeting is in room 14."
+  },
+  "r49": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 3 times out of 5 says the meeting is in room 12."
+  },
+  "r5": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 9.000000000000002,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 9 times out of 10 says the meeting is in room 14."
+  },
+  "r6": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 3 times out of 5 says the meeting is in room 12."
+  },
+  "r7": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 3 times out of 4 says the meeting is in room 12."
+  },
+  "r8": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 9 times out of 10 says the meeting is in room 12."
+  },
+  "r9": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a receptionist",
+   "text": "A receptionist who is right 3 times out of 4 says the meeting is in room 12."
+  }
+ },
+ "kind": "representative",
+ "margin": 3.0,
+ "minority_correct": false,
+ "pooled_logodds_toward_truth": 36.319872560564995,
+ "replaced_seeds": [],
+ "scenario_id": "dev-room-A",
+ "schema_version": "1.0",
+ "sha256": "7c4f34e88c65d248d278ee715e7a9debe9e144feaef009b6274641be32de81b8",
+ "solvable": true
+}

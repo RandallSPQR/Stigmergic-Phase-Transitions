@@ -1,0 +1,620 @@
+{
+ "N": 100,
+ "alloc_seed": 606037859639311608,
+ "held_reports": 50,
+ "held_reports_favouring_truth": 38,
+ "holders": {
+  "0": [
+   "r0"
+  ],
+  "1": [],
+  "10": [
+   "r6"
+  ],
+  "11": [
+   "r7"
+  ],
+  "12": [],
+  "13": [],
+  "14": [],
+  "15": [
+   "r8"
+  ],
+  "16": [
+   "r9"
+  ],
+  "17": [],
+  "18": [],
+  "19": [],
+  "2": [
+   "r1"
+  ],
+  "20": [],
+  "21": [],
+  "22": [
+   "r10"
+  ],
+  "23": [],
+  "24": [],
+  "25": [
+   "r11"
+  ],
+  "26": [],
+  "27": [],
+  "28": [
+   "r12"
+  ],
+  "29": [],
+  "3": [
+   "r2"
+  ],
+  "30": [],
+  "31": [],
+  "32": [],
+  "33": [
+   "r13"
+  ],
+  "34": [
+   "r14"
+  ],
+  "35": [
+   "r15"
+  ],
+  "36": [
+   "r16"
+  ],
+  "37": [
+   "r17"
+  ],
+  "38": [],
+  "39": [],
+  "4": [
+   "r3"
+  ],
+  "40": [],
+  "41": [
+   "r18"
+  ],
+  "42": [
+   "r19"
+  ],
+  "43": [],
+  "44": [
+   "r20"
+  ],
+  "45": [],
+  "46": [],
+  "47": [],
+  "48": [
+   "r21"
+  ],
+  "49": [
+   "r22"
+  ],
+  "5": [
+   "r4"
+  ],
+  "50": [],
+  "51": [],
+  "52": [
+   "r23"
+  ],
+  "53": [],
+  "54": [
+   "r24"
+  ],
+  "55": [],
+  "56": [
+   "r25"
+  ],
+  "57": [],
+  "58": [],
+  "59": [
+   "r26"
+  ],
+  "6": [],
+  "60": [
+   "r27"
+  ],
+  "61": [],
+  "62": [],
+  "63": [
+   "r28"
+  ],
+  "64": [
+   "r29"
+  ],
+  "65": [
+   "r30"
+  ],
+  "66": [],
+  "67": [
+   "r31"
+  ],
+  "68": [
+   "r32"
+  ],
+  "69": [],
+  "7": [],
+  "70": [
+   "r33"
+  ],
+  "71": [
+   "r34"
+  ],
+  "72": [],
+  "73": [
+   "r35"
+  ],
+  "74": [],
+  "75": [
+   "r36"
+  ],
+  "76": [
+   "r37"
+  ],
+  "77": [
+   "r38"
+  ],
+  "78": [
+   "r39"
+  ],
+  "79": [],
+  "8": [
+   "r5"
+  ],
+  "80": [
+   "r40"
+  ],
+  "81": [
+   "r41"
+  ],
+  "82": [
+   "r42"
+  ],
+  "83": [],
+  "84": [
+   "r43"
+  ],
+  "85": [],
+  "86": [],
+  "87": [
+   "r44"
+  ],
+  "88": [
+   "r45"
+  ],
+  "89": [],
+  "9": [],
+  "90": [],
+  "91": [
+   "r46"
+  ],
+  "92": [],
+  "93": [
+   "r47"
+  ],
+  "94": [],
+  "95": [],
+  "96": [],
+  "97": [
+   "r48"
+  ],
+  "98": [],
+  "99": [
+   "r49"
+  ]
+ },
+ "informed_positions": 50,
+ "items": {
+  "r0": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 9.000000000000002,
+   "source": "a water tester",
+   "text": "A water tester who is right 9 times out of 10 says the south well has safe water."
+  },
+  "r1": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 3.0,
+   "source": "a water tester",
+   "text": "A water tester who is right 3 times out of 4 says the south well has safe water."
+  },
+  "r10": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a water tester",
+   "text": "A water tester who is right 3 times out of 5 says the south well has safe water."
+  },
+  "r11": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 3.0,
+   "source": "a water tester",
+   "text": "A water tester who is right 3 times out of 4 says the south well has safe water."
+  },
+  "r12": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a water tester",
+   "text": "A water tester who is right 9 times out of 10 says the north well has safe water."
+  },
+  "r13": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a water tester",
+   "text": "A water tester who is right 3 times out of 5 says the north well has safe water."
+  },
+  "r14": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a water tester",
+   "text": "A water tester who is right 9 times out of 10 says the north well has safe water."
+  },
+  "r15": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a water tester",
+   "text": "A water tester who is right 3 times out of 5 says the south well has safe water."
+  },
+  "r16": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a water tester",
+   "text": "A water tester who is right 3 times out of 5 says the south well has safe water."
+  },
+  "r17": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a water tester",
+   "text": "A water tester who is right 9 times out of 10 says the north well has safe water."
+  },
+  "r18": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 9.000000000000002,
+   "source": "a water tester",
+   "text": "A water tester who is right 9 times out of 10 says the south well has safe water."
+  },
+  "r19": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a water tester",
+   "text": "A water tester who is right 9 times out of 10 says the north well has safe water."
+  },
+  "r2": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a water tester",
+   "text": "A water tester who is right 3 times out of 4 says the north well has safe water."
+  },
+  "r20": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 3.0,
+   "source": "a water tester",
+   "text": "A water tester who is right 3 times out of 4 says the south well has safe water."
+  },
+  "r21": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a water tester",
+   "text": "A water tester who is right 3 times out of 4 says the north well has safe water."
+  },
+  "r22": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 9.000000000000002,
+   "source": "a water tester",
+   "text": "A water tester who is right 9 times out of 10 says the south well has safe water."
+  },
+  "r23": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a water tester",
+   "text": "A water tester who is right 9 times out of 10 says the north well has safe water."
+  },
+  "r24": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 9.000000000000002,
+   "source": "a water tester",
+   "text": "A water tester who is right 9 times out of 10 says the south well has safe water."
+  },
+  "r25": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a water tester",
+   "text": "A water tester who is right 9 times out of 10 says the north well has safe water."
+  },
+  "r26": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a water tester",
+   "text": "A water tester who is right 3 times out of 5 says the south well has safe water."
+  },
+  "r27": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a water tester",
+   "text": "A water tester who is right 3 times out of 4 says the north well has safe water."
+  },
+  "r28": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a water tester",
+   "text": "A water tester who is right 9 times out of 10 says the north well has safe water."
+  },
+  "r29": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a water tester",
+   "text": "A water tester who is right 3 times out of 5 says the north well has safe water."
+  },
+  "r3": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a water tester",
+   "text": "A water tester who is right 3 times out of 4 says the north well has safe water."
+  },
+  "r30": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a water tester",
+   "text": "A water tester who is right 3 times out of 4 says the north well has safe water."
+  },
+  "r31": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a water tester",
+   "text": "A water tester who is right 3 times out of 5 says the north well has safe water."
+  },
+  "r32": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a water tester",
+   "text": "A water tester who is right 3 times out of 5 says the north well has safe water."
+  },
+  "r33": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a water tester",
+   "text": "A water tester who is right 9 times out of 10 says the north well has safe water."
+  },
+  "r34": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a water tester",
+   "text": "A water tester who is right 9 times out of 10 says the north well has safe water."
+  },
+  "r35": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a water tester",
+   "text": "A water tester who is right 3 times out of 4 says the north well has safe water."
+  },
+  "r36": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a water tester",
+   "text": "A water tester who is right 9 times out of 10 says the north well has safe water."
+  },
+  "r37": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a water tester",
+   "text": "A water tester who is right 3 times out of 4 says the north well has safe water."
+  },
+  "r38": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a water tester",
+   "text": "A water tester who is right 9 times out of 10 says the north well has safe water."
+  },
+  "r39": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a water tester",
+   "text": "A water tester who is right 3 times out of 5 says the north well has safe water."
+  },
+  "r4": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a water tester",
+   "text": "A water tester who is right 3 times out of 4 says the north well has safe water."
+  },
+  "r40": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a water tester",
+   "text": "A water tester who is right 9 times out of 10 says the north well has safe water."
+  },
+  "r41": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a water tester",
+   "text": "A water tester who is right 3 times out of 5 says the north well has safe water."
+  },
+  "r42": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a water tester",
+   "text": "A water tester who is right 3 times out of 4 says the north well has safe water."
+  },
+  "r43": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a water tester",
+   "text": "A water tester who is right 9 times out of 10 says the north well has safe water."
+  },
+  "r44": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 3.0,
+   "source": "a water tester",
+   "text": "A water tester who is right 3 times out of 4 says the south well has safe water."
+  },
+  "r45": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a water tester",
+   "text": "A water tester who is right 9 times out of 10 says the north well has safe water."
+  },
+  "r46": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a water tester",
+   "text": "A water tester who is right 3 times out of 4 says the north well has safe water."
+  },
+  "r47": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a water tester",
+   "text": "A water tester who is right 9 times out of 10 says the north well has safe water."
+  },
+  "r48": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a water tester",
+   "text": "A water tester who is right 3 times out of 4 says the north well has safe water."
+  },
+  "r49": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a water tester",
+   "text": "A water tester who is right 3 times out of 5 says the north well has safe water."
+  },
+  "r5": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a water tester",
+   "text": "A water tester who is right 9 times out of 10 says the north well has safe water."
+  },
+  "r6": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a water tester",
+   "text": "A water tester who is right 3 times out of 5 says the north well has safe water."
+  },
+  "r7": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a water tester",
+   "text": "A water tester who is right 9 times out of 10 says the north well has safe water."
+  },
+  "r8": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a water tester",
+   "text": "A water tester who is right 3 times out of 5 says the north well has safe water."
+  },
+  "r9": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a water tester",
+   "text": "A water tester who is right 3 times out of 4 says the north well has safe water."
+  }
+ },
+ "kind": "representative",
+ "margin": 3.0,
+ "minority_correct": false,
+ "pooled_logodds_toward_truth": 39.38014335525656,
+ "replaced_seeds": [],
+ "scenario_id": "dev-well-A",
+ "schema_version": "1.0",
+ "sha256": "2cc78454dd2390e3df9275e5d0164972cfa57ba17509a7949a2f0e44b100f4ed",
+ "solvable": true
+}

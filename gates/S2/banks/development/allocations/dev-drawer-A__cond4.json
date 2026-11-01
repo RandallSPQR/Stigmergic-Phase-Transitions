@@ -1,0 +1,539 @@
+{
+ "N": 100,
+ "alloc_seed": 759849533055090395,
+ "held_reports": 42,
+ "held_reports_favouring_truth": 12,
+ "holders": {
+  "0": [],
+  "1": [],
+  "10": [],
+  "11": [],
+  "12": [
+   "c41"
+  ],
+  "13": [
+   "c40"
+  ],
+  "14": [
+   "c32"
+  ],
+  "15": [
+   "c20"
+  ],
+  "16": [
+   "c31"
+  ],
+  "17": [],
+  "18": [],
+  "19": [
+   "c36"
+  ],
+  "2": [],
+  "20": [],
+  "21": [
+   "c18"
+  ],
+  "22": [
+   "c5"
+  ],
+  "23": [
+   "c21"
+  ],
+  "24": [],
+  "25": [],
+  "26": [],
+  "27": [
+   "c30"
+  ],
+  "28": [
+   "c4"
+  ],
+  "29": [
+   "c19"
+  ],
+  "3": [],
+  "30": [],
+  "31": [
+   "c1"
+  ],
+  "32": [],
+  "33": [],
+  "34": [],
+  "35": [],
+  "36": [],
+  "37": [],
+  "38": [
+   "c38"
+  ],
+  "39": [
+   "c22"
+  ],
+  "4": [],
+  "40": [
+   "c11"
+  ],
+  "41": [
+   "c29"
+  ],
+  "42": [
+   "c37"
+  ],
+  "43": [
+   "c33"
+  ],
+  "44": [
+   "c35"
+  ],
+  "45": [],
+  "46": [],
+  "47": [],
+  "48": [],
+  "49": [],
+  "5": [],
+  "50": [],
+  "51": [
+   "c3"
+  ],
+  "52": [],
+  "53": [
+   "c34"
+  ],
+  "54": [
+   "c23"
+  ],
+  "55": [],
+  "56": [
+   "c28"
+  ],
+  "57": [],
+  "58": [],
+  "59": [],
+  "6": [
+   "c13"
+  ],
+  "60": [
+   "c12"
+  ],
+  "61": [
+   "c17"
+  ],
+  "62": [
+   "c15"
+  ],
+  "63": [
+   "c25"
+  ],
+  "64": [
+   "c0"
+  ],
+  "65": [],
+  "66": [],
+  "67": [
+   "c2"
+  ],
+  "68": [],
+  "69": [
+   "c10"
+  ],
+  "7": [],
+  "70": [],
+  "71": [],
+  "72": [],
+  "73": [],
+  "74": [],
+  "75": [
+   "c6"
+  ],
+  "76": [],
+  "77": [
+   "c39"
+  ],
+  "78": [],
+  "79": [],
+  "8": [],
+  "80": [
+   "c7"
+  ],
+  "81": [],
+  "82": [],
+  "83": [
+   "c14"
+  ],
+  "84": [],
+  "85": [
+   "c27"
+  ],
+  "86": [],
+  "87": [
+   "c26"
+  ],
+  "88": [],
+  "89": [
+   "c8"
+  ],
+  "9": [],
+  "90": [],
+  "91": [],
+  "92": [],
+  "93": [],
+  "94": [],
+  "95": [
+   "c9"
+  ],
+  "96": [],
+  "97": [
+   "c24"
+  ],
+  "98": [
+   "c16"
+  ],
+  "99": []
+ },
+ "informed_positions": 42,
+ "items": {
+  "c0": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a housemate",
+   "text": "A housemate who is right 9 times out of 10 says the key is in the left drawer."
+  },
+  "c1": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a housemate",
+   "text": "A housemate who is right 9 times out of 10 says the key is in the left drawer."
+  },
+  "c10": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a housemate",
+   "text": "A housemate who is right 9 times out of 10 says the key is in the left drawer."
+  },
+  "c11": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a housemate",
+   "text": "A housemate who is right 9 times out of 10 says the key is in the left drawer."
+  },
+  "c12": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a housemate",
+   "text": "A housemate who is right 3 times out of 5 says the key is in the right drawer."
+  },
+  "c13": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a housemate",
+   "text": "A housemate who is right 3 times out of 5 says the key is in the right drawer."
+  },
+  "c14": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a housemate",
+   "text": "A housemate who is right 3 times out of 5 says the key is in the right drawer."
+  },
+  "c15": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a housemate",
+   "text": "A housemate who is right 3 times out of 5 says the key is in the right drawer."
+  },
+  "c16": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a housemate",
+   "text": "A housemate who is right 3 times out of 5 says the key is in the right drawer."
+  },
+  "c17": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a housemate",
+   "text": "A housemate who is right 3 times out of 5 says the key is in the right drawer."
+  },
+  "c18": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a housemate",
+   "text": "A housemate who is right 3 times out of 5 says the key is in the right drawer."
+  },
+  "c19": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a housemate",
+   "text": "A housemate who is right 3 times out of 5 says the key is in the right drawer."
+  },
+  "c2": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a housemate",
+   "text": "A housemate who is right 9 times out of 10 says the key is in the left drawer."
+  },
+  "c20": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a housemate",
+   "text": "A housemate who is right 3 times out of 5 says the key is in the right drawer."
+  },
+  "c21": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a housemate",
+   "text": "A housemate who is right 3 times out of 5 says the key is in the right drawer."
+  },
+  "c22": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a housemate",
+   "text": "A housemate who is right 3 times out of 5 says the key is in the right drawer."
+  },
+  "c23": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a housemate",
+   "text": "A housemate who is right 3 times out of 5 says the key is in the right drawer."
+  },
+  "c24": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a housemate",
+   "text": "A housemate who is right 3 times out of 5 says the key is in the right drawer."
+  },
+  "c25": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a housemate",
+   "text": "A housemate who is right 3 times out of 5 says the key is in the right drawer."
+  },
+  "c26": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a housemate",
+   "text": "A housemate who is right 3 times out of 5 says the key is in the right drawer."
+  },
+  "c27": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a housemate",
+   "text": "A housemate who is right 3 times out of 5 says the key is in the right drawer."
+  },
+  "c28": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a housemate",
+   "text": "A housemate who is right 3 times out of 5 says the key is in the right drawer."
+  },
+  "c29": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a housemate",
+   "text": "A housemate who is right 3 times out of 5 says the key is in the right drawer."
+  },
+  "c3": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a housemate",
+   "text": "A housemate who is right 9 times out of 10 says the key is in the left drawer."
+  },
+  "c30": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a housemate",
+   "text": "A housemate who is right 3 times out of 5 says the key is in the right drawer."
+  },
+  "c31": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a housemate",
+   "text": "A housemate who is right 3 times out of 5 says the key is in the right drawer."
+  },
+  "c32": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a housemate",
+   "text": "A housemate who is right 3 times out of 5 says the key is in the right drawer."
+  },
+  "c33": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a housemate",
+   "text": "A housemate who is right 3 times out of 5 says the key is in the right drawer."
+  },
+  "c34": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a housemate",
+   "text": "A housemate who is right 3 times out of 5 says the key is in the right drawer."
+  },
+  "c35": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a housemate",
+   "text": "A housemate who is right 3 times out of 5 says the key is in the right drawer."
+  },
+  "c36": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a housemate",
+   "text": "A housemate who is right 3 times out of 5 says the key is in the right drawer."
+  },
+  "c37": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a housemate",
+   "text": "A housemate who is right 3 times out of 5 says the key is in the right drawer."
+  },
+  "c38": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a housemate",
+   "text": "A housemate who is right 3 times out of 5 says the key is in the right drawer."
+  },
+  "c39": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a housemate",
+   "text": "A housemate who is right 3 times out of 5 says the key is in the right drawer."
+  },
+  "c4": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a housemate",
+   "text": "A housemate who is right 9 times out of 10 says the key is in the left drawer."
+  },
+  "c40": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a housemate",
+   "text": "A housemate who is right 3 times out of 5 says the key is in the right drawer."
+  },
+  "c41": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a housemate",
+   "text": "A housemate who is right 3 times out of 5 says the key is in the right drawer."
+  },
+  "c5": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a housemate",
+   "text": "A housemate who is right 9 times out of 10 says the key is in the left drawer."
+  },
+  "c6": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a housemate",
+   "text": "A housemate who is right 9 times out of 10 says the key is in the left drawer."
+  },
+  "c7": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a housemate",
+   "text": "A housemate who is right 9 times out of 10 says the key is in the left drawer."
+  },
+  "c8": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a housemate",
+   "text": "A housemate who is right 9 times out of 10 says the key is in the left drawer."
+  },
+  "c9": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a housemate",
+   "text": "A housemate who is right 9 times out of 10 says the key is in the left drawer."
+  }
+ },
+ "kind": "conditional_challenge_set",
+ "margin": 3.0,
+ "minority_correct": true,
+ "pooled_logodds_toward_truth": 14.202741684789718,
+ "scenario_id": "dev-drawer-A",
+ "schema_version": "1.0",
+ "sha256": "5419f7e5365870e3a027cbb86f292099a9b163ae912d630563f26226dd813287",
+ "solvable": true
+}

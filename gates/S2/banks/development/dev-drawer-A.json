@@ -1,0 +1,38 @@
+{
+ "bank": "development",
+ "challenge_set": false,
+ "conventions": "gates/S2/CONVENTIONS.md (provisional)",
+ "evidence_model": {
+  "accuracy_mix": [
+   "3/5",
+   "3/4",
+   "9/10"
+  ],
+  "accuracy_weights": [
+   1,
+   1,
+   1
+  ],
+  "informed_fraction": 0.5,
+  "reports_per_informed_agent": 1,
+  "shared": [],
+  "type": "independent_reports"
+ },
+ "hidden_state": "A",
+ "pooled_margin_logodds": 3.0,
+ "prior": 0.5,
+ "scenario_id": "dev-drawer-A",
+ "schema_version": "1.0",
+ "story": {
+  "options": {
+   "A": "the left drawer",
+   "B": "the right drawer"
+  },
+  "question": "Where is the key: {A} or {B}?",
+  "report": "{source} who is right {freq} says the key is in {option}.",
+  "source": "a housemate",
+  "uninformed": "You have no report about where the key is."
+ },
+ "story_key": "drawer",
+ "study": "StPT"
+}

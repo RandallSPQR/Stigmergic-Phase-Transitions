@@ -1,0 +1,620 @@
+{
+ "N": 100,
+ "alloc_seed": 759206720113035426,
+ "held_reports": 50,
+ "held_reports_favouring_truth": 39,
+ "holders": {
+  "0": [],
+  "1": [
+   "r0"
+  ],
+  "10": [],
+  "11": [
+   "r6"
+  ],
+  "12": [
+   "r7"
+  ],
+  "13": [
+   "r8"
+  ],
+  "14": [
+   "r9"
+  ],
+  "15": [
+   "r10"
+  ],
+  "16": [],
+  "17": [],
+  "18": [],
+  "19": [],
+  "2": [],
+  "20": [],
+  "21": [
+   "r11"
+  ],
+  "22": [],
+  "23": [
+   "r12"
+  ],
+  "24": [],
+  "25": [],
+  "26": [
+   "r13"
+  ],
+  "27": [
+   "r14"
+  ],
+  "28": [
+   "r15"
+  ],
+  "29": [
+   "r16"
+  ],
+  "3": [
+   "r1"
+  ],
+  "30": [],
+  "31": [],
+  "32": [
+   "r17"
+  ],
+  "33": [
+   "r18"
+  ],
+  "34": [],
+  "35": [
+   "r19"
+  ],
+  "36": [
+   "r20"
+  ],
+  "37": [],
+  "38": [],
+  "39": [
+   "r21"
+  ],
+  "4": [],
+  "40": [],
+  "41": [],
+  "42": [
+   "r22"
+  ],
+  "43": [],
+  "44": [],
+  "45": [
+   "r23"
+  ],
+  "46": [],
+  "47": [],
+  "48": [
+   "r24"
+  ],
+  "49": [
+   "r25"
+  ],
+  "5": [
+   "r2"
+  ],
+  "50": [
+   "r26"
+  ],
+  "51": [
+   "r27"
+  ],
+  "52": [
+   "r28"
+  ],
+  "53": [
+   "r29"
+  ],
+  "54": [
+   "r30"
+  ],
+  "55": [
+   "r31"
+  ],
+  "56": [
+   "r32"
+  ],
+  "57": [],
+  "58": [],
+  "59": [],
+  "6": [
+   "r3"
+  ],
+  "60": [
+   "r33"
+  ],
+  "61": [],
+  "62": [
+   "r34"
+  ],
+  "63": [],
+  "64": [],
+  "65": [],
+  "66": [
+   "r35"
+  ],
+  "67": [],
+  "68": [],
+  "69": [],
+  "7": [
+   "r4"
+  ],
+  "70": [],
+  "71": [],
+  "72": [
+   "r36"
+  ],
+  "73": [],
+  "74": [
+   "r37"
+  ],
+  "75": [
+   "r38"
+  ],
+  "76": [
+   "r39"
+  ],
+  "77": [
+   "r40"
+  ],
+  "78": [
+   "r41"
+  ],
+  "79": [],
+  "8": [],
+  "80": [],
+  "81": [
+   "r42"
+  ],
+  "82": [],
+  "83": [],
+  "84": [],
+  "85": [
+   "r43"
+  ],
+  "86": [],
+  "87": [],
+  "88": [],
+  "89": [],
+  "9": [
+   "r5"
+  ],
+  "90": [],
+  "91": [
+   "r44"
+  ],
+  "92": [],
+  "93": [
+   "r45"
+  ],
+  "94": [],
+  "95": [
+   "r46"
+  ],
+  "96": [],
+  "97": [
+   "r47"
+  ],
+  "98": [
+   "r48"
+  ],
+  "99": [
+   "r49"
+  ]
+ },
+ "informed_positions": 50,
+ "items": {
+  "r0": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 4 says the east bridge is open."
+  },
+  "r1": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a guard",
+   "text": "A guard who is right 9 times out of 10 says the east bridge is open."
+  },
+  "r10": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 5 says the west bridge is open."
+  },
+  "r11": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 5 says the east bridge is open."
+  },
+  "r12": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 4 says the east bridge is open."
+  },
+  "r13": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 4 says the east bridge is open."
+  },
+  "r14": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 5 says the west bridge is open."
+  },
+  "r15": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 4 says the east bridge is open."
+  },
+  "r16": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 5 says the east bridge is open."
+  },
+  "r17": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 5 says the west bridge is open."
+  },
+  "r18": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 5 says the east bridge is open."
+  },
+  "r19": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 4 says the east bridge is open."
+  },
+  "r2": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 4 says the east bridge is open."
+  },
+  "r20": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 4 says the east bridge is open."
+  },
+  "r21": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 4 says the east bridge is open."
+  },
+  "r22": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 5 says the west bridge is open."
+  },
+  "r23": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 4 says the east bridge is open."
+  },
+  "r24": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 5 says the west bridge is open."
+  },
+  "r25": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a guard",
+   "text": "A guard who is right 9 times out of 10 says the east bridge is open."
+  },
+  "r26": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 4 says the east bridge is open."
+  },
+  "r27": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a guard",
+   "text": "A guard who is right 9 times out of 10 says the east bridge is open."
+  },
+  "r28": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a guard",
+   "text": "A guard who is right 9 times out of 10 says the east bridge is open."
+  },
+  "r29": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 5 says the west bridge is open."
+  },
+  "r3": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 5 says the west bridge is open."
+  },
+  "r30": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a guard",
+   "text": "A guard who is right 9 times out of 10 says the east bridge is open."
+  },
+  "r31": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 5 says the east bridge is open."
+  },
+  "r32": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 5 says the east bridge is open."
+  },
+  "r33": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a guard",
+   "text": "A guard who is right 9 times out of 10 says the east bridge is open."
+  },
+  "r34": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 5 says the east bridge is open."
+  },
+  "r35": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 3.0,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 4 says the west bridge is open."
+  },
+  "r36": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 5 says the west bridge is open."
+  },
+  "r37": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 5 says the east bridge is open."
+  },
+  "r38": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 4 says the east bridge is open."
+  },
+  "r39": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 3.0,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 4 says the west bridge is open."
+  },
+  "r4": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 5 says the east bridge is open."
+  },
+  "r40": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 4 says the east bridge is open."
+  },
+  "r41": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 5 says the east bridge is open."
+  },
+  "r42": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 4 says the east bridge is open."
+  },
+  "r43": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 5 says the east bridge is open."
+  },
+  "r44": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 4 says the east bridge is open."
+  },
+  "r45": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a guard",
+   "text": "A guard who is right 9 times out of 10 says the east bridge is open."
+  },
+  "r46": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a guard",
+   "text": "A guard who is right 9 times out of 10 says the east bridge is open."
+  },
+  "r47": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 5 says the east bridge is open."
+  },
+  "r48": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 5 says the west bridge is open."
+  },
+  "r49": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a guard",
+   "text": "A guard who is right 9 times out of 10 says the east bridge is open."
+  },
+  "r5": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 4 says the east bridge is open."
+  },
+  "r6": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 4 says the east bridge is open."
+  },
+  "r7": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a guard",
+   "text": "A guard who is right 9 times out of 10 says the east bridge is open."
+  },
+  "r8": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a guard",
+   "text": "A guard who is right 9 times out of 10 says the east bridge is open."
+  },
+  "r9": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a guard",
+   "text": "A guard who is right 3 times out of 5 says the east bridge is open."
+  }
+ },
+ "kind": "representative",
+ "margin": 3.0,
+ "minority_correct": false,
+ "pooled_logodds_toward_truth": 40.766437716376444,
+ "replaced_seeds": [],
+ "scenario_id": "dev-bridge-A",
+ "schema_version": "1.0",
+ "sha256": "84582e4a2426d7078c6a44685f3893916f664872d614bf0bd55c864fa255e6b6",
+ "solvable": true
+}

@@ -1,0 +1,644 @@
+{
+ "N": 100,
+ "alloc_seed": 1146495172127319307,
+ "held_reports": 60,
+ "held_reports_favouring_truth": 42,
+ "holders": {
+  "0": [
+   "r0"
+  ],
+  "1": [
+   "r1"
+  ],
+  "10": [
+   "r7"
+  ],
+  "11": [
+   "r8"
+  ],
+  "12": [
+   "r9"
+  ],
+  "13": [
+   "r10"
+  ],
+  "14": [
+   "r11",
+   "s0"
+  ],
+  "15": [],
+  "16": [
+   "r12"
+  ],
+  "17": [
+   "r13"
+  ],
+  "18": [
+   "s0"
+  ],
+  "19": [
+   "r14"
+  ],
+  "2": [],
+  "20": [
+   "r15"
+  ],
+  "21": [
+   "r16"
+  ],
+  "22": [],
+  "23": [
+   "r17"
+  ],
+  "24": [],
+  "25": [],
+  "26": [],
+  "27": [
+   "r18"
+  ],
+  "28": [],
+  "29": [],
+  "3": [],
+  "30": [
+   "r19"
+  ],
+  "31": [
+   "r20"
+  ],
+  "32": [],
+  "33": [],
+  "34": [
+   "r21"
+  ],
+  "35": [],
+  "36": [],
+  "37": [],
+  "38": [
+   "r22"
+  ],
+  "39": [],
+  "4": [
+   "r2"
+  ],
+  "40": [
+   "r23"
+  ],
+  "41": [],
+  "42": [
+   "r24"
+  ],
+  "43": [],
+  "44": [
+   "r25"
+  ],
+  "45": [],
+  "46": [
+   "r26"
+  ],
+  "47": [],
+  "48": [
+   "s0"
+  ],
+  "49": [
+   "r27"
+  ],
+  "5": [
+   "r3"
+  ],
+  "50": [
+   "s0"
+  ],
+  "51": [],
+  "52": [],
+  "53": [],
+  "54": [
+   "r28"
+  ],
+  "55": [
+   "r29"
+  ],
+  "56": [
+   "r30"
+  ],
+  "57": [
+   "r31"
+  ],
+  "58": [
+   "s0"
+  ],
+  "59": [],
+  "6": [
+   "r4"
+  ],
+  "60": [
+   "s0"
+  ],
+  "61": [
+   "r32",
+   "s0"
+  ],
+  "62": [
+   "r33",
+   "s0"
+  ],
+  "63": [],
+  "64": [],
+  "65": [
+   "r34"
+  ],
+  "66": [
+   "s0"
+  ],
+  "67": [],
+  "68": [
+   "r35"
+  ],
+  "69": [],
+  "7": [
+   "r5"
+  ],
+  "70": [
+   "r36"
+  ],
+  "71": [],
+  "72": [],
+  "73": [],
+  "74": [
+   "r37"
+  ],
+  "75": [
+   "r38"
+  ],
+  "76": [
+   "r39"
+  ],
+  "77": [
+   "r40"
+  ],
+  "78": [
+   "r41"
+  ],
+  "79": [
+   "r42"
+  ],
+  "8": [],
+  "80": [],
+  "81": [
+   "r43"
+  ],
+  "82": [
+   "r44"
+  ],
+  "83": [],
+  "84": [],
+  "85": [
+   "r45"
+  ],
+  "86": [],
+  "87": [],
+  "88": [
+   "r46",
+   "s0"
+  ],
+  "89": [
+   "r47"
+  ],
+  "9": [
+   "r6"
+  ],
+  "90": [],
+  "91": [],
+  "92": [],
+  "93": [
+   "r48"
+  ],
+  "94": [
+   "r49"
+  ],
+  "95": [],
+  "96": [],
+  "97": [],
+  "98": [],
+  "99": []
+ },
+ "informed_positions": 56,
+ "items": {
+  "r0": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 3 times out of 5 says the blue crate holds the spare parts."
+  },
+  "r1": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 3 times out of 4 says the red crate holds the spare parts."
+  },
+  "r10": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 3.0,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 3 times out of 4 says the blue crate holds the spare parts."
+  },
+  "r11": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 3 times out of 5 says the red crate holds the spare parts."
+  },
+  "r12": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 3 times out of 5 says the blue crate holds the spare parts."
+  },
+  "r13": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 9.000000000000002,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 9 times out of 10 says the blue crate holds the spare parts."
+  },
+  "r14": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 3 times out of 4 says the red crate holds the spare parts."
+  },
+  "r15": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 9 times out of 10 says the red crate holds the spare parts."
+  },
+  "r16": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 3 times out of 4 says the red crate holds the spare parts."
+  },
+  "r17": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 3 times out of 4 says the red crate holds the spare parts."
+  },
+  "r18": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 3 times out of 4 says the red crate holds the spare parts."
+  },
+  "r19": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 3 times out of 4 says the red crate holds the spare parts."
+  },
+  "r2": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 3 times out of 5 says the red crate holds the spare parts."
+  },
+  "r20": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 3 times out of 4 says the red crate holds the spare parts."
+  },
+  "r21": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 3 times out of 4 says the red crate holds the spare parts."
+  },
+  "r22": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 3 times out of 5 says the red crate holds the spare parts."
+  },
+  "r23": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 3 times out of 5 says the red crate holds the spare parts."
+  },
+  "r24": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 9 times out of 10 says the red crate holds the spare parts."
+  },
+  "r25": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 3 times out of 5 says the red crate holds the spare parts."
+  },
+  "r26": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 9 times out of 10 says the red crate holds the spare parts."
+  },
+  "r27": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 3 times out of 5 says the red crate holds the spare parts."
+  },
+  "r28": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 9 times out of 10 says the red crate holds the spare parts."
+  },
+  "r29": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 3 times out of 5 says the red crate holds the spare parts."
+  },
+  "r3": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 3 times out of 4 says the red crate holds the spare parts."
+  },
+  "r30": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 3 times out of 5 says the blue crate holds the spare parts."
+  },
+  "r31": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 9.000000000000002,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 9 times out of 10 says the blue crate holds the spare parts."
+  },
+  "r32": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 9 times out of 10 says the red crate holds the spare parts."
+  },
+  "r33": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 3 times out of 4 says the red crate holds the spare parts."
+  },
+  "r34": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 3 times out of 5 says the red crate holds the spare parts."
+  },
+  "r35": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 9 times out of 10 says the red crate holds the spare parts."
+  },
+  "r36": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 3 times out of 4 says the red crate holds the spare parts."
+  },
+  "r37": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 9 times out of 10 says the red crate holds the spare parts."
+  },
+  "r38": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 3 times out of 4 says the red crate holds the spare parts."
+  },
+  "r39": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 3 times out of 5 says the blue crate holds the spare parts."
+  },
+  "r4": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 9 times out of 10 says the red crate holds the spare parts."
+  },
+  "r40": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 9 times out of 10 says the red crate holds the spare parts."
+  },
+  "r41": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 3 times out of 5 says the red crate holds the spare parts."
+  },
+  "r42": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 9 times out of 10 says the red crate holds the spare parts."
+  },
+  "r43": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 9 times out of 10 says the red crate holds the spare parts."
+  },
+  "r44": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 9 times out of 10 says the red crate holds the spare parts."
+  },
+  "r45": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 9 times out of 10 says the red crate holds the spare parts."
+  },
+  "r46": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 9 times out of 10 says the red crate holds the spare parts."
+  },
+  "r47": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 3 times out of 4 says the red crate holds the spare parts."
+  },
+  "r48": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 9 times out of 10 says the red crate holds the spare parts."
+  },
+  "r49": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 3 times out of 5 says the blue crate holds the spare parts."
+  },
+  "r5": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 9 times out of 10 says the red crate holds the spare parts."
+  },
+  "r6": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 9 times out of 10 says the red crate holds the spare parts."
+  },
+  "r7": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 9 times out of 10 says the red crate holds the spare parts."
+  },
+  "r8": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 3 times out of 5 says the red crate holds the spare parts."
+  },
+  "r9": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 3 times out of 5 says the red crate holds the spare parts."
+  },
+  "s0": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a warehouse clerk",
+   "text": "A warehouse clerk who is right 3 times out of 5 says the blue crate holds the spare parts."
+  }
+ },
+ "kind": "representative",
+ "margin": 3.0,
+ "minority_correct": false,
+ "pooled_logodds_toward_truth": 50.36626624193765,
+ "replaced_seeds": [],
+ "scenario_id": "dev-crate-A-shared",
+ "schema_version": "1.0",
+ "sha256": "59c3d66e936e2c846a6ac41d65a3dead9be5862bb5ff9df25f780dd705955674",
+ "solvable": true
+}

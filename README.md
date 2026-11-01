@@ -3,7 +3,7 @@
 **Question.** Agents see only their contacts' current votes. Do those votes change how memoryless LLM agents use
 dispersed private evidence? And does a temporary change to what agents see leave a lasting mark on the board?
 
-**Status (2026-11-01): Step 0 done; gate S0 CLOSED (passed; restart drift handled by server-start blocking, D14); gate S1 CLOSED (passes under Amendment 1); gate S2 (evidence specifications) in progress.**
+**Status (2026-11-01): Step 0 done; gate S0 CLOSED (passed; restart drift handled by server-start blocking, D14); gate S1 CLOSED (passes under Amendment 1); gate S2 reported (passes; provisional conventions await the owner).**
 - Not frozen. No paid collection. Nothing confirmatory.
 - Brief: https://claude.ai/artifact/Q36cWtMumtJPs3semD76ni (revision 3).
 - Missing Piece is the complementary study. Both share the pipeline and the coordination record below.
@@ -48,7 +48,7 @@ across the two; a TOST for each.
 | Step 0: shared pipeline built, tagged, locked, published; SPT release pinned | **done** |
 | S0: pipeline + SPT harness replay | **CLOSED 2026-11-01**: passed; restart drift accepted on v1.2.0 with server-start blocking (D14; `gates/S0/S0_REPORT.md`) |
 | S1: simulator checks (CPU only) | **CLOSED 2026-11-01**: passes under Amendment 1 (DV1); original-plan failure kept on record (`gates/S1/S1_REPORT.md`) |
-| S2: evidence specifications | in progress |
+| S2: evidence specifications | **reported 2026-11-01**: passes (28 specs committed before any model call; shared schema v1.0); conventions provisional (`gates/S2/S2_REPORT.md`) |
 | S3–S10 | not started |
 
 ## Layout

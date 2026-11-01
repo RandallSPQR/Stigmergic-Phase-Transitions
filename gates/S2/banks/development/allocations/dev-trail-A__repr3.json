@@ -1,0 +1,620 @@
+{
+ "N": 100,
+ "alloc_seed": 274358313834949258,
+ "held_reports": 50,
+ "held_reports_favouring_truth": 36,
+ "holders": {
+  "0": [],
+  "1": [],
+  "10": [],
+  "11": [
+   "r7"
+  ],
+  "12": [
+   "r8"
+  ],
+  "13": [],
+  "14": [],
+  "15": [],
+  "16": [
+   "r9"
+  ],
+  "17": [],
+  "18": [
+   "r10"
+  ],
+  "19": [
+   "r11"
+  ],
+  "2": [
+   "r0"
+  ],
+  "20": [],
+  "21": [],
+  "22": [
+   "r12"
+  ],
+  "23": [
+   "r13"
+  ],
+  "24": [],
+  "25": [],
+  "26": [
+   "r14"
+  ],
+  "27": [
+   "r15"
+  ],
+  "28": [],
+  "29": [
+   "r16"
+  ],
+  "3": [
+   "r1"
+  ],
+  "30": [
+   "r17"
+  ],
+  "31": [],
+  "32": [],
+  "33": [],
+  "34": [],
+  "35": [
+   "r18"
+  ],
+  "36": [
+   "r19"
+  ],
+  "37": [],
+  "38": [
+   "r20"
+  ],
+  "39": [],
+  "4": [
+   "r2"
+  ],
+  "40": [
+   "r21"
+  ],
+  "41": [
+   "r22"
+  ],
+  "42": [
+   "r23"
+  ],
+  "43": [
+   "r24"
+  ],
+  "44": [],
+  "45": [],
+  "46": [
+   "r25"
+  ],
+  "47": [],
+  "48": [],
+  "49": [],
+  "5": [
+   "r3"
+  ],
+  "50": [
+   "r26"
+  ],
+  "51": [],
+  "52": [
+   "r27"
+  ],
+  "53": [
+   "r28"
+  ],
+  "54": [],
+  "55": [],
+  "56": [],
+  "57": [],
+  "58": [],
+  "59": [
+   "r29"
+  ],
+  "6": [
+   "r4"
+  ],
+  "60": [
+   "r30"
+  ],
+  "61": [],
+  "62": [],
+  "63": [
+   "r31"
+  ],
+  "64": [],
+  "65": [
+   "r32"
+  ],
+  "66": [],
+  "67": [
+   "r33"
+  ],
+  "68": [
+   "r34"
+  ],
+  "69": [],
+  "7": [],
+  "70": [
+   "r35"
+  ],
+  "71": [
+   "r36"
+  ],
+  "72": [
+   "r37"
+  ],
+  "73": [
+   "r38"
+  ],
+  "74": [
+   "r39"
+  ],
+  "75": [],
+  "76": [
+   "r40"
+  ],
+  "77": [
+   "r41"
+  ],
+  "78": [],
+  "79": [],
+  "8": [
+   "r5"
+  ],
+  "80": [
+   "r42"
+  ],
+  "81": [],
+  "82": [],
+  "83": [],
+  "84": [],
+  "85": [
+   "r43"
+  ],
+  "86": [
+   "r44"
+  ],
+  "87": [
+   "r45"
+  ],
+  "88": [
+   "r46"
+  ],
+  "89": [
+   "r47"
+  ],
+  "9": [
+   "r6"
+  ],
+  "90": [],
+  "91": [],
+  "92": [
+   "r48"
+  ],
+  "93": [
+   "r49"
+  ],
+  "94": [],
+  "95": [],
+  "96": [],
+  "97": [],
+  "98": [],
+  "99": []
+ },
+ "informed_positions": 50,
+ "items": {
+  "r0": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 3.0,
+   "source": "a hiker",
+   "text": "A hiker who is right 3 times out of 4 says the ridge trail is passable."
+  },
+  "r1": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a hiker",
+   "text": "A hiker who is right 3 times out of 5 says the river trail is passable."
+  },
+  "r10": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a hiker",
+   "text": "A hiker who is right 3 times out of 4 says the river trail is passable."
+  },
+  "r11": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a hiker",
+   "text": "A hiker who is right 9 times out of 10 says the river trail is passable."
+  },
+  "r12": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a hiker",
+   "text": "A hiker who is right 9 times out of 10 says the river trail is passable."
+  },
+  "r13": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a hiker",
+   "text": "A hiker who is right 9 times out of 10 says the river trail is passable."
+  },
+  "r14": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a hiker",
+   "text": "A hiker who is right 3 times out of 4 says the river trail is passable."
+  },
+  "r15": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a hiker",
+   "text": "A hiker who is right 9 times out of 10 says the river trail is passable."
+  },
+  "r16": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a hiker",
+   "text": "A hiker who is right 3 times out of 5 says the river trail is passable."
+  },
+  "r17": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a hiker",
+   "text": "A hiker who is right 3 times out of 5 says the river trail is passable."
+  },
+  "r18": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a hiker",
+   "text": "A hiker who is right 9 times out of 10 says the river trail is passable."
+  },
+  "r19": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a hiker",
+   "text": "A hiker who is right 3 times out of 5 says the ridge trail is passable."
+  },
+  "r2": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a hiker",
+   "text": "A hiker who is right 3 times out of 5 says the river trail is passable."
+  },
+  "r20": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 3.0,
+   "source": "a hiker",
+   "text": "A hiker who is right 3 times out of 4 says the ridge trail is passable."
+  },
+  "r21": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 3.0,
+   "source": "a hiker",
+   "text": "A hiker who is right 3 times out of 4 says the ridge trail is passable."
+  },
+  "r22": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a hiker",
+   "text": "A hiker who is right 9 times out of 10 says the river trail is passable."
+  },
+  "r23": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a hiker",
+   "text": "A hiker who is right 3 times out of 4 says the river trail is passable."
+  },
+  "r24": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a hiker",
+   "text": "A hiker who is right 3 times out of 4 says the river trail is passable."
+  },
+  "r25": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a hiker",
+   "text": "A hiker who is right 3 times out of 4 says the river trail is passable."
+  },
+  "r26": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a hiker",
+   "text": "A hiker who is right 9 times out of 10 says the river trail is passable."
+  },
+  "r27": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 3.0,
+   "source": "a hiker",
+   "text": "A hiker who is right 3 times out of 4 says the ridge trail is passable."
+  },
+  "r28": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a hiker",
+   "text": "A hiker who is right 3 times out of 5 says the ridge trail is passable."
+  },
+  "r29": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a hiker",
+   "text": "A hiker who is right 3 times out of 4 says the river trail is passable."
+  },
+  "r3": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a hiker",
+   "text": "A hiker who is right 3 times out of 5 says the ridge trail is passable."
+  },
+  "r30": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a hiker",
+   "text": "A hiker who is right 9 times out of 10 says the river trail is passable."
+  },
+  "r31": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a hiker",
+   "text": "A hiker who is right 3 times out of 5 says the ridge trail is passable."
+  },
+  "r32": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 3.0,
+   "source": "a hiker",
+   "text": "A hiker who is right 3 times out of 4 says the ridge trail is passable."
+  },
+  "r33": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a hiker",
+   "text": "A hiker who is right 9 times out of 10 says the river trail is passable."
+  },
+  "r34": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a hiker",
+   "text": "A hiker who is right 3 times out of 5 says the river trail is passable."
+  },
+  "r35": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 9.000000000000002,
+   "source": "a hiker",
+   "text": "A hiker who is right 9 times out of 10 says the ridge trail is passable."
+  },
+  "r36": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a hiker",
+   "text": "A hiker who is right 3 times out of 5 says the river trail is passable."
+  },
+  "r37": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a hiker",
+   "text": "A hiker who is right 9 times out of 10 says the river trail is passable."
+  },
+  "r38": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a hiker",
+   "text": "A hiker who is right 3 times out of 5 says the river trail is passable."
+  },
+  "r39": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a hiker",
+   "text": "A hiker who is right 9 times out of 10 says the river trail is passable."
+  },
+  "r4": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a hiker",
+   "text": "A hiker who is right 3 times out of 4 says the river trail is passable."
+  },
+  "r40": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a hiker",
+   "text": "A hiker who is right 9 times out of 10 says the river trail is passable."
+  },
+  "r41": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a hiker",
+   "text": "A hiker who is right 3 times out of 5 says the river trail is passable."
+  },
+  "r42": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a hiker",
+   "text": "A hiker who is right 3 times out of 5 says the ridge trail is passable."
+  },
+  "r43": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a hiker",
+   "text": "A hiker who is right 9 times out of 10 says the river trail is passable."
+  },
+  "r44": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a hiker",
+   "text": "A hiker who is right 9 times out of 10 says the river trail is passable."
+  },
+  "r45": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a hiker",
+   "text": "A hiker who is right 9 times out of 10 says the river trail is passable."
+  },
+  "r46": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a hiker",
+   "text": "A hiker who is right 3 times out of 4 says the river trail is passable."
+  },
+  "r47": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a hiker",
+   "text": "A hiker who is right 3 times out of 5 says the river trail is passable."
+  },
+  "r48": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a hiker",
+   "text": "A hiker who is right 3 times out of 5 says the ridge trail is passable."
+  },
+  "r49": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a hiker",
+   "text": "A hiker who is right 3 times out of 4 says the river trail is passable."
+  },
+  "r5": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 1.4999999999999998,
+   "source": "a hiker",
+   "text": "A hiker who is right 3 times out of 5 says the ridge trail is passable."
+  },
+  "r6": {
+   "accuracy": "3/4",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 3.0,
+   "source": "a hiker",
+   "text": "A hiker who is right 3 times out of 4 says the river trail is passable."
+  },
+  "r7": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "B",
+   "lr": 9.000000000000002,
+   "source": "a hiker",
+   "text": "A hiker who is right 9 times out of 10 says the ridge trail is passable."
+  },
+  "r8": {
+   "accuracy": "3/5",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 1.4999999999999998,
+   "source": "a hiker",
+   "text": "A hiker who is right 3 times out of 5 says the river trail is passable."
+  },
+  "r9": {
+   "accuracy": "9/10",
+   "dependence_group": null,
+   "favours": "A",
+   "lr": 9.000000000000002,
+   "source": "a hiker",
+   "text": "A hiker who is right 9 times out of 10 says the river trail is passable."
+  }
+ },
+ "kind": "representative",
+ "margin": 3.0,
+ "minority_correct": false,
+ "pooled_logodds_toward_truth": 37.47060085037211,
+ "replaced_seeds": [],
+ "scenario_id": "dev-trail-A",
+ "schema_version": "1.0",
+ "sha256": "f86dfd6ad88c3b6f140300843bab761ffcb3c216655f20319c7aded44a08ec2b",
+ "solvable": true
+}

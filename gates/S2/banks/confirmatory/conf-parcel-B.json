@@ -1,0 +1,38 @@
+{
+ "bank": "confirmatory",
+ "challenge_set": false,
+ "conventions": "gates/S2/CONVENTIONS.md (provisional)",
+ "evidence_model": {
+  "accuracy_mix": [
+   "3/5",
+   "3/4",
+   "9/10"
+  ],
+  "accuracy_weights": [
+   1,
+   1,
+   1
+  ],
+  "informed_fraction": 0.5,
+  "reports_per_informed_agent": 1,
+  "shared": [],
+  "type": "independent_reports"
+ },
+ "hidden_state": "B",
+ "pooled_margin_logodds": 3.0,
+ "prior": 0.5,
+ "scenario_id": "conf-parcel-B",
+ "schema_version": "1.0",
+ "story": {
+  "options": {
+   "A": "locker 7",
+   "B": "locker 9"
+  },
+  "question": "Which locker holds the parcel: {A} or {B}?",
+  "report": "{source} who is right {freq} says the parcel is in {option}.",
+  "source": "a courier",
+  "uninformed": "You have no report about which locker holds the parcel."
+ },
+ "story_key": "parcel",
+ "study": "StPT"
+}
