@@ -29,8 +29,16 @@ $VPY -c "import sys, vllm, torch; print(sys.version.split()[0], 'vllm', vllm.__v
 step "prompts"
 $PY - "$OUT" <<'PYX' || { echo "STOP: prompt set"; upload; exit 3; }
 import base64, gzip, hashlib, json, os, sys
-b64 = os.environ.get("STPT_PROMPTS_B64") or "".join(os.environ[f"STPT_PROMPTS_B64_{i}"] for i in range(int(os.environ["STPT_PROMPTS_PARTS"])))
-d = json.loads(gzip.decompress(base64.b64decode(b64)))
+if os.environ.get("STPT_CONTEXTS_B64"):          # round 2: compact contexts + stpt/prompts.py source; render here
+    import importlib.util
+    pl = json.loads(gzip.decompress(base64.b64decode(os.environ["STPT_CONTEXTS_B64"])))
+    open("/root/stpt_prompts.py", "w").write(pl["prompts_py"])
+    spec = importlib.util.spec_from_file_location("stpt_prompts", "/root/stpt_prompts.py"); P = importlib.util.module_from_spec(spec); spec.loader.exec_module(P)
+    out = P.build_round2(pl["contexts"], 4)
+    d = {"version": os.environ["STPT_PROMPTS_VERSION"], "template": "stpt/prompts.py", "n": len(out), "prompts": out}
+else:
+    b64 = os.environ.get("STPT_PROMPTS_B64") or "".join(os.environ[f"STPT_PROMPTS_B64_{i}"] for i in range(int(os.environ["STPT_PROMPTS_PARTS"])))
+    d = json.loads(gzip.decompress(base64.b64decode(b64)))
 blob = json.dumps(d, sort_keys=True, indent=1)
 h = hashlib.sha256(blob.encode()).hexdigest()
 assert h == os.environ["STPT_PROMPTS_SHA256"], f"prompt set sha256 {h} != committed"

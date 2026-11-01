@@ -25,28 +25,20 @@ def main():
     r1 = json.load(open(ROOT / "gates" / "S3" / "prompts" / "s3_prompts.json"))["prompts"]
     specs = {json.load(open(f))["scenario_id"]: json.load(open(f)) for f in sorted(glob.glob(str(BANK / "*.json")))}
     allocs = {json.load(open(f))["sha256"]: json.load(open(f)) for f in sorted(glob.glob(str(BANK / "allocations" / "*.json")))}
-    out, mismatches = [], 0
+    contexts, mismatches = [], 0
     for p in r1:
         s, a = specs[p["scenario_id"]], allocs[p["allocation_sha256"]]
         ids = a["holders"][str(p["position"])]
         informed = bool(ids)
         private = a["items"][ids[0]]["text"] if informed else s["story"]["uninformed"]
         contacts = ["A"] * p["contacts_A"] + ["B"] * (D - p["contacts_A"])
-        w1 = P.render("w1", s["story"], private, p["own_vote"], contacts, p["layout"], p["qtype"])
-        if w1 != p["messages"]:
+        if P.render("w1", s["story"], private, p["own_vote"], contacts, p["layout"], p["qtype"]) != p["messages"]:
             mismatches += 1
-        for w in ("w2", "w3"):
-            out.append({**{k: p[k] for k in ("qtype", "scenario_id", "allocation_sha256", "position", "correct_letter", "layout",
-                                             "own_vote", "contacts_A", "report_accuracy")},
-                        "prompt_id": f"{w}-{p['prompt_id']}", "wording": w, "round1_prompt_id": p["prompt_id"],
-                        "messages": P.render(w, s["story"], private, p["own_vote"], contacts, p["layout"], p["qtype"], informed=informed)})
-        if p["qtype"] == "own_vote":       # 240 contexts, any position: the actual vote question, in every wording
-            for w in ("w1", "w2", "w3"):
-                out.append({**{k: p[k] for k in ("scenario_id", "allocation_sha256", "position", "layout", "own_vote", "contacts_A",
-                                                 "report_accuracy")},
-                            "qtype": "vote", "correct_letter": None, "prompt_id": f"{w}-vote-{p['prompt_id']}", "wording": w,
-                            "round1_prompt_id": p["prompt_id"], "informed": informed,
-                            "messages": P.render(w, s["story"], private, p["own_vote"], contacts, p["layout"], "vote", informed=informed)})
+        contexts.append({**{k: p[k] for k in ("prompt_id", "qtype", "scenario_id", "allocation_sha256", "position", "correct_letter",
+                                              "layout", "own_vote", "contacts_A", "report_accuracy")},
+                         "story": s["story"], "private": private, "informed": informed})
+    out = P.build_round2(contexts, D)
+    (ROOT / "gates" / "S3" / "prompts" / "s3_round2_contexts.json").write_text(json.dumps(contexts, sort_keys=True, indent=1))
     if mismatches:
         raise SystemExit(f"W1 does not reproduce round 1 on {mismatches} prompts")
     d = ROOT / "gates" / "S3" / "prompts"

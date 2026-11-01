@@ -128,3 +128,23 @@ def render(wording, story, private_text, own_vote, contact_votes, layout, questi
     if wording == "w1":
         return render_board(story, private_text, own_vote, contact_votes, layout, q, live)
     return {"w2": render_w2, "w3": render_w3}[wording](story, private_text, own_vote, contact_votes, layout, q, live, informed)
+
+
+def build_round2(contexts, d=4):
+    """S3 round-2 prompt records from compact contexts (one per round-1 prompt: story, private text, informed flag,
+    own vote, contact pattern, layout and identifiers). Used identically by gates/S3/make_prompts_round2.py and on the
+    pod, whose rendering must reproduce the committed sha256."""
+    out = []
+    for c in contexts:
+        contacts = ["A"] * c["contacts_A"] + ["B"] * (d - c["contacts_A"])
+        base = {k: c[k] for k in ("scenario_id", "allocation_sha256", "position", "layout", "own_vote", "contacts_A", "report_accuracy")}
+        for w in ("w2", "w3"):
+            out.append({**base, "qtype": c["qtype"], "correct_letter": c["correct_letter"], "prompt_id": f"{w}-{c['prompt_id']}",
+                        "wording": w, "round1_prompt_id": c["prompt_id"],
+                        "messages": render(w, c["story"], c["private"], c["own_vote"], contacts, c["layout"], c["qtype"], informed=c["informed"])})
+        if c["qtype"] == "own_vote":
+            for w in ("w1", "w2", "w3"):
+                out.append({**base, "qtype": "vote", "correct_letter": None, "prompt_id": f"{w}-vote-{c['prompt_id']}", "wording": w,
+                            "round1_prompt_id": c["prompt_id"], "informed": c["informed"],
+                            "messages": render(w, c["story"], c["private"], c["own_vote"], contacts, c["layout"], "vote", informed=c["informed"])})
+    return out
