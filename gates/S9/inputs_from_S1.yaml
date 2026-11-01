@@ -1,0 +1,22 @@
+# Inputs to the S9 power simulation from gate S1 (deviation DV1, owner-approved 2026-11-01).
+# Graph-to-graph spread of an ensemble quantity at fixed parameters: the SD across independent graph + field draws of
+# the T = 0 random-field magnetisation at N = 20,000 (gates/S1). These are SCALE INPUTS. They show how much one graph
+# can differ from the ensemble near a transition. They are not StPT outcome variances; S9 uses StPT's own fresh
+# kernels and boards. Live boards are N = 100. For a self-averaging quantity, between-graph SD shrinks roughly as
+# N^(-1/2), so at N = 100 the same mechanism would give a spread about 14x larger, and more near a transition.
+# S9 must therefore estimate between-graph variance at N = 100 from its own simulations, and treat these values as a
+# lower bound on how much a transition inflates it.
+graph_to_graph_spread:
+  - case: "d = 4, sigma = 2.5, steep section (H near 1.0), smooth branch"
+    sd: [0.025, 0.028]          # diagnostic (10 graphs), B3A re-run (10 graphs)
+    sources: [gates/S1/diagnostics/B3_realisation_spread.json, gates/S1/results/B3A.json]
+  - case: "d = 6, sigma = 3.5, just above critical disorder (H near 1.0)"
+    sd: [0.189, 0.184]          # diagnostic, B3A near-critical diagnostic
+    sources: [gates/S1/diagnostics/B3_realisation_spread.json, gates/S1/results/B3A.json]
+  - case: "d = 6, sigma = 4.5, clear of critical disorder (H near 0.75)"
+    sd: [0.031]                 # B3A re-run
+    sources: [gates/S1/results/B3A.json]
+implications:
+  - "Near-transition contrasts need many independent graphs: one graph can sit far from the ensemble curve."
+  - "The degree-6 robustness check needs many graphs; d = 6 near critical disorder showed the largest spread (0.19)."
+  - "Power is computed per independent cluster (graph x allocation), and between-graph variance is estimated at N = 100."

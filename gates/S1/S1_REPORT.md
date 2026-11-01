@@ -1,14 +1,10 @@
 # Gate S1: simulator checks (2026-11-01)
 
-**Verdict: S1 FAILS as pre-stated, on one criterion.** The failure is a defect in the plan's tolerance, not in the
-simulator.
-- 5 of 6 sections pass: R, G, B1, B2, B4.
-- In B3, both jump cases pass, but both smooth cases miss the single-realisation tolerance of 0.02 on the steep middle
-  of the curve: 4 of 66 grid points.
-- A post-outcome diagnostic over 10 independent realisations finds no systematic error. The average matches the exact
-  curve at every point. The miss is realisation-to-realisation spread, which is large near the critical disorder. The
-  plan assumed noise of about N^(−1/2) instead.
-- **Nothing was re-run under a changed criterion.** An amended B3 criterion is proposed for the owner (section 5).
+**S1 CLOSED: PASSES under Amendment 1** (post-outcome deviation DV1, owner-approved).
+- **Original plan: FAIL**, kept on record. B3's smooth cases missed a single-graph tolerance of 0.02 (sections 1–3).
+- **Amended rule:** smooth cases are judged on the mean of 10 graphs with the 4 SE + 0.005 rule of B1, B2 and B4. The
+  d = 6 pass/fail point moves to σ = 4.5. Both pass on new seeds (section 6).
+- Every other section passed under the original plan.
 
 Plan: `S1_PLAN.md`, committed before any simulation. Runner: `run_s1.py`. Results: `results/` (`summary.json` and one
 JSON per section). Environment: Python 3.13.18, numpy 2.5.3, numba 0.68.0, networkx 3.7, scipy 1.18.1, 4 CPUs.
@@ -78,3 +74,24 @@ These all hold, and nothing about them depends on the B3 miss:
 
 The cost is CPU only, under a minute. If approved, it goes into the coordination record as a post-outcome deviation,
 because it is decided after seeing this result.
+
+## 6. Amendment 1 re-run (DV1, 2026-11-01): PASS
+
+- **Rule:** committed to `S1_PLAN.md` before the re-run, and logged in the coordination record as DV1.
+- **Seeds:** new (`B3A|…`). 10 independent graph-and-field realisations at N = 20,000 per case, on the same coarse
+  grid.
+- **Results:** `results/B3A.json`. Summary: `results/summary.json` (`pass: true`; `pass_original_plan: false`).
+
+| case | role | every point within 4 SE + 0.005? | largest \|mean Δm\| | largest SD across graphs (at H) | order independence |
+|---|---|---|---|---|---|
+| (4, 2.5) | pass/fail | **yes (33/33)** | 0.0052 | 0.028 (1.0) | bit-identical |
+| (6, 4.5) | pass/fail | **yes (33/33)** | 0.019 | 0.031 (0.75) | bit-identical |
+| (6, 3.5) | near-critical diagnostic, no pass/fail | reported only | 0.089 | 0.184 (1.0) | bit-identical |
+
+**Near-critical diagnostic.** Just above the critical disorder, single graphs spread by up to 0.18–0.19 around the
+ensemble curve, and with 10 graphs even the mean sits 0.09 away at one point. Heavy-tailed avalanches make 10 graphs
+too few there. That is why near-transition contrasts need many graphs.
+
+**Inputs carried forward to S9:** `gates/S9/inputs_from_S1.yaml`, which records the measured spreads and their scale
+caveat (N = 20,000 here; live boards are N = 100). The StPT brief's power section and degree-6 paragraph now say that
+near-transition contrasts and the degree-6 check need many independent graphs.

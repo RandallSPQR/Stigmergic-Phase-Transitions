@@ -146,6 +146,46 @@ def b3():
     return rows
 
 
+def b3a():
+    """Amendment 1 (post-outcome deviation DV1): smooth cases on the mean of 10 realisations, 4 SE + 0.005 per point;
+    pass/fail at (4, 2.5) and (6, 4.5); (6, 3.5) reported as a near-critical diagnostic (no pass/fail); new seeds."""
+    coarse = [round(-4.0 + 0.25 * i, 2) for i in range(33)]
+    rows = []
+    for d, sg, graded in ((4, 2.5, True), (6, 4.5, True), (6, 3.5, False)):
+        ref = np.array([R.dss_hysteresis(d, sg, H)["m"] for H in coarse])
+        sims, identical = [], True
+        for k in range(10):
+            lab = f"B3A|{d}|{sg}|{k}"
+            indptr, nbr, info = sim.rrg(N_BIG, d, seed_of(lab) % 2**31)
+            h = sg * np.random.Generator(np.random.PCG64(seed_of(lab, "fields"))).standard_normal(N_BIG)
+            chs = [sim.Chain(indptr, nbr, sim.zero_T_table(N_BIG, d, H=coarse[0], h=h), -np.ones(N_BIG, np.int8),
+                             seed=seed_of(lab, "order", j)) for j in (0, 1)]
+            row = []
+            for H in coarse:
+                for ch in chs:
+                    ch.set_table(sim.zero_T_table(N_BIG, d, H=H, h=h)); ch.relax(100_000)
+                identical &= bool(np.array_equal(chs[0].s, chs[1].s))
+                row.append(chs[0].m())
+            sims.append(row)
+        diff = np.array(sims) - ref[None, :]
+        pts = []
+        for j, H in enumerate(coarse):
+            md, sd = float(diff[:, j].mean()), float(diff[:, j].std(ddof=1))
+            se = sd / math.sqrt(10)
+            pts.append({"H": H, "ref": float(ref[j]), "mean_sim": float(np.mean(np.array(sims)[:, j])), "mean_diff": md,
+                        "sd_across_graphs": sd, "se": se, "tol": 4 * se + 0.005, "ok": abs(md) <= 4 * se + 0.005})
+        row = {"d": d, "sigma": sg, "graded": graded, "realisations": 10, "order_independent": identical, "points": pts,
+               "max_abs_mean_diff": max(abs(p["mean_diff"]) for p in pts), "max_sd_across_graphs": max(p["sd_across_graphs"] for p in pts),
+               "H_at_max_sd": max(pts, key=lambda p: p["sd_across_graphs"])["H"]}
+        if graded:
+            row["ok"] = all(p["ok"] for p in pts) and identical
+        rows.append(row)
+        print("B3A", d, sg, "graded" if graded else "diagnostic", "ok" if not graded else row["ok"], "max|mean diff|",
+              round(row["max_abs_mean_diff"], 4), "max SD", round(row["max_sd_across_graphs"], 4), "at H", row["H_at_max_sd"],
+              "order-indep", identical, flush=True)
+    return rows
+
+
 def b4():
     from scipy.special import ndtr
     pts = [(d, mu, r0) for d in (4, 6) for mu, r0 in ((0.5, 0.05), (0.5, 0.1), (0.5, 0.2), (0.4, 0.05), (0.4, 0.2))]
@@ -211,14 +251,14 @@ def main():
     import networkx, numba, scipy
     env = {"python": platform.python_version(), "numpy": np.__version__, "numba": numba.__version__,
            "networkx": networkx.__version__, "scipy": scipy.__version__, "machine": platform.platform()}
-    fns = {"R": r, "G": g, "B1": b1, "B2": b2, "B3": b3, "B4": b4}
+    fns = {"R": r, "G": g, "B1": b1, "B2": b2, "B3": b3, "B3A": b3a, "B4": b4}
     for k in a.only:
         t0 = time.time()
         res = fns[k]()
         json.dump({"section": k, "env": env, "minutes": round((time.time() - t0) / 60, 2), "results": res},
                   open(OUT / f"{k}.json", "w"), indent=1, default=lambda o: o.tolist() if hasattr(o, "tolist") else str(o))
     summ = {}
-    for k in ("R", "G", "B1", "B2", "B3", "B4"):
+    for k in ("R", "G", "B1", "B2", "B3", "B3A", "B4"):
         f = OUT / f"{k}.json"
         if not f.exists():
             continue
@@ -226,10 +266,16 @@ def main():
         if k in ("R", "G"):
             summ[k] = res["ok"]
         elif k == "B3":
-            summ[k] = all(x["ok"] for x in res)
+            summ[k] = all(x["ok"] for x in res)           # original rule (kept on record)
+            summ["B3_jump_cases"] = all(x["ok"] for x in res if x.get("ref_jump"))
+        elif k == "B3A":
+            summ[k] = all(x["ok"] for x in res if x["graded"])
         else:
             summ[k] = all(all(v["ok"] for q, v in x.items() if isinstance(v, dict) and "ok" in v) for x in res)
-    summ["pass"] = all(summ.values()) and len(summ) == 6
+    # Amendment 1 (DV1): B3's smooth cases are judged by B3A; the original B3 result stays in the summary, on record
+    need = ["R", "G", "B1", "B2", "B4", "B3_jump_cases", "B3A"]
+    summ["pass_original_plan"] = all(summ.get(k, False) for k in ["R", "G", "B1", "B2", "B3", "B4"])
+    summ["pass"] = all(summ.get(k, False) for k in need)
     json.dump({"env": env, "sections": summ}, open(OUT / "summary.json", "w"), indent=1)
     print("SUMMARY", summ)
 

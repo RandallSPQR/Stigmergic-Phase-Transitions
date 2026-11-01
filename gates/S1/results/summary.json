@@ -13,7 +13,10 @@
   "B1": true,
   "B2": true,
   "B3": false,
+  "B3_jump_cases": true,
+  "B3A": true,
   "B4": true,
-  "pass": false
+  "pass_original_plan": false,
+  "pass": true
  }
 }
