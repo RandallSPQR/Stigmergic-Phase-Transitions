@@ -1,0 +1,21 @@
+{
+ "generated": "2026-11-01T18:10:46Z",
+ "hash_bytes": true,
+ "repos": [
+  {
+   "repo": "Qwen/Qwen3.5-27B",
+   "revision_requested": "fc05daec18b0a78c049392ed2e771dde82bdf654",
+   "metadata_source": "hub",
+   "ok": true,
+   "files_expected": 19,
+   "files_verified": 19,
+   "lfs_files": 12,
+   "missing": [],
+   "mismatch": [],
+   "verified_by": "sha256",
+   "revision_resolved": "fc05daec18b0a78c049392ed2e771dde82bdf654",
+   "snapshot": "/root/hf/hub/models--Qwen--Qwen3.5-27B/snapshots/fc05daec18b0a78c049392ed2e771dde82bdf654",
+   "weight_hash": "5e536c8708a9430b"
+  }
+ ]
+}

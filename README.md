@@ -3,7 +3,7 @@
 **Question.** Agents see only their contacts' current votes. Do those votes change how memoryless LLM agents use
 dispersed private evidence? And does a temporary change to what agents see leave a lasting mark on the board?
 
-**Status (2026-11-01): S0 and S1 closed; S2 passed with conventions accepted (D15–D19); S3 reported: 4/5 models pass, Qwen3.5-9B fails one type; awaiting the owner.**
+**Status (2026-11-01): S0 and S1 closed; S2 passed with conventions accepted (D15–D19); S3 passes with wording W3 (round 2); next gate S4 (noise, GPU) awaits the owner.**
 - Not frozen. No paid collection. Nothing confirmatory.
 - Brief: https://claude.ai/artifact/Q36cWtMumtJPs3semD76ni (revision 3).
 - Missing Piece is the complementary study. Both share the pipeline and the coordination record below.
@@ -49,7 +49,7 @@ across the two; a TOST for each.
 | S0: pipeline + SPT harness replay | **CLOSED 2026-11-01**: passed; restart drift accepted on v1.2.0 with server-start blocking (D14; `gates/S0/S0_REPORT.md`) |
 | S1: simulator checks (CPU only) | **CLOSED 2026-11-01**: passes under Amendment 1 (DV1); original-plan failure kept on record (`gates/S1/S1_REPORT.md`) |
 | S2: evidence specifications | **passes** (28 specs before any model call; schema v1.0); conventions accepted as provisional (D15–D16); difficulty chosen by simulated power before live data: f 0.5, sources {3/4, 9/10}; S8 region adds {3/5, 3/4, 9/10} (D18; `gates/S2/difficulty/POWER_REPORT.md`) |
-| S3: comprehension (GPU) | **reported 2026-11-01**: 4/5 pass; Qwen3.5-9B fails own-report (0.867, context interference); Llama-8B high non-A/B mass; owner to decide (`gates/S3/S3_REPORT.md`) |
+| S3: comprehension (GPU) | **PASSES 2026-11-01** under round 2 (A12): wording W3 valid for all five models (W1, W2 not); non-A/B mass at the vote ≈ 0 under W3; Qwen3.5-9B at the threshold (`gates/S3/S3_REPORT.md`) |
 | S4–S10 | not started |
 
 ## Layout

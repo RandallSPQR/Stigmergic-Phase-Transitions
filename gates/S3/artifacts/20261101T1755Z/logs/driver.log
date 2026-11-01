@@ -1,0 +1,46 @@
+=== 2026-11-01T17:55:44Z stack
+NVIDIA RTX PRO 6000 Blackwell Server Edition, 595.91.07, 97887 MiB
+3.11.13 vllm 0.19.1 torch 2.10.0+cu128 NVIDIA RTX PRO 6000 Blackwell Server Edition
+=== 2026-11-01T17:56:17Z prompts
+prompt set verified e7d6a316b49d85e6 2160
+=== 2026-11-01T17:56:17Z llama-3.1-8b-it: weights
+overlay         200G   22G  179G  11% /
+[OK ] meta-llama/Llama-3.1-8B-Instruct@0e9e39f249a1  files 11/11  by sha256  meta=hub  weight_hash=495b73750141622d
+report: /root/out/20261101T1755Z/preflight_llama-3.1-8b-it.json
+=== 2026-11-01T17:56:33Z llama-3.1-8b-it: serve
+=== 2026-11-01T17:57:54Z llama-3.1-8b-it: readouts
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+llama-3.1-8b-it accuracy {'w2/contact_majority': 1.0, 'w2/own_evidence': 0.9708, 'w2/own_vote': 1.0, 'w3/contact_majority': 0.9958, 'w3/own_evidence': 0.9625, 'w3/own_vote': 1.0} seconds 59.5
+=== 2026-11-01T17:59:08Z gemma-2-9b-it: weights
+overlay         200G   37G  164G  19% /
+[OK ] google/gemma-2-9b-it@11c9b309abf7  files 11/11  by sha256  meta=hub  weight_hash=7055bc8c5f456ced
+report: /root/out/20261101T1755Z/preflight_gemma-2-9b-it.json
+=== 2026-11-01T17:59:28Z gemma-2-9b-it: serve
+=== 2026-11-01T18:01:08Z gemma-2-9b-it: readouts
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+gemma-2-9b-it accuracy {'w2/contact_majority': 0.9917, 'w2/own_evidence': 1.0, 'w2/own_vote': 0.6833, 'w3/contact_majority': 1.0, 'w3/own_evidence': 1.0, 'w3/own_vote': 0.9417} seconds 49.5
+=== 2026-11-01T18:02:12Z qwen3.5-9b: weights
+overlay         200G   54G  147G  27% /
+[OK ] Qwen/Qwen3.5-9B@c20223623576  files 11/11  by sha256  meta=hub  weight_hash=4b570a1e6e5db4b9
+report: /root/out/20261101T1755Z/preflight_qwen3.5-9b.json
+=== 2026-11-01T18:02:30Z qwen3.5-9b: serve
+=== 2026-11-01T18:04:21Z qwen3.5-9b: readouts
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+qwen3.5-9b accuracy {'w2/contact_majority': 0.9083, 'w2/own_evidence': 0.9375, 'w2/own_vote': 0.9083, 'w3/contact_majority': 0.9708, 'w3/own_evidence': 0.9, 'w3/own_vote': 0.9792} seconds 57.6
+=== 2026-11-01T18:05:30Z gemma-3-27b-it: weights
+overlay         200G   73G  128G  37% /
+[OK ] google/gemma-3-27b-it@005ad3404e59  files 23/23  by sha256  meta=hub  weight_hash=34f745e7c6ef5b7b
+report: /root/out/20261101T1755Z/preflight_gemma-3-27b-it.json
+=== 2026-11-01T18:06:21Z gemma-3-27b-it: serve
+=== 2026-11-01T18:07:26Z gemma-3-27b-it: readouts
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+gemma-3-27b-it accuracy {'w2/contact_majority': 1.0, 'w2/own_evidence': 1.0, 'w2/own_vote': 1.0, 'w3/contact_majority': 1.0, 'w3/own_evidence': 1.0, 'w3/own_vote': 1.0} seconds 129.9
+=== 2026-11-01T18:09:54Z qwen3.5-27b: weights
+overlay         200G  124G   77G  62% /
+[OK ] Qwen/Qwen3.5-27B@fc05daec18b0  files 19/19  by sha256  meta=hub  weight_hash=5e536c8708a9430b
+report: /root/out/20261101T1755Z/preflight_qwen3.5-27b.json
+=== 2026-11-01T18:10:46Z qwen3.5-27b: serve
+=== 2026-11-01T18:12:41Z qwen3.5-27b: readouts
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+qwen3.5-27b accuracy {'w2/contact_majority': 1.0, 'w2/own_evidence': 1.0, 'w2/own_vote': 1.0, 'w3/contact_majority': 1.0, 'w3/own_evidence': 1.0, 'w3/own_vote': 1.0} seconds 122.5
+=== 2026-11-01T18:14:57Z done

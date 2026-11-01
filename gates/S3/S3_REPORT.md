@@ -1,10 +1,14 @@
 # Gate S3: comprehension (development bank, branched), 2026-11-01
 
-**Verdict: 4 of 5 models pass; Qwen3.5-9B fails one question type.**
-- Rule: accuracy ≥ 0.90 per question type, per model.
-- Qwen3.5-9B scores 0.867 on its own report. Its errors are interference from the rest of the context, not misreading
-  the report.
-- Under the plan, a failing model is reported, and the next step for it is the owner's decision.
+**Verdict: S3 PASSES under round 2 (A12), with wording W3.**
+- **Round 1, original wording W1:** 4 of 5 models passed; Qwen3.5-9B failed own-report (0.867). Kept on record below.
+- **Round 2:** the owner chose to revise the wording (A12). Two revisions ran on the same 720 contexts. **W3 is valid:**
+  all five models pass all three types. **W2 is not:** Gemma-2's own-vote accuracy is 0.683.
+- Under the rule fixed before round 2, **the study's wording set is {W3}**.
+- W3 also removes the answer-format problem: non-A/B mass at the vote question is 0.0–0.3% for every model.
+- Qwen3.5-9B passes at exactly the threshold (0.900).
+
+## Round 1 (W1)
 
 **Inputs and run.**
 - Plan: `S3_PLAN.md`, committed before any model call.
@@ -67,3 +71,55 @@ the contact-majority question and 0.62 for own vote. It does not answer in the r
    - Any rule for excluding a call or a model on non-A/B mass must be set before data.
 3. **S3 tested one wording.** The pre-registered prompt-sensitivity factor (several wordings) needs each wording to
    pass S3 before it is used.
+
+## Round 2 (A12): wordings W2 and W3 on the same 720 contexts
+
+Plan: `ROUND2_PLAN.md` (rule fixed before any call). Prompts: `prompts/s3_round2_prompts.json`, sha256 `e7d6a316…`. They
+were rendered on the pod from the compact contexts and matched the committed hash.
+
+Run details:
+- The pod `8258g4pbif2xhh` ran all five models in about 20 min, roughly $0.85. Pipeline v1.2.0 was checked by
+  `check_pin`, weights were re-hashed to their pins, and each model had one server start with its ID in the manifest.
+- An earlier round-2 pod (`83hfku47mkxrf0`) never started its container (RunPod host problem). It was terminated after
+  32 min, roughly $1.30. The watcher now terminates any pod whose container has not started after 10 min.
+- An earlier launch was refused by RunPod because the request body was too large, so prompts are now rendered on the
+  pod.
+- Results: `artifacts/20261101T1755Z/`, `results/round2_summary.json`.
+
+**Accuracy (own report / own vote / contact majority; pass is ≥ 0.90 on each)**
+
+| model | W1 (round 1) | W2 | **W3** |
+|---|---|---|---|
+| Llama-3.1-8B | 0.954 / 1.000 / 0.950 | 0.971 / 1.000 / 1.000 | **0.963 / 1.000 / 0.996** |
+| Gemma-2-9B | 0.908 / 1.000 / 0.983 | 1.000 / **0.683** / 0.992 | **1.000 / 0.942 / 1.000** |
+| Qwen3.5-9B | **0.867** / 0.958 / 0.996 | 0.938 / 0.908 / 0.908 | **0.900 / 0.979 / 0.971** |
+| Gemma-3-27B | 0.996 / 1.000 / 1.000 | 1.000 / 1.000 / 1.000 | **1.000 / 1.000 / 1.000** |
+| Qwen3.5-27B | 1.000 / 1.000 / 1.000 | 1.000 / 1.000 / 1.000 | **1.000 / 1.000 / 1.000** |
+| **valid for all five?** | no (Qwen3.5-9B) | no (Gemma-2 own vote) | **yes** |
+
+**Non-A/B mass at the actual vote question (240 contexts per wording; measured, not scored)**
+
+| model | W1 | W2 | W3 |
+|---|---|---|---|
+| Llama-3.1-8B | 0.377 | 0.000 | 0.000 |
+| Gemma-2-9B | 0.425 | 0.001 | 0.001 |
+| Qwen3.5-9B | 0.007 | 0.002 | 0.003 |
+| Gemma-3-27B | 0.593 | 0.000 | 0.000 |
+| Qwen3.5-27B | 0.000 | 0.000 | 0.000 |
+
+W1's plain "Answer with a single letter" let three models put 38–59% of their probability elsewhere. W3's strict
+instruction ("Reply with exactly one letter, A or B, and nothing else") brings that to about zero. That largely settles
+the question of a non-A/B rule: under W3, the vote is almost entirely A or B.
+
+## What carries forward
+
+1. **The study's wording is W3** (`stpt/prompts.py`, `render("w3", …)`), from S4 onward. W1 and W2 are retired: W1
+   failed Qwen3.5-9B, and W2 failed Gemma-2's own vote.
+2. **Qwen3.5-9B passes at the threshold.** Its own-report accuracy under W3 is 0.900: 216 of 240, one answer above
+   the line. Interference remains: 0.817 when its own vote disagrees with its report, against 0.991 when they agree.
+   Its kernel will carry some of that.
+3. **Prompt-sensitivity factor.** The brief pre-registers several wordings as a random factor, but only one is valid
+   so far. A random factor needs at least two valid wordings. Further variants of W3 would each have to pass S3 for all
+   five models first. This is the owner's decision.
+4. **Letter preference at the vote question.** The Gemma models choose A on 40–42% of vote readouts under W3, although
+   letters are randomised per call. S4 and S5 measure this, and the randomisation and analysis already absorb it.

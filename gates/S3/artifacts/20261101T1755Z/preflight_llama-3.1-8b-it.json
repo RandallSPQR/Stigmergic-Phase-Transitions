@@ -1,0 +1,21 @@
+{
+ "generated": "2026-11-01T17:56:33Z",
+ "hash_bytes": true,
+ "repos": [
+  {
+   "repo": "meta-llama/Llama-3.1-8B-Instruct",
+   "revision_requested": "0e9e39f249a16976918f6564b8830bc894c89659",
+   "metadata_source": "hub",
+   "ok": true,
+   "files_expected": 11,
+   "files_verified": 11,
+   "lfs_files": 4,
+   "missing": [],
+   "mismatch": [],
+   "verified_by": "sha256",
+   "revision_resolved": "0e9e39f249a16976918f6564b8830bc894c89659",
+   "snapshot": "/root/hf/hub/models--meta-llama--Llama-3.1-8B-Instruct/snapshots/0e9e39f249a16976918f6564b8830bc894c89659",
+   "weight_hash": "495b73750141622d"
+  }
+ ]
+}

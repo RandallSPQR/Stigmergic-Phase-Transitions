@@ -1,0 +1,208 @@
+{
+ "rule": "a wording is valid if all five models score >= 0.90 on each of the three types (gates/S3/ROUND2_PLAN.md)",
+ "models": {
+  "llama-3.1-8b-it": {
+   "server_start": "8258g4pbif2xhh/start1/2026-11-01T17:56:33Z",
+   "pipeline_commit": "5ca15f56a71f35d5818d0392f7f3b4acb2d85d1b",
+   "prompts_sha256": "e7d6a316b49d85e68e48f616f8da0a7a4bb5174cba54c524c44117b9e02321b5",
+   "wordings": {
+    "w1": {
+     "own_evidence": 0.9541666666666667,
+     "own_vote": 1.0,
+     "contact_majority": 0.95
+    },
+    "w2": {
+     "own_evidence": 0.9708333333333333,
+     "own_vote": 1.0,
+     "contact_majority": 1.0
+    },
+    "w3": {
+     "own_evidence": 0.9625,
+     "own_vote": 1.0,
+     "contact_majority": 0.9958333333333333
+    }
+   },
+   "vote_non_option_mass": {
+    "w1": 0.3770822671719904,
+    "w2": 1.7160389871216652e-05,
+    "w3": 1.4493124245580173e-05
+   },
+   "vote_share_A": {
+    "w1": 0.4625,
+    "w2": 0.475,
+    "w3": 0.5041666666666667
+   },
+   "w3_own_report_by_vote_agreement": {
+    "vote != report": 0.96,
+    "vote = report": 0.965
+   },
+   "w3_own_report_by_correct_letter": {
+    "A": 1.0,
+    "B": 0.922
+   }
+  },
+  "gemma-2-9b-it": {
+   "server_start": "8258g4pbif2xhh/start1/2026-11-01T17:59:28Z",
+   "pipeline_commit": "5ca15f56a71f35d5818d0392f7f3b4acb2d85d1b",
+   "prompts_sha256": "e7d6a316b49d85e68e48f616f8da0a7a4bb5174cba54c524c44117b9e02321b5",
+   "wordings": {
+    "w1": {
+     "own_evidence": 0.9083333333333333,
+     "own_vote": 1.0,
+     "contact_majority": 0.9833333333333333
+    },
+    "w2": {
+     "own_evidence": 1.0,
+     "own_vote": 0.6833333333333333,
+     "contact_majority": 0.9916666666666667
+    },
+    "w3": {
+     "own_evidence": 1.0,
+     "own_vote": 0.9416666666666667,
+     "contact_majority": 1.0
+    }
+   },
+   "vote_non_option_mass": {
+    "w1": 0.4247311397193786,
+    "w2": 0.0010266183955189208,
+    "w3": 0.0012141368499225262
+   },
+   "vote_share_A": {
+    "w1": 0.32083333333333336,
+    "w2": 0.43333333333333335,
+    "w3": 0.3958333333333333
+   },
+   "w3_own_report_by_vote_agreement": {
+    "vote != report": 1.0,
+    "vote = report": 1.0
+   },
+   "w3_own_report_by_correct_letter": {
+    "A": 1.0,
+    "B": 1.0
+   }
+  },
+  "qwen3.5-9b": {
+   "server_start": "8258g4pbif2xhh/start1/2026-11-01T18:02:30Z",
+   "pipeline_commit": "5ca15f56a71f35d5818d0392f7f3b4acb2d85d1b",
+   "prompts_sha256": "e7d6a316b49d85e68e48f616f8da0a7a4bb5174cba54c524c44117b9e02321b5",
+   "wordings": {
+    "w1": {
+     "own_evidence": 0.8666666666666667,
+     "own_vote": 0.9583333333333334,
+     "contact_majority": 0.9958333333333333
+    },
+    "w2": {
+     "own_evidence": 0.9375,
+     "own_vote": 0.9083333333333333,
+     "contact_majority": 0.9083333333333333
+    },
+    "w3": {
+     "own_evidence": 0.9,
+     "own_vote": 0.9791666666666666,
+     "contact_majority": 0.9708333333333333
+    }
+   },
+   "vote_non_option_mass": {
+    "w1": 0.007460638654103498,
+    "w2": 0.0022169914736607558,
+    "w3": 0.0030830127759540063
+   },
+   "vote_share_A": {
+    "w1": 0.32083333333333336,
+    "w2": 0.3458333333333333,
+    "w3": 0.49166666666666664
+   },
+   "w3_own_report_by_vote_agreement": {
+    "vote != report": 0.817,
+    "vote = report": 0.991
+   },
+   "w3_own_report_by_correct_letter": {
+    "A": 0.919,
+    "B": 0.879
+   }
+  },
+  "gemma-3-27b-it": {
+   "server_start": "8258g4pbif2xhh/start1/2026-11-01T18:06:21Z",
+   "pipeline_commit": "5ca15f56a71f35d5818d0392f7f3b4acb2d85d1b",
+   "prompts_sha256": "e7d6a316b49d85e68e48f616f8da0a7a4bb5174cba54c524c44117b9e02321b5",
+   "wordings": {
+    "w1": {
+     "own_evidence": 0.9958333333333333,
+     "own_vote": 1.0,
+     "contact_majority": 1.0
+    },
+    "w2": {
+     "own_evidence": 1.0,
+     "own_vote": 1.0,
+     "contact_majority": 1.0
+    },
+    "w3": {
+     "own_evidence": 1.0,
+     "own_vote": 1.0,
+     "contact_majority": 1.0
+    }
+   },
+   "vote_non_option_mass": {
+    "w1": 0.5933865724330112,
+    "w2": 2.2598556342438384e-08,
+    "w3": 1.824897156813924e-08
+   },
+   "vote_share_A": {
+    "w1": 0.37083333333333335,
+    "w2": 0.425,
+    "w3": 0.42083333333333334
+   },
+   "w3_own_report_by_vote_agreement": {
+    "vote != report": 1.0,
+    "vote = report": 1.0
+   },
+   "w3_own_report_by_correct_letter": {
+    "A": 1.0,
+    "B": 1.0
+   }
+  },
+  "qwen3.5-27b": {
+   "server_start": "8258g4pbif2xhh/start1/2026-11-01T18:10:46Z",
+   "pipeline_commit": "5ca15f56a71f35d5818d0392f7f3b4acb2d85d1b",
+   "prompts_sha256": "e7d6a316b49d85e68e48f616f8da0a7a4bb5174cba54c524c44117b9e02321b5",
+   "wordings": {
+    "w1": {
+     "own_evidence": 1.0,
+     "own_vote": 1.0,
+     "contact_majority": 1.0
+    },
+    "w2": {
+     "own_evidence": 1.0,
+     "own_vote": 1.0,
+     "contact_majority": 1.0
+    },
+    "w3": {
+     "own_evidence": 1.0,
+     "own_vote": 1.0,
+     "contact_majority": 1.0
+    }
+   },
+   "vote_non_option_mass": {
+    "w1": 0.0003435744370360242,
+    "w2": 0.00020225422298417774,
+    "w3": 0.0002321296480627159
+   },
+   "vote_share_A": {
+    "w1": 0.525,
+    "w2": 0.48333333333333334,
+    "w3": 0.5208333333333334
+   },
+   "w3_own_report_by_vote_agreement": {
+    "vote != report": 1.0,
+    "vote = report": 1.0
+   },
+   "w3_own_report_by_correct_letter": {
+    "A": 1.0,
+    "B": 1.0
+   }
+  }
+ },
+ "valid_wordings": [
+  "w3"
+ ]
+}
