@@ -89,3 +89,23 @@ Required:
   S7 tests branches in full.
 
 Outputs go to `gates/S1/results/` (one JSON per section, plus `summary.json`) and `gates/S1/S1_REPORT.md`.
+
+## Amendment 1 (2026-11-01): post-outcome deviation, approved by the owner, committed before the re-run
+
+This is decided after B3's original result was seen. That result is a FAIL on both smooth cases, kept on record in
+`S1_REPORT.md` and `results/B3.json`. Logged in the coordination record as a post-outcome deviation.
+
+- **Why.** The exact curve is an ensemble (large-N, averaged) result, so a single-graph comparison was mis-specified.
+  Near the critical disorder, graph-to-graph spread is large: up to 0.025 at d = 4 on the steep section, and up to
+  0.19 at d = 6, σ = 3.5 (`diagnostics/B3_realisation_spread.json`).
+- **Amended B3 smooth-case rule.** Mean over 10 independent graph-and-field realisations at N = 20,000, on the same
+  coarse grid (H = −4.0, −3.75, …, 4.0). Per grid point: |mean Δm| ≤ 4 SE + 0.005, with SE = SD across realisations
+  / √10. The same rule as B1, B2 and B4.
+- **Pass/fail points:** (d = 4, σ = 2.5) and (d = 6, σ = 4.5). The (6, 4.5) point replaces (6, 3.5), which sat just
+  above the critical disorder.
+- **(d = 6, σ = 3.5) is kept as a near-critical diagnostic:** 10 realisations, mean and spread reported, no pass/fail.
+- **New seeds:** labels `B3A|<d>|<σ>|<k>`, distinct from the original run and from the diagnostic.
+- **Unchanged:** the jump cases (4, 1.5) and (6, 2.0) passed the original rule and are not re-run. Order independence
+  is checked again on every amended realisation (two update orders, bit-identical at every H).
+- **Gate rule:** S1 passes if R, G, B1, B2, B4 (passed), B3's jump cases (passed) and the amended smooth-case points
+  all pass.
