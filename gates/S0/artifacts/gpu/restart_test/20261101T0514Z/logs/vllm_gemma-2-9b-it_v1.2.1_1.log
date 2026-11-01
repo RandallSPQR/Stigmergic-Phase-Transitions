@@ -1,0 +1,105 @@
+(APIServer pid=2891) INFO 11-01 05:19:16 [utils.py:299] 
+(APIServer pid=2891) INFO 11-01 05:19:16 [utils.py:299]        █     █     █▄   ▄█
+(APIServer pid=2891) INFO 11-01 05:19:16 [utils.py:299]  ▄▄ ▄█ █     █     █ ▀▄▀ █  version 0.19.1
+(APIServer pid=2891) INFO 11-01 05:19:16 [utils.py:299]   █▄█▀ █     █     █     █  model   google/gemma-2-9b-it
+(APIServer pid=2891) INFO 11-01 05:19:16 [utils.py:299]    ▀▀  ▀▀▀▀▀ ▀▀▀▀▀ ▀     ▀
+(APIServer pid=2891) INFO 11-01 05:19:16 [utils.py:299] 
+(APIServer pid=2891) INFO 11-01 05:19:16 [utils.py:233] non-default args: {'model': 'google/gemma-2-9b-it', 'dtype': 'bfloat16', 'revision': '11c9b309abf73637e4b6f9a3fa1e92e615547819', 'tokenizer_revision': '11c9b309abf73637e4b6f9a3fa1e92e615547819', 'max_model_len': 8192, 'enforce_eager': True, 'served_model_name': ['gemma-2-9b-it'], 'attention_backend': 'FLASH_ATTN', 'enable_prefix_caching': False, 'max_num_batched_tokens': 8192, 'max_num_seqs': 1}
+(APIServer pid=2891) INFO 11-01 05:19:22 [model.py:549] Resolved architecture: Gemma2ForCausalLM
+(APIServer pid=2891) INFO 11-01 05:19:22 [model.py:1678] Using max model len 8192
+(APIServer pid=2891) INFO 11-01 05:19:22 [scheduler.py:238] Chunked prefill is enabled with max_num_batched_tokens=8192.
+(APIServer pid=2891) INFO 11-01 05:19:22 [vllm.py:790] Asynchronous scheduling is enabled.
+(APIServer pid=2891) WARNING 11-01 05:19:22 [vllm.py:848] Enforce eager set, disabling torch.compile and CUDAGraphs. This is equivalent to setting -cc.mode=none -cc.cudagraph_mode=none
+(APIServer pid=2891) WARNING 11-01 05:19:22 [vllm.py:859] Inductor compilation was disabled by user settings, optimizations settings that are only active during inductor compilation will be ignored.
+(APIServer pid=2891) INFO 11-01 05:19:22 [vllm.py:1025] Cudagraph is disabled under eager mode
+(APIServer pid=2891) INFO 11-01 05:19:22 [compilation.py:292] Enabled custom fusions: norm_quant, act_quant
+(EngineCore pid=3286) INFO 11-01 05:19:26 [core.py:105] Initializing a V1 LLM engine (v0.19.1) with config: model='google/gemma-2-9b-it', speculative_config=None, tokenizer='google/gemma-2-9b-it', skip_tokenizer_init=False, tokenizer_mode=auto, revision=11c9b309abf73637e4b6f9a3fa1e92e615547819, tokenizer_revision=11c9b309abf73637e4b6f9a3fa1e92e615547819, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=8192, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=True, quantization=None, enforce_eager=True, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False), seed=0, served_model_name=gemma-2-9b-it, enable_prefix_caching=False, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.NONE: 0>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['all'], 'splitting_ops': [], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_images_per_batch': 0, 'compile_sizes': [], 'compile_ranges_endpoints': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'size_asserts': False, 'alignment_asserts': False, 'scalar_asserts': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.NONE: 0>, 'cudagraph_num_of_warmups': 0, 'cudagraph_capture_sizes': [], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': True, 'fuse_act_quant': True, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 0, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': True, 'static_all_moe_layers': []}
+(EngineCore pid=3286) /root/venv_vllm_lineup/lib/python3.11/site-packages/torch/library.py:357: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+(EngineCore pid=3286)   Overriding a previously registered kernel for the same operator and the same dispatch key
+(EngineCore pid=3286)   operator: aten::_log_softmax(Tensor self, int dim, bool half_to_float) -> Tensor
+(EngineCore pid=3286)     registered at /pytorch/build/aten/src/ATen/RegisterSchema.cpp:6
+(EngineCore pid=3286)   dispatch key: CUDA
+(EngineCore pid=3286)   previous kernel: registered at /pytorch/build/aten/src/ATen/RegisterCPU_3.cpp:3798
+(EngineCore pid=3286)        new kernel: registered at /root/venv_vllm_lineup/lib/python3.11/site-packages/vllm/model_executor/layers/batch_invariant.py:936 (Triggered internally at /pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+(EngineCore pid=3286)   self.m.impl(
+[W1101 05:19:27.545943130 Context.cpp:534] Warning: torch.backends.cuda.preferred_blas_library is an experimental feature. If you see any error or unexpected behavior when this flag is set please file an issue on GitHub. (function operator())
+(EngineCore pid=3286) INFO 11-01 05:19:27 [parallel_state.py:1400] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://172.25.0.2:48529 backend=nccl
+(EngineCore pid=3286) INFO 11-01 05:19:27 [parallel_state.py:1716] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A, EPLB rank N/A
+(EngineCore pid=3286) INFO 11-01 05:19:27 [gpu_model_runner.py:4735] Starting to load model google/gemma-2-9b-it...
+(EngineCore pid=3286) INFO 11-01 05:19:28 [cuda.py:274] Using AttentionBackendEnum.FLASH_ATTN backend.
+(EngineCore pid=3286) INFO 11-01 05:19:28 [flash_attn.py:596] Using FlashAttention version 2
+(EngineCore pid=3286) Loading safetensors checkpoint shards:   0% Completed | 0/4 [00:00<?, ?it/s]
+(EngineCore pid=3286) Loading safetensors checkpoint shards:  25% Completed | 1/4 [00:00<00:00,  4.00it/s]
+(EngineCore pid=3286) Loading safetensors checkpoint shards:  50% Completed | 2/4 [00:00<00:00,  3.61it/s]
+(EngineCore pid=3286) Loading safetensors checkpoint shards:  75% Completed | 3/4 [00:00<00:00,  3.48it/s]
+(EngineCore pid=3286) Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:01<00:00,  3.57it/s]
+(EngineCore pid=3286) Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:01<00:00,  3.58it/s]
+(EngineCore pid=3286) 
+(EngineCore pid=3286) INFO 11-01 05:19:29 [default_loader.py:384] Loading weights took 1.15 seconds
+(EngineCore pid=3286) INFO 11-01 05:19:30 [gpu_model_runner.py:4820] Model loading took 17.22 GiB memory and 1.453513 seconds
+(EngineCore pid=3286) INFO 11-01 05:19:33 [gpu_worker.py:436] Available KV cache memory: 67.14 GiB
+(EngineCore pid=3286) INFO 11-01 05:19:33 [kv_cache_utils.py:1319] GPU KV cache size: 209,520 tokens
+(EngineCore pid=3286) INFO 11-01 05:19:33 [kv_cache_utils.py:1324] Maximum concurrency for 8,192 tokens per request: 25.55x
+(EngineCore pid=3286) 2026-11-01 05:19:33,306 - INFO - autotuner.py:262 - flashinfer.jit: [Autotuner]: Autotuning process starts ...
+(EngineCore pid=3286) 2026-11-01 05:19:33,323 - INFO - autotuner.py:268 - flashinfer.jit: [Autotuner]: Autotuning process ends
+(EngineCore pid=3286) INFO 11-01 05:19:34 [core.py:283] init engine (profile, create kv cache, warmup model) took 4.20 seconds
+(EngineCore pid=3286) INFO 11-01 05:19:35 [vllm.py:790] Asynchronous scheduling is enabled.
+(EngineCore pid=3286) WARNING 11-01 05:19:35 [vllm.py:848] Enforce eager set, disabling torch.compile and CUDAGraphs. This is equivalent to setting -cc.mode=none -cc.cudagraph_mode=none
+(EngineCore pid=3286) WARNING 11-01 05:19:35 [vllm.py:859] Inductor compilation was disabled by user settings, optimizations settings that are only active during inductor compilation will be ignored.
+(EngineCore pid=3286) INFO 11-01 05:19:35 [vllm.py:1025] Cudagraph is disabled under eager mode
+(EngineCore pid=3286) INFO 11-01 05:19:35 [compilation.py:292] Enabled custom fusions: norm_quant, act_quant
+(APIServer pid=2891) INFO 11-01 05:19:35 [api_server.py:592] Supported tasks: ['generate']
+(APIServer pid=2891) INFO 11-01 05:19:36 [hf.py:314] Detected the chat template content format to be 'string'. You can set `--chat-template-content-format` to override this.
+(APIServer pid=2891) INFO 11-01 05:19:36 [api_server.py:596] Starting vLLM server on http://0.0.0.0:8000
+(APIServer pid=2891) INFO 11-01 05:19:36 [launcher.py:37] Available routes are:
+(APIServer pid=2891) INFO 11-01 05:19:36 [launcher.py:46] Route: /openapi.json, Methods: GET, HEAD
+(APIServer pid=2891) INFO 11-01 05:19:36 [launcher.py:46] Route: /docs, Methods: GET, HEAD
+(APIServer pid=2891) INFO 11-01 05:19:36 [launcher.py:46] Route: /docs/oauth2-redirect, Methods: GET, HEAD
+(APIServer pid=2891) INFO 11-01 05:19:36 [launcher.py:46] Route: /redoc, Methods: GET, HEAD
+(APIServer pid=2891) INFO 11-01 05:19:36 [launcher.py:46] Route: /metrics, Methods: GET
+(APIServer pid=2891) INFO:     Started server process [2891]
+(APIServer pid=2891) INFO:     Waiting for application startup.
+(APIServer pid=2891) INFO:     Application startup complete.
+(APIServer pid=2891) INFO:     127.0.0.1:35270 - "GET /v1/models HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:35276 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:37218 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:37224 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:37230 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:37244 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:37250 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:37266 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:37270 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:37274 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:37288 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:37290 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:37298 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:37300 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:37316 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:37320 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:37324 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:37326 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:37336 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:37350 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:37358 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:37368 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:37374 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:37378 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:37388 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:37400 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:37414 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:37422 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:37424 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:37434 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:37450 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:37466 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:37474 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:37480 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:37488 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=2891) INFO:     127.0.0.1:37496 - "POST /v1/completions HTTP/1.1" 200 OK
+(EngineCore pid=3286) INFO 11-01 05:20:01 [core.py:1210] Shutdown initiated (timeout=0)
+(EngineCore pid=3286) INFO 11-01 05:20:01 [core.py:1233] Shutdown complete
+(APIServer pid=2891) INFO:     Shutting down
+[rank0]:[W1101 05:20:01.158879005 ProcessGroupNCCL.cpp:1553] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+(APIServer pid=2891) INFO:     Waiting for application shutdown.
+(APIServer pid=2891) INFO:     Application shutdown complete.
+(APIServer pid=2891) INFO:     Finished server process [2891]

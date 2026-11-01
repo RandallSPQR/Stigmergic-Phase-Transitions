@@ -1,0 +1,69 @@
+{
+ "winner": null,
+ "elapsed_min": 20.4,
+ "pipeline_version": "1.2.1",
+ "pipe_commit": "ffc4902a1db0173502b2addd173a755775edb937",
+ "serve_env": {
+  "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+  "PYTHONHASHSEED": "0",
+  "TOKENIZERS_PARALLELISM": "false",
+  "VLLM_BATCH_INVARIANT": "1"
+ },
+ "cells": [
+  {
+   "model": "llama-3.1-8b-it",
+   "config": "v1.2.1",
+   "starts": 3,
+   "up": 3,
+   "identical_across_starts": true,
+   "within_identical": true,
+   "max_diff_nats": 0.0,
+   "fallback_ok": true,
+   "latency_ms_median": 28.02
+  },
+  {
+   "model": "gemma-2-9b-it",
+   "config": "v1.2.1",
+   "starts": 3,
+   "up": 3,
+   "identical_across_starts": false,
+   "within_identical": true,
+   "max_diff_nats": 0.12484359741210938,
+   "fallback_ok": true,
+   "latency_ms_median": 37.84
+  },
+  {
+   "model": "qwen3.5-9b",
+   "config": "v1.2.1",
+   "starts": 3,
+   "up": 3,
+   "identical_across_starts": false,
+   "within_identical": true,
+   "max_diff_nats": 0.07969850301742554,
+   "fallback_ok": true,
+   "latency_ms_median": 34.42
+  },
+  {
+   "model": "gemma-3-27b-it",
+   "config": "v1.2.1",
+   "starts": 3,
+   "up": 0,
+   "identical_across_starts": false,
+   "within_identical": true,
+   "max_diff_nats": null,
+   "fallback_ok": true,
+   "latency_ms_median": null
+  },
+  {
+   "model": "qwen3.5-27b",
+   "config": "v1.2.1",
+   "starts": 3,
+   "up": 3,
+   "identical_across_starts": true,
+   "within_identical": true,
+   "max_diff_nats": 0.0,
+   "fallback_ok": true,
+   "latency_ms_median": 85.79
+  }
+ ]
+}

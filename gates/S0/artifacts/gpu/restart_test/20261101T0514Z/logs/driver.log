@@ -1,0 +1,30 @@
+=== 2026-11-01T05:15:01Z stack
+NVIDIA RTX PRO 6000 Blackwell Server Edition, 595.91.07, 97887 MiB
+3.11.13 vllm 0.19.1 torch 2.10.0+cu128 NVIDIA RTX PRO 6000 Blackwell Server Edition
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Fetching 12 files:   0%|          | 0/12 [00:00<?, ?it/s]Fetching 12 files:  42%|████▏     | 5/12 [00:00<00:00, 34.00it/s]Fetching 12 files:  75%|███████▌  | 9/12 [00:03<00:01,  2.18it/s]Fetching 12 files:  92%|█████████▏| 11/12 [00:07<00:00,  1.14it/s]Fetching 12 files: 100%|██████████| 12/12 [00:36<00:00,  5.48s/it]Fetching 12 files: 100%|██████████| 12/12 [00:36<00:00,  3.02s/it]
+05:17:11 llama-3.1-8b-it v1.2.1 1 up 30.0 s 27.8 ms/call within True {'plain': 2.25, 'board': 0.5, 'lopsided': 10.25}
+05:18:05 llama-3.1-8b-it v1.2.1 2 up 25.0 s 28.33 ms/call within True {'plain': 2.25, 'board': 0.5, 'lopsided': 10.25}
+05:19:00 llama-3.1-8b-it v1.2.1 3 up 25.0 s 28.02 ms/call within True {'plain': 2.25, 'board': 0.5, 'lopsided': 10.25}
+Fetching 11 files:   0%|          | 0/11 [00:00<?, ?it/s]Fetching 11 files:  45%|████▌     | 5/11 [00:00<00:00, 36.70it/s]Fetching 11 files:  82%|████████▏ | 9/11 [00:05<00:01,  1.38it/s]Fetching 11 files: 100%|██████████| 11/11 [00:10<00:00,  1.28s/it]Fetching 11 files: 100%|██████████| 11/11 [00:10<00:00,  1.00it/s]
+05:20:06 gemma-2-9b-it v1.2.1 1 up 25.0 s 38.17 ms/call within True {'plain': 2.75, 'board': -2.375, 'lopsided': 9.625}
+05:21:01 gemma-2-9b-it v1.2.1 2 up 25.0 s 37.8 ms/call within True {'plain': 2.75, 'board': -2.375, 'lopsided': 9.625}
+05:21:55 gemma-2-9b-it v1.2.1 3 up 25.0 s 37.84 ms/call within True {'plain': 2.625, 'board': -2.375, 'lopsided': 9.75}
+Fetching 13 files:   0%|          | 0/13 [00:00<?, ?it/s]Fetching 13 files:  38%|███▊      | 5/13 [00:00<00:00, 42.58it/s]Fetching 13 files:  77%|███████▋  | 10/13 [00:04<00:01,  1.86it/s]Fetching 13 files:  92%|█████████▏| 12/13 [00:05<00:00,  1.74it/s]Fetching 13 files: 100%|██████████| 13/13 [00:06<00:00,  2.03it/s]
+05:23:56 qwen3.5-9b v1.2.1 1 up 85.0 s 34.42 ms/call within True {'plain': 0.5, 'board': 0.375, 'lopsided': 4.375}
+05:25:51 qwen3.5-9b v1.2.1 2 up 85.0 s 34.29 ms/call within True {'plain': 0.5, 'board': 0.375, 'lopsided': 4.375}
+05:27:46 qwen3.5-9b v1.2.1 3 up 85.0 s 34.45 ms/call within True {'plain': 0.5, 'board': 0.5, 'lopsided': 4.375}
+Fetching 23 files:   0%|          | 0/23 [00:00<?, ?it/s]Fetching 23 files:  22%|██▏       | 5/23 [00:07<00:28,  1.57s/it]Fetching 23 files:  30%|███       | 7/23 [00:08<00:16,  1.04s/it]Fetching 23 files:  35%|███▍      | 8/23 [00:08<00:13,  1.12it/s]Fetching 23 files:  39%|███▉      | 9/23 [00:08<00:11,  1.24it/s]Fetching 23 files:  48%|████▊     | 11/23 [00:09<00:06,  1.93it/s]Fetching 23 files:  57%|█████▋    | 13/23 [00:09<00:03,  2.83it/s]Fetching 23 files:  65%|██████▌   | 15/23 [00:10<00:03,  2.46it/s]Fetching 23 files:  78%|███████▊  | 18/23 [00:11<00:02,  2.45it/s]Fetching 23 files:  83%|████████▎ | 19/23 [00:12<00:02,  1.72it/s]Fetching 23 files:  87%|████████▋ | 20/23 [00:13<00:01,  1.77it/s]Fetching 23 files:  91%|█████████▏| 21/23 [00:13<00:01,  1.84it/s]Fetching 23 files: 100%|██████████| 23/23 [00:14<00:00,  2.65it/s]Fetching 23 files: 100%|██████████| 23/23 [00:14<00:00,  1.64it/s]
+05:28:32 gemma-3-27b-it v1.2.1 1 DOWN 25.0 s None ms/call within None {}
+05:29:02 gemma-3-27b-it v1.2.1 2 DOWN 25.0 s None ms/call within None {}
+05:29:32 gemma-3-27b-it v1.2.1 3 DOWN 25.0 s None ms/call within None {}
+Fetching 21 files:   0%|          | 0/21 [00:00<?, ?it/s]Fetching 21 files:  14%|█▍        | 3/21 [00:00<00:00, 28.55it/s]Fetching 21 files:  29%|██▊       | 6/21 [00:10<00:31,  2.12s/it]Fetching 21 files:  38%|███▊      | 8/21 [00:11<00:20,  1.54s/it]Fetching 21 files:  48%|████▊     | 10/21 [00:12<00:11,  1.06s/it]Fetching 21 files:  81%|████████  | 17/21 [00:12<00:01,  2.47it/s]Fetching 21 files:  95%|█████████▌| 20/21 [00:15<00:00,  1.70it/s]Fetching 21 files: 100%|██████████| 21/21 [00:16<00:00,  1.29it/s]
+05:31:51 qwen3.5-27b v1.2.1 1 up 90.0 s 86.76 ms/call within True {'plain': 2.125, 'board': 0.5, 'lopsided': 6.625}
+05:33:53 qwen3.5-27b v1.2.1 2 up 90.0 s 85.79 ms/call within True {'plain': 2.125, 'board': 0.5, 'lopsided': 6.625}
+05:35:54 qwen3.5-27b v1.2.1 3 up 90.0 s 85.67 ms/call within True {'plain': 2.125, 'board': 0.5, 'lopsided': 6.625}
+05:35:55 phase 1 winner: None
+05:35:55 {'model': 'llama-3.1-8b-it', 'config': 'v1.2.1', 'starts': 3, 'up': 3, 'identical_across_starts': True, 'within_identical': True, 'max_diff_nats': 0.0, 'fallback_ok': True, 'latency_ms_median': 28.02}
+05:35:55 {'model': 'gemma-2-9b-it', 'config': 'v1.2.1', 'starts': 3, 'up': 3, 'identical_across_starts': False, 'within_identical': True, 'max_diff_nats': 0.12484359741210938, 'fallback_ok': True, 'latency_ms_median': 37.84}
+05:35:55 {'model': 'qwen3.5-9b', 'config': 'v1.2.1', 'starts': 3, 'up': 3, 'identical_across_starts': False, 'within_identical': True, 'max_diff_nats': 0.07969850301742554, 'fallback_ok': True, 'latency_ms_median': 34.42}
+05:35:55 {'model': 'gemma-3-27b-it', 'config': 'v1.2.1', 'starts': 3, 'up': 0, 'identical_across_starts': False, 'within_identical': True, 'max_diff_nats': None, 'fallback_ok': True, 'latency_ms_median': None}
+05:35:55 {'model': 'qwen3.5-27b', 'config': 'v1.2.1', 'starts': 3, 'up': 3, 'identical_across_starts': True, 'within_identical': True, 'max_diff_nats': 0.0, 'fallback_ok': True, 'latency_ms_median': 85.79}

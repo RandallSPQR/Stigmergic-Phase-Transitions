@@ -1,0 +1,100 @@
+{
+ "model": "gemma-2-9b-it",
+ "config": "v1.2.1",
+ "start": 2,
+ "argv": [
+  "-m",
+  "vllm.entrypoints.openai.api_server",
+  "--model",
+  "google/gemma-2-9b-it",
+  "--revision",
+  "11c9b309abf73637e4b6f9a3fa1e92e615547819",
+  "--tokenizer-revision",
+  "11c9b309abf73637e4b6f9a3fa1e92e615547819",
+  "--served-model-name",
+  "gemma-2-9b-it",
+  "--max-model-len",
+  "8192",
+  "--tensor-parallel-size",
+  "1",
+  "--gpu-memory-utilization",
+  "0.9",
+  "--port",
+  "8000",
+  "--max-num-seqs",
+  "1",
+  "--no-enable-prefix-caching",
+  "--max-num-batched-tokens",
+  "8192",
+  "--seed",
+  "0",
+  "--logprobs-mode",
+  "raw_logprobs",
+  "--dtype",
+  "bfloat16",
+  "--enforce-eager",
+  "--attention-backend",
+  "FLASH_ATTN"
+ ],
+ "env": {},
+ "up": true,
+ "startup_s": 25.0,
+ "logp": {
+  "plain": {
+   "A": -2.2412338256835938,
+   "B": -4.991233825683594
+  },
+  "board": {
+   "A": -2.721259117126465,
+   "B": -0.34625911712646484
+  },
+  "lopsided": {
+   "A": -0.002286321949213743,
+   "B": -9.627285957336426
+  }
+ },
+ "within_identical": true,
+ "non_option_mass": {
+  "plain": 0.886875493192063,
+  "board": 0.22687895515523748,
+  "lopsided": 0.00221780462778709
+ },
+ "latency_ms_median": 37.8,
+ "fallback_consistency": {
+  "checked": {
+   "A": {
+    "top": -2.721259117126465,
+    "restricted": -2.721259117126465,
+    "equal": true
+   },
+   "B": {
+    "top": -0.34625911712646484,
+    "restricted": -0.34625911712646484,
+    "equal": true
+   }
+  },
+  "ok": true
+ },
+ "latency_ms": [
+  37.8,
+  37.5,
+  37.9,
+  37.69,
+  37.48,
+  38.0,
+  38.02,
+  37.85,
+  37.64,
+  37.83,
+  37.66,
+  38.11,
+  37.73,
+  37.79,
+  37.83,
+  37.65,
+  37.68,
+  37.67,
+  38.08,
+  38.08
+ ]
+}

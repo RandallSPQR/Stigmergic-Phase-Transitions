@@ -174,6 +174,31 @@ call.
 - `h6zot49xwv37a4`: follow-up, about 17 min.
 - Restart test total: about $1.55.
 
+### 4c. Confirmation of the v1.2.1 candidate (2026-11-01): FAILED, not released
+
+**Setup.**
+- Pod `s5itxbomssdjz1`, RTX PRO 6000 Blackwell, about 21 min, about $0.90.
+- It installed the candidate commit `ffc4902a1db0` (branch `release/v1.2.1`) from GitHub and served with its own
+  settings: batch-invariant + FLASH_ATTN + eager.
+- 3 cold starts per model, the exact-fallback check at every start.
+- Results: `artifacts/gpu/restart_test/20261101T0514Z/`.
+
+| model | across 3 cold starts | max Δ log P | exact fallback | ms per call |
+|---|---|---|---|---|
+| Llama-3.1-8B | **identical** (same values as the screening pod) | 0.0 | ok | 28.0 |
+| Gemma-2-9B | drifts at start 3 | 0.125 | ok | 37.8 |
+| Qwen3.5-9B | drifts at start 3 (it was identical over 2 starts in the screen) | 0.080 | ok | 34.4 |
+| Gemma-3-27B | **does not start**: FLASH_ATTN is invalid for its multimodal configuration | none | none | none |
+| Qwen3.5-27B | **identical** | 0.0 | ok | 85.8 |
+
+**Reading.**
+- Batch-invariant + eager reduces cross-start drift but does not remove it on this stack.
+- The screen's two identical starts per model were not enough to show that.
+- The setting also breaks Gemma-3-27B.
+- The candidate is marked REJECTED on its branch. No `v1.2.1` tag exists, and both studies stay on v1.2.0.
+- Drift under v1.2.0 is at most 0.25 nats. Each move is 1–2 bf16 steps on the A/B logit, and moves are rare relative to
+  starts.
+
 ## Open items for the owner
 
 1. ~~Push the pipeline release.~~ Done 2026-10-31 (see the update at the top).
@@ -181,7 +206,8 @@ call.
 3. ~~GPU for the box identity check.~~ Approved and done 2026-10-31 (section 1b).
 5. **GPU type for all StPT serving.** Determinism was checked on the RTX PRO 6000 Blackwell, so StPT should serve on that
    type, or re-run this check on another.
-6. ~~The restart finding: option (a) or (b).~~ The owner chose (b). A working setting was found (section 4b). Still to
-   decide: confirm C2e on all five models, and release it as pipeline v1.2.1, with both studies re-pinned.
+6. ~~The restart finding: option (a) or (b).~~ The owner chose (b). The candidate fix failed confirmation (section 4c).
+   **Open:** take option (a) on v1.2.0 (record the server start; S4 measures noise across cold starts), or fund a deeper
+   investigation.
 4. **Proposal awaiting a decision:** P6, the SPT tag v1.0.1 for the replay. The Qwen pair, the stack and bf16 were
    accepted (D8–D10).
