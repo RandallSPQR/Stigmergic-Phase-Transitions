@@ -7,6 +7,10 @@
   coordination-record commit, brief revision. `stpt.manifest.check_environment(model)` must pass before any model call.
   The pipeline is LOCKED at v1.2.0. Any change to it is a new pipeline version plus an entry in the coordination
   record's `AMENDMENTS.md`.
+- **Server starts (D14).** Every run manifest records the server-start ID (`stpt.manifest.server_start_id`). Every
+  paired contrast (live vs blind; pulsed vs unpulsed branch) runs within one server start, and conditions are balanced
+  across starts. The start is a blocking factor in the analysis. Tripwire: a between-start shift above 0.025 in vote
+  probability makes blocking mandatory everywhere, and the trigger is logged.
 - **Inherit only harness and simulator from SPT** (`inherited/`, verbatim, never edited). Estimate fresh,
   signal-conditioned kernels. Take no transitions, kernels or sample sizes from SPT.
 - **Numbers come only from results files.** Cite the file.

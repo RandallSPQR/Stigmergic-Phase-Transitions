@@ -1,6 +1,16 @@
 # Gate S0: pipeline and harness (2026-10-31)
 
-**Verdict (2026-10-31, final): S0 PASSES.** One finding needs the owner's decision before S4 (section 4).
+**S0 CLOSED (2026-11-01).** S0 passed on 2026-10-31. The one open finding, restart drift (section 4), was settled by
+the owner on 2026-11-01. The fix failed confirmation (4c), so the studies stay on pipeline v1.2.0 with server-start
+blocking: coordination record D14, prospective amendment A7.
+- Every run manifest records the server-start ID.
+- Paired contrasts run within one start, and conditions are balanced across starts.
+- The start ID is a blocking factor in both studies' analyses.
+- S4 reports within-start and between-start noise, also in vote probability at p ≈ 0.5.
+- Between-start variance enters kernel uncertainty and the power tiers.
+- Tripwire: a between-start shift above 0.025 in vote probability (StPT) makes blocking mandatory everywhere.
+
+Both briefs' protocol and analysis sections were updated to match.
 
 - The CPU parts passed first.
 - The GPU box identity check then passed for all five models, on two pods the same day (section 1b).
@@ -206,8 +216,6 @@ call.
 3. ~~GPU for the box identity check.~~ Approved and done 2026-10-31 (section 1b).
 5. **GPU type for all StPT serving.** Determinism was checked on the RTX PRO 6000 Blackwell, so StPT should serve on that
    type, or re-run this check on another.
-6. ~~The restart finding: option (a) or (b).~~ The owner chose (b). The candidate fix failed confirmation (section 4c).
-   **Open:** take option (a) on v1.2.0 (record the server start; S4 measures noise across cold starts), or fund a deeper
-   investigation.
+6. ~~The restart finding.~~ Settled 2026-11-01: option (a) on v1.2.0 with server-start blocking (D14).
 4. **Proposal awaiting a decision:** P6, the SPT tag v1.0.1 for the replay. The Qwen pair, the stack and bf16 were
    accepted (D8–D10).

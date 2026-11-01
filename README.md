@@ -3,7 +3,7 @@
 **Question.** Agents see only their contacts' current votes. Do those votes change how memoryless LLM agents use
 dispersed private evidence? And does a temporary change to what agents see leave a lasting mark on the board?
 
-**Status (2026-10-31): Step 0 done and published; gate S0 PASSED (all five models byte-verified on GPU); one finding awaits the owner before S4.**
+**Status (2026-11-01): Step 0 done; gate S0 CLOSED (passed; restart drift handled by server-start blocking, D14); gate S1 (simulator, CPU only) in progress.**
 - Not frozen. No paid collection. Nothing confirmatory.
 - Brief: https://claude.ai/artifact/Q36cWtMumtJPs3semD76ni (revision 3).
 - Missing Piece is the complementary study. Both share the pipeline and the coordination record below.
@@ -14,7 +14,7 @@ dispersed private evidence? And does a temporary change to what agents see leave
 |---|---|---|---|
 | Shared five-model pipeline (LOCKED) | RandallSPQR/SAE-Ethos-Calibration | `v1.2.0` | `5ca15f56a71f35d5818d0392f7f3b4acb2d85d1b` |
 | SPT release (harness + simulator source; S0 replay) | RandallSPQR/social-phase-transitions-public | `v1.0.1` | `c37a91d2d2561fdf78fc61af500ea000aac3ea2f` |
-| Shared coordination record | RandallSPQR/StPT-MP-Coordination | none | `46baa832341fd879ce21075c09fd4ea3401af704` |
+| Shared coordination record | RandallSPQR/StPT-MP-Coordination | none | `da70ddaff05745625799c07c4a5e86f2455d9a21` |
 
 Models (pipeline v1.2.0):
 - Llama-3.1-8B-Instruct, Gemma-2-9B-IT, Gemma-3-27B-IT.
@@ -46,8 +46,9 @@ across the two; a TOST for each.
 | gate | status |
 |---|---|
 | Step 0: shared pipeline built, tagged, locked, published; SPT release pinned | **done** |
-| S0: pipeline + SPT harness replay | **PASS**; restart drift unresolved: the v1.2.1 fix failed confirmation, staying on v1.2.0 (`gates/S0/S0_REPORT.md` 4c) |
-| S1–S10 | not started |
+| S0: pipeline + SPT harness replay | **CLOSED 2026-11-01**: passed; restart drift accepted on v1.2.0 with server-start blocking (D14; `gates/S0/S0_REPORT.md`) |
+| S1: simulator checks (CPU only) | in progress |
+| S2–S10 | not started |
 
 ## Layout
 
