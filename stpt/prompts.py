@@ -59,3 +59,72 @@ def render_board(story: dict, private_text: str, own_vote: str, contact_votes, l
         lines.append("You cannot see anyone else's vote.")
     lines += ["", final_question]
     return [{"role": "user", "content": "\n".join(lines)}]
+
+
+# ---- Wordings (S3 round 2, 2026-11-01). W1 = render_board above, unchanged. W2 and W3 carry the same content (question,
+# options, report text, own vote, contacts) with different framing; the brief treats wordings as a random factor, and a
+# wording is used only if every model passes S3 with it (gates/S3/ROUND2_PLAN.md).
+STRICT = "Reply with exactly one letter, A or B, and nothing else."
+QUESTIONS = {
+    "w1": {"vote": VOTE_Q, **COMPREHENSION},
+    "w2": {"vote": f"Which option do you vote for now? {STRICT}",
+           "own_evidence": f"Question about your private report: which option does your private report say? {STRICT}",
+           "own_vote": f"Question about your own vote: which option is your current vote? {STRICT}",
+           "contact_majority": f"Question about the people you are connected to: which option do more of them currently vote for? {STRICT}"},
+    "w3": {"vote": f"Which option do you vote for now? {STRICT}",
+           "own_evidence": f"Question about your private report: which option does your private report say? {STRICT}",
+           "own_vote": f"Question about your own vote: which option is your current vote? {STRICT}",
+           "contact_majority": f"Question about the people you are connected to: which option do more of them currently vote for? {STRICT}"},
+}
+
+
+def _letters(story, layout):
+    L = layout["letter_of_content"]
+    c_of = {v: k for k, v in L.items()}
+    first = layout["listed_first_letter"]
+    second = "B" if first == "A" else "A"
+    q = story["question"].format(A=story["options"][c_of[first]], B=story["options"][c_of[second]])
+    return L, c_of, first, second, q
+
+
+def render_w2(story, private_text, own_vote, contact_votes, layout, final_question, live=True, informed=True):
+    """W2, structured: labelled sections; the board (own vote, contacts) first; the private report LAST, quoted and set
+    apart, so it sits next to the question."""
+    L, c_of, first, second, q = _letters(story, layout)
+    lines = ["You are one of 100 people answering the same question. Each person has their own private report (or none) "
+             "and can see the current votes of a few of the others.", "",
+             f"Question: {q}", "Options:", f"{first}: {story['options'][c_of[first]]}", f"{second}: {story['options'][c_of[second]]}", "",
+             "On the board:", f"- Your current vote: {L[own_vote]}"]
+    if live:
+        lines.append(f"- Current votes of the {len(contact_votes)} people you are connected to: "
+                     + ", ".join(L[contact_votes[i]] for i in layout["contact_order"]))
+    else:
+        lines.append("- You cannot see anyone else's vote.")
+    lines += ["", "Your private report (only you have it):", f"\"{private_text}\"" if informed else private_text, "", final_question]
+    return [{"role": "user", "content": "\n".join(lines)}]
+
+
+def render_w3(story, private_text, own_vote, contact_votes, layout, final_question, live=True, informed=True):
+    """W3, minimal change from W1: the same order, with the report labelled as a private report and quoted, and the
+    votes labelled as votes."""
+    L, c_of, first, second, q = _letters(story, layout)
+    lines = ["You are one of 100 people answering the same question. Each person has their own private report (or none) "
+             "and can see the current votes of a few of the others.", "",
+             f"Question: {q}", "", "The two options are:", f"{first}: {story['options'][c_of[first]]}",
+             f"{second}: {story['options'][c_of[second]]}", "",
+             "Your private report: " + (f"\"{private_text}\"" if informed else private_text),
+             f"Your current vote: {L[own_vote]}"]
+    if live:
+        lines.append(f"Votes currently shown by the {len(contact_votes)} people you are connected to: "
+                     + ", ".join(L[contact_votes[i]] for i in layout["contact_order"]))
+    else:
+        lines.append("You cannot see anyone else's vote.")
+    lines += ["", final_question]
+    return [{"role": "user", "content": "\n".join(lines)}]
+
+
+def render(wording, story, private_text, own_vote, contact_votes, layout, question_key, live=True, informed=True):
+    q = QUESTIONS[wording][question_key]
+    if wording == "w1":
+        return render_board(story, private_text, own_vote, contact_votes, layout, q, live)
+    return {"w2": render_w2, "w3": render_w3}[wording](story, private_text, own_vote, contact_votes, layout, q, live, informed)

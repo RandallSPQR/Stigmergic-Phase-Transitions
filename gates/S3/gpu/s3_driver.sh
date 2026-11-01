@@ -29,7 +29,8 @@ $VPY -c "import sys, vllm, torch; print(sys.version.split()[0], 'vllm', vllm.__v
 step "prompts"
 $PY - "$OUT" <<'PYX' || { echo "STOP: prompt set"; upload; exit 3; }
 import base64, gzip, hashlib, json, os, sys
-d = json.loads(gzip.decompress(base64.b64decode(os.environ["STPT_PROMPTS_B64"])))
+b64 = os.environ.get("STPT_PROMPTS_B64") or "".join(os.environ[f"STPT_PROMPTS_B64_{i}"] for i in range(int(os.environ["STPT_PROMPTS_PARTS"])))
+d = json.loads(gzip.decompress(base64.b64decode(b64)))
 blob = json.dumps(d, sort_keys=True, indent=1)
 h = hashlib.sha256(blob.encode()).hexdigest()
 assert h == os.environ["STPT_PROMPTS_SHA256"], f"prompt set sha256 {h} != committed"
@@ -66,18 +67,21 @@ P = json.load(open("/root/s3_prompts.json"))
 rows, t0 = [], time.time()
 for p in P["prompts"]:
     r = readout.readout(tr, served, ser.apply_to_tokenizer(tok, p["messages"]), opt)
-    lp = r["logp"]; c = p["correct_letter"]; o = "B" if c == "A" else "A"
-    rows.append({"prompt_id": p["prompt_id"], "qtype": p["qtype"], "correct_letter": c, "logp_A": lp["A"], "logp_B": lp["B"],
-                 "answer": "A" if lp["A"] > lp["B"] else "B", "correct": lp[c] > lp[o],
-                 "p_correct_renorm": r["p"][c] / (r["p"]["A"] + r["p"]["B"]), "non_option_mass": r["non_option_mass"],
-                 "read_by": r["read_by"], "calls": r["calls"]})
+    lp = r["logp"]; c = p["correct_letter"]; o = None if c is None else ("B" if c == "A" else "A")
+    rows.append({"prompt_id": p["prompt_id"], "qtype": p["qtype"], "wording": p.get("wording", "w1"), "correct_letter": c,
+                 "logp_A": lp["A"], "logp_B": lp["B"], "answer": "A" if lp["A"] > lp["B"] else "B",
+                 "correct": None if c is None else lp[c] > lp[o],
+                 "p_correct_renorm": None if c is None else r["p"][c] / (r["p"]["A"] + r["p"]["B"]),
+                 "non_option_mass": r["non_option_mass"], "read_by": r["read_by"], "calls": r["calls"]})
 manifest_out = {"gate": "S3", "model": m, "identity_block": block,
                 "server_start": {"id": f"{os.environ.get('RUNPOD_POD_ID', 'pod')}/start1/{started}", "pod": os.environ.get("RUNPOD_POD_ID"),
                                  "index": 1, "started_at": started},
                 "stpt_commit": os.environ["STPT_COMMIT"], "pins": json.loads(os.environ["STPT_PINS_JSON"]),
                 "prompts_sha256": os.environ["STPT_PROMPTS_SHA256"], "seconds": round(time.time() - t0, 1), "n": len(rows)}
 json.dump({"manifest": manifest_out, "rows": rows}, open(f"{out}/s3_{m}.json", "w"))
-acc = {q: round(sum(r["correct"] for r in rows if r["qtype"] == q) / sum(1 for r in rows if r["qtype"] == q), 4) for q in sorted({r["qtype"] for r in rows})}
+acc = {f"{w}/{q}": round(sum(r["correct"] for r in rows if r["qtype"] == q and r["wording"] == w) / sum(1 for r in rows if r["qtype"] == q and r["wording"] == w), 4)
+       for w in sorted({r["wording"] for r in rows}) for q in sorted({r["qtype"] for r in rows if r["correct"] is not None})
+       if any(r["qtype"] == q and r["wording"] == w for r in rows)}
 print(m, "accuracy", acc, "seconds", manifest_out["seconds"], flush=True)
 PYX
   else
