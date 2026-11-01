@@ -43,6 +43,8 @@ if os.environ.get("STPT_CONFIGS"):          # follow-up runs name their own conf
     CONFIGS = {k: (v[0], v[1]) for k, v in json.loads(os.environ["STPT_CONFIGS"]).items()}
 SCREEN = (os.environ.get("STPT_SCREEN_MODELS") or "llama-3.1-8b-it qwen3.5-9b").split()
 PHASE2 = os.environ.get("STPT_PHASE2", "1") == "1"
+STARTS = tuple(range(1, int(os.environ.get("STPT_STARTS", "2")) + 1))
+DELETE = os.environ.get("STPT_DELETE_WEIGHTS", "0") == "1"      # free the disk after each model (all-five runs)
 PROMPTS = {"plain": "Two options, A and B. Evidence: the left door is warm. Answer with one letter: A or B.",
            "board": "Your evidence: the left door is warm.\nYour current vote: B.\nYour contacts' votes: A, B, A, A.\n\nWhich option do you vote for now? Answer with one letter: A or B.",
            "lopsided": "Option A is correct. Answer with one letter: A or B."}
@@ -104,6 +106,7 @@ def one_start(model, cfg, n, ids, opt, served):
         for _ in range(20):
             s = time.perf_counter(); readout.readout(tr, served, ids["board"], opt); lat.append(time.perf_counter() - s)
         rec["latency_ms_median"] = round(1000 * statistics.median(lat), 2)
+        rec["fallback_consistency"] = readout.fallback_consistency(tr, served, ids["board"], opt)
         rec["latency_ms"] = [round(1000 * v, 2) for v in lat]
     p.terminate()
     try:
@@ -135,7 +138,11 @@ over = lambda: time.time() - T0 > BUDGET_S
 for model in SCREEN:                                                                 # phase 1
     ids, opt, served = setup(model)
     for cfg in CONFIGS:
-        results[(model, cfg)] = [one_start(model, cfg, n, ids, opt, served) for n in (1, 2)]
+        results[(model, cfg)] = [one_start(model, cfg, n, ids, opt, served) for n in STARTS]
+    if DELETE:
+        e = lineup.models()[model]
+        shutil.rmtree(f"/root/hf/hub/models--{e['hf_id'].replace('/', '--')}", ignore_errors=True)
+        shutil.rmtree("/root/hf/xet", ignore_errors=True)
     upload()
 winner = next((c for c in CONFIGS if all(identical(results[(m, c)]) for m in SCREEN)), None)
 log("phase 1 winner:", winner)
@@ -152,9 +159,12 @@ if winner and PHASE2:                                                           
             shutil.rmtree(f"/root/hf/hub/models--{e['hf_id'].replace('/', '--')}", ignore_errors=True)
             shutil.rmtree("/root/hf/xet", ignore_errors=True)
         upload()
-summary = {"winner": winner, "elapsed_min": round((time.time() - T0) / 60, 1), "cells": [
+summary = {"winner": winner, "elapsed_min": round((time.time() - T0) / 60, 1),
+           "pipeline_version": sae_ethos_pipeline.__version__, "pipe_commit": os.environ.get("PIPE_COMMIT"),
+           "serve_env": serve.env(), "cells": [
     {"model": m, "config": c, "starts": len(r), "up": sum(x["up"] for x in r), "identical_across_starts": identical(r),
      "within_identical": all(x.get("within_identical") for x in r if x["up"]), "max_diff_nats": maxdiff(r),
+     "fallback_ok": all((x.get("fallback_consistency") or {}).get("ok") for x in r if x["up"]),
      "latency_ms_median": statistics.median([x["latency_ms_median"] for x in r if x["up"]]) if any(x["up"] for x in r) else None}
     for (m, c), r in results.items()]}
 json.dump(summary, open(f"{OUT}/summary.json", "w"), indent=1)
