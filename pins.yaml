@@ -16,7 +16,8 @@ spt:                           # the SPT release StPT inherits harness and simul
   data: https://huggingface.co/datasets/RandallSPQR/social-phase-transitions-data
 coordination:                  # the shared coordination record (StPT + Missing Piece)
   repo: https://github.com/RandallSPQR/StPT-MP-Coordination
-  commit: da70ddaff05745625799c07c4a5e86f2455d9a21   # D14 / A7 (server-start blocking); earlier pins 93a9ee7, 2383272, 0fecf40, ac12a7f, 46baa83
+  commit: 5b595d4042ec505368062e32f7497bca850f3c5e   # A8 (evidence schema v1.0, StPT banks); earlier pins 93a9ee7, 2383272, 0fecf40, ac12a7f, 46baa83, da70dda
+  evidence_schema: "1.0"      # coordination record schema/evidence_schema_v1.0.json
 brief:
   url: https://claude.ai/artifact/Q36cWtMumtJPs3semD76ni
   revision: 3                  # document rev 34, read 2026-10-31
