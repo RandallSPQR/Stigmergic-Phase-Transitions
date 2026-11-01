@@ -1,0 +1,34 @@
+{
+ "section": "G",
+ "env": {
+  "python": "3.13.18",
+  "numpy": "2.5.3",
+  "numba": "0.68.0",
+  "networkx": "3.7",
+  "scipy": "1.18.1",
+  "machine": "Linux-6.18.44-fc-v185-x86_64-with-glibc2.39"
+ },
+ "minutes": 0.05,
+ "results": {
+  "networkx": "3.7",
+  "d4": {
+   "n": 1000,
+   "simple": 1000,
+   "regular": 1000,
+   "connected": 1000,
+   "same_fingerprint_twice": 1000,
+   "distinct_fingerprints": 1000,
+   "disconnected_seeds": []
+  },
+  "d6": {
+   "n": 1000,
+   "simple": 1000,
+   "regular": 1000,
+   "connected": 1000,
+   "same_fingerprint_twice": 1000,
+   "distinct_fingerprints": 1000,
+   "disconnected_seeds": []
+  },
+  "ok": true
+ }
+}
