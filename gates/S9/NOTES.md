@@ -22,3 +22,7 @@
   R ≈ 10–13 nats vs 0.4–3.7 for the others); responsiveness slopes on designed log LR 0.10–1.77; own-vote stickiness
   with no report P = 0.81–1.00 at T = 1. Decision noise T (common or per-model) must be settled before S8; it sets how
   far the board can move each model.
+
+- **Decision noise (D23).** Simulate the primary regime C (per-model T, Bayesian anchor; values in
+  `analysis/DECISION_NOISE_T.md`) with S4 variance components scaled by 1/T (Llama's S_p becomes 0.036). The secondary
+  regime A (T = 1) runs on a seeded share with no power target; S9 sets that share.

@@ -14,6 +14,9 @@
 - **Wordings and letters (D20).** Board wording W3 is primary; only wordings that passed S3's held-out check are used
   (`stpt.prompts`, text locked in the coordination record's `PROTOCOL_SPEC.md`). The letter mapping is balanced within
   each server-start block.
+- **Decision noise T (D23).** Primary: per-model T with the Bayesian anchor (a lone 3/4 report gives 0.75): Llama 0.50,
+  Gemma-2 2.15, Qwen3.5-9B 1.78, Gemma-3-27B 10.40, Qwen3.5-27B 2.88 (`analysis/DECISION_NOISE_T.md`). Secondary: T = 1
+  on a seeded share. Same T for the initial vote and every update.
 - **Inherit only harness and simulator from SPT** (`inherited/`, verbatim, never edited). Estimate fresh,
   signal-conditioned kernels. Take no transitions, kernels or sample sizes from SPT.
 - **Numbers come only from results files.** Cite the file.
