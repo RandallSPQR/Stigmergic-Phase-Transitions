@@ -4,7 +4,8 @@
 # In each start: the W3 block, the other wordings' blocks, then the W3 block again (exact within-start repeats).
 # Started by gates/S0/gpu/launch.py --driver gates/S4/gpu/s4_driver.sh.
 # Env: HF_TOKEN (RunPod secret), STPT_RESULTS_REPO, STPT_RUN_ID, PIPE_COMMIT, STPT_COMMIT, STPT_PINS_JSON,
-#      STPT_CONTEXTS_B64 (gzip+base64 of {contexts, wordings, prompts_py}), STPT_PROMPTS_SHA256, STPT_STARTS, STPT_MODELS.
+#      STPT_CONTEXTS_B64 (gzip+base64 of {contexts, wordings, prompts_py}), STPT_PROMPTS_SHA256, STPT_STARTS, STPT_MODELS,
+#      STPT_WORDINGS_BY_MODEL (JSON {model: [wordings valid for it]}, W3 first; D21).
 set -uo pipefail
 OUT=/root/out/$STPT_RUN_ID; mkdir -p "$OUT/logs"; touch /tmp/pod_driven
 export HF_HOME=/root/hf HF_HUB_DISABLE_TELEMETRY=1 PIP_DISABLE_PIP_VERSION_CHECK=1 TOKENIZERS_PARALLELISM=false
@@ -71,7 +72,9 @@ manifest.check_pin(block, "v1.2.0", os.environ["PIPE_COMMIT"])            # refu
 tm = modelcfg.target(); tok = AutoTokenizer.from_pretrained(tm["hf_id"], revision=tm["revision"]); ser = modelcfg.serializer()
 opt = readout.option_token_ids(tok); tr = readout.HTTPTransport(); served = modelcfg.models()["endpoint"]["served_model_name"]
 P = json.load(open("/root/s4_probes.json"))
-blocks = [("first", "w3")] + [("first", w) for w in P["wordings"] if w != "w3"] + [("repeat", "w3")]
+mine = json.loads(os.environ.get("STPT_WORDINGS_BY_MODEL", "{}")).get(m, P["wordings"])   # D21: only this model's valid wordings
+assert mine[0] == "w3" and set(mine) <= set(P["wordings"]), mine
+blocks = [("first", "w3")] + [("first", w) for w in mine if w != "w3"] + [("repeat", "w3")]
 rows, t0 = [], time.time()
 for read, w in blocks:
     for p in (x for x in P["prompts"] if x["wording"] == w):
@@ -83,7 +86,7 @@ manifest_out = {"gate": "S4", "model": m, "identity_block": block,
                 "server_start": {"id": f"{pod}/start{k}/{started}", "pod": pod, "index": k, "started_at": started,
                                  "cold": True, "caches_cleared": os.environ["CACHES"].split()},
                 "stpt_commit": os.environ["STPT_COMMIT"], "pins": json.loads(os.environ["STPT_PINS_JSON"]),
-                "probes_sha256": os.environ["STPT_PROMPTS_SHA256"], "wordings": P["wordings"],
+                "probes_sha256": os.environ["STPT_PROMPTS_SHA256"], "wordings": mine, "probe_set_wordings": P["wordings"],
                 "seconds": round(time.time() - t0, 1), "n": len(rows)}
 json.dump({"manifest": manifest_out, "rows": rows}, open(f"{out}/s4_{m}_start{k}.json", "w"))
 rep = {x["prompt_id"]: x for x in rows if x["read"] == "repeat"}

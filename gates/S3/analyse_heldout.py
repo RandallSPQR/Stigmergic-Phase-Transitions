@@ -61,11 +61,19 @@ def main():
     out["valid"] = {w: have and all(out["models"][m]["wordings"][w]["pass"] for m in MODELS) for w in wordings}
     out["w3_passes"] = out["valid"]["w3"]
     out["wording_set"] = [w for w in wordings if out["valid"][w]] if out["w3_passes"] else []
+    # D21 (owner, 2026-11-02): per-model wording sets for the per-model consistency check, and the fragility pattern
+    out["valid_by_model"] = {m: [w for w in wordings if out["models"][m]["wordings"][w]["pass"]] for m in MODELS if m in out["models"]}
+    out["fragility"] = [{"model": m, "wording": w, "qtype": q, "accuracy": a,
+                         "correct_of": out["models"][m]["wordings"][w]["correct_of"][q],
+                         "own_report_by_vote": out["models"][m]["wordings"][w]["own_report_by_vote"] if q == "own_evidence" else None}
+                        for m in MODELS if m in out["models"] for w in wordings
+                        for q, a in out["models"][m]["wordings"][w]["accuracy"].items() if a < 0.90]
     (ROOT / "gates" / "S3" / "results" / "heldout_summary.json").write_text(json.dumps(out, indent=1))
     for m in MODELS:
         if m in out["models"]:
             print(m.ljust(16), " | ".join(f"{w}: " + "/".join(f"{out['models'][m]['wordings'][w]['accuracy'].get(q, float('nan')):.3f}" for q in TYPES)
                                           + ("" if out["models"][m]["wordings"][w]["pass"] else " FAIL") for w in wordings))
+    print("valid by model:", out["valid_by_model"])
     print("valid:", out["valid"], "| W3 passes:", out["w3_passes"], "| wording set:", out["wording_set"])
 
 

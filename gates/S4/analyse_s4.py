@@ -62,7 +62,7 @@ def analyse(probes, runs):
         M["within_start_repeat_max_sd"] = max(r["sd_nats"] for r in rep if r["sd_nats"] is not None)
         M["gate_pass"] = M["within_start_repeat_max_sd"] <= LIMIT
         for w in wordings:
-            ids = sorted(p for p in probes if probes[p]["wording"] == w and all(p in starts[s]["first"] for s in sids))
+            ids = sorted(p for p in probes if probes[p]["wording"] == w and all(p in starts[s]["first"] for s in sids))   # a model is read only in its valid wordings (D21)
             if not ids:
                 continue
             L = np.array([[ell(starts[s]["first"][p]) for s in sids] for p in ids])          # probes x starts
