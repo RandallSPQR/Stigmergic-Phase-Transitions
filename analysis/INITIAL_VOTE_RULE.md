@@ -1,4 +1,19 @@
-# Initial-vote rule: proposal and expected effect on development data (for the owner's approval, 2026-11-02)
+# Initial-vote rule (decided 2026-11-02, coordination D25 / A21; prospective)
+
+**Decision.**
+- **Primary, rule (i):** the first vote is sampled at the model's T from its W3 blind, evidence-only call, with a
+  seeded placeholder own vote. The placeholder is balanced within evidence type, within server-start blocks and across
+  graph positions, and the assignment is identical for live and blind.
+- **Sensitivity arm, rule (ii):** a seeded random 50/50 start, on a seeded share of graphs and allocations, with no
+  power target.
+- **Methods text** states the placeholder plainly, and the equivalence: rule (i) = rule (ii) followed by one blind
+  update; the blind board differs by ≤ 0.003 between the rules after two updates per agent. Uninformed agents' first
+  votes follow the balanced placeholder.
+- **S8 and S9** report the live-board difference between the rules, especially in the early rounds.
+
+The proposal and its development-data analysis follow, unchanged.
+
+## Proposal and expected effect on development data
 
 **Proposed (owner's item 4).**
 - **Primary, rule (i):** each agent's first vote is sampled, at its model's T (D23), from its own blind, evidence-only

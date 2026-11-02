@@ -3,7 +3,7 @@
 **Question.** Agents see only their contacts' current votes. Do those votes change how memoryless LLM agents use
 dispersed private evidence? And does a temporary change to what agents see leave a lasting mark on the board?
 
-**Status (2026-11-02): S0 and S1 closed; S2 passed (D15–D19); S3 passes with W3, confirmed on a held-out set (D20–D21); S4 passes, D14 tripwire triggered (blocking by start mandatory, A16); S5 passes (all models monotone in strength and direction; wide spread in responsiveness); S6 fails on Llama-3.1-8B, which leaves the pooled confirmatory tests (D24; four-model confirmatory set); initial-vote rule proposed, awaiting approval.**
+**Status (2026-11-02): S0 and S1 closed; S2 passed (D15–D19); S3 passes with W3, confirmed on a held-out set (D20–D21); S4 passes, D14 tripwire triggered (blocking by start mandatory, A16); S5 passes (all models monotone in strength and direction; wide spread in responsiveness); S6 fails on Llama-3.1-8B, which leaves the pooled confirmatory tests (D24; four-model confirmatory set); initial-vote rule decided (D25); S7 (branch isolation) in progress.**
 - Not frozen. No paid collection. Nothing confirmatory.
 - Brief: https://claude.ai/artifact/Q36cWtMumtJPs3semD76ni (revision 3).
 - Missing Piece is the complementary study. Both share the pipeline and the coordination record below.
@@ -14,7 +14,7 @@ dispersed private evidence? And does a temporary change to what agents see leave
 |---|---|---|---|
 | Shared five-model pipeline (LOCKED) | RandallSPQR/SAE-Ethos-Calibration | `v1.2.0` | `5ca15f56a71f35d5818d0392f7f3b4acb2d85d1b` |
 | SPT release (harness + simulator source; S0 replay) | RandallSPQR/social-phase-transitions-public | `v1.0.1` | `c37a91d2d2561fdf78fc61af500ea000aac3ea2f` |
-| Shared coordination record | RandallSPQR/StPT-MP-Coordination | none | `1e4f9af46cd45ce3a708dbc66907dd89c32ac297` |
+| Shared coordination record | RandallSPQR/StPT-MP-Coordination | none | `7c4430adc40fca9ae2e51223b0243fdac053ba18` |
 
 Models (pipeline v1.2.0):
 - Llama-3.1-8B-Instruct, Gemma-2-9B-IT, Gemma-3-27B-IT.

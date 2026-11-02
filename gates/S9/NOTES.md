@@ -29,5 +29,5 @@
 
 - **Four strata (D24).** Power is computed for the pooled test over Gemma-2-9B, Qwen3.5-9B, Gemma-3-27B and
   Qwen3.5-27B. Llama-3.1-8B runs as the secondary comparison agent (no power target). The initial-vote rule (proposal
-  in `analysis/INITIAL_VOTE_RULE_PROPOSAL.md`, awaiting approval) changes the live board's early dynamics; S9 should
+  in `analysis/INITIAL_VOTE_RULE.md`) changes the live board's early dynamics; S9 should
   simulate the approved primary rule.
