@@ -1,0 +1,34 @@
+=== 2026-11-02T20:55:21Z stack
+NVIDIA RTX PRO 6000 Blackwell Server Edition, 595.91.07, 97887 MiB
+3.11.13 vllm 0.19.1 torch 2.10.0+cu128 NVIDIA RTX PRO 6000 Blackwell Server Edition
+=== 2026-11-02T20:57:00Z payload
+payload verified 8e112a417f5acd1e ['board.py', 'prompts.py', 's7_core.py']
+=== 2026-11-02T20:57:00Z llama-3.1-8b-it: weights
+overlay         200G   22G  179G  11% /
+=== 2026-11-02T20:57:41Z llama-3.1-8b-it: cold start 1
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+llama-3.1-8b-it calls 1369 seconds 68.2 {'C1_main_identical': True, 'C2_final_state_identical': True, 'C3_unpulsed_branch_equals_main_continuation': True, 'C4_pulse_ok': True, 'C6_save_restore': True, 'C5_probes_run': 19, 'C7_live_blind_initial_identical': True, 'C7_live_blind_same_agents_and_draws': True, 'C9_letter_mapping_A_as_A_share': 0.5, 'base_vs_again_identical': True}
+/root/box_identity.sh: line 54:  1034 Killed                  bash -c "$CMD" > "$OUT/logs/vllm_${M}_start$K.log" 2>&1
+=== 2026-11-02T21:02:20Z gemma-2-9b-it: weights
+overlay         200G   37G  164G  19% /
+=== 2026-11-02T21:02:58Z gemma-2-9b-it: cold start 1
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+gemma-2-9b-it calls 1369 seconds 39.6 {'C1_main_identical': True, 'C2_final_state_identical': True, 'C3_unpulsed_branch_equals_main_continuation': True, 'C4_pulse_ok': True, 'C6_save_restore': True, 'C5_probes_run': 19, 'C7_live_blind_initial_identical': True, 'C7_live_blind_same_agents_and_draws': True, 'C9_letter_mapping_A_as_A_share': 0.5, 'base_vs_again_identical': True}
+=== 2026-11-02T21:07:32Z qwen3.5-9b: weights
+overlay         200G   54G  147G  27% /
+=== 2026-11-02T21:08:13Z qwen3.5-9b: cold start 1
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+qwen3.5-9b calls 1369 seconds 113.7 {'C1_main_identical': True, 'C2_final_state_identical': True, 'C3_unpulsed_branch_equals_main_continuation': True, 'C4_pulse_ok': True, 'C6_save_restore': True, 'C5_probes_run': 19, 'C7_live_blind_initial_identical': True, 'C7_live_blind_same_agents_and_draws': True, 'C9_letter_mapping_A_as_A_share': 0.5, 'base_vs_again_identical': True}
+/root/box_identity.sh: line 54:  3297 Killed                  bash -c "$CMD" > "$OUT/logs/vllm_${M}_start$K.log" 2>&1
+=== 2026-11-02T21:15:31Z gemma-3-27b-it: weights
+overlay         200G   73G  128G  37% /
+=== 2026-11-02T21:17:11Z gemma-3-27b-it: cold start 1
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+gemma-3-27b-it calls 1369 seconds 86.9 {'C1_main_identical': True, 'C2_final_state_identical': True, 'C3_unpulsed_branch_equals_main_continuation': True, 'C4_pulse_ok': True, 'C6_save_restore': True, 'C5_probes_run': 19, 'C7_live_blind_initial_identical': True, 'C7_live_blind_same_agents_and_draws': True, 'C9_letter_mapping_A_as_A_share': 0.5, 'base_vs_again_identical': True}
+=== 2026-11-02T21:21:24Z qwen3.5-27b: weights
+overlay         200G  123G   78G  62% /
+=== 2026-11-02T21:22:55Z qwen3.5-27b: cold start 1
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+qwen3.5-27b calls 1369 seconds 168.9 {'C1_main_identical': True, 'C2_final_state_identical': True, 'C3_unpulsed_branch_equals_main_continuation': True, 'C4_pulse_ok': True, 'C6_save_restore': True, 'C5_probes_run': 19, 'C7_live_blind_initial_identical': True, 'C7_live_blind_same_agents_and_draws': True, 'C9_letter_mapping_A_as_A_share': 0.5, 'base_vs_again_identical': True}
+/root/box_identity.sh: line 54:  6452 Killed                  bash -c "$CMD" > "$OUT/logs/vllm_${M}_start$K.log" 2>&1
+=== 2026-11-02T21:31:03Z done

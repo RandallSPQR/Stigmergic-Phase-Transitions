@@ -1,0 +1,192 @@
+{
+ "plan": "gates/S7/S7_PLAN.md",
+ "models": {
+  "gemma-2-9b-it": {
+   "server_start": "z1kf6jnyjwra7l/start1/2026-11-02T21:02:58Z",
+   "model_calls": 1369,
+   "T": 2.154706914697696,
+   "C1_main_identical": true,
+   "C2_final_state_identical": true,
+   "C3_unpulsed_branch_equals_main_continuation": true,
+   "C4_pulse_ok": true,
+   "C6_save_restore": true,
+   "C7_live_blind_initial_identical": true,
+   "C7_live_blind_same_agents_and_draws": true,
+   "letter_share": 0.5,
+   "probes": 19,
+   "pulse": [
+    {
+     "t0": 60,
+     "records_with_altered_display": 0,
+     "overrides_left_at_end": 0,
+     "shown_altered_at_start": true,
+     "others_unaltered_at_start": true,
+     "restored": true,
+     "same_agents_and_draws": true
+    },
+    {
+     "t0": 130,
+     "records_with_altered_display": 2,
+     "overrides_left_at_end": 0,
+     "shown_altered_at_start": true,
+     "others_unaltered_at_start": true,
+     "restored": true,
+     "same_agents_and_draws": true
+    }
+   ],
+   "base_vs_again_identical": true,
+   "main_sha": "2869765892f96c12c2af4bb34e3d372f80ca71dbffdfd66bb678576a9814c6ee",
+   "pass": true
+  },
+  "gemma-3-27b-it": {
+   "server_start": "z1kf6jnyjwra7l/start1/2026-11-02T21:17:11Z",
+   "model_calls": 1369,
+   "T": 10.401379436559568,
+   "C1_main_identical": true,
+   "C2_final_state_identical": true,
+   "C3_unpulsed_branch_equals_main_continuation": true,
+   "C4_pulse_ok": true,
+   "C6_save_restore": true,
+   "C7_live_blind_initial_identical": true,
+   "C7_live_blind_same_agents_and_draws": true,
+   "letter_share": 0.5,
+   "probes": 19,
+   "pulse": [
+    {
+     "t0": 60,
+     "records_with_altered_display": 1,
+     "overrides_left_at_end": 0,
+     "shown_altered_at_start": true,
+     "others_unaltered_at_start": true,
+     "restored": true,
+     "same_agents_and_draws": true
+    },
+    {
+     "t0": 130,
+     "records_with_altered_display": 0,
+     "overrides_left_at_end": 0,
+     "shown_altered_at_start": true,
+     "others_unaltered_at_start": true,
+     "restored": true,
+     "same_agents_and_draws": true
+    }
+   ],
+   "base_vs_again_identical": true,
+   "main_sha": "45c384864e1f924618dd40556c6247e4dac62798b106bdadeea390a02488302f",
+   "pass": true
+  },
+  "llama-3.1-8b-it": {
+   "server_start": "z1kf6jnyjwra7l/start1/2026-11-02T20:57:41Z",
+   "model_calls": 1369,
+   "T": 0.5048983170988395,
+   "C1_main_identical": true,
+   "C2_final_state_identical": true,
+   "C3_unpulsed_branch_equals_main_continuation": true,
+   "C4_pulse_ok": true,
+   "C6_save_restore": true,
+   "C7_live_blind_initial_identical": true,
+   "C7_live_blind_same_agents_and_draws": true,
+   "letter_share": 0.5,
+   "probes": 19,
+   "pulse": [
+    {
+     "t0": 60,
+     "records_with_altered_display": 0,
+     "overrides_left_at_end": 0,
+     "shown_altered_at_start": true,
+     "others_unaltered_at_start": true,
+     "restored": true,
+     "same_agents_and_draws": true
+    },
+    {
+     "t0": 130,
+     "records_with_altered_display": 1,
+     "overrides_left_at_end": 0,
+     "shown_altered_at_start": true,
+     "others_unaltered_at_start": true,
+     "restored": true,
+     "same_agents_and_draws": true
+    }
+   ],
+   "base_vs_again_identical": true,
+   "main_sha": "8d37304685e1b7f1f3999700a4a96df29feb7de2604d8ada31d83ce16139c526",
+   "pass": true
+  },
+  "qwen3.5-27b": {
+   "server_start": "z1kf6jnyjwra7l/start1/2026-11-02T21:22:55Z",
+   "model_calls": 1369,
+   "T": 2.8776834075084508,
+   "C1_main_identical": true,
+   "C2_final_state_identical": true,
+   "C3_unpulsed_branch_equals_main_continuation": true,
+   "C4_pulse_ok": true,
+   "C6_save_restore": true,
+   "C7_live_blind_initial_identical": true,
+   "C7_live_blind_same_agents_and_draws": true,
+   "letter_share": 0.5,
+   "probes": 19,
+   "pulse": [
+    {
+     "t0": 60,
+     "records_with_altered_display": 2,
+     "overrides_left_at_end": 0,
+     "shown_altered_at_start": true,
+     "others_unaltered_at_start": true,
+     "restored": true,
+     "same_agents_and_draws": true
+    },
+    {
+     "t0": 130,
+     "records_with_altered_display": 0,
+     "overrides_left_at_end": 0,
+     "shown_altered_at_start": true,
+     "others_unaltered_at_start": true,
+     "restored": true,
+     "same_agents_and_draws": true
+    }
+   ],
+   "base_vs_again_identical": true,
+   "main_sha": "c4f1de0743d8854faa8f31d8dfa80adc34189df3cc8aeeff7fa9d1e78623dafa",
+   "pass": true
+  },
+  "qwen3.5-9b": {
+   "server_start": "z1kf6jnyjwra7l/start1/2026-11-02T21:08:13Z",
+   "model_calls": 1369,
+   "T": 1.7801814090326422,
+   "C1_main_identical": true,
+   "C2_final_state_identical": true,
+   "C3_unpulsed_branch_equals_main_continuation": true,
+   "C4_pulse_ok": true,
+   "C6_save_restore": true,
+   "C7_live_blind_initial_identical": true,
+   "C7_live_blind_same_agents_and_draws": true,
+   "letter_share": 0.5,
+   "probes": 19,
+   "pulse": [
+    {
+     "t0": 60,
+     "records_with_altered_display": 0,
+     "overrides_left_at_end": 0,
+     "shown_altered_at_start": true,
+     "others_unaltered_at_start": true,
+     "restored": true,
+     "same_agents_and_draws": true
+    },
+    {
+     "t0": 130,
+     "records_with_altered_display": 0,
+     "overrides_left_at_end": 0,
+     "shown_altered_at_start": true,
+     "others_unaltered_at_start": true,
+     "restored": true,
+     "same_agents_and_draws": true
+    }
+   ],
+   "base_vs_again_identical": true,
+   "main_sha": "e9121d1f71f42cc0a94b09c1eb33136d14493644ab15c67f19171fb4418af20f",
+   "pass": true
+  }
+ },
+ "all_five_present": true,
+ "pass": true
+}
