@@ -11,6 +11,9 @@
   paired contrast (live vs blind; pulsed vs unpulsed branch) runs within one server start, and conditions are balanced
   across starts. The start is a blocking factor in the analysis. Tripwire: a between-start shift above 0.025 in vote
   probability makes blocking mandatory everywhere, and the trigger is logged.
+- **Wordings and letters (D20).** Board wording W3 is primary; only wordings that passed S3's held-out check are used
+  (`stpt.prompts`, text locked in the coordination record's `PROTOCOL_SPEC.md`). The letter mapping is balanced within
+  each server-start block.
 - **Inherit only harness and simulator from SPT** (`inherited/`, verbatim, never edited). Estimate fresh,
   signal-conditioned kernels. Take no transitions, kernels or sample sizes from SPT.
 - **Numbers come only from results files.** Cite the file.
