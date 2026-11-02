@@ -1,0 +1,211 @@
+{
+ "note": "development data only (S4 W3 live probes, uninformed; S5 W3); S_p scales as 1/T",
+ "inputs": {
+  "llama-3.1-8b-it": {
+   "R": {
+    "3/5": 0.43229167140088975,
+    "3/4": 0.5546874956926331,
+    "9/10": 0.6145833321691802
+   },
+   "stick_no_report": 1.692708323476836,
+   "social_uninformed": {
+    "2-2: toward own vote": 0.428125,
+    "3-1 against own vote: toward contacts": -0.25937500670552255,
+    "3-1 with own vote: toward contacts": 0.3749999962747097,
+    "4-0 against own vote: toward contacts": 0.01562499776482582,
+    "4-0 with own vote: toward contacts": 0.4750000011175871
+   },
+   "S_p_T1": 0.017984645246351235
+  },
+  "gemma-2-9b-it": {
+   "R": {
+    "3/5": 1.7057291684759548,
+    "3/4": 2.3671874949650373,
+    "9/10": 3.450520820958142
+   },
+   "stick_no_report": 3.8619791625630264,
+   "social_uninformed": {
+    "2-2: toward own vote": 0.4562499975319952,
+    "3-1 against own vote: toward contacts": 1.431249994551763,
+    "3-1 with own vote: toward contacts": 0.968750002537854,
+    "4-0 against own vote: toward contacts": 4.576562441389251,
+    "4-0 with own vote: toward contacts": 5.2984375563566575
+   },
+   "S_p_T1": 0.0
+  },
+  "qwen3.5-9b": {
+   "R": {
+    "3/5": 1.6054687527939677,
+    "3/4": 1.9557291720217715,
+    "9/10": 2.3802083239521985
+   },
+   "stick_no_report": 2.2161458386884383,
+   "social_uninformed": {
+    "2-2: toward own vote": 1.2437499960884453,
+    "3-1 against own vote: toward contacts": 0.7312499992549419,
+    "3-1 with own vote: toward contacts": 2.012500002421439,
+    "4-0 against own vote: toward contacts": 1.9093750089406967,
+    "4-0 with own vote: toward contacts": 3.6375000027008353
+   },
+   "S_p_T1": 0.020421299435095523
+  },
+  "gemma-3-27b-it": {
+   "R": {
+    "3/5": 9.953124918831811,
+    "3/4": 11.42708326810412,
+    "9/10": 13.152343670143713
+   },
+   "stick_no_report": 17.874999940395487,
+   "social_uninformed": {
+    "2-2: toward own vote": 11.159374838628462,
+    "3-1 against own vote: toward contacts": 7.193749989389673,
+    "3-1 with own vote: toward contacts": 15.840624922531514,
+    "4-0 against own vote: toward contacts": 12.534374989613779,
+    "4-0 with own vote: toward contacts": 19.290624982118608
+   },
+   "S_p_T1": 0.0499104042759296
+  },
+  "qwen3.5-27b": {
+   "R": {
+    "3/5": 2.174479184798353,
+    "3/4": 3.161458354385104,
+    "9/10": 3.7005208397167735
+   },
+   "stick_no_report": 3.533854154540071,
+   "social_uninformed": {
+    "2-2: toward own vote": 1.221874998882413,
+    "3-1 against own vote: toward contacts": 2.8343750022351744,
+    "3-1 with own vote: toward contacts": 3.2562499874969943,
+    "4-0 against own vote: toward contacts": 3.5937500202096997,
+    "4-0 with own vote: toward contacts": 4.253125006356276
+   },
+   "S_p_T1": 0.01838059836493349
+  }
+ },
+ "options": {
+  "A_native_T1": {
+   "llama-3.1-8b-it": {
+    "T": 1.0,
+    "P_follow_lone_report": {
+     "3/5": 0.6064207654214656,
+     "3/4": 0.6352224404815169,
+     "9/10": 0.6489856118362306
+    },
+    "P_keep_own_vote_no_report_no_contacts": 0.8445799988037737,
+    "P_follow_4-0_contacts_against_own_vote_uninformed": 0.5039061699703211,
+    "P_follow_3-1_contacts_against_own_vote_uninformed": 0.43551735159398786,
+    "S_p_between_start": 0.017984645246351235
+   },
+   "gemma-2-9b-it": {
+    "T": 1.0,
+    "P_follow_lone_report": {
+     "3/5": 0.8462815168526375,
+     "3/4": 0.9142907203246635,
+     "9/10": 0.9692466688414202
+    },
+    "P_keep_own_vote_no_report_no_contacts": 0.9794066589065819,
+    "P_follow_4-0_contacts_against_own_vote_uninformed": 0.9898146011177992,
+    "P_follow_3-1_contacts_against_own_vote_uninformed": 0.8070960046829808,
+    "S_p_between_start": 0.0
+   },
+   "qwen3.5-9b": {
+    "T": 1.0,
+    "P_follow_lone_report": {
+     "3/5": 0.8327813315580667,
+     "3/4": 0.8760700071308462,
+     "9/10": 0.915305585204087
+    },
+    "P_keep_own_vote_no_report_no_contacts": 0.9016900717835671,
+    "P_follow_4-0_contacts_against_own_vote_uninformed": 0.8709489170801694,
+    "P_follow_3-1_contacts_against_own_vote_uninformed": 0.6750795163549176,
+    "S_p_between_start": 0.020421299435095523
+   },
+   "gemma-3-27b-it": {
+    "T": 1.0,
+    "P_follow_lone_report": {
+     "3/5": 0.999952423541882,
+     "3/4": 0.9999891037750588,
+     "9/10": 0.9999980590744502
+    },
+    "P_keep_own_vote_no_report_no_contacts": 0.9999999827421714,
+    "P_follow_4-0_contacts_against_own_vote_uninformed": 0.9999963992866896,
+    "P_follow_3-1_contacts_against_own_vote_uninformed": 0.999249297387961,
+    "S_p_between_start": 0.0499104042759296
+   },
+   "qwen3.5-27b": {
+    "T": 1.0,
+    "P_follow_lone_report": {
+     "3/5": 0.8979342088404112,
+     "3/4": 0.9593578463117067,
+     "9/10": 0.9758852386666954
+    },
+    "P_keep_own_vote_no_report_no_contacts": 0.9716358247557557,
+    "P_follow_4-0_contacts_against_own_vote_uninformed": 0.9732407173408826,
+    "P_follow_3-1_contacts_against_own_vote_uninformed": 0.9445053641859344,
+    "S_p_between_start": 0.01838059836493349
+   }
+  },
+  "C_per_model_evidence_anchored": {
+   "llama-3.1-8b-it": {
+    "T": 0.5048983170988395,
+    "P_follow_lone_report": {
+     "3/5": 0.7018651746863427,
+     "3/4": 0.75,
+     "9/10": 0.7715777918041538
+    },
+    "P_keep_own_vote_no_report_no_contacts": 0.9661889818527575,
+    "P_follow_4-0_contacts_against_own_vote_uninformed": 0.5077360878134519,
+    "P_follow_3-1_contacts_against_own_vote_uninformed": 0.3743225057387527,
+    "S_p_between_start": 0.03562033113853802
+   },
+   "gemma-2-9b-it": {
+    "T": 2.154706914697696,
+    "P_follow_lone_report": {
+     "3/5": 0.6881810699506258,
+     "3/4": 0.75,
+     "9/10": 0.8322122246540515
+    },
+    "P_keep_own_vote_no_report_no_contacts": 0.8572145964612511,
+    "P_follow_4-0_contacts_against_own_vote_uninformed": 0.893212509480369,
+    "P_follow_3-1_contacts_against_own_vote_uninformed": 0.6602129795740919,
+    "S_p_between_start": 0.0
+   },
+   "qwen3.5-9b": {
+    "T": 1.7801814090326422,
+    "P_follow_lone_report": {
+     "3/5": 0.7113309311409575,
+     "3/4": 0.75,
+     "9/10": 0.7920059483631036
+    },
+    "P_keep_own_vote_no_report_no_contacts": 0.7764155836034662,
+    "P_follow_4-0_contacts_against_own_vote_uninformed": 0.7450859740173372,
+    "P_follow_3-1_contacts_against_own_vote_uninformed": 0.6012731534840365,
+    "S_p_between_start": 0.011471471014963885
+   },
+   "gemma-3-27b-it": {
+    "T": 10.401379436559568,
+    "P_follow_lone_report": {
+     "3/5": 0.722501570543992,
+     "3/4": 0.75,
+     "9/10": 0.7797964728793333
+    },
+    "P_keep_own_vote_no_report_no_contacts": 0.8479383694388294,
+    "P_follow_4-0_contacts_against_own_vote_uninformed": 0.7694252187163473,
+    "P_follow_3-1_contacts_against_own_vote_uninformed": 0.6663260941341232,
+    "S_p_between_start": 0.004798440877995535
+   },
+   "qwen3.5-27b": {
+    "T": 2.8776834075084508,
+    "P_follow_lone_report": {
+     "3/5": 0.6804053624963133,
+     "3/4": 0.75,
+     "9/10": 0.7834587653292657
+    },
+    "P_keep_own_vote_no_report_no_contacts": 0.7734719238958797,
+    "P_follow_4-0_contacts_against_own_vote_uninformed": 0.7770980243342326,
+    "P_follow_3-1_contacts_against_own_vote_uninformed": 0.7280893498378652,
+    "S_p_between_start": 0.00638728996976347
+   }
+  }
+ }
+}
