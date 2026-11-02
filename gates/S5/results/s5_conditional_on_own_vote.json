@@ -1,0 +1,135 @@
+{
+ "note": "diagnostic derived from the S5 readouts (W3), not pass/fail: mean logit toward the reported option split by whether the agent's own current vote is that option; P at T = 1 is the mean of the per-rendering probabilities",
+ "models": {
+  "gemma-2-9b-it": {
+   "3/4|own vote = report": {
+    "mean_logit": 2.6692708156770095,
+    "P_follow_report_T1": 0.8184922396401332
+   },
+   "3/4|own vote against report": {
+    "mean_logit": 2.065104174253065,
+    "P_follow_report_T1": 0.8204383451751042
+   },
+   "3/5|own vote = report": {
+    "mean_logit": 2.4114583367966893,
+    "P_follow_report_T1": 0.8269297163317925
+   },
+   "3/5|own vote against report": {
+    "mean_logit": 1.0000000001552205,
+    "P_follow_report_T1": 0.6404465340188455
+   },
+   "9/10|own vote = report": {
+    "mean_logit": 3.9322916623956794,
+    "P_follow_report_T1": 0.8925718609333156
+   },
+   "9/10|own vote against report": {
+    "mean_logit": 2.9687499795206045,
+    "P_follow_report_T1": 0.9237034308826582
+   }
+  },
+  "gemma-3-27b-it": {
+   "3/4|own vote = report": {
+    "mean_logit": 14.854166569036375,
+    "P_follow_report_T1": 0.999685481067401
+   },
+   "3/4|own vote against report": {
+    "mean_logit": 7.99999996717187,
+    "P_follow_report_T1": 0.9215967504947787
+   },
+   "3/5|own vote = report": {
+    "mean_logit": 14.53645821621351,
+    "P_follow_report_T1": 0.9995998712904974
+   },
+   "3/5|own vote against report": {
+    "mean_logit": 5.369791621450113,
+    "P_follow_report_T1": 0.7933311556632531
+   },
+   "9/10|own vote = report": {
+    "mean_logit": 15.96614575820005,
+    "P_follow_report_T1": 0.9999747458792867
+   },
+   "9/10|own vote against report": {
+    "mean_logit": 10.338541582087379,
+    "P_follow_report_T1": 0.9936089337831729
+   }
+  },
+  "llama-3.1-8b-it": {
+   "3/4|own vote = report": {
+    "mean_logit": 1.0885416561892878,
+    "P_follow_report_T1": 0.7163548674549668
+   },
+   "3/4|own vote against report": {
+    "mean_logit": 0.02083333519597848,
+    "P_follow_report_T1": 0.5050691883412569
+   },
+   "3/5|own vote = report": {
+    "mean_logit": 1.0156250082266827,
+    "P_follow_report_T1": 0.7081009061828528
+   },
+   "3/5|own vote against report": {
+    "mean_logit": -0.15104166542490324,
+    "P_follow_report_T1": 0.4643770283463664
+   },
+   "9/10|own vote = report": {
+    "mean_logit": 1.138020830694586,
+    "P_follow_report_T1": 0.7158521418457916
+   },
+   "9/10|own vote against report": {
+    "mean_logit": 0.0911458336437742,
+    "P_follow_report_T1": 0.5213012141156096
+   }
+  },
+  "qwen3.5-27b": {
+   "3/4|own vote = report": {
+    "mean_logit": 5.015625036515606,
+    "P_follow_report_T1": 0.9916965538387096
+   },
+   "3/4|own vote against report": {
+    "mean_logit": 1.3072916722546022,
+    "P_follow_report_T1": 0.7734310361689601
+   },
+   "3/5|own vote = report": {
+    "mean_logit": 4.302083368975825,
+    "P_follow_report_T1": 0.9826449014387425
+   },
+   "3/5|own vote against report": {
+    "mean_logit": 0.046875000620881714,
+    "P_follow_report_T1": 0.5113857040518036
+   },
+   "9/10|own vote = report": {
+    "mean_logit": 5.468750008808759,
+    "P_follow_report_T1": 0.9948085219135607
+   },
+   "9/10|own vote against report": {
+    "mean_logit": 1.9322916706247877,
+    "P_follow_report_T1": 0.8653186169414998
+   }
+  },
+  "qwen3.5-9b": {
+   "3/4|own vote = report": {
+    "mean_logit": 2.8984375131937363,
+    "P_follow_report_T1": 0.9411294151036795
+   },
+   "3/4|own vote against report": {
+    "mean_logit": 1.0130208308498065,
+    "P_follow_report_T1": 0.7185202156434151
+   },
+   "3/5|own vote = report": {
+    "mean_logit": 2.5468750040357313,
+    "P_follow_report_T1": 0.9203408959609165
+   },
+   "3/5|own vote against report": {
+    "mean_logit": 0.6640625015522043,
+    "P_follow_report_T1": 0.6524093428424925
+   },
+   "9/10|own vote = report": {
+    "mean_logit": 3.3749999869808867,
+    "P_follow_report_T1": 0.9622378591816294
+   },
+   "9/10|own vote against report": {
+    "mean_logit": 1.3854166609235108,
+    "P_follow_report_T1": 0.7833131601995084
+   }
+  }
+ }
+}

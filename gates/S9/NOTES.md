@@ -17,3 +17,8 @@
   drift. The D14 tripwire fired (Gemma-3-27B), so the simulation blocks every analysis by start. Presentation effects
   (letter and option order; large for both Gemma models) are in `s4_summary.json` and add call-level variance even
   though the balanced design cancels their mean.
+
+- **S5 inputs (2026-11-02, `gates/S5/results/s5_summary.json`).** Per-model logit scale differs about 10× (Gemma-3-27B
+  R ≈ 10–13 nats vs 0.4–3.7 for the others); responsiveness slopes on designed log LR 0.10–1.77; own-vote stickiness
+  with no report P = 0.81–1.00 at T = 1. Decision noise T (common or per-model) must be settled before S8; it sets how
+  far the board can move each model.

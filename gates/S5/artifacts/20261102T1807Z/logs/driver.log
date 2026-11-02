@@ -1,0 +1,31 @@
+=== 2026-11-02T18:11:56Z stack
+NVIDIA RTX PRO 6000 Blackwell Server Edition, 595.91.07, 97887 MiB
+3.11.13 vllm 0.19.1 torch 2.10.0+cu128 NVIDIA RTX PRO 6000 Blackwell Server Edition
+=== 2026-11-02T18:13:19Z probes
+probe set verified f110b1684cb9064f 1344 ['w3', 'w4', 'w5', 'w6']
+=== 2026-11-02T18:13:19Z llama-3.1-8b-it: weights
+overlay         200G   22G  179G  11% /
+=== 2026-11-02T18:14:36Z llama-3.1-8b-it: cold start 1
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+llama-3.1-8b-it start 1 readouts 1344 repeats identical 336 of 336 seconds 70.4
+=== 2026-11-02T18:17:45Z gemma-2-9b-it: weights
+overlay         200G   37G  164G  19% /
+=== 2026-11-02T18:19:11Z gemma-2-9b-it: cold start 1
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+gemma-2-9b-it start 1 readouts 1008 repeats identical 336 of 336 seconds 24.9
+=== 2026-11-02T18:21:49Z qwen3.5-9b: weights
+overlay         200G   54G  147G  27% /
+=== 2026-11-02T18:22:36Z qwen3.5-9b: cold start 1
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+qwen3.5-9b start 1 readouts 1008 repeats identical 336 of 336 seconds 66.0
+=== 2026-11-02T18:27:05Z gemma-3-27b-it: weights
+overlay         200G   73G  128G  37% /
+=== 2026-11-02T18:29:31Z gemma-3-27b-it: cold start 1
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+gemma-3-27b-it start 1 readouts 1680 repeats identical 336 of 336 seconds 100.9
+=== 2026-11-02T18:33:26Z qwen3.5-27b: weights
+overlay         200G  123G   78G  62% /
+=== 2026-11-02T18:35:07Z qwen3.5-27b: cold start 1
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+qwen3.5-27b start 1 readouts 1680 repeats identical 336 of 336 seconds 127.6
+=== 2026-11-02T18:40:48Z done
