@@ -2,7 +2,8 @@
 # Gate S3 on the pod (gates/S3/S3_PLAN.md): the comprehension prompt set through the five lineup models, exact A/B
 # readouts, one server start per model. Started by gates/S0/gpu/launch.py --driver gates/S3/gpu/s3_driver.sh.
 # Env: HF_TOKEN (RunPod secret), STPT_RESULTS_REPO, STPT_RUN_ID, PIPE_COMMIT, STPT_COMMIT, STPT_PINS_JSON,
-#      STPT_PROMPTS_B64 (gzip+base64 of the prompt set), STPT_PROMPTS_SHA256, STPT_MODELS (optional subset).
+#      STPT_PROMPTS_B64 (gzip+base64 of the prompt set), STPT_PROMPTS_SHA256, STPT_MODELS (optional subset);
+#      or STPT_CONTEXTS_B64 + STPT_PROMPTS_VERSION + STPT_BUILDER (prompts rendered here by stpt/prompts.py, hash-checked).
 set -uo pipefail
 OUT=/root/out/$STPT_RUN_ID; mkdir -p "$OUT/logs"; touch /tmp/pod_driven
 export HF_HOME=/root/hf HF_HUB_DISABLE_TELEMETRY=1 PIP_DISABLE_PIP_VERSION_CHECK=1 TOKENIZERS_PARALLELISM=false
@@ -34,7 +35,7 @@ if os.environ.get("STPT_CONTEXTS_B64"):          # round 2: compact contexts + s
     pl = json.loads(gzip.decompress(base64.b64decode(os.environ["STPT_CONTEXTS_B64"])))
     open("/root/stpt_prompts.py", "w").write(pl["prompts_py"])
     spec = importlib.util.spec_from_file_location("stpt_prompts", "/root/stpt_prompts.py"); P = importlib.util.module_from_spec(spec); spec.loader.exec_module(P)
-    out = P.build_round2(pl["contexts"], 4)
+    out = getattr(P, os.environ.get("STPT_BUILDER", "build_round2"))(pl["contexts"], 4)   # held-out: build_heldout
     d = {"version": os.environ["STPT_PROMPTS_VERSION"], "template": "stpt/prompts.py", "n": len(out), "prompts": out}
 else:
     b64 = os.environ.get("STPT_PROMPTS_B64") or "".join(os.environ[f"STPT_PROMPTS_B64_{i}"] for i in range(int(os.environ["STPT_PROMPTS_PARTS"])))
