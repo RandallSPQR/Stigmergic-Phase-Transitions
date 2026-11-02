@@ -1,0 +1,147 @@
+{
+ "gemma-2-9b-it": {
+  "w3": {
+   "var_start_offset_nats2": 0.0,
+   "var_probe_x_start_nats2": 0.0,
+   "sigma_b_nats": 0.0,
+   "between_pod_mean_difference_nats": 0.0,
+   "n_starts": 6,
+   "n_pods": 2,
+   "probes": "operating-point probes"
+  },
+  "w5": {
+   "var_start_offset_nats2": 0.0,
+   "var_probe_x_start_nats2": 0.0,
+   "sigma_b_nats": 0.0,
+   "between_pod_mean_difference_nats": 0.0,
+   "n_starts": 6,
+   "n_pods": 2,
+   "probes": "operating-point probes"
+  }
+ },
+ "gemma-3-27b-it": {
+  "w3": {
+   "var_start_offset_nats2": 7.43995133922233e-05,
+   "var_probe_x_start_nats2": 0.019853988126501628,
+   "sigma_b_nats": 0.1411679412610875,
+   "between_pod_mean_difference_nats": -0.0038194455150089013,
+   "n_starts": 6,
+   "n_pods": 2,
+   "probes": "all probes (fewer than 40 at the operating point)"
+  },
+  "w4": {
+   "var_start_offset_nats2": 2.115871971216221e-06,
+   "var_probe_x_start_nats2": 0.024759173017026233,
+   "sigma_b_nats": 0.1573572015797099,
+   "between_pod_mean_difference_nats": 0.0010416661920158443,
+   "n_starts": 6,
+   "n_pods": 2,
+   "probes": "all probes (fewer than 40 at the operating point)"
+  },
+  "w5": {
+   "var_start_offset_nats2": 3.9082860134843886e-05,
+   "var_probe_x_start_nats2": 0.020491515166143233,
+   "sigma_b_nats": 0.1432850237333898,
+   "between_pod_mean_difference_nats": 0.005295139549990058,
+   "n_starts": 6,
+   "n_pods": 2,
+   "probes": "all probes (fewer than 40 at the operating point)"
+  },
+  "w6": {
+   "var_start_offset_nats2": 2.360033790471398e-06,
+   "var_probe_x_start_nats2": 0.019487656258460405,
+   "sigma_b_nats": 0.13960664845289739,
+   "between_pod_mean_difference_nats": 0.0012152800141349562,
+   "n_starts": 6,
+   "n_pods": 2,
+   "probes": "all probes (fewer than 40 at the operating point)"
+  }
+ },
+ "llama-3.1-8b-it": {
+  "w3": {
+   "var_start_offset_nats2": 9.766769164096597e-07,
+   "var_probe_x_start_nats2": 0.002586603040180423,
+   "sigma_b_nats": 0.050868258443717465,
+   "between_pod_mean_difference_nats": -0.00035385804887536065,
+   "n_starts": 6,
+   "n_pods": 2,
+   "probes": "operating-point probes"
+  },
+  "w4": {
+   "var_start_offset_nats2": 2.72465479706798e-05,
+   "var_probe_x_start_nats2": 0.002473838584596984,
+   "sigma_b_nats": 0.05001085014841943,
+   "between_pod_mean_difference_nats": -0.004079861835473125,
+   "n_starts": 6,
+   "n_pods": 2,
+   "probes": "operating-point probes"
+  },
+  "w5": {
+   "var_start_offset_nats2": 9.139902130411824e-06,
+   "var_probe_x_start_nats2": 0.002712241930314111,
+   "sigma_b_nats": 0.052166865273318104,
+   "between_pod_mean_difference_nats": -0.003980892347218046,
+   "n_starts": 6,
+   "n_pods": 2,
+   "probes": "operating-point probes"
+  }
+ },
+ "qwen3.5-27b": {
+  "w3": {
+   "var_start_offset_nats2": 1.493669187723702e-05,
+   "var_probe_x_start_nats2": 0.002687834478146728,
+   "sigma_b_nats": 0.051988182984443354,
+   "between_pod_mean_difference_nats": 0.0038430391777680567,
+   "n_starts": 6,
+   "n_pods": 2,
+   "probes": "operating-point probes"
+  },
+  "w4": {
+   "var_start_offset_nats2": 1.0953134558548777e-05,
+   "var_probe_x_start_nats2": 0.0030592225372202326,
+   "sigma_b_nats": 0.05540916595454927,
+   "between_pod_mean_difference_nats": 0.0025062690346611474,
+   "n_starts": 6,
+   "n_pods": 2,
+   "probes": "operating-point probes"
+  },
+  "w5": {
+   "var_start_offset_nats2": 2.547848607463207e-05,
+   "var_probe_x_start_nats2": 0.003178095523434002,
+   "sigma_b_nats": 0.0566001237587749,
+   "between_pod_mean_difference_nats": -0.004849138070197628,
+   "n_starts": 6,
+   "n_pods": 2,
+   "probes": "operating-point probes"
+  },
+  "w6": {
+   "var_start_offset_nats2": 1.2011677003335771e-05,
+   "var_probe_x_start_nats2": 0.0025776872119573587,
+   "sigma_b_nats": 0.050889084182766484,
+   "between_pod_mean_difference_nats": -0.004243827781375546,
+   "n_starts": 6,
+   "n_pods": 2,
+   "probes": "operating-point probes"
+  }
+ },
+ "qwen3.5-9b": {
+  "w3": {
+   "var_start_offset_nats2": 1.272518611391645e-05,
+   "var_probe_x_start_nats2": 0.003323510578828745,
+   "sigma_b_nats": 0.057760157244788224,
+   "between_pod_mean_difference_nats": -0.0009029952749625286,
+   "n_starts": 6,
+   "n_pods": 2,
+   "probes": "operating-point probes"
+  },
+  "w4": {
+   "var_start_offset_nats2": 1.6196813263416563e-05,
+   "var_probe_x_start_nats2": 0.003502456335162169,
+   "sigma_b_nats": 0.05931823622146553,
+   "between_pod_mean_difference_nats": -0.003875968927272072,
+   "n_starts": 6,
+   "n_pods": 2,
+   "probes": "operating-point probes"
+  }
+ }
+}

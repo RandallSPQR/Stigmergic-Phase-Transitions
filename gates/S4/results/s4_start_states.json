@@ -1,0 +1,60 @@
+{
+ "note": "starts whose readouts are bit-identical on every probe (all wordings read) share a state",
+ "by_model": {
+  "gemma-2-9b-it": {
+   "n_distinct_states": 1,
+   "state_of_start": {
+    "c0c6gqx5ycpsfp/start1/2026-11-02T15:46:13Z": 0,
+    "c0c6gqx5ycpsfp/start2/2026-11-02T15:48:33Z": 0,
+    "c0c6gqx5ycpsfp/start3/2026-11-02T15:50:53Z": 0,
+    "w7lelecs4ddjgx/start1/2026-11-02T15:47:57Z": 0,
+    "w7lelecs4ddjgx/start2/2026-11-02T15:51:05Z": 0,
+    "w7lelecs4ddjgx/start3/2026-11-02T15:54:12Z": 0
+   }
+  },
+  "gemma-3-27b-it": {
+   "n_distinct_states": 3,
+   "state_of_start": {
+    "c0c6gqx5ycpsfp/start1/2026-11-02T16:08:32Z": 0,
+    "c0c6gqx5ycpsfp/start2/2026-11-02T16:12:02Z": 1,
+    "c0c6gqx5ycpsfp/start3/2026-11-02T16:15:37Z": 2,
+    "w7lelecs4ddjgx/start1/2026-11-02T16:14:05Z": 0,
+    "w7lelecs4ddjgx/start2/2026-11-02T16:18:23Z": 2,
+    "w7lelecs4ddjgx/start3/2026-11-02T16:22:41Z": 2
+   }
+  },
+  "llama-3.1-8b-it": {
+   "n_distinct_states": 5,
+   "state_of_start": {
+    "c0c6gqx5ycpsfp/start1/2026-11-02T15:36:32Z": 0,
+    "c0c6gqx5ycpsfp/start2/2026-11-02T15:39:00Z": 0,
+    "c0c6gqx5ycpsfp/start3/2026-11-02T15:41:23Z": 1,
+    "w7lelecs4ddjgx/start1/2026-11-02T15:37:48Z": 2,
+    "w7lelecs4ddjgx/start2/2026-11-02T15:41:09Z": 3,
+    "w7lelecs4ddjgx/start3/2026-11-02T15:44:18Z": 4
+   }
+  },
+  "qwen3.5-27b": {
+   "n_distinct_states": 6,
+   "state_of_start": {
+    "c0c6gqx5ycpsfp/start1/2026-11-02T16:20:29Z": 0,
+    "c0c6gqx5ycpsfp/start2/2026-11-02T16:25:58Z": 1,
+    "c0c6gqx5ycpsfp/start3/2026-11-02T16:31:27Z": 2,
+    "w7lelecs4ddjgx/start1/2026-11-02T16:28:09Z": 3,
+    "w7lelecs4ddjgx/start2/2026-11-02T16:35:29Z": 4,
+    "w7lelecs4ddjgx/start3/2026-11-02T16:42:54Z": 5
+   }
+  },
+  "qwen3.5-9b": {
+   "n_distinct_states": 6,
+   "state_of_start": {
+    "c0c6gqx5ycpsfp/start1/2026-11-02T15:53:50Z": 0,
+    "c0c6gqx5ycpsfp/start2/2026-11-02T15:57:26Z": 1,
+    "c0c6gqx5ycpsfp/start3/2026-11-02T16:01:02Z": 2,
+    "w7lelecs4ddjgx/start1/2026-11-02T15:57:45Z": 3,
+    "w7lelecs4ddjgx/start2/2026-11-02T16:02:49Z": 4,
+    "w7lelecs4ddjgx/start3/2026-11-02T16:07:55Z": 5
+   }
+  }
+ }
+}

@@ -10,3 +10,10 @@
   variance component. The proxy numbers rank difficulty settings; they never size the study.
 - **The informed-status split (D19) is secondary**, with no power target. S9 powers only the two confirmatory
   contrasts.
+
+- **S4 inputs (2026-11-02, `gates/S4/results/s4_variance_components.json`).** Per model and wording: start-offset
+  variance (≤ 1e-4 nats² everywhere) and probe × start variance (W3: Llama 0.0026, Qwen3.5-9B 0.0033, Qwen3.5-27B
+  0.0027, Gemma-3-27B 0.020, Gemma-2-9B 0 nats²). Starts are discrete states (`s4_start_states.json`), not continuous
+  drift. The D14 tripwire fired (Gemma-3-27B), so the simulation blocks every analysis by start. Presentation effects
+  (letter and option order; large for both Gemma models) are in `s4_summary.json` and add call-level variance even
+  though the balanced design cancels their mean.

@@ -3,7 +3,7 @@
 **Question.** Agents see only their contacts' current votes. Do those votes change how memoryless LLM agents use
 dispersed private evidence? And does a temporary change to what agents see leave a lasting mark on the board?
 
-**Status (2026-11-02): S0 and S1 closed; S2 passed (D15–D19); S3 passes with W3, confirmed on a held-out set (D20–D21); S4 (noise, GPU) running.**
+**Status (2026-11-02): S0 and S1 closed; S2 passed (D15–D19); S3 passes with W3, confirmed on a held-out set (D20–D21); S4 passes, D14 tripwire triggered (blocking by start mandatory, A16); next gate S5 awaits the owner.**
 - Not frozen. No paid collection. Nothing confirmatory.
 - Brief: https://claude.ai/artifact/Q36cWtMumtJPs3semD76ni (revision 3).
 - Missing Piece is the complementary study. Both share the pipeline and the coordination record below.
@@ -50,7 +50,7 @@ across the two; a TOST for each.
 | S1: simulator checks (CPU only) | **CLOSED 2026-11-01**: passes under Amendment 1 (DV1); original-plan failure kept on record (`gates/S1/S1_REPORT.md`) |
 | S2: evidence specifications | **passes** (28 specs before any model call; schema v1.0); conventions accepted as provisional (D15–D16); difficulty chosen by simulated power before live data: f 0.5, sources {3/4, 9/10}; S8 region adds {3/5, 3/4, 9/10} (D18; `gates/S2/difficulty/POWER_REPORT.md`) |
 | S3: comprehension (GPU) | **PASSES**: W3 valid for all five models in round 2 (A12) and on a held-out set (A14–A15); W3 is the single primary wording; variants W4–W6 valid per model only (D21); wording-fragility finding recorded (`gates/S3/S3_REPORT.md`) |
-| S4: noise (GPU) | **running 2026-11-02** (`gates/S4/S4_PLAN.md`, amended before any call for per-model wordings) |
+| S4: noise (GPU) | **PASSES 2026-11-02**: within-start repeat SD 0 (all repeats bit-identical); between-start σ_b ≈ 0.05 nats (Gemma-2-9B 0); **tripwire triggered by Gemma-3-27B** (S_p 0.050, σ_b ≈ 0.24 nats near p = 0.5): blocking by start mandatory everywhere (A16) (`gates/S4/S4_REPORT.md`) |
 | S5–S10 | not started |
 
 ## Layout

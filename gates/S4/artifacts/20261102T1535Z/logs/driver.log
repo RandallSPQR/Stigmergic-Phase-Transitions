@@ -1,0 +1,61 @@
+=== 2026-11-02T15:35:34Z stack
+NVIDIA RTX PRO 6000 Blackwell Server Edition, 595.91.07, 97887 MiB
+3.11.13 vllm 0.19.1 torch 2.10.0+cu128 NVIDIA RTX PRO 6000 Blackwell Server Edition
+=== 2026-11-02T15:37:26Z probes
+probe set verified b94a246733bcdd20 1920 ['w3', 'w4', 'w5', 'w6']
+=== 2026-11-02T15:37:26Z llama-3.1-8b-it: weights
+overlay         200G   22G  179G  11% /
+=== 2026-11-02T15:37:48Z llama-3.1-8b-it: cold start 1
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+llama-3.1-8b-it start 1 readouts 1920 repeats identical 480 of 480 seconds 75.6
+=== 2026-11-02T15:41:09Z llama-3.1-8b-it: cold start 2
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+llama-3.1-8b-it start 2 readouts 1920 repeats identical 480 of 480 seconds 75.2
+=== 2026-11-02T15:44:18Z llama-3.1-8b-it: cold start 3
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+llama-3.1-8b-it start 3 readouts 1920 repeats identical 480 of 480 seconds 74.4
+=== 2026-11-02T15:47:32Z gemma-2-9b-it: weights
+overlay         200G   37G  164G  19% /
+=== 2026-11-02T15:47:57Z gemma-2-9b-it: cold start 1
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+gemma-2-9b-it start 1 readouts 1440 repeats identical 480 of 480 seconds 38.3
+=== 2026-11-02T15:51:05Z gemma-2-9b-it: cold start 2
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+gemma-2-9b-it start 2 readouts 1440 repeats identical 480 of 480 seconds 37.4
+=== 2026-11-02T15:54:12Z gemma-2-9b-it: cold start 3
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+gemma-2-9b-it start 3 readouts 1440 repeats identical 480 of 480 seconds 38.3
+=== 2026-11-02T15:57:20Z qwen3.5-9b: weights
+overlay         200G   54G  147G  27% /
+=== 2026-11-02T15:57:45Z qwen3.5-9b: cold start 1
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+qwen3.5-9b start 1 readouts 1440 repeats identical 480 of 480 seconds 94.2
+=== 2026-11-02T16:02:49Z qwen3.5-9b: cold start 2
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+qwen3.5-9b start 2 readouts 1440 repeats identical 480 of 480 seconds 96.6
+=== 2026-11-02T16:07:55Z qwen3.5-9b: cold start 3
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+qwen3.5-9b start 3 readouts 1440 repeats identical 480 of 480 seconds 93.9
+=== 2026-11-02T16:12:58Z gemma-3-27b-it: weights
+overlay         200G   73G  128G  37% /
+=== 2026-11-02T16:14:05Z gemma-3-27b-it: cold start 1
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+gemma-3-27b-it start 1 readouts 2400 repeats identical 480 of 480 seconds 153.4
+=== 2026-11-02T16:18:23Z gemma-3-27b-it: cold start 2
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+gemma-3-27b-it start 2 readouts 2400 repeats identical 480 of 480 seconds 153.1
+=== 2026-11-02T16:22:41Z gemma-3-27b-it: cold start 3
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+gemma-3-27b-it start 3 readouts 2400 repeats identical 480 of 480 seconds 153.8
+=== 2026-11-02T16:27:00Z qwen3.5-27b: weights
+overlay         200G  123G   78G  62% /
+=== 2026-11-02T16:28:09Z qwen3.5-27b: cold start 1
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+qwen3.5-27b start 1 readouts 2400 repeats identical 480 of 480 seconds 210.3
+=== 2026-11-02T16:35:29Z qwen3.5-27b: cold start 2
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+qwen3.5-27b start 2 readouts 2400 repeats identical 480 of 480 seconds 210.3
+=== 2026-11-02T16:42:54Z qwen3.5-27b: cold start 3
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+qwen3.5-27b start 3 readouts 2400 repeats identical 480 of 480 seconds 211.3
+=== 2026-11-02T16:50:15Z done
