@@ -68,8 +68,8 @@ Per-story monotone counts are 9–12 of 12. Llama's weakest is W5 with 9/12; Gem
 
 ## For the owner
 1. **S5 passes.** The next gate is S6, the solo pooled-evidence check (development bank; correct ≥ 0.90; GPU).
-2. **Decision noise T,** still open ("Decisions still required"), now has data behind it. Gemma-3-27B's logits are
-   about 10× the others', so a single T across models would leave it near-deterministic at T = 1, or the others
+2. **Decision noise T,** still open ("Decisions still required"), now has data behind it. Gemma-3-27B's responses are
+   3–20 times the others' in nats, so a single T across models would leave it near-deterministic at T = 1, or the others
    near-random at large T.
    - The brief samples votes at T from logits/T; whether T is common or per-model is undecided.
    - S5 and S4 give the inputs: the logit scale per model, and stickiness.
