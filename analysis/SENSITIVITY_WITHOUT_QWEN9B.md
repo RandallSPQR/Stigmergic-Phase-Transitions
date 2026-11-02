@@ -11,3 +11,6 @@
 - **Reading.** If either contrast's conclusion (rejection, equivalence or neither) changes when Qwen3.5-9B is excluded,
   the primary result is reported as dependent on that model. The primary estimand (D2: one pooled test across the five
   models) is unchanged.
+
+**Update (D24, 2026-11-02).** The confirmatory set is now four models (Llama-3.1-8B left at S6), so this analysis
+uses three: Gemma-2-9B, Gemma-3-27B, Qwen3.5-27B.

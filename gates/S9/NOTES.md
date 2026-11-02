@@ -26,3 +26,8 @@
 - **Decision noise (D23).** Simulate the primary regime C (per-model T, Bayesian anchor; values in
   `analysis/DECISION_NOISE_T.md`) with S4 variance components scaled by 1/T (Llama's S_p becomes 0.036). The secondary
   regime A (T = 1) runs on a seeded share with no power target; S9 sets that share.
+
+- **Four strata (D24).** Power is computed for the pooled test over Gemma-2-9B, Qwen3.5-9B, Gemma-3-27B and
+  Qwen3.5-27B. Llama-3.1-8B runs as the secondary comparison agent (no power target). The initial-vote rule (proposal
+  in `analysis/INITIAL_VOTE_RULE_PROPOSAL.md`, awaiting approval) changes the live board's early dynamics; S9 should
+  simulate the approved primary rule.
