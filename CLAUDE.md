@@ -19,6 +19,8 @@
   on a seeded share. Same T for the initial vote and every update.
 - **Initial vote (D25).** Rule (i): first vote sampled at T from the W3 blind, evidence-only call with a seeded,
   balanced placeholder own vote, identical for live and blind. Rule (ii), a seeded 50/50 start, is a sensitivity arm.
+- **Display pulse (D26).** k = 3, D = 3 sweeps, r = 10, t0 = 5 sweeps, W = 5 sweeps, two pulsed branches per saved
+  state; self-reset branch on a seeded share; intention-to-treat recipient mean (`analysis/PULSE_SETTINGS.md`).
 - **Confirmatory set (D24).** Pooled confirmatory tests use the four models that passed every gate (Gemma-2-9B,
   Qwen3.5-9B, Gemma-3-27B, Qwen3.5-27B). Llama-3.1-8B failed S6 and is the secondary weakly social comparison agent:
   all runs and per-model estimates, never pooled (`analysis/CONFIRMATORY_SET.md`).

@@ -199,3 +199,19 @@ def apply_pulse(board: Board, state: State, recipients, k: int, toward: str, dur
 def branch(state: State) -> State:
     """A branch starts from a full copy of the saved state; it shares the main trajectory's keys from that step."""
     return copy.deepcopy(state)
+
+
+def self_reset(state: State, recipients, votes_at_pulse) -> dict:
+    """Self-reset branch (owner, 2026-11-02): at restoration, each recipient's own vote, which is what the recipient sees
+    as "Your current vote" and what its contacts see, is set back to its value when the pulse began. Every other
+    agent's vote is unchanged. Persistence in this branch can only come from what the pulse left in the recipients'
+    neighbours (social persistence); total minus social is self persistence."""
+    others_before = {j: v for j, v in enumerate(state.votes) if j not in set(recipients)}
+    changed = []
+    for r in recipients:
+        if state.votes[r] != votes_at_pulse[r]:
+            changed.append(int(r))
+        state.votes[r] = votes_at_pulse[r]
+    if any(state.votes[j] != v for j, v in others_before.items()):
+        raise AssertionError("self-reset changed a non-recipient's vote")
+    return {"kind": "self_reset", "step": state.step, "recipients_reset": changed}

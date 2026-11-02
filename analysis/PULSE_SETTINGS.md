@@ -1,4 +1,22 @@
-# Display-pulse settings for S8: proposal (for the owner's approval, 2026-11-02)
+# Display-pulse settings (decided 2026-11-02, coordination D26 / A23; prospective)
+
+**Decision.** The settings below were approved as proposed. The owner added three things:
+1. **Self-reset branch.** At restoration, each recipient's own vote (what it sees as its current vote and what its
+   contacts see) is reset to its value at pulse onset. All other votes are unchanged.
+   - It runs for one direction per saved state, on a seeded share of saved states. The share is proposed from cost in
+     the S8 plan.
+   - Pre-registered decomposition (secondary, interpretive): **social persistence** = persistence in the self-reset
+     branch; **self persistence** = total minus social. Total persistence stays the confirmatory outcome.
+   - Model-based cross-check: kernel simulation with the contact terms switched off after restoration.
+2. **Intention to treat.** The confirmatory recipient mean includes every assigned recipient regardless of exposure.
+   The exposed-only mean is secondary.
+3. The self-reset branch is in the S8 plan and its cost estimate.
+
+The harness operation is `stpt.board.self_reset`; `tests/test_board.py` checks that it touches only recipients.
+
+The proposal follows, unchanged.
+
+## Proposal (as approved)
 
 **Basis.** These are simulations with development proxy kernels. No live board has run. Source:
 `analysis/pulse_design.py`, output `analysis/results/pulse_design.json`.

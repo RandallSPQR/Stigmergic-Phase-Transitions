@@ -53,3 +53,19 @@ def test_placeholder_balanced_and_letters_balanced():
 def test_state_json_round_trip():
     s = B.State(5, ["A", "B"], {"0,1": ["A", 9]})
     assert B.State.from_json(s.to_json()).digest() == s.digest()
+
+
+def test_self_reset_touches_recipients_only():
+    b = _board()
+    state, _ = B.initial_state(b, C.MockKernel(), "i")
+    for _ in range(50):
+        B.update(b, state, C.MockKernel())
+    rec = [3, 17, 42]
+    at_pulse = list(state.votes)
+    B.apply_pulse(b, state, rec, 3, "A", 30, "x")
+    for _ in range(30):
+        B.update(b, state, C.MockKernel())
+    before = list(state.votes)
+    B.self_reset(state, rec, at_pulse)
+    assert all(state.votes[r] == at_pulse[r] for r in rec)
+    assert all(state.votes[j] == before[j] for j in range(b.N) if j not in rec)
