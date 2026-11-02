@@ -30,7 +30,7 @@ def load(dirs):
             rec = {"pod": ss["pod"], "index": ss["index"], "first": {}, "repeat": {}, "read_by": defaultdict(int)}
             for x in r["rows"]:
                 rec[x["read"]][x["prompt_id"]] = (x["logp_A"], x["logp_B"], x["non_option_mass"])
-                rec["read_by"][x["read_by"]] += 1
+                rec["read_by"]["A:%s/B:%s" % (x["read_by"]["A"], x["read_by"]["B"]) if isinstance(x["read_by"], dict) else str(x["read_by"])] += 1
             runs[man["model"]][ss["id"]] = rec
     return probes, runs
 
