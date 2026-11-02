@@ -65,12 +65,17 @@ def start_cmd(hours: float) -> str:
 def cmd_create(a):
     reg = load()
     live = [p for p, v in reg["pods"].items() if not v.get("ended")]
-    if live:                       # refresh: a pod that deleted itself is not live
+    if len(live) >= a.max_live:    # refresh: a pod that deleted itself is not live
         cmd_status(a); reg = load(); live = [p for p, v in reg["pods"].items() if not v.get("ended")]
-    if live:
-        sys.exit(f"REFUSED: a registered pod is still live: {live}")
+    if len(live) >= a.max_live:     # default 1; S4 runs two pods side by side (its plan says so)
+        sys.exit(f"REFUSED: registered pods still live: {live} (max {a.max_live})")
     now = dt.datetime.now(dt.timezone.utc)
     run_id = now.strftime("%Y%m%dT%H%MZ")
+    used = {v.get("run_id") for v in reg["pods"].values()}
+    for sfx in "bcdefgh":            # two pods launched in one minute must not share a results folder
+        if run_id not in used:
+            break
+        run_id = now.strftime("%Y%m%dT%H%MZ") + sfx
     dpath = (HERE.parents[2] / a.driver) if "/" in a.driver else (HERE / a.driver)
     driver = dpath.read_bytes()
     body = {"name": f"stpt-{Path(a.driver).stem.replace('_', '-')}-{run_id}", "imageName": IMAGE, "cloudType": "SECURE",
@@ -136,6 +141,7 @@ def main(argv=None):
     sub = ap.add_subparsers(dest="cmd", required=True)
     c = sub.add_parser("create"); c.add_argument("--repo", required=True); c.add_argument("--hours", type=float, default=4.0)
     c.add_argument("--disk", type=int, default=200); c.add_argument("--dry-run", action="store_true")
+    c.add_argument("--max-live", type=int, default=1, help="refuse if this many registered pods are already live")
     c.add_argument("--gpu-set", choices=sorted(GPU_SETS), default="a100")
     c.add_argument("--models", nargs="*", help="lineup model names (default: all five)")
     c.add_argument("--driver", default="box_identity.sh",

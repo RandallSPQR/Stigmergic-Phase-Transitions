@@ -256,3 +256,21 @@ def build_heldout(contexts, d=4):
                             "context_id": c["prompt_id"], "informed": c["informed"],
                             "messages": render(w, c["story"], c["private"], c["own_vote"], contacts, c["layout"], "vote", informed=c["informed"])})
     return out
+
+
+def build_s4(contexts, wordings, d=4):
+    """S4 noise probes (gates/S4/S4_PLAN.md) from compact contexts: each context x each of its four layouts (letter
+    mapping x option order, both balanced) with the actual vote question, live or blind as the context says, in every
+    wording of the study's set. The order is the contexts' order, the same in every server start."""
+    out = []
+    for w in wordings:
+        for c in contexts:
+            contacts = ["A"] * c["contacts_A"] + ["B"] * (d - c["contacts_A"])
+            for j, lay in enumerate(c["layouts"]):
+                out.append({"prompt_id": f"{w}-{c['context_id']}-L{j}", "context_id": c["context_id"], "wording": w, "layout_index": j,
+                            "layout": lay, "live": c["live"], "informed": c["informed"], "own_vote": c["own_vote"],
+                            "contacts_A": c["contacts_A"], "report_accuracy": c["report_accuracy"], "report_favours": c["report_favours"],
+                            "scenario_id": c["scenario_id"], "allocation_sha256": c["allocation_sha256"], "position": c["position"],
+                            "messages": render(w, c["story"], c["private"], c["own_vote"], contacts, lay, "vote", live=c["live"],
+                                               informed=c["informed"])})
+    return out
