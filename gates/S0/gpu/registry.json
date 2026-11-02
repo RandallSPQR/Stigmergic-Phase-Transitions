@@ -178,7 +178,8 @@
    "max_cost_usd": 4.98,
    "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
    "cost_per_hr": 2.49,
-   "repo": "RandallSPQR/stpt-gate-artifacts"
+   "repo": "RandallSPQR/stpt-gate-artifacts",
+   "ended": "terminated 2026-11-02T16:38:29.962384+00:00: run DONE and uploaded"
   }
  }
 }
