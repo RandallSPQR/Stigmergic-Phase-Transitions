@@ -1,5 +1,12 @@
 # Gate S4: noise (development bank). Plan committed before any S4 model call.
 
+**Amendment (2026-11-02, before any S4 call; coordination D21/A15).** The held-out check made W3 valid for all five
+models and W4–W6 valid for some models only. The probe set carries W3–W6; **each model is read only in the wordings
+valid for it** (`wordings_by_model.json`, equal to `valid_by_model` in `gates/S3/results/heldout_summary.json`):
+Llama-3.1-8B W3/W4/W5; Gemma-2-9B W3/W5; Qwen3.5-9B W3/W4; the 27B models W3–W6. Every statistic below is computed per
+model and wording over those pairs only. The tripwire applies to every model in every wording valid for it; W3 is the
+wording of the pooled confirmatory tests.
+
 **Approval.** The owner approved S4 on 2026-11-02 (coordination D20), to run straight after the held-out wording check
 with the wordings that pass. If W3 fails that check, S4 does not start.
 
