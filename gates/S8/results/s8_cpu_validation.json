@@ -11,7 +11,7 @@
   "open_refuses_unrecorded_hash": true,
   "open_logs_then_decodes": true
  },
- "mock_run_seconds": 5.5,
+ "mock_run_seconds": 6.2,
  "pass": true,
  "summary_open_fields_seen": [
   "between_start_shift",
@@ -36,7 +36,7 @@
    "hi95": 0.22093788764293595
   },
   "manipulation_check_pass": true,
-  "horizon_slope_sweeps_20_30": {
+  "live_slope_sweeps_20_30_descriptive": {
    "n": 12,
    "mean": 0.0023939393939393866,
    "lo95": -0.00724907197711483,
@@ -44,8 +44,8 @@
    "implied_change_over_10_sweeps": [
     -0.07249071977114831,
     0.12036950764993604
-   ]
-  },
-  "horizon_30_stands": false
+   ],
+   "role": "descriptive consistency check only (D28); the horizon is decided in S9 by simulation"
+  }
  }
 }

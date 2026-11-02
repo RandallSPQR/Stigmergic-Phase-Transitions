@@ -32,6 +32,13 @@
      about 0.045, against the band of 0.01. **The horizon rule is therefore expected to return "unresolved: interval
      too wide"**, which sends the horizon to the owner as the rule provides. This was reported to the owner before
      launch.
+   - **Replaced by D28 (owner, recorded 2026-11-02T22:26:27Z, before any S8 result existed).** The horizon is
+     decided in S9: the S8 live-fitted kernels are simulated on ≥ 1,000 boards per model, and the horizon is fixed
+     where the expected live − blind contrast changes by less than ±0.025 across the final 10 sweeps. 30 sweeps stands
+     if that holds; otherwise S9 proposes a horizon for approval. **In S8, the pooled live slope over sweeps 20–30 is a
+     descriptive consistency check only**, not pass/fail. A gross trend in live boards that the simulation does not show
+     goes to the owner. Proposed for the pre-registration: the primary outcome is the mean over a final window (sweeps
+     25–30) rather than the final sweep; S9 reports the precision gained. S8 rules 1–3 are unchanged.
 4. **Manipulation check.**
    - Unit: the cluster × confirmatory-model mean of its two pulsed branches' immediate response (recipients' share
      voting the pulse direction during the pulse, pulsed minus unpulsed, intention to treat).

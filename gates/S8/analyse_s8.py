@@ -246,8 +246,9 @@ def main():
         summary["pooled_confirmatory"]["manipulation_check_pass"] = bool(summary["pooled_confirmatory"]["manipulation_check_immediate_response"]["lo95"] > 0)
     if len(units_slope) > 1:
         h = tci(units_slope)
-        summary["pooled_confirmatory"]["horizon_slope_sweeps_20_30"] = {**h, "implied_change_over_10_sweeps": [10 * h["lo95"], 10 * h["hi95"]]}
-        summary["pooled_confirmatory"]["horizon_30_stands"] = bool((10 * h["lo95"] >= -0.01) and (10 * h["hi95"] <= 0.01))
+        summary["pooled_confirmatory"]["live_slope_sweeps_20_30_descriptive"] = {
+            **h, "implied_change_over_10_sweeps": [10 * h["lo95"], 10 * h["hi95"]],
+            "role": "descriptive consistency check only (D28); the horizon is decided in S9 by simulation"}
     summary["pooled_confirmatory"]["variance_components"] = {
         "board_effect_between_cluster": pooled_variance(pooled_be),
         "persistence_itt_between_cluster": pooled_variance(pooled_pe),

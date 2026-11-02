@@ -31,3 +31,9 @@
   Qwen3.5-27B. Llama-3.1-8B runs as the secondary comparison agent (no power target). The initial-vote rule (proposal
   in `analysis/INITIAL_VOTE_RULE.md`) changes the live board's early dynamics; S9 should
   simulate the approved primary rule.
+
+- **Horizon (D28).** S9 decides the operational horizon: simulate the S8 live-fitted kernels on ≥ 1,000 boards per model
+  and fix the horizon where the expected live − blind contrast changes by less than ±0.025 across the final 10 sweeps;
+  30 sweeps stands if that holds, else S9 proposes a horizon for the owner's approval. S9 also reports the precision
+  gained by a final-window primary outcome (mean over sweeps 25–30) against the final sweep, proposed for the
+  pre-registration.
