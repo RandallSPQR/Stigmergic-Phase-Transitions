@@ -1,0 +1,107 @@
+{
+ "bank_d18": {
+  "dev-bridge-A-d18": "f5d861ecbeef00aa2e3669c7f24410f2c691ce904640f5175f235a3830ce6a5a",
+  "dev-bridge-B-d18": "54c3f80a13b50687a2007fad3df71f8c72b6e768cd4f5d9b4d97ff0300a96ce3",
+  "dev-crate-A-d18": "baad6434e493ae389e6dc313426eed5e9eaa7aaec4814215f294a68b61f29454",
+  "dev-crate-B-d18": "c250aa62183aa639b37fc78f6391fff58b9114d40b1df65113eeb29a7500c15e",
+  "dev-drawer-A-d18": "116fe23a1bc551e621342bfe3e5aa991380f825dfd02d22e6250783eee5c7a8f",
+  "dev-drawer-B-d18": "3998163abbba8fbd2458b9d28c063c8506da7b8e8f30a8b816dec602483adab1",
+  "dev-room-A-d18": "efda3fe0fea611245946a0fa8c67dbac7b8fddd1583cde97be8aba770db66b7c",
+  "dev-room-B-d18": "410275a76277a1fec4700208c9c5660d29f9807e905e9742d01924e76311022c",
+  "dev-trail-A-d18": "78d8eeae784b5388c1e2f6c9b69cdfd655ebba8d365d32676bc9ca6770e08f38",
+  "dev-trail-B-d18": "f5eec9fe456e66f93b291f02ea891de038067fa4373e1ec757d15cb84e383b5b",
+  "dev-well-A-d18": "93a457a4fff2a8bc6a67e8c5109f584c5ca4b606bd8d39c0db69ff7dfe4af1f9",
+  "dev-well-B-d18": "e853ba014a0cbee82714c3e96a330569c586444095c0d1fe384f48944f4a838a"
+ },
+ "clusters": [
+  {
+   "allocation_sha256": "57fdd318393f5e79b56f0251664bd8d512c2582cc8f8f19271fa76cdb4524b26",
+   "cluster": 1,
+   "graph_fingerprint": "a8b284da588fdfb3",
+   "informed": 50,
+   "pooled_logodds_toward_truth": 53.83,
+   "rule": "i",
+   "scenario_id": "dev-room-A-d18",
+   "setting": "S_a",
+   "start": 1
+  },
+  {
+   "allocation_sha256": "82b52f9998e885d109738a5ff5782742678b64dc7d2edbd2482e68e2ac230905",
+   "cluster": 2,
+   "graph_fingerprint": "6279afa0a3e3e64b",
+   "informed": 50,
+   "pooled_logodds_toward_truth": 56.03,
+   "rule": "i",
+   "scenario_id": "dev-drawer-B-d18",
+   "setting": "S_a",
+   "start": 1
+  },
+  {
+   "allocation_sha256": "4d183a9c685ffacac186f9f64f0e7c6cf9c42901e4d4f24af07e7df12a3e1751",
+   "cluster": 3,
+   "graph_fingerprint": "23c961507306f4bb",
+   "informed": 50,
+   "pooled_logodds_toward_truth": 58.23,
+   "rule": "i",
+   "scenario_id": "dev-drawer-A-d18",
+   "setting": "S_a",
+   "start": 2
+  },
+  {
+   "allocation_sha256": "52fe9543f62eee5adc1879f38a846edacce4bcf922bbdd90e13a4173ea64830c",
+   "cluster": 4,
+   "graph_fingerprint": "8cd2e3442a2cb6bd",
+   "informed": 50,
+   "pooled_logodds_toward_truth": 31.98,
+   "rule": "i",
+   "scenario_id": "dev-well-B",
+   "setting": "S_b",
+   "start": 1
+  },
+  {
+   "allocation_sha256": "5ae95afe286b5136167796b60d2e2c4150c76105d3b2f4ec8b58512858554149",
+   "cluster": 5,
+   "graph_fingerprint": "b0d079b02ae22562",
+   "informed": 50,
+   "pooled_logodds_toward_truth": 43.25,
+   "rule": "i",
+   "scenario_id": "dev-trail-A",
+   "setting": "S_b",
+   "start": 2
+  },
+  {
+   "allocation_sha256": "d2b5278da9d45fe9b5681030f2236e3e97e64f80a363abc373bf0dc0785ec9c3",
+   "cluster": 6,
+   "graph_fingerprint": "f1dc45c37bbbba3b",
+   "informed": 50,
+   "pooled_logodds_toward_truth": 38.74,
+   "rule": "i",
+   "scenario_id": "dev-trail-B",
+   "setting": "S_b",
+   "start": 2
+  },
+  {
+   "allocation_sha256": "0c78516016819a400d98fcd90d3629de5f4b8d63b3cf9d148300a471e0529ff8",
+   "cluster": 7,
+   "graph_fingerprint": "415fb1575f1ba63c",
+   "informed": 50,
+   "pooled_logodds_toward_truth": 54.93,
+   "rule": "ii",
+   "scenario_id": "dev-room-B-d18",
+   "setting": "S_a",
+   "start": 1
+  },
+  {
+   "allocation_sha256": "3562217c9cde583ee5a42a2a6faa0345a4fe97d143b6f1cde9e2deb6b9890e00",
+   "cluster": 8,
+   "graph_fingerprint": "800897f08442a41b",
+   "informed": 50,
+   "pooled_logodds_toward_truth": 34.0,
+   "rule": "ii",
+   "scenario_id": "dev-crate-A",
+   "setting": "S_b",
+   "start": 2
+  }
+ ],
+ "clusters_json_sha256": "04d18820565e24125195e679223f3e91f99f12ad8194b91df73d19519e21123a"
+}

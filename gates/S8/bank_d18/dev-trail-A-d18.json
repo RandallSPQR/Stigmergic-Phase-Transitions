@@ -1,0 +1,36 @@
+{
+ "bank": "development",
+ "challenge_set": false,
+ "conventions": "development copy of the D18 confirmatory setting for the S8 pilot (gates/S8/S8_PLAN.md)",
+ "evidence_model": {
+  "accuracy_mix": [
+   "3/4",
+   "9/10"
+  ],
+  "accuracy_weights": [
+   1,
+   1
+  ],
+  "informed_fraction": 0.5,
+  "reports_per_informed_agent": 1,
+  "shared": [],
+  "type": "independent_reports"
+ },
+ "hidden_state": "A",
+ "pooled_margin_logodds": 3.0,
+ "prior": 0.5,
+ "scenario_id": "dev-trail-A-d18",
+ "schema_version": "1.0",
+ "story": {
+  "options": {
+   "A": "the river trail",
+   "B": "the ridge trail"
+  },
+  "question": "Which trail is passable this morning: {A} or {B}?",
+  "report": "{source} who is right {freq} says {option} is passable.",
+  "source": "a hiker",
+  "uninformed": "You have no report about which trail is passable."
+ },
+ "story_key": "trail",
+ "study": "StPT"
+}

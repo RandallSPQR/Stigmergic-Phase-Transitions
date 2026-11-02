@@ -105,11 +105,22 @@ def displayed(state: State, viewer: int, j: int) -> str:
     return ov[0] if ov is not None and state.step < ov[1] else state.votes[j]
 
 
+RETRIES = 3
+
+
 def _call(board: Board, kernel, i, own_vote, shown, layout, question_key, live):
+    """Render and read. A failed or invalid call (exception, or non-finite log-probabilities) is retried up to RETRIES
+    times; if it still fails, r is None and the caller keeps the agent's previous vote, counted as missing (brief)."""
     msgs = P.render(board.wording, board.story, board.text(i), own_vote, shown, layout, question_key, live=live,
                     informed=board.private[i] is not None)
-    r = kernel(msgs)
-    return msgs, r
+    for _ in range(1 + RETRIES):
+        try:
+            r = kernel(msgs)
+            if r is not None and math.isfinite(r["logp_A"]) and math.isfinite(r["logp_B"]):
+                return msgs, r
+        except Exception:                                   # noqa: BLE001 - any failure counts as a failed call
+            pass
+    return msgs, None
 
 
 def placeholder_votes(board: Board) -> list:
@@ -141,12 +152,17 @@ def initial_state(board: Board, kernel, rule: str = "i"):
     for i in range(board.N):
         layout = layout_for(board.run_key, "init", i)
         msgs, r = _call(board, kernel, i, ph[i], [], layout, "vote", live=False)
-        lA = content_logit_A(layout, r["logp_A"], r["logp_B"])
         u = unif(board.run_key, "init-draw", i)
-        v = "A" if u < sigmoid(lA / board.T) else "B"
+        if r is None:                                       # failed after retries: the placeholder stands, missing
+            v = ph[i]
+            recs.append({"kind": "init", "agent": i, "placeholder": ph[i], "prompt_sha": sha(msgs), "layout": layout,
+                         "logp_A": None, "logp_B": None, "u": u, "vote": v, "missing": True})
+        else:
+            lA = content_logit_A(layout, r["logp_A"], r["logp_B"])
+            v = "A" if u < sigmoid(lA / board.T) else "B"
+            recs.append({"kind": "init", "agent": i, "placeholder": ph[i], "prompt_sha": sha(msgs), "layout": layout,
+                         "logp_A": r["logp_A"], "logp_B": r["logp_B"], "u": u, "vote": v})
         votes.append(v)
-        recs.append({"kind": "init", "agent": i, "placeholder": ph[i], "prompt_sha": sha(msgs), "layout": layout,
-                     "logp_A": r["logp_A"], "logp_B": r["logp_B"], "u": u, "vote": v})
     return State(0, votes), recs
 
 
@@ -157,11 +173,16 @@ def update(board: Board, state: State, kernel) -> dict:
     shown = [displayed(state, i, j) for j in board.adj[i]]
     layout = layout_for(board.run_key, "upd", t, len(board.adj[i]))
     msgs, r = _call(board, kernel, i, state.votes[i], shown, layout, "vote", live=board.live)
-    lA = content_logit_A(layout, r["logp_A"], r["logp_B"])
     u = unif(board.run_key, "draw", t)
-    v = "A" if u < sigmoid(lA / board.T) else "B"
-    rec = {"kind": "update", "step": t, "agent": i, "own_before": state.votes[i], "shown": shown if board.live else None,
-           "prompt_sha": sha(msgs), "layout": layout, "logp_A": r["logp_A"], "logp_B": r["logp_B"], "u": u, "vote": v}
+    if r is None:                                           # failed after retries: keep the previous vote, missing
+        v = state.votes[i]
+        rec = {"kind": "update", "step": t, "agent": i, "own_before": state.votes[i], "shown": shown if board.live else None,
+               "prompt_sha": sha(msgs), "layout": layout, "logp_A": None, "logp_B": None, "u": u, "vote": v, "missing": True}
+    else:
+        lA = content_logit_A(layout, r["logp_A"], r["logp_B"])
+        v = "A" if u < sigmoid(lA / board.T) else "B"
+        rec = {"kind": "update", "step": t, "agent": i, "own_before": state.votes[i], "shown": shown if board.live else None,
+               "prompt_sha": sha(msgs), "layout": layout, "logp_A": r["logp_A"], "logp_B": r["logp_B"], "u": u, "vote": v}
     state.votes[i] = v
     state.step = t + 1
     state.overrides = {k: o for k, o in state.overrides.items() if state.step < o[1]}   # restore expired displays
@@ -176,8 +197,12 @@ def probe(board: Board, state: State, kernel, agent: int, question_key: str, pro
     msgs, r = _call(board, kernel, agent, state.votes[agent], shown, layout, question_key, live=board.live)
     if state.digest() != before:
         raise AssertionError("probe changed the state")
-    return {"kind": "probe", "probe_id": probe_id, "step": state.step, "agent": agent, "question": question_key,
-            "prompt_sha": sha(msgs), "layout": layout, "logp_A": r["logp_A"], "logp_B": r["logp_B"]}
+    rec = {"kind": "probe", "probe_id": probe_id, "step": state.step, "agent": agent, "question": question_key,
+           "prompt_sha": sha(msgs), "layout": layout, "logp_A": None if r is None else r["logp_A"],
+           "logp_B": None if r is None else r["logp_B"]}
+    if r is None:
+        rec["missing"] = True
+    return rec
 
 
 def apply_pulse(board: Board, state: State, recipients, k: int, toward: str, duration: int, pulse_id: str) -> dict:

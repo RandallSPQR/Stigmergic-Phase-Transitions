@@ -1,0 +1,36 @@
+{
+ "bank": "development",
+ "challenge_set": false,
+ "conventions": "development copy of the D18 confirmatory setting for the S8 pilot (gates/S8/S8_PLAN.md)",
+ "evidence_model": {
+  "accuracy_mix": [
+   "3/4",
+   "9/10"
+  ],
+  "accuracy_weights": [
+   1,
+   1
+  ],
+  "informed_fraction": 0.5,
+  "reports_per_informed_agent": 1,
+  "shared": [],
+  "type": "independent_reports"
+ },
+ "hidden_state": "B",
+ "pooled_margin_logodds": 3.0,
+ "prior": 0.5,
+ "scenario_id": "dev-well-B-d18",
+ "schema_version": "1.0",
+ "story": {
+  "options": {
+   "A": "the north well",
+   "B": "the south well"
+  },
+  "question": "Which well has safe water today: {A} or {B}?",
+  "report": "{source} who is right {freq} says {option} has safe water.",
+  "source": "a water tester",
+  "uninformed": "You have no report about which well has safe water."
+ },
+ "story_key": "well",
+ "study": "StPT"
+}

@@ -3,7 +3,7 @@
 **Question.** Agents see only their contacts' current votes. Do those votes change how memoryless LLM agents use
 dispersed private evidence? And does a temporary change to what agents see leave a lasting mark on the board?
 
-**Status (2026-11-02): S0 and S1 closed; S2 passed (D15–D19); S3 passes with W3, confirmed on a held-out set (D20–D21); S4 passes, D14 tripwire triggered (blocking by start mandatory, A16); S5 passes (all models monotone in strength and direction; wide spread in responsiveness); S6 fails on Llama-3.1-8B, which leaves the pooled confirmatory tests (D24; four-model confirmatory set); initial-vote rule decided (D25); S7 passes (branch isolation exact on CPU and on all five models); next gate S8 (pilot) awaits the owner.**
+**Status (2026-11-02): S0 and S1 closed; S2 passed (D15–D19); S3 passes with W3, confirmed on a held-out set (D20–D21); S4 passes, D14 tripwire triggered (blocking by start mandatory, A16); S5 passes (all models monotone in strength and direction; wide spread in responsiveness); S6 fails on Llama-3.1-8B, which leaves the pooled confirmatory tests (D24; four-model confirmatory set); initial-vote rule decided (D25); S7 passes (branch isolation exact on CPU and on all five models); pulse settings decided (D26); S8 pilot approved (D27), running.**
 - Not frozen. No paid collection. Nothing confirmatory.
 - Brief: https://claude.ai/artifact/Q36cWtMumtJPs3semD76ni (revision 3).
 - Missing Piece is the complementary study. Both share the pipeline and the coordination record below.
@@ -54,7 +54,8 @@ across the two; a TOST for each.
 | S5: responsiveness (GPU) | **PASSES 2026-11-02**: every model and wording monotone in designed strength and direction; slopes on log LR 0.10 (Llama) to 1.77 (Gemma-3-27B); Gemma-3-27B saturates (`gates/S5/S5_REPORT.md`) |
 | S6: solo pooled-evidence check (GPU) | **FAILS 2026-11-02 on Llama-3.1-8B** (representative 0.832; own vote against truth 0.711); other four pass (0.902–0.992); challenge set not solvable solo by any model; Llama becomes the secondary comparison agent (D24; `gates/S6/S6_REPORT.md`, `analysis/CONFIRMATORY_SET.md`) |
 | S7: branch isolation | **PASSES 2026-11-02**: main trajectories byte-identical with and without probes and pulse branches, on CPU (negative control detected) and on all five models in one start each (`gates/S7/S7_REPORT.md`) |
-| S8–S10 | not started |
+| S8: pilot (GPU) | **running 2026-11-02** (`gates/S8/S8_PLAN.md`; CPU validation incl. the sealed-file path: `gates/S8/results/s8_cpu_validation.json`) |
+| S9–S10 | not started |
 
 ## Layout
 

@@ -69,3 +69,28 @@ def test_self_reset_touches_recipients_only():
     B.self_reset(state, rec, at_pulse)
     assert all(state.votes[r] == at_pulse[r] for r in rec)
     assert all(state.votes[j] == before[j] for j in range(b.N) if j not in rec)
+
+
+class _Flaky(C.MockKernel):
+    """Fails every call on one prompt, and the first attempt of every call."""
+
+    def __init__(self, bad_sha):
+        super().__init__(); self.bad = bad_sha; self.attempt = 0
+
+    def __call__(self, msgs):
+        self.attempt += 1
+        if B.sha(msgs) == self.bad or self.attempt % 2 == 1:
+            raise RuntimeError("server error")
+        return super().__call__(msgs)
+
+
+def test_failed_call_retries_then_keeps_vote():
+    b = _board()
+    state, _ = B.initial_state(b, C.MockKernel(), "i")
+    ref = B.State.from_json(state.to_json())
+    rec_ok = B.update(b, B.State.from_json(state.to_json()), C.MockKernel())
+    k = _Flaky(rec_ok["prompt_sha"])
+    rec = B.update(b, state, k)
+    assert rec["missing"] and rec["vote"] == ref.votes[rec["agent"]] and k.attempt == 1 + B.RETRIES
+    rec2 = B.update(b, state, _Flaky("none"))                # transient failures are retried, not missing
+    assert "missing" not in rec2

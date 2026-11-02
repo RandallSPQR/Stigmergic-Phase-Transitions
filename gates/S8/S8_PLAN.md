@@ -1,4 +1,42 @@
-# Gate S8: pilot (development bank). Plan for the owner's approval; no S8 model call before approval.
+# Gate S8: pilot (development bank). Approved 2026-11-02 with four changes (coordination D27); no S8 model call before this commit.
+
+**Approval with changes (owner, 2026-11-02).** These override the plan text below wherever they differ.
+1. **Sealed estimates.**
+   - The S8 report code outputs only the **variance components** of the two confirmatory contrasts.
+   - The point estimates are written once, by `analyse_s8.py`, to a sealed file, `gates/S8/sealed/s8_sealed.json.gz.b64`:
+     - live minus blind;
+     - persistence;
+     - its self/social decomposition;
+     - intention to treat versus exposed.
+   - The sealed file is encoded so that it is not human-readable at a glance, and it is never printed. The code refuses
+     to overwrite it.
+   - Its sha256 is recorded in the coordination record.
+   - It is opened only at the owner's request, through `open_sealed.py --reason …`. That script first appends the
+     opening (date, reason) to the coordination record.
+   - **Pilot clusters are never reused in confirmatory work.** Their seeds are in `clusters.json`; their specs are in
+     the development bank.
+2. **Variance for S9.**
+   - Between-cluster variance is pooled across the two evidence settings. The stated assumption: the contrast's
+     between-cluster variance does not depend on the setting. Each setting is centred on its own mean, so pooled
+     df = n − 2.
+   - S9 sizes tiers on a **conservative quantile**: the 80th percentile of the variance's sampling distribution,
+     σ²₈₀ = s² · df / χ²₀.₂₀,df, not the point estimate.
+3. **Horizon rule, in equivalence form.**
+   - Per (rule-(i) cluster × confirmatory model) unit: the least-squares slope of live support for the truth over
+     sweeps 20–30.
+   - Pooled: the mean slope, with a 95% t-interval.
+   - **30 sweeps stands if the whole interval, times 10 sweeps, lies within ±0.01.** If the interval is too wide, or
+     outside the band, the horizon comes to the owner as unresolved.
+   - **Pre-launch note (written before any S8 call).** On the proxy kernels, the per-unit slope over sweeps 20–30 has
+     SD about 0.011 per sweep, from run noise on N = 100 boards. With 24 units, the 95% half-width times 10 sweeps is
+     about 0.045, against the band of 0.01. **The horizon rule is therefore expected to return "unresolved: interval
+     too wide"**, which sends the horizon to the owner as the rule provides. This was reported to the owner before
+     launch.
+4. **Manipulation check.**
+   - Unit: the cluster × confirmatory-model mean of its two pulsed branches' immediate response (recipients' share
+     voting the pulse direction during the pulse, pulsed minus unpulsed, intention to treat).
+   - Pass: the **95% lower bound of the pooled mean is > 0** (two-sided t-interval over the 24 units).
+
 
 **Approval so far.** The owner approved S8 and the pulse settings (D26) on 2026-11-02. This plan sets the run sizes,
 the cost cap and the pre-stated rules. The brief's S8 row reads "pulse mechanics, donor process, horizon, cost; pass:
