@@ -1,12 +1,13 @@
-# Gate S3: comprehension (development bank, branched), 2026-11-01
+# Gate S3: comprehension (development bank, branched), 2026-11-01 / 11-02
 
-**Verdict: S3 PASSES under round 2 (A12), with wording W3.**
+**Verdict: S3 PASSES with W3, confirmed on a held-out set (A14, A15).**
 - **Round 1, original wording W1:** 4 of 5 models passed; Qwen3.5-9B failed own-report (0.867). Kept on record below.
-- **Round 2:** the owner chose to revise the wording (A12). Two revisions ran on the same 720 contexts. **W3 is valid:**
-  all five models pass all three types. **W2 is not:** Gemma-2's own-vote accuracy is 0.683.
-- Under the rule fixed before round 2, **the study's wording set is {W3}**.
-- W3 also removes the answer-format problem: non-A/B mass at the vote question is 0.0–0.3% for every model.
-- Qwen3.5-9B passes at exactly the threshold (0.900).
+- **Round 2 (A12):** two revisions on the same 720 contexts. W3 valid for all five; W2 not (Gemma-2 own vote 0.683).
+- **Held-out check (A14):** 720 fresh contexts, W3 plus three new variants. **W3 passes for all five models** and stays
+  the single primary wording (D21). W4, W5 and W6 each fail at least one small model, so each is valid for some
+  models only; they serve the per-model consistency check (D21) and never a confirmatory estimate for a model they
+  failed.
+- Under W3, non-A/B mass at the vote question is at most 0.003 for every model (round 2 and held-out).
 
 ## Round 1 (W1)
 
@@ -123,3 +124,71 @@ the question of a non-A/B rule: under W3, the vote is almost entirely A or B.
    five models first. This is the owner's decision.
 4. **Letter preference at the vote question.** The Gemma models choose A on 40–42% of vote readouts under W3, although
    letters are randomised per call. S4 and S5 measure this, and the randomisation and analysis already absorb it.
+
+## Held-out check (A14; plan `HELDOUT_PLAN.md`, rule committed before any call)
+
+**Inputs and run.**
+- Prompts: `prompts/s3_heldout_prompts.json`, 3,840 prompts, sha256 `3edfcd891093efae…`. They were rendered on the pod
+  from the compact contexts and matched the committed hash.
+- 720 fresh development-bank contexts, seed `S3-heldout-v1`. Round 1's procedure, with no context in common with round
+  1. Each context is rendered in W3, W4, W5 and W6; each own-vote context is also read at the actual vote question.
+- Pod `ujgbj3z0nlerjq`, RTX PRO 6000 Blackwell, pipeline v1.2.0 checked by `check_pin`. Weights were re-hashed to
+  their pins, and each model had one server start with its ID in the manifest. StPT commit `8586f2e`.
+- About 46 min, about $1.90. Raw results: `artifacts/20261102T1447Z/`; summary: `results/heldout_summary.json`.
+
+**Accuracy (own report / own vote / contact majority; pass is ≥ 0.90 on each; 240 prompts per cell)**
+
+| model | W3 | W4 | W5 | W6 |
+|---|---|---|---|---|
+| Llama-3.1-8B | 0.958 / 1.000 / 0.996 | 0.929 / 0.958 / 1.000 | 0.958 / 1.000 / 0.954 | **0.771** / 1.000 / 0.988 |
+| Gemma-2-9B | 1.000 / 0.917 / 1.000 | 1.000 / **0.829** / 0.971 | 1.000 / 0.917 / 0.958 | 1.000 / **0.600** / 1.000 |
+| Qwen3.5-9B | 0.904 / 0.942 / 0.946 | 0.983 / 0.967 / 1.000 | **0.896** / 0.971 / 0.967 | **0.842** / 0.954 / 0.992 |
+| Gemma-3-27B | 1.000 / 1.000 / 1.000 | 1.000 / 1.000 / 1.000 | 0.979 / 1.000 / 1.000 | 1.000 / 1.000 / 1.000 |
+| Qwen3.5-27B | 1.000 / 1.000 / 1.000 | 1.000 / 0.983 / 1.000 | 1.000 / 1.000 / 1.000 | 1.000 / 1.000 / 1.000 |
+| **valid for all five?** | **yes** | no | no | no |
+
+**Under the committed rule:**
+- W3 passes for all five models. Its lowest cells are Qwen3.5-9B own report 0.904 (217 of 240) and Gemma-2 own vote
+  0.917 (220 of 240).
+- So W3 remains the primary wording, and the study's wording set for the pooled tests is {W3}.
+
+**Per model (D21, `valid_by_model`):**
+
+| model | valid wordings |
+|---|---|
+| Llama-3.1-8B | W3, W4, W5 |
+| Gemma-2-9B | W3, W5 |
+| Qwen3.5-9B | W3, W4 |
+| Gemma-3-27B | W3, W4, W5, W6 |
+| Qwen3.5-27B | W3, W4, W5, W6 |
+
+**Vote question (measured, not scored).** Non-A/B mass is at most 0.0015 for every model in every wording, except
+Qwen3.5-9B. Qwen3.5-9B has 0.003 under W3 and 0.020–0.033 under W4–W6. The share answered A ranges from 0.40 to
+0.58.
+
+## Finding: wording fragility (reported finding, D21)
+
+Every failure on the held-out set is a small model on one question type. The three small models break in three
+different ways. Recomputed from `artifacts/20261102T1447Z/`; the splits are on 240 prompts per cell.
+
+| model | breaks on | under | what pulls the answer | evidence |
+|---|---|---|---|---|
+| Gemma-2-9B | own vote | W4 (0.829), W6 (0.600); W3/W5 pass narrowly (0.917) | **its contacts' votes** | accuracy when contacts mostly vote against its own vote: W3 0.835, W5 0.826, W4 0.633, W6 0.284; when they mostly match it: 0.91–1.00 |
+| Qwen3.5-9B | own report | W5 (0.896), W6 (0.842); W3 passes at 0.904 | **its own vote** | when its vote disagrees with its report: W3 0.809, W5 0.773, W6 0.764, W4 0.964; when they agree: 0.91–1.00 |
+| Llama-3.1-8B | own report | W6 (0.771) | **the letter A**, not context | correct letter A 1.000 vs B 0.553 under W6; no vote or contact interference (it is, if anything, worse when its vote agrees with its report) |
+| Gemma-3-27B, Qwen3.5-27B | nothing | — | — | every cell ≥ 0.979 |
+
+**Labels.**
+- Gemma-2's own-vote collapse is worst under W6, which labels its own vote "Your own vote so far" next to "Latest votes
+  of your 4 contacts". It is milder under W4 ("Your vote at the moment" / "Your 4 connections' votes at the moment").
+  Both pairs use near-parallel phrasing for the two vote lines.
+- Qwen3.5-9B does best under W4 ("Private report you hold"), and worst under W6 ("Your own report (no one else sees
+  it)"), where the report label and the vote label share "Your own".
+- Llama's failure appears only with W6's short pronoun question ("which option does it say?").
+
+These label readings are descriptive; nothing here was varied one label at a time.
+
+**Reading.** Comprehension in the small models is fragile to labelling. The errors are not random: each model has a
+characteristic pull (contacts, own vote, or letter). This is why wording is not a random factor (D20). It is also why
+each model's consistency check uses only the wordings valid for it (D21), and why the comprehension score enters as a
+descriptive moderator. The 27B models are robust to every wording tested.
