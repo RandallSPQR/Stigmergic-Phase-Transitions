@@ -1,0 +1,46 @@
+=== 2026-11-02T14:47:25Z stack
+NVIDIA RTX PRO 6000 Blackwell Server Edition, 595.91.07, 97887 MiB
+3.11.13 vllm 0.19.1 torch 2.10.0+cu128 NVIDIA RTX PRO 6000 Blackwell Server Edition
+=== 2026-11-02T14:48:24Z prompts
+prompt set verified 3edfcd891093efae 3840
+=== 2026-11-02T14:48:24Z llama-3.1-8b-it: weights
+overlay         200G   22G  179G  11% /
+[OK ] meta-llama/Llama-3.1-8B-Instruct@0e9e39f249a1  files 11/11  by sha256  meta=hub  weight_hash=495b73750141622d
+report: /root/out/20261102T1447Z/preflight_llama-3.1-8b-it.json
+=== 2026-11-02T14:50:20Z llama-3.1-8b-it: serve
+=== 2026-11-02T14:51:45Z llama-3.1-8b-it: readouts
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+llama-3.1-8b-it accuracy {'w3/contact_majority': 0.9958, 'w3/own_evidence': 0.9583, 'w3/own_vote': 1.0, 'w4/contact_majority': 1.0, 'w4/own_evidence': 0.9292, 'w4/own_vote': 0.9583, 'w5/contact_majority': 0.9542, 'w5/own_evidence': 0.9583, 'w5/own_vote': 1.0, 'w6/contact_majority': 0.9875, 'w6/own_evidence': 0.7708, 'w6/own_vote': 1.0} seconds 93.1
+=== 2026-11-02T14:53:33Z gemma-2-9b-it: weights
+overlay         200G   37G  164G  19% /
+[OK ] google/gemma-2-9b-it@11c9b309abf7  files 11/11  by sha256  meta=hub  weight_hash=7055bc8c5f456ced
+report: /root/out/20261102T1447Z/preflight_gemma-2-9b-it.json
+=== 2026-11-02T14:55:47Z gemma-2-9b-it: serve
+=== 2026-11-02T14:57:33Z gemma-2-9b-it: readouts
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+gemma-2-9b-it accuracy {'w3/contact_majority': 1.0, 'w3/own_evidence': 1.0, 'w3/own_vote': 0.9167, 'w4/contact_majority': 0.9708, 'w4/own_evidence': 1.0, 'w4/own_vote': 0.8292, 'w5/contact_majority': 0.9583, 'w5/own_evidence': 1.0, 'w5/own_vote': 0.9167, 'w6/contact_majority': 1.0, 'w6/own_evidence': 1.0, 'w6/own_vote': 0.6} seconds 90.9
+=== 2026-11-02T14:59:27Z qwen3.5-9b: weights
+overlay         200G   54G  147G  27% /
+[OK ] Qwen/Qwen3.5-9B@c20223623576  files 11/11  by sha256  meta=hub  weight_hash=4b570a1e6e5db4b9
+report: /root/out/20261102T1447Z/preflight_qwen3.5-9b.json
+=== 2026-11-02T15:01:53Z qwen3.5-9b: serve
+=== 2026-11-02T15:03:58Z qwen3.5-9b: readouts
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+qwen3.5-9b accuracy {'w3/contact_majority': 0.9458, 'w3/own_evidence': 0.9042, 'w3/own_vote': 0.9417, 'w4/contact_majority': 1.0, 'w4/own_evidence': 0.9833, 'w4/own_vote': 0.9667, 'w5/contact_majority': 0.9667, 'w5/own_evidence': 0.8958, 'w5/own_vote': 0.9708, 'w6/contact_majority': 0.9917, 'w6/own_evidence': 0.8417, 'w6/own_vote': 0.9542} seconds 113.7
+=== 2026-11-02T15:06:10Z gemma-3-27b-it: weights
+overlay         200G   73G  128G  37% /
+[OK ] google/gemma-3-27b-it@005ad3404e59  files 23/23  by sha256  meta=hub  weight_hash=34f745e7c6ef5b7b
+report: /root/out/20261102T1447Z/preflight_gemma-3-27b-it.json
+=== 2026-11-02T15:13:14Z gemma-3-27b-it: serve
+=== 2026-11-02T15:14:29Z gemma-3-27b-it: readouts
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+gemma-3-27b-it accuracy {'w3/contact_majority': 1.0, 'w3/own_evidence': 1.0, 'w3/own_vote': 1.0, 'w4/contact_majority': 1.0, 'w4/own_evidence': 1.0, 'w4/own_vote': 1.0, 'w5/contact_majority': 1.0, 'w5/own_evidence': 0.9792, 'w5/own_vote': 1.0, 'w6/contact_majority': 1.0, 'w6/own_evidence': 1.0, 'w6/own_vote': 1.0} seconds 226.5
+=== 2026-11-02T15:18:29Z qwen3.5-27b: weights
+overlay         200G  124G   77G  62% /
+[OK ] Qwen/Qwen3.5-27B@fc05daec18b0  files 19/19  by sha256  meta=hub  weight_hash=5e536c8708a9430b
+report: /root/out/20261102T1447Z/preflight_qwen3.5-27b.json
+=== 2026-11-02T15:25:35Z qwen3.5-27b: serve
+=== 2026-11-02T15:27:40Z qwen3.5-27b: readouts
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+qwen3.5-27b accuracy {'w3/contact_majority': 1.0, 'w3/own_evidence': 1.0, 'w3/own_vote': 1.0, 'w4/contact_majority': 1.0, 'w4/own_evidence': 1.0, 'w4/own_vote': 0.9833, 'w5/contact_majority': 1.0, 'w5/own_evidence': 1.0, 'w5/own_vote': 1.0, 'w6/contact_majority': 1.0, 'w6/own_evidence': 1.0, 'w6/own_vote': 1.0} seconds 223.9
+=== 2026-11-02T15:31:37Z done
