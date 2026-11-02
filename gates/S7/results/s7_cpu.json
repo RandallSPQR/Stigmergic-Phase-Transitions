@@ -1,0 +1,106 @@
+{
+ "plan": "gates/S7/S7_PLAN.md",
+ "params": {
+  "H": 400,
+  "probe_every": 10,
+  "branches": [
+   100,
+   250
+  ],
+  "branch_len": 100,
+  "pulse": {
+   "r": 5,
+   "k": 2,
+   "toward": "A",
+   "duration": 30
+  }
+ },
+ "graph": {
+  "N": 100,
+  "d": 4,
+  "seed": 291677533320851596,
+  "edges": 200,
+  "simple": true,
+  "regular": true,
+  "connected": true,
+  "fingerprint": "3a32ab2916ca941d"
+ },
+ "allocation": "d3ab6fc684f5af59116551fd12ce12f30de7fdd081fe33d1d0429cd5b20b6cb4",
+ "rules": {
+  "i": {
+   "C1_main_identical": true,
+   "C2_final_state_identical": true,
+   "C3_unpulsed_branch_equals_main_continuation": true,
+   "C4_pulse": [
+    {
+     "t0": 100,
+     "records_with_altered_display": 0,
+     "overrides_left_at_end": 0,
+     "shown_altered_at_start": true,
+     "others_unaltered_at_start": true,
+     "restored": true,
+     "same_agents_and_draws": true
+    },
+    {
+     "t0": 250,
+     "records_with_altered_display": 1,
+     "overrides_left_at_end": 0,
+     "shown_altered_at_start": true,
+     "others_unaltered_at_start": true,
+     "restored": true,
+     "same_agents_and_draws": true
+    }
+   ],
+   "C4_pulse_ok": true,
+   "C6_save_restore": true,
+   "C5_probes_run": 39,
+   "C7_live_blind_initial_identical": true,
+   "C7_live_blind_same_agents_and_draws": true,
+   "C9_letter_mapping_A_as_A_share": 0.5,
+   "C8_placeholder_imbalance_max": 1,
+   "C8_placeholder_groups": 7,
+   "C7_blind_shows_no_contacts": true,
+   "main_sha": "0bb91d0b9df62a7b3d8cee2167e13b55415f71f980dba61ae04817da924ef361"
+  },
+  "ii": {
+   "C1_main_identical": true,
+   "C2_final_state_identical": true,
+   "C3_unpulsed_branch_equals_main_continuation": true,
+   "C4_pulse": [
+    {
+     "t0": 100,
+     "records_with_altered_display": 1,
+     "overrides_left_at_end": 0,
+     "shown_altered_at_start": true,
+     "others_unaltered_at_start": true,
+     "restored": true,
+     "same_agents_and_draws": true
+    },
+    {
+     "t0": 250,
+     "records_with_altered_display": 1,
+     "overrides_left_at_end": 0,
+     "shown_altered_at_start": true,
+     "others_unaltered_at_start": true,
+     "restored": true,
+     "same_agents_and_draws": true
+    }
+   ],
+   "C4_pulse_ok": true,
+   "C6_save_restore": true,
+   "C5_probes_run": 39,
+   "C7_live_blind_initial_identical": true,
+   "C7_live_blind_same_agents_and_draws": true,
+   "C9_letter_mapping_A_as_A_share": 0.5,
+   "C8_rule_ii_no_model_calls_at_init": true,
+   "C7_blind_shows_no_contacts": true,
+   "main_sha": "3d62570c717f6bfc13461c3bbca7dd62a095ac4f6cd3f3fd00f6769d1e124ffa"
+  }
+ },
+ "negative_control_leaky_kernel": {
+  "C1_main_identical": false,
+  "C3_unpulsed_branch_equals_main_continuation": false,
+  "detected": true
+ },
+ "pass": true
+}

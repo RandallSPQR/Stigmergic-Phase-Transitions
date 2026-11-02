@@ -53,7 +53,8 @@ across the two; a TOST for each.
 | S4: noise (GPU) | **PASSES 2026-11-02**: within-start repeat SD 0 (all repeats bit-identical); between-start σ_b ≈ 0.05 nats (Gemma-2-9B 0); **tripwire triggered by Gemma-3-27B** (S_p 0.050, σ_b ≈ 0.24 nats near p = 0.5): blocking by start mandatory everywhere (A16) (`gates/S4/S4_REPORT.md`) |
 | S5: responsiveness (GPU) | **PASSES 2026-11-02**: every model and wording monotone in designed strength and direction; slopes on log LR 0.10 (Llama) to 1.77 (Gemma-3-27B); Gemma-3-27B saturates (`gates/S5/S5_REPORT.md`) |
 | S6: solo pooled-evidence check (GPU) | **FAILS 2026-11-02 on Llama-3.1-8B** (representative 0.832; own vote against truth 0.711); other four pass (0.902–0.992); challenge set not solvable solo by any model; Llama becomes the secondary comparison agent (D24; `gates/S6/S6_REPORT.md`, `analysis/CONFIRMATORY_SET.md`) |
-| S7–S10 | not started |
+| S7: branch isolation | **CPU part passes** (mock model, negative control detected; `gates/S7/results/s7_cpu.json`); **GPU part running 2026-11-02** (`gates/S7/S7_PLAN.md`) |
+| S8–S10 | not started |
 
 ## Layout
 
