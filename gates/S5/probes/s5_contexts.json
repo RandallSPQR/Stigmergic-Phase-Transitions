@@ -1,0 +1,6554 @@
+[
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "bridge-none-ownA",
+  "informed": false,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "You have no report about which bridge is open.",
+  "report_accuracy": null,
+  "report_favours": null,
+  "scenario_id": "dev-bridge-A-shared",
+  "story": {
+   "options": {
+    "A": "the east bridge",
+    "B": "the west bridge"
+   },
+   "question": "After the storm, which bridge is open: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} is open.",
+   "source": "a guard",
+   "uninformed": "You have no report about which bridge is open."
+  },
+  "story_key": "bridge"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "bridge-none-ownB",
+  "informed": false,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "You have no report about which bridge is open.",
+  "report_accuracy": null,
+  "report_favours": null,
+  "scenario_id": "dev-bridge-A-shared",
+  "story": {
+   "options": {
+    "A": "the east bridge",
+    "B": "the west bridge"
+   },
+   "question": "After the storm, which bridge is open: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} is open.",
+   "source": "a guard",
+   "uninformed": "You have no report about which bridge is open."
+  },
+  "story_key": "bridge"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "bridge-3of5-A-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A guard who is right 3 times out of 5 says the east bridge is open.",
+  "report_accuracy": "3/5",
+  "report_favours": "A",
+  "scenario_id": "dev-bridge-A-shared",
+  "story": {
+   "options": {
+    "A": "the east bridge",
+    "B": "the west bridge"
+   },
+   "question": "After the storm, which bridge is open: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} is open.",
+   "source": "a guard",
+   "uninformed": "You have no report about which bridge is open."
+  },
+  "story_key": "bridge"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "bridge-3of5-A-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A guard who is right 3 times out of 5 says the east bridge is open.",
+  "report_accuracy": "3/5",
+  "report_favours": "A",
+  "scenario_id": "dev-bridge-A-shared",
+  "story": {
+   "options": {
+    "A": "the east bridge",
+    "B": "the west bridge"
+   },
+   "question": "After the storm, which bridge is open: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} is open.",
+   "source": "a guard",
+   "uninformed": "You have no report about which bridge is open."
+  },
+  "story_key": "bridge"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "bridge-3of5-B-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A guard who is right 3 times out of 5 says the west bridge is open.",
+  "report_accuracy": "3/5",
+  "report_favours": "B",
+  "scenario_id": "dev-bridge-A-shared",
+  "story": {
+   "options": {
+    "A": "the east bridge",
+    "B": "the west bridge"
+   },
+   "question": "After the storm, which bridge is open: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} is open.",
+   "source": "a guard",
+   "uninformed": "You have no report about which bridge is open."
+  },
+  "story_key": "bridge"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "bridge-3of5-B-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A guard who is right 3 times out of 5 says the west bridge is open.",
+  "report_accuracy": "3/5",
+  "report_favours": "B",
+  "scenario_id": "dev-bridge-A-shared",
+  "story": {
+   "options": {
+    "A": "the east bridge",
+    "B": "the west bridge"
+   },
+   "question": "After the storm, which bridge is open: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} is open.",
+   "source": "a guard",
+   "uninformed": "You have no report about which bridge is open."
+  },
+  "story_key": "bridge"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "bridge-3of4-A-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A guard who is right 3 times out of 4 says the east bridge is open.",
+  "report_accuracy": "3/4",
+  "report_favours": "A",
+  "scenario_id": "dev-bridge-A-shared",
+  "story": {
+   "options": {
+    "A": "the east bridge",
+    "B": "the west bridge"
+   },
+   "question": "After the storm, which bridge is open: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} is open.",
+   "source": "a guard",
+   "uninformed": "You have no report about which bridge is open."
+  },
+  "story_key": "bridge"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "bridge-3of4-A-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A guard who is right 3 times out of 4 says the east bridge is open.",
+  "report_accuracy": "3/4",
+  "report_favours": "A",
+  "scenario_id": "dev-bridge-A-shared",
+  "story": {
+   "options": {
+    "A": "the east bridge",
+    "B": "the west bridge"
+   },
+   "question": "After the storm, which bridge is open: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} is open.",
+   "source": "a guard",
+   "uninformed": "You have no report about which bridge is open."
+  },
+  "story_key": "bridge"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "bridge-3of4-B-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A guard who is right 3 times out of 4 says the west bridge is open.",
+  "report_accuracy": "3/4",
+  "report_favours": "B",
+  "scenario_id": "dev-bridge-A-shared",
+  "story": {
+   "options": {
+    "A": "the east bridge",
+    "B": "the west bridge"
+   },
+   "question": "After the storm, which bridge is open: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} is open.",
+   "source": "a guard",
+   "uninformed": "You have no report about which bridge is open."
+  },
+  "story_key": "bridge"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "bridge-3of4-B-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A guard who is right 3 times out of 4 says the west bridge is open.",
+  "report_accuracy": "3/4",
+  "report_favours": "B",
+  "scenario_id": "dev-bridge-A-shared",
+  "story": {
+   "options": {
+    "A": "the east bridge",
+    "B": "the west bridge"
+   },
+   "question": "After the storm, which bridge is open: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} is open.",
+   "source": "a guard",
+   "uninformed": "You have no report about which bridge is open."
+  },
+  "story_key": "bridge"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "bridge-9of10-A-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A guard who is right 9 times out of 10 says the east bridge is open.",
+  "report_accuracy": "9/10",
+  "report_favours": "A",
+  "scenario_id": "dev-bridge-A-shared",
+  "story": {
+   "options": {
+    "A": "the east bridge",
+    "B": "the west bridge"
+   },
+   "question": "After the storm, which bridge is open: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} is open.",
+   "source": "a guard",
+   "uninformed": "You have no report about which bridge is open."
+  },
+  "story_key": "bridge"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "bridge-9of10-A-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A guard who is right 9 times out of 10 says the east bridge is open.",
+  "report_accuracy": "9/10",
+  "report_favours": "A",
+  "scenario_id": "dev-bridge-A-shared",
+  "story": {
+   "options": {
+    "A": "the east bridge",
+    "B": "the west bridge"
+   },
+   "question": "After the storm, which bridge is open: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} is open.",
+   "source": "a guard",
+   "uninformed": "You have no report about which bridge is open."
+  },
+  "story_key": "bridge"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "bridge-9of10-B-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A guard who is right 9 times out of 10 says the west bridge is open.",
+  "report_accuracy": "9/10",
+  "report_favours": "B",
+  "scenario_id": "dev-bridge-A-shared",
+  "story": {
+   "options": {
+    "A": "the east bridge",
+    "B": "the west bridge"
+   },
+   "question": "After the storm, which bridge is open: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} is open.",
+   "source": "a guard",
+   "uninformed": "You have no report about which bridge is open."
+  },
+  "story_key": "bridge"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "bridge-9of10-B-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A guard who is right 9 times out of 10 says the west bridge is open.",
+  "report_accuracy": "9/10",
+  "report_favours": "B",
+  "scenario_id": "dev-bridge-A-shared",
+  "story": {
+   "options": {
+    "A": "the east bridge",
+    "B": "the west bridge"
+   },
+   "question": "After the storm, which bridge is open: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} is open.",
+   "source": "a guard",
+   "uninformed": "You have no report about which bridge is open."
+  },
+  "story_key": "bridge"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "crate-none-ownA",
+  "informed": false,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "You have no report about which crate holds the spare parts.",
+  "report_accuracy": null,
+  "report_favours": null,
+  "scenario_id": "dev-crate-A-shared",
+  "story": {
+   "options": {
+    "A": "the red crate",
+    "B": "the blue crate"
+   },
+   "question": "Which crate holds the spare parts: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} holds the spare parts.",
+   "source": "a warehouse clerk",
+   "uninformed": "You have no report about which crate holds the spare parts."
+  },
+  "story_key": "crate"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "crate-none-ownB",
+  "informed": false,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "You have no report about which crate holds the spare parts.",
+  "report_accuracy": null,
+  "report_favours": null,
+  "scenario_id": "dev-crate-A-shared",
+  "story": {
+   "options": {
+    "A": "the red crate",
+    "B": "the blue crate"
+   },
+   "question": "Which crate holds the spare parts: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} holds the spare parts.",
+   "source": "a warehouse clerk",
+   "uninformed": "You have no report about which crate holds the spare parts."
+  },
+  "story_key": "crate"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "crate-3of5-A-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A warehouse clerk who is right 3 times out of 5 says the red crate holds the spare parts.",
+  "report_accuracy": "3/5",
+  "report_favours": "A",
+  "scenario_id": "dev-crate-A-shared",
+  "story": {
+   "options": {
+    "A": "the red crate",
+    "B": "the blue crate"
+   },
+   "question": "Which crate holds the spare parts: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} holds the spare parts.",
+   "source": "a warehouse clerk",
+   "uninformed": "You have no report about which crate holds the spare parts."
+  },
+  "story_key": "crate"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "crate-3of5-A-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A warehouse clerk who is right 3 times out of 5 says the red crate holds the spare parts.",
+  "report_accuracy": "3/5",
+  "report_favours": "A",
+  "scenario_id": "dev-crate-A-shared",
+  "story": {
+   "options": {
+    "A": "the red crate",
+    "B": "the blue crate"
+   },
+   "question": "Which crate holds the spare parts: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} holds the spare parts.",
+   "source": "a warehouse clerk",
+   "uninformed": "You have no report about which crate holds the spare parts."
+  },
+  "story_key": "crate"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "crate-3of5-B-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A warehouse clerk who is right 3 times out of 5 says the blue crate holds the spare parts.",
+  "report_accuracy": "3/5",
+  "report_favours": "B",
+  "scenario_id": "dev-crate-A-shared",
+  "story": {
+   "options": {
+    "A": "the red crate",
+    "B": "the blue crate"
+   },
+   "question": "Which crate holds the spare parts: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} holds the spare parts.",
+   "source": "a warehouse clerk",
+   "uninformed": "You have no report about which crate holds the spare parts."
+  },
+  "story_key": "crate"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "crate-3of5-B-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A warehouse clerk who is right 3 times out of 5 says the blue crate holds the spare parts.",
+  "report_accuracy": "3/5",
+  "report_favours": "B",
+  "scenario_id": "dev-crate-A-shared",
+  "story": {
+   "options": {
+    "A": "the red crate",
+    "B": "the blue crate"
+   },
+   "question": "Which crate holds the spare parts: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} holds the spare parts.",
+   "source": "a warehouse clerk",
+   "uninformed": "You have no report about which crate holds the spare parts."
+  },
+  "story_key": "crate"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "crate-3of4-A-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A warehouse clerk who is right 3 times out of 4 says the red crate holds the spare parts.",
+  "report_accuracy": "3/4",
+  "report_favours": "A",
+  "scenario_id": "dev-crate-A-shared",
+  "story": {
+   "options": {
+    "A": "the red crate",
+    "B": "the blue crate"
+   },
+   "question": "Which crate holds the spare parts: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} holds the spare parts.",
+   "source": "a warehouse clerk",
+   "uninformed": "You have no report about which crate holds the spare parts."
+  },
+  "story_key": "crate"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "crate-3of4-A-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A warehouse clerk who is right 3 times out of 4 says the red crate holds the spare parts.",
+  "report_accuracy": "3/4",
+  "report_favours": "A",
+  "scenario_id": "dev-crate-A-shared",
+  "story": {
+   "options": {
+    "A": "the red crate",
+    "B": "the blue crate"
+   },
+   "question": "Which crate holds the spare parts: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} holds the spare parts.",
+   "source": "a warehouse clerk",
+   "uninformed": "You have no report about which crate holds the spare parts."
+  },
+  "story_key": "crate"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "crate-3of4-B-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A warehouse clerk who is right 3 times out of 4 says the blue crate holds the spare parts.",
+  "report_accuracy": "3/4",
+  "report_favours": "B",
+  "scenario_id": "dev-crate-A-shared",
+  "story": {
+   "options": {
+    "A": "the red crate",
+    "B": "the blue crate"
+   },
+   "question": "Which crate holds the spare parts: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} holds the spare parts.",
+   "source": "a warehouse clerk",
+   "uninformed": "You have no report about which crate holds the spare parts."
+  },
+  "story_key": "crate"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "crate-3of4-B-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A warehouse clerk who is right 3 times out of 4 says the blue crate holds the spare parts.",
+  "report_accuracy": "3/4",
+  "report_favours": "B",
+  "scenario_id": "dev-crate-A-shared",
+  "story": {
+   "options": {
+    "A": "the red crate",
+    "B": "the blue crate"
+   },
+   "question": "Which crate holds the spare parts: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} holds the spare parts.",
+   "source": "a warehouse clerk",
+   "uninformed": "You have no report about which crate holds the spare parts."
+  },
+  "story_key": "crate"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "crate-9of10-A-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A warehouse clerk who is right 9 times out of 10 says the red crate holds the spare parts.",
+  "report_accuracy": "9/10",
+  "report_favours": "A",
+  "scenario_id": "dev-crate-A-shared",
+  "story": {
+   "options": {
+    "A": "the red crate",
+    "B": "the blue crate"
+   },
+   "question": "Which crate holds the spare parts: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} holds the spare parts.",
+   "source": "a warehouse clerk",
+   "uninformed": "You have no report about which crate holds the spare parts."
+  },
+  "story_key": "crate"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "crate-9of10-A-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A warehouse clerk who is right 9 times out of 10 says the red crate holds the spare parts.",
+  "report_accuracy": "9/10",
+  "report_favours": "A",
+  "scenario_id": "dev-crate-A-shared",
+  "story": {
+   "options": {
+    "A": "the red crate",
+    "B": "the blue crate"
+   },
+   "question": "Which crate holds the spare parts: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} holds the spare parts.",
+   "source": "a warehouse clerk",
+   "uninformed": "You have no report about which crate holds the spare parts."
+  },
+  "story_key": "crate"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "crate-9of10-B-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A warehouse clerk who is right 9 times out of 10 says the blue crate holds the spare parts.",
+  "report_accuracy": "9/10",
+  "report_favours": "B",
+  "scenario_id": "dev-crate-A-shared",
+  "story": {
+   "options": {
+    "A": "the red crate",
+    "B": "the blue crate"
+   },
+   "question": "Which crate holds the spare parts: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} holds the spare parts.",
+   "source": "a warehouse clerk",
+   "uninformed": "You have no report about which crate holds the spare parts."
+  },
+  "story_key": "crate"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "crate-9of10-B-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A warehouse clerk who is right 9 times out of 10 says the blue crate holds the spare parts.",
+  "report_accuracy": "9/10",
+  "report_favours": "B",
+  "scenario_id": "dev-crate-A-shared",
+  "story": {
+   "options": {
+    "A": "the red crate",
+    "B": "the blue crate"
+   },
+   "question": "Which crate holds the spare parts: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} holds the spare parts.",
+   "source": "a warehouse clerk",
+   "uninformed": "You have no report about which crate holds the spare parts."
+  },
+  "story_key": "crate"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "drawer-none-ownA",
+  "informed": false,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "You have no report about where the key is.",
+  "report_accuracy": null,
+  "report_favours": null,
+  "scenario_id": "dev-drawer-A",
+  "story": {
+   "options": {
+    "A": "the left drawer",
+    "B": "the right drawer"
+   },
+   "question": "Where is the key: {A} or {B}?",
+   "report": "{source} who is right {freq} says the key is in {option}.",
+   "source": "a housemate",
+   "uninformed": "You have no report about where the key is."
+  },
+  "story_key": "drawer"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "drawer-none-ownB",
+  "informed": false,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "You have no report about where the key is.",
+  "report_accuracy": null,
+  "report_favours": null,
+  "scenario_id": "dev-drawer-A",
+  "story": {
+   "options": {
+    "A": "the left drawer",
+    "B": "the right drawer"
+   },
+   "question": "Where is the key: {A} or {B}?",
+   "report": "{source} who is right {freq} says the key is in {option}.",
+   "source": "a housemate",
+   "uninformed": "You have no report about where the key is."
+  },
+  "story_key": "drawer"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "drawer-3of5-A-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A housemate who is right 3 times out of 5 says the key is in the left drawer.",
+  "report_accuracy": "3/5",
+  "report_favours": "A",
+  "scenario_id": "dev-drawer-A",
+  "story": {
+   "options": {
+    "A": "the left drawer",
+    "B": "the right drawer"
+   },
+   "question": "Where is the key: {A} or {B}?",
+   "report": "{source} who is right {freq} says the key is in {option}.",
+   "source": "a housemate",
+   "uninformed": "You have no report about where the key is."
+  },
+  "story_key": "drawer"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "drawer-3of5-A-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A housemate who is right 3 times out of 5 says the key is in the left drawer.",
+  "report_accuracy": "3/5",
+  "report_favours": "A",
+  "scenario_id": "dev-drawer-A",
+  "story": {
+   "options": {
+    "A": "the left drawer",
+    "B": "the right drawer"
+   },
+   "question": "Where is the key: {A} or {B}?",
+   "report": "{source} who is right {freq} says the key is in {option}.",
+   "source": "a housemate",
+   "uninformed": "You have no report about where the key is."
+  },
+  "story_key": "drawer"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "drawer-3of5-B-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A housemate who is right 3 times out of 5 says the key is in the right drawer.",
+  "report_accuracy": "3/5",
+  "report_favours": "B",
+  "scenario_id": "dev-drawer-A",
+  "story": {
+   "options": {
+    "A": "the left drawer",
+    "B": "the right drawer"
+   },
+   "question": "Where is the key: {A} or {B}?",
+   "report": "{source} who is right {freq} says the key is in {option}.",
+   "source": "a housemate",
+   "uninformed": "You have no report about where the key is."
+  },
+  "story_key": "drawer"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "drawer-3of5-B-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A housemate who is right 3 times out of 5 says the key is in the right drawer.",
+  "report_accuracy": "3/5",
+  "report_favours": "B",
+  "scenario_id": "dev-drawer-A",
+  "story": {
+   "options": {
+    "A": "the left drawer",
+    "B": "the right drawer"
+   },
+   "question": "Where is the key: {A} or {B}?",
+   "report": "{source} who is right {freq} says the key is in {option}.",
+   "source": "a housemate",
+   "uninformed": "You have no report about where the key is."
+  },
+  "story_key": "drawer"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "drawer-3of4-A-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A housemate who is right 3 times out of 4 says the key is in the left drawer.",
+  "report_accuracy": "3/4",
+  "report_favours": "A",
+  "scenario_id": "dev-drawer-A",
+  "story": {
+   "options": {
+    "A": "the left drawer",
+    "B": "the right drawer"
+   },
+   "question": "Where is the key: {A} or {B}?",
+   "report": "{source} who is right {freq} says the key is in {option}.",
+   "source": "a housemate",
+   "uninformed": "You have no report about where the key is."
+  },
+  "story_key": "drawer"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "drawer-3of4-A-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A housemate who is right 3 times out of 4 says the key is in the left drawer.",
+  "report_accuracy": "3/4",
+  "report_favours": "A",
+  "scenario_id": "dev-drawer-A",
+  "story": {
+   "options": {
+    "A": "the left drawer",
+    "B": "the right drawer"
+   },
+   "question": "Where is the key: {A} or {B}?",
+   "report": "{source} who is right {freq} says the key is in {option}.",
+   "source": "a housemate",
+   "uninformed": "You have no report about where the key is."
+  },
+  "story_key": "drawer"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "drawer-3of4-B-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A housemate who is right 3 times out of 4 says the key is in the right drawer.",
+  "report_accuracy": "3/4",
+  "report_favours": "B",
+  "scenario_id": "dev-drawer-A",
+  "story": {
+   "options": {
+    "A": "the left drawer",
+    "B": "the right drawer"
+   },
+   "question": "Where is the key: {A} or {B}?",
+   "report": "{source} who is right {freq} says the key is in {option}.",
+   "source": "a housemate",
+   "uninformed": "You have no report about where the key is."
+  },
+  "story_key": "drawer"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "drawer-3of4-B-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A housemate who is right 3 times out of 4 says the key is in the right drawer.",
+  "report_accuracy": "3/4",
+  "report_favours": "B",
+  "scenario_id": "dev-drawer-A",
+  "story": {
+   "options": {
+    "A": "the left drawer",
+    "B": "the right drawer"
+   },
+   "question": "Where is the key: {A} or {B}?",
+   "report": "{source} who is right {freq} says the key is in {option}.",
+   "source": "a housemate",
+   "uninformed": "You have no report about where the key is."
+  },
+  "story_key": "drawer"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "drawer-9of10-A-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A housemate who is right 9 times out of 10 says the key is in the left drawer.",
+  "report_accuracy": "9/10",
+  "report_favours": "A",
+  "scenario_id": "dev-drawer-A",
+  "story": {
+   "options": {
+    "A": "the left drawer",
+    "B": "the right drawer"
+   },
+   "question": "Where is the key: {A} or {B}?",
+   "report": "{source} who is right {freq} says the key is in {option}.",
+   "source": "a housemate",
+   "uninformed": "You have no report about where the key is."
+  },
+  "story_key": "drawer"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "drawer-9of10-A-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A housemate who is right 9 times out of 10 says the key is in the left drawer.",
+  "report_accuracy": "9/10",
+  "report_favours": "A",
+  "scenario_id": "dev-drawer-A",
+  "story": {
+   "options": {
+    "A": "the left drawer",
+    "B": "the right drawer"
+   },
+   "question": "Where is the key: {A} or {B}?",
+   "report": "{source} who is right {freq} says the key is in {option}.",
+   "source": "a housemate",
+   "uninformed": "You have no report about where the key is."
+  },
+  "story_key": "drawer"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "drawer-9of10-B-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A housemate who is right 9 times out of 10 says the key is in the right drawer.",
+  "report_accuracy": "9/10",
+  "report_favours": "B",
+  "scenario_id": "dev-drawer-A",
+  "story": {
+   "options": {
+    "A": "the left drawer",
+    "B": "the right drawer"
+   },
+   "question": "Where is the key: {A} or {B}?",
+   "report": "{source} who is right {freq} says the key is in {option}.",
+   "source": "a housemate",
+   "uninformed": "You have no report about where the key is."
+  },
+  "story_key": "drawer"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "drawer-9of10-B-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A housemate who is right 9 times out of 10 says the key is in the right drawer.",
+  "report_accuracy": "9/10",
+  "report_favours": "B",
+  "scenario_id": "dev-drawer-A",
+  "story": {
+   "options": {
+    "A": "the left drawer",
+    "B": "the right drawer"
+   },
+   "question": "Where is the key: {A} or {B}?",
+   "report": "{source} who is right {freq} says the key is in {option}.",
+   "source": "a housemate",
+   "uninformed": "You have no report about where the key is."
+  },
+  "story_key": "drawer"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "room-none-ownA",
+  "informed": false,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "You have no report about where the meeting is being held.",
+  "report_accuracy": null,
+  "report_favours": null,
+  "scenario_id": "dev-room-A",
+  "story": {
+   "options": {
+    "A": "room 12",
+    "B": "room 14"
+   },
+   "question": "Where is the meeting being held: {A} or {B}?",
+   "report": "{source} who is right {freq} says the meeting is in {option}.",
+   "source": "a receptionist",
+   "uninformed": "You have no report about where the meeting is being held."
+  },
+  "story_key": "room"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "room-none-ownB",
+  "informed": false,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "You have no report about where the meeting is being held.",
+  "report_accuracy": null,
+  "report_favours": null,
+  "scenario_id": "dev-room-A",
+  "story": {
+   "options": {
+    "A": "room 12",
+    "B": "room 14"
+   },
+   "question": "Where is the meeting being held: {A} or {B}?",
+   "report": "{source} who is right {freq} says the meeting is in {option}.",
+   "source": "a receptionist",
+   "uninformed": "You have no report about where the meeting is being held."
+  },
+  "story_key": "room"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "room-3of5-A-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A receptionist who is right 3 times out of 5 says the meeting is in room 12.",
+  "report_accuracy": "3/5",
+  "report_favours": "A",
+  "scenario_id": "dev-room-A",
+  "story": {
+   "options": {
+    "A": "room 12",
+    "B": "room 14"
+   },
+   "question": "Where is the meeting being held: {A} or {B}?",
+   "report": "{source} who is right {freq} says the meeting is in {option}.",
+   "source": "a receptionist",
+   "uninformed": "You have no report about where the meeting is being held."
+  },
+  "story_key": "room"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "room-3of5-A-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A receptionist who is right 3 times out of 5 says the meeting is in room 12.",
+  "report_accuracy": "3/5",
+  "report_favours": "A",
+  "scenario_id": "dev-room-A",
+  "story": {
+   "options": {
+    "A": "room 12",
+    "B": "room 14"
+   },
+   "question": "Where is the meeting being held: {A} or {B}?",
+   "report": "{source} who is right {freq} says the meeting is in {option}.",
+   "source": "a receptionist",
+   "uninformed": "You have no report about where the meeting is being held."
+  },
+  "story_key": "room"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "room-3of5-B-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A receptionist who is right 3 times out of 5 says the meeting is in room 14.",
+  "report_accuracy": "3/5",
+  "report_favours": "B",
+  "scenario_id": "dev-room-A",
+  "story": {
+   "options": {
+    "A": "room 12",
+    "B": "room 14"
+   },
+   "question": "Where is the meeting being held: {A} or {B}?",
+   "report": "{source} who is right {freq} says the meeting is in {option}.",
+   "source": "a receptionist",
+   "uninformed": "You have no report about where the meeting is being held."
+  },
+  "story_key": "room"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "room-3of5-B-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A receptionist who is right 3 times out of 5 says the meeting is in room 14.",
+  "report_accuracy": "3/5",
+  "report_favours": "B",
+  "scenario_id": "dev-room-A",
+  "story": {
+   "options": {
+    "A": "room 12",
+    "B": "room 14"
+   },
+   "question": "Where is the meeting being held: {A} or {B}?",
+   "report": "{source} who is right {freq} says the meeting is in {option}.",
+   "source": "a receptionist",
+   "uninformed": "You have no report about where the meeting is being held."
+  },
+  "story_key": "room"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "room-3of4-A-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A receptionist who is right 3 times out of 4 says the meeting is in room 12.",
+  "report_accuracy": "3/4",
+  "report_favours": "A",
+  "scenario_id": "dev-room-A",
+  "story": {
+   "options": {
+    "A": "room 12",
+    "B": "room 14"
+   },
+   "question": "Where is the meeting being held: {A} or {B}?",
+   "report": "{source} who is right {freq} says the meeting is in {option}.",
+   "source": "a receptionist",
+   "uninformed": "You have no report about where the meeting is being held."
+  },
+  "story_key": "room"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "room-3of4-A-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A receptionist who is right 3 times out of 4 says the meeting is in room 12.",
+  "report_accuracy": "3/4",
+  "report_favours": "A",
+  "scenario_id": "dev-room-A",
+  "story": {
+   "options": {
+    "A": "room 12",
+    "B": "room 14"
+   },
+   "question": "Where is the meeting being held: {A} or {B}?",
+   "report": "{source} who is right {freq} says the meeting is in {option}.",
+   "source": "a receptionist",
+   "uninformed": "You have no report about where the meeting is being held."
+  },
+  "story_key": "room"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "room-3of4-B-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A receptionist who is right 3 times out of 4 says the meeting is in room 14.",
+  "report_accuracy": "3/4",
+  "report_favours": "B",
+  "scenario_id": "dev-room-A",
+  "story": {
+   "options": {
+    "A": "room 12",
+    "B": "room 14"
+   },
+   "question": "Where is the meeting being held: {A} or {B}?",
+   "report": "{source} who is right {freq} says the meeting is in {option}.",
+   "source": "a receptionist",
+   "uninformed": "You have no report about where the meeting is being held."
+  },
+  "story_key": "room"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "room-3of4-B-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A receptionist who is right 3 times out of 4 says the meeting is in room 14.",
+  "report_accuracy": "3/4",
+  "report_favours": "B",
+  "scenario_id": "dev-room-A",
+  "story": {
+   "options": {
+    "A": "room 12",
+    "B": "room 14"
+   },
+   "question": "Where is the meeting being held: {A} or {B}?",
+   "report": "{source} who is right {freq} says the meeting is in {option}.",
+   "source": "a receptionist",
+   "uninformed": "You have no report about where the meeting is being held."
+  },
+  "story_key": "room"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "room-9of10-A-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A receptionist who is right 9 times out of 10 says the meeting is in room 12.",
+  "report_accuracy": "9/10",
+  "report_favours": "A",
+  "scenario_id": "dev-room-A",
+  "story": {
+   "options": {
+    "A": "room 12",
+    "B": "room 14"
+   },
+   "question": "Where is the meeting being held: {A} or {B}?",
+   "report": "{source} who is right {freq} says the meeting is in {option}.",
+   "source": "a receptionist",
+   "uninformed": "You have no report about where the meeting is being held."
+  },
+  "story_key": "room"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "room-9of10-A-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A receptionist who is right 9 times out of 10 says the meeting is in room 12.",
+  "report_accuracy": "9/10",
+  "report_favours": "A",
+  "scenario_id": "dev-room-A",
+  "story": {
+   "options": {
+    "A": "room 12",
+    "B": "room 14"
+   },
+   "question": "Where is the meeting being held: {A} or {B}?",
+   "report": "{source} who is right {freq} says the meeting is in {option}.",
+   "source": "a receptionist",
+   "uninformed": "You have no report about where the meeting is being held."
+  },
+  "story_key": "room"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "room-9of10-B-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A receptionist who is right 9 times out of 10 says the meeting is in room 14.",
+  "report_accuracy": "9/10",
+  "report_favours": "B",
+  "scenario_id": "dev-room-A",
+  "story": {
+   "options": {
+    "A": "room 12",
+    "B": "room 14"
+   },
+   "question": "Where is the meeting being held: {A} or {B}?",
+   "report": "{source} who is right {freq} says the meeting is in {option}.",
+   "source": "a receptionist",
+   "uninformed": "You have no report about where the meeting is being held."
+  },
+  "story_key": "room"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "room-9of10-B-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A receptionist who is right 9 times out of 10 says the meeting is in room 14.",
+  "report_accuracy": "9/10",
+  "report_favours": "B",
+  "scenario_id": "dev-room-A",
+  "story": {
+   "options": {
+    "A": "room 12",
+    "B": "room 14"
+   },
+   "question": "Where is the meeting being held: {A} or {B}?",
+   "report": "{source} who is right {freq} says the meeting is in {option}.",
+   "source": "a receptionist",
+   "uninformed": "You have no report about where the meeting is being held."
+  },
+  "story_key": "room"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "trail-none-ownA",
+  "informed": false,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "You have no report about which trail is passable.",
+  "report_accuracy": null,
+  "report_favours": null,
+  "scenario_id": "dev-trail-A",
+  "story": {
+   "options": {
+    "A": "the river trail",
+    "B": "the ridge trail"
+   },
+   "question": "Which trail is passable this morning: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} is passable.",
+   "source": "a hiker",
+   "uninformed": "You have no report about which trail is passable."
+  },
+  "story_key": "trail"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "trail-none-ownB",
+  "informed": false,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "You have no report about which trail is passable.",
+  "report_accuracy": null,
+  "report_favours": null,
+  "scenario_id": "dev-trail-A",
+  "story": {
+   "options": {
+    "A": "the river trail",
+    "B": "the ridge trail"
+   },
+   "question": "Which trail is passable this morning: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} is passable.",
+   "source": "a hiker",
+   "uninformed": "You have no report about which trail is passable."
+  },
+  "story_key": "trail"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "trail-3of5-A-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A hiker who is right 3 times out of 5 says the river trail is passable.",
+  "report_accuracy": "3/5",
+  "report_favours": "A",
+  "scenario_id": "dev-trail-A",
+  "story": {
+   "options": {
+    "A": "the river trail",
+    "B": "the ridge trail"
+   },
+   "question": "Which trail is passable this morning: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} is passable.",
+   "source": "a hiker",
+   "uninformed": "You have no report about which trail is passable."
+  },
+  "story_key": "trail"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "trail-3of5-A-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A hiker who is right 3 times out of 5 says the river trail is passable.",
+  "report_accuracy": "3/5",
+  "report_favours": "A",
+  "scenario_id": "dev-trail-A",
+  "story": {
+   "options": {
+    "A": "the river trail",
+    "B": "the ridge trail"
+   },
+   "question": "Which trail is passable this morning: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} is passable.",
+   "source": "a hiker",
+   "uninformed": "You have no report about which trail is passable."
+  },
+  "story_key": "trail"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "trail-3of5-B-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A hiker who is right 3 times out of 5 says the ridge trail is passable.",
+  "report_accuracy": "3/5",
+  "report_favours": "B",
+  "scenario_id": "dev-trail-A",
+  "story": {
+   "options": {
+    "A": "the river trail",
+    "B": "the ridge trail"
+   },
+   "question": "Which trail is passable this morning: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} is passable.",
+   "source": "a hiker",
+   "uninformed": "You have no report about which trail is passable."
+  },
+  "story_key": "trail"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "trail-3of5-B-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A hiker who is right 3 times out of 5 says the ridge trail is passable.",
+  "report_accuracy": "3/5",
+  "report_favours": "B",
+  "scenario_id": "dev-trail-A",
+  "story": {
+   "options": {
+    "A": "the river trail",
+    "B": "the ridge trail"
+   },
+   "question": "Which trail is passable this morning: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} is passable.",
+   "source": "a hiker",
+   "uninformed": "You have no report about which trail is passable."
+  },
+  "story_key": "trail"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "trail-3of4-A-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A hiker who is right 3 times out of 4 says the river trail is passable.",
+  "report_accuracy": "3/4",
+  "report_favours": "A",
+  "scenario_id": "dev-trail-A",
+  "story": {
+   "options": {
+    "A": "the river trail",
+    "B": "the ridge trail"
+   },
+   "question": "Which trail is passable this morning: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} is passable.",
+   "source": "a hiker",
+   "uninformed": "You have no report about which trail is passable."
+  },
+  "story_key": "trail"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "trail-3of4-A-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A hiker who is right 3 times out of 4 says the river trail is passable.",
+  "report_accuracy": "3/4",
+  "report_favours": "A",
+  "scenario_id": "dev-trail-A",
+  "story": {
+   "options": {
+    "A": "the river trail",
+    "B": "the ridge trail"
+   },
+   "question": "Which trail is passable this morning: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} is passable.",
+   "source": "a hiker",
+   "uninformed": "You have no report about which trail is passable."
+  },
+  "story_key": "trail"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "trail-3of4-B-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A hiker who is right 3 times out of 4 says the ridge trail is passable.",
+  "report_accuracy": "3/4",
+  "report_favours": "B",
+  "scenario_id": "dev-trail-A",
+  "story": {
+   "options": {
+    "A": "the river trail",
+    "B": "the ridge trail"
+   },
+   "question": "Which trail is passable this morning: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} is passable.",
+   "source": "a hiker",
+   "uninformed": "You have no report about which trail is passable."
+  },
+  "story_key": "trail"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "trail-3of4-B-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A hiker who is right 3 times out of 4 says the ridge trail is passable.",
+  "report_accuracy": "3/4",
+  "report_favours": "B",
+  "scenario_id": "dev-trail-A",
+  "story": {
+   "options": {
+    "A": "the river trail",
+    "B": "the ridge trail"
+   },
+   "question": "Which trail is passable this morning: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} is passable.",
+   "source": "a hiker",
+   "uninformed": "You have no report about which trail is passable."
+  },
+  "story_key": "trail"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "trail-9of10-A-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A hiker who is right 9 times out of 10 says the river trail is passable.",
+  "report_accuracy": "9/10",
+  "report_favours": "A",
+  "scenario_id": "dev-trail-A",
+  "story": {
+   "options": {
+    "A": "the river trail",
+    "B": "the ridge trail"
+   },
+   "question": "Which trail is passable this morning: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} is passable.",
+   "source": "a hiker",
+   "uninformed": "You have no report about which trail is passable."
+  },
+  "story_key": "trail"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "trail-9of10-A-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A hiker who is right 9 times out of 10 says the river trail is passable.",
+  "report_accuracy": "9/10",
+  "report_favours": "A",
+  "scenario_id": "dev-trail-A",
+  "story": {
+   "options": {
+    "A": "the river trail",
+    "B": "the ridge trail"
+   },
+   "question": "Which trail is passable this morning: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} is passable.",
+   "source": "a hiker",
+   "uninformed": "You have no report about which trail is passable."
+  },
+  "story_key": "trail"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "trail-9of10-B-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A hiker who is right 9 times out of 10 says the ridge trail is passable.",
+  "report_accuracy": "9/10",
+  "report_favours": "B",
+  "scenario_id": "dev-trail-A",
+  "story": {
+   "options": {
+    "A": "the river trail",
+    "B": "the ridge trail"
+   },
+   "question": "Which trail is passable this morning: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} is passable.",
+   "source": "a hiker",
+   "uninformed": "You have no report about which trail is passable."
+  },
+  "story_key": "trail"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "trail-9of10-B-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A hiker who is right 9 times out of 10 says the ridge trail is passable.",
+  "report_accuracy": "9/10",
+  "report_favours": "B",
+  "scenario_id": "dev-trail-A",
+  "story": {
+   "options": {
+    "A": "the river trail",
+    "B": "the ridge trail"
+   },
+   "question": "Which trail is passable this morning: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} is passable.",
+   "source": "a hiker",
+   "uninformed": "You have no report about which trail is passable."
+  },
+  "story_key": "trail"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "well-none-ownA",
+  "informed": false,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "You have no report about which well has safe water.",
+  "report_accuracy": null,
+  "report_favours": null,
+  "scenario_id": "dev-well-A",
+  "story": {
+   "options": {
+    "A": "the north well",
+    "B": "the south well"
+   },
+   "question": "Which well has safe water today: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} has safe water.",
+   "source": "a water tester",
+   "uninformed": "You have no report about which well has safe water."
+  },
+  "story_key": "well"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "well-none-ownB",
+  "informed": false,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "You have no report about which well has safe water.",
+  "report_accuracy": null,
+  "report_favours": null,
+  "scenario_id": "dev-well-A",
+  "story": {
+   "options": {
+    "A": "the north well",
+    "B": "the south well"
+   },
+   "question": "Which well has safe water today: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} has safe water.",
+   "source": "a water tester",
+   "uninformed": "You have no report about which well has safe water."
+  },
+  "story_key": "well"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "well-3of5-A-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A water tester who is right 3 times out of 5 says the north well has safe water.",
+  "report_accuracy": "3/5",
+  "report_favours": "A",
+  "scenario_id": "dev-well-A",
+  "story": {
+   "options": {
+    "A": "the north well",
+    "B": "the south well"
+   },
+   "question": "Which well has safe water today: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} has safe water.",
+   "source": "a water tester",
+   "uninformed": "You have no report about which well has safe water."
+  },
+  "story_key": "well"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "well-3of5-A-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A water tester who is right 3 times out of 5 says the north well has safe water.",
+  "report_accuracy": "3/5",
+  "report_favours": "A",
+  "scenario_id": "dev-well-A",
+  "story": {
+   "options": {
+    "A": "the north well",
+    "B": "the south well"
+   },
+   "question": "Which well has safe water today: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} has safe water.",
+   "source": "a water tester",
+   "uninformed": "You have no report about which well has safe water."
+  },
+  "story_key": "well"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "well-3of5-B-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A water tester who is right 3 times out of 5 says the south well has safe water.",
+  "report_accuracy": "3/5",
+  "report_favours": "B",
+  "scenario_id": "dev-well-A",
+  "story": {
+   "options": {
+    "A": "the north well",
+    "B": "the south well"
+   },
+   "question": "Which well has safe water today: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} has safe water.",
+   "source": "a water tester",
+   "uninformed": "You have no report about which well has safe water."
+  },
+  "story_key": "well"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "well-3of5-B-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A water tester who is right 3 times out of 5 says the south well has safe water.",
+  "report_accuracy": "3/5",
+  "report_favours": "B",
+  "scenario_id": "dev-well-A",
+  "story": {
+   "options": {
+    "A": "the north well",
+    "B": "the south well"
+   },
+   "question": "Which well has safe water today: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} has safe water.",
+   "source": "a water tester",
+   "uninformed": "You have no report about which well has safe water."
+  },
+  "story_key": "well"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "well-3of4-A-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A water tester who is right 3 times out of 4 says the north well has safe water.",
+  "report_accuracy": "3/4",
+  "report_favours": "A",
+  "scenario_id": "dev-well-A",
+  "story": {
+   "options": {
+    "A": "the north well",
+    "B": "the south well"
+   },
+   "question": "Which well has safe water today: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} has safe water.",
+   "source": "a water tester",
+   "uninformed": "You have no report about which well has safe water."
+  },
+  "story_key": "well"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "well-3of4-A-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A water tester who is right 3 times out of 4 says the north well has safe water.",
+  "report_accuracy": "3/4",
+  "report_favours": "A",
+  "scenario_id": "dev-well-A",
+  "story": {
+   "options": {
+    "A": "the north well",
+    "B": "the south well"
+   },
+   "question": "Which well has safe water today: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} has safe water.",
+   "source": "a water tester",
+   "uninformed": "You have no report about which well has safe water."
+  },
+  "story_key": "well"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "well-3of4-B-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A water tester who is right 3 times out of 4 says the south well has safe water.",
+  "report_accuracy": "3/4",
+  "report_favours": "B",
+  "scenario_id": "dev-well-A",
+  "story": {
+   "options": {
+    "A": "the north well",
+    "B": "the south well"
+   },
+   "question": "Which well has safe water today: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} has safe water.",
+   "source": "a water tester",
+   "uninformed": "You have no report about which well has safe water."
+  },
+  "story_key": "well"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "well-3of4-B-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A water tester who is right 3 times out of 4 says the south well has safe water.",
+  "report_accuracy": "3/4",
+  "report_favours": "B",
+  "scenario_id": "dev-well-A",
+  "story": {
+   "options": {
+    "A": "the north well",
+    "B": "the south well"
+   },
+   "question": "Which well has safe water today: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} has safe water.",
+   "source": "a water tester",
+   "uninformed": "You have no report about which well has safe water."
+  },
+  "story_key": "well"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "well-9of10-A-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A water tester who is right 9 times out of 10 says the north well has safe water.",
+  "report_accuracy": "9/10",
+  "report_favours": "A",
+  "scenario_id": "dev-well-A",
+  "story": {
+   "options": {
+    "A": "the north well",
+    "B": "the south well"
+   },
+   "question": "Which well has safe water today: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} has safe water.",
+   "source": "a water tester",
+   "uninformed": "You have no report about which well has safe water."
+  },
+  "story_key": "well"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "well-9of10-A-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A water tester who is right 9 times out of 10 says the north well has safe water.",
+  "report_accuracy": "9/10",
+  "report_favours": "A",
+  "scenario_id": "dev-well-A",
+  "story": {
+   "options": {
+    "A": "the north well",
+    "B": "the south well"
+   },
+   "question": "Which well has safe water today: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} has safe water.",
+   "source": "a water tester",
+   "uninformed": "You have no report about which well has safe water."
+  },
+  "story_key": "well"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "well-9of10-B-ownA",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "A",
+  "position": null,
+  "private": "A water tester who is right 9 times out of 10 says the south well has safe water.",
+  "report_accuracy": "9/10",
+  "report_favours": "B",
+  "scenario_id": "dev-well-A",
+  "story": {
+   "options": {
+    "A": "the north well",
+    "B": "the south well"
+   },
+   "question": "Which well has safe water today: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} has safe water.",
+   "source": "a water tester",
+   "uninformed": "You have no report about which well has safe water."
+  },
+  "story_key": "well"
+ },
+ {
+  "allocation_sha256": null,
+  "contacts_A": 0,
+  "context_id": "well-9of10-B-ownB",
+  "informed": true,
+  "layouts": [
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "A",
+     "B": "B"
+    },
+    "listed_first_letter": "B"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "A"
+   },
+   {
+    "contact_order": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "letter_of_content": {
+     "A": "B",
+     "B": "A"
+    },
+    "listed_first_letter": "B"
+   }
+  ],
+  "live": false,
+  "own_vote": "B",
+  "position": null,
+  "private": "A water tester who is right 9 times out of 10 says the south well has safe water.",
+  "report_accuracy": "9/10",
+  "report_favours": "B",
+  "scenario_id": "dev-well-A",
+  "story": {
+   "options": {
+    "A": "the north well",
+    "B": "the south well"
+   },
+   "question": "Which well has safe water today: {A} or {B}?",
+   "report": "{source} who is right {freq} says {option} has safe water.",
+   "source": "a water tester",
+   "uninformed": "You have no report about which well has safe water."
+  },
+  "story_key": "well"
+ }
+]

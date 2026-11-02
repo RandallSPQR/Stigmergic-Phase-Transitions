@@ -3,7 +3,7 @@
 **Question.** Agents see only their contacts' current votes. Do those votes change how memoryless LLM agents use
 dispersed private evidence? And does a temporary change to what agents see leave a lasting mark on the board?
 
-**Status (2026-11-02): S0 and S1 closed; S2 passed (D15–D19); S3 passes with W3, confirmed on a held-out set (D20–D21); S4 passes, D14 tripwire triggered (blocking by start mandatory, A16); next gate S5 awaits the owner.**
+**Status (2026-11-02): S0 and S1 closed; S2 passed (D15–D19); S3 passes with W3, confirmed on a held-out set (D20–D21); S4 passes, D14 tripwire triggered (blocking by start mandatory, A16); S5 (responsiveness, GPU) running.**
 - Not frozen. No paid collection. Nothing confirmatory.
 - Brief: https://claude.ai/artifact/Q36cWtMumtJPs3semD76ni (revision 3).
 - Missing Piece is the complementary study. Both share the pipeline and the coordination record below.
@@ -14,7 +14,7 @@ dispersed private evidence? And does a temporary change to what agents see leave
 |---|---|---|---|
 | Shared five-model pipeline (LOCKED) | RandallSPQR/SAE-Ethos-Calibration | `v1.2.0` | `5ca15f56a71f35d5818d0392f7f3b4acb2d85d1b` |
 | SPT release (harness + simulator source; S0 replay) | RandallSPQR/social-phase-transitions-public | `v1.0.1` | `c37a91d2d2561fdf78fc61af500ea000aac3ea2f` |
-| Shared coordination record | RandallSPQR/StPT-MP-Coordination | none | `f65fef77160d9684d7a084a028d35c9baa29a00f` |
+| Shared coordination record | RandallSPQR/StPT-MP-Coordination | none | `25a71acc04d5385462fd393790a2843d986d2dcf` |
 
 Models (pipeline v1.2.0):
 - Llama-3.1-8B-Instruct, Gemma-2-9B-IT, Gemma-3-27B-IT.
@@ -51,7 +51,8 @@ across the two; a TOST for each.
 | S2: evidence specifications | **passes** (28 specs before any model call; schema v1.0); conventions accepted as provisional (D15–D16); difficulty chosen by simulated power before live data: f 0.5, sources {3/4, 9/10}; S8 region adds {3/5, 3/4, 9/10} (D18; `gates/S2/difficulty/POWER_REPORT.md`) |
 | S3: comprehension (GPU) | **PASSES**: W3 valid for all five models in round 2 (A12) and on a held-out set (A14–A15); W3 is the single primary wording; variants W4–W6 valid per model only (D21); wording-fragility finding recorded (`gates/S3/S3_REPORT.md`) |
 | S4: noise (GPU) | **PASSES 2026-11-02**: within-start repeat SD 0 (all repeats bit-identical); between-start σ_b ≈ 0.05 nats (Gemma-2-9B 0); **tripwire triggered by Gemma-3-27B** (S_p 0.050, σ_b ≈ 0.24 nats near p = 0.5): blocking by start mandatory everywhere (A16) (`gates/S4/S4_REPORT.md`) |
-| S5–S10 | not started |
+| S5: responsiveness (GPU) | **running 2026-11-02** (`gates/S5/S5_PLAN.md`) |
+| S6–S10 | not started |
 
 ## Layout
 
