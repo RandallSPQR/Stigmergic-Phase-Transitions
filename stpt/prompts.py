@@ -274,3 +274,30 @@ def build_s4(contexts, wordings, d=4):
                             "messages": render(w, c["story"], c["private"], c["own_vote"], contacts, lay, "vote", live=c["live"],
                                                informed=c["informed"])})
     return out
+
+
+def render_solo(wording, story, report_texts, own_vote, layout, final_question):
+    """S6 solo pooled-evidence check: the W3-family board for ONE agent holding every distinct report of an allocation
+    (blind board). The single report line becomes a labelled list, one quoted report per line, in layout["report_order"]."""
+    t = TEMPLATES[wording]
+    L, c_of, first, second, q = _letters(story, layout)
+    texts = [report_texts[i] for i in layout["report_order"]]
+    lines = [t["intro"], "", t["question"] + q, "", t["options"], f"{first}: {story['options'][c_of[first]]}",
+             f"{second}: {story['options'][c_of[second]]}", "",
+             t["report"].rstrip().rstrip(":") + f"s ({len(texts)} reports, one per line):"] + [f"- \"{x}\"" for x in texts] + \
+            [t["own"] + L[own_vote], t["blind"], "", final_question]
+    return [{"role": "user", "content": "\n".join(lines)}]
+
+
+def build_s6(contexts, wordings, d=4):
+    """S6 probes (gates/S6/S6_PLAN.md) from compact contexts: each allocation's distinct reports, each own vote, four
+    layouts (letter mapping x option order, each with its own report order), the vote question."""
+    out = []
+    for w in wordings:
+        for c in contexts:
+            for j, lay in enumerate(c["layouts"]):
+                out.append({"prompt_id": f"{w}-{c['context_id']}-L{j}", "context_id": c["context_id"], "wording": w, "layout_index": j,
+                            "layout": lay, "own_vote": c["own_vote"], "truth": c["truth"], "kind": c["kind"],
+                            "scenario_id": c["scenario_id"], "allocation_sha256": c["allocation_sha256"],
+                            "messages": render_solo(w, c["story"], c["texts"], c["own_vote"], lay, QUESTIONS[w]["vote"])})
+    return out
