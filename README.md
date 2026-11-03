@@ -14,7 +14,7 @@ dispersed private evidence? And does a temporary change to what agents see leave
 |---|---|---|---|
 | Shared five-model pipeline (LOCKED) | RandallSPQR/SAE-Ethos-Calibration | `v1.2.0` | `5ca15f56a71f35d5818d0392f7f3b4acb2d85d1b` |
 | SPT release (harness + simulator source; S0 replay) | RandallSPQR/social-phase-transitions-public | `v1.0.1` | `c37a91d2d2561fdf78fc61af500ea000aac3ea2f` |
-| Shared coordination record | RandallSPQR/StPT-MP-Coordination | none | `8dc2aaf5ebf2be290f77b2f9e5777c5978bed063` |
+| Shared coordination record | RandallSPQR/StPT-MP-Coordination | none | `4a0f14346a7af0d39e3f67e8da3b7f0f5d0c28cb` |
 
 Models (pipeline v1.2.0):
 - Llama-3.1-8B-Instruct, Gemma-2-9B-IT, Gemma-3-27B-IT.
