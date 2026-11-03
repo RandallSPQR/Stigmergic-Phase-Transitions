@@ -10,8 +10,10 @@ Outcomes per (model m, cluster j), from the run records (rows as written by gate
 Pooled estimand (D2, D24): theta = mean over the four confirmatory models of each model's mean effect; with shared
 clusters this is the mean over clusters of c_j = mean_m (effect_mj).
 Primary model, conditional on the story bank (D29): c_j = theta + u_block(j) + e_j, u ~ N(0, s_b^2) (server-start
-block, mandatory under A16), REML; t reference with containment df = (number of start blocks - 1).
-Generalisation to new stories (D29): c_j = theta + u_block + v_story + e_j, REML; df = min(blocks, stories) - 1.
+block, mandatory under A16), REML; t reference with Satterthwaite df (as lmerTest; a variance component at its boundary
+is held fixed). The first validation run used containment df (blocks - 1) and failed criterion B1 by being
+conservative; the switch to Satterthwaite was made on synthetic data only, before any confirmatory data.
+Generalisation to new stories (D29): c_j = theta + u_block + v_story + e_j, REML; Satterthwaite df.
 Tests per contrast: superiority, two-sided, Holm across the two contrasts at family alpha 0.05; equivalence, TOST at
 +/-0.03 with alpha 0.05 (90% interval inside the bound). Decision: effect / small effect within bound / equivalence /
 inconclusive.
@@ -131,16 +133,56 @@ def reml(y, groups):
     V = V_of(lp); Vi = np.linalg.inv(V)
     XtViX = (X.T @ Vi @ X).item()
     theta = (X.T @ Vi @ y).item() / XtViX
-    return {"theta": theta, "se": math.sqrt(1.0 / XtViX), "var_resid": math.exp(lp[0]),
-            "var_groups": [math.exp(l) for l in lp[1:]]}
+    out = {"theta": theta, "se": math.sqrt(1.0 / XtViX), "var_resid": math.exp(lp[0]),
+           "var_groups": [math.exp(l) for l in lp[1:]]}
+    out["df_satterthwaite"] = _satterthwaite(y, Zs, [math.exp(l) for l in lp])
+    return out
+
+
+def _satterthwaite(y, Zs, var):
+    """Satterthwaite df for the intercept (as lmerTest): df = 2 Var(theta)^2 / (g' A g), with g the gradient of
+    Var(theta) = (1' V^-1 1)^-1 in the variance parameters and A the inverse of the REML observed information in those
+    parameters. A variance component at its boundary (< 1e-8 of the total) is held fixed (dropped from g and A)."""
+    n = len(y); one = np.ones(n)
+    tot = sum(var)
+    free = [k for k, v in enumerate(var) if k == 0 or v > 1e-8 * tot]
+    mats = [np.eye(n)] + [Z @ Z.T for Z in Zs]
+
+    def V_of(v):
+        return sum(vk * Mk for vk, Mk in zip(v, mats))
+
+    def var_theta(v):
+        Vi = np.linalg.inv(V_of(v)); return 1.0 / float(one @ Vi @ one)
+
+    def reml_nll(v):
+        V = V_of(v); Vi = np.linalg.inv(V); s, logdet = np.linalg.slogdet(V)
+        a = float(one @ Vi @ one); beta = float(one @ Vi @ y) / a; r = y - beta
+        return 0.5 * (logdet + math.log(a) + float(r @ Vi @ r))
+
+    h = [max(1e-4 * var[k], 1e-12) for k in range(len(var))]
+    g = np.zeros(len(free)); H = np.zeros((len(free), len(free)))
+    for a_, k in enumerate(free):
+        vp = list(var); vm = list(var); vp[k] += h[k]; vm[k] -= h[k]
+        g[a_] = (var_theta(vp) - var_theta(vm)) / (2 * h[k])
+        for b_, l in enumerate(free):
+            vpp = list(var); vpm = list(var); vmp = list(var); vmm = list(var)
+            vpp[k] += h[k]; vpp[l] += h[l]; vpm[k] += h[k]; vpm[l] -= h[l]
+            vmp[k] -= h[k]; vmp[l] += h[l]; vmm[k] -= h[k]; vmm[l] -= h[l]
+            H[a_, b_] = (reml_nll(vpp) - reml_nll(vpm) - reml_nll(vmp) + reml_nll(vmm)) / (4 * h[k] * h[l])
+    try:
+        A = np.linalg.inv(H)
+    except np.linalg.LinAlgError:
+        return float(n - 1)
+    den = float(g @ A @ g)
+    df = 2 * var_theta(var) ** 2 / den if den > 0 else float(n - 1)
+    return float(min(max(df, 1.0), n - 1))
 
 
 def infer(y, blocks, stories=None):
     """Conditional (block RE) or generalisation (block + story RE) inference for one contrast."""
     groups = [blocks] if stories is None else [blocks, stories]
     fit = reml(y, groups)
-    nb = len(set(np.asarray(blocks).tolist()))
-    df = nb - 1 if stories is None else min(nb, len(set(np.asarray(stories).tolist()))) - 1
+    df = fit["df_satterthwaite"]       # Satterthwaite (replaces containment df after the first validation run; S10)
     t = fit["theta"] / fit["se"]
     p = 2 * stats.t.sf(abs(t), df)
     tq = stats.t.ppf(1 - TOST_ALPHA, df)
