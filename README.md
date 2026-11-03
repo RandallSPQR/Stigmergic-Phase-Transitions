@@ -3,7 +3,7 @@
 **Question.** Agents see only their contacts' current votes. Do those votes change how memoryless LLM agents use
 dispersed private evidence? And does a temporary change to what agents see leave a lasting mark on the board?
 
-**Status (2026-11-02): S0 and S1 closed; S2 passed (D15–D19); S3 passes with W3, confirmed on a held-out set (D20–D21); S4 passes, D14 tripwire triggered (blocking by start mandatory, A16); S5 passes (all models monotone in strength and direction; wide spread in responsiveness); S6 fails on Llama-3.1-8B, which leaves the pooled confirmatory tests (D24; four-model confirmatory set); initial-vote rule decided (D25); S7 passes (branch isolation exact on CPU and on all five models); pulse settings decided (D26); S8 passes (execution, exposure 0.958, manipulation check 0.155 [0.135, 0.175]; contrast estimates sealed); S9 done (61 clusters; window outcome, D31); S10 freeze commit made (design hashed in `osf/FREEZE_MANIFEST.json`).**
+**Status (2026-11-03): S0 and S1 closed; S2 passed (D15–D19); S3 passes with W3, confirmed on a held-out set (D20–D21); S4 passes, D14 tripwire triggered (blocking by start mandatory, A16); S5 passes (all models monotone in strength and direction; wide spread in responsiveness); S6 fails on Llama-3.1-8B, which leaves the pooled confirmatory tests (D24; four-model confirmatory set); initial-vote rule decided (D25); S7 passes (branch isolation exact on CPU and on all five models); pulse settings decided (D26); S8 passes (execution, exposure 0.958, manipulation check 0.155 [0.135, 0.175]; contrast estimates sealed); S9 done (61 clusters; window outcome, D31); S10 passes: design frozen (commit `17063f5`, `osf/FREEZE_MANIFEST.json`), sealed files opened after the freeze (logged), pre-registration finalised and re-verified (commit `cb10726`, tag `stpt-prereg-v1-final`), registered on OSF (DOI 10.17605/OSF.IO/SM8XR) and archived on Zenodo (DOI 10.5281/zenodo.23924793) (D47). The confirmatory run has not started; it needs the owner's explicit OK.**
 - Not frozen. No paid collection. Nothing confirmatory.
 - Brief: https://claude.ai/artifact/Q36cWtMumtJPs3semD76ni (revision 3).
 - Missing Piece is the complementary study. Both share the pipeline and the coordination record below.
@@ -56,7 +56,7 @@ across the two; a TOST for each.
 | S7: branch isolation | **PASSES 2026-11-02**: main trajectories byte-identical with and without probes and pulse branches, on CPU (negative control detected) and on all five models in one start each (`gates/S7/S7_REPORT.md`) |
 | S8: pilot (GPU) | **PASSES 2026-11-03**: rules 1–3 met; horizon to S9 (D28); confirmatory-contrast estimates sealed (D27; `gates/S8/S8_REPORT.md`) |
 | S9: power simulation (CPU) | **done 2026-11-03**: horizon 30 sweeps stands; Strong at ρ = 1 = 61 clusters (final sweep; $77 core / $144 all arms) or 48 (window 25–30; $61 / $113); 3 validation flags to the owner (`gates/S9/S9_REPORT.md`) |
-| S10 | not started |
+| S10: freeze and pre-registration | **passes 2026-11-03** (D47): freeze commit `17063f5`; final pre-registration `cb10726` (tag `stpt-prereg-v1-final`; freeze re-verification PASS, `osf/FREEZE_VERIFICATION.json`); OSF https://osf.io/sm8xr (DOI 10.17605/OSF.IO/SM8XR); Zenodo DOI 10.5281/zenodo.23924793 |
 
 ## Layout
 

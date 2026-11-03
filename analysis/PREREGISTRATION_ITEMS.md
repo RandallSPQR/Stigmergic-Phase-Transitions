@@ -2,6 +2,23 @@
 
 A running checklist. S10 does not freeze until each item is in the pre-registration text.
 
+**Status (2026-11-03): complete.** Every item below is in the registered pre-registration: `osf/PREREGISTRATION.md` at
+commit `cb10726e3d359d8094fbd083f336453d6af9280d` (tag `stpt-prereg-v1-final`), posted to OSF as
+https://osf.io/sm8xr (DOI 10.17605/OSF.IO/SM8XR) and archived on Zenodo (DOI 10.5281/zenodo.23924793). Coordination
+record: D47, A35.
+
+| item | where in the registered text |
+|---|---|
+| 1. Sealed pilot estimates, sha256, openings table | §9 (hash; estimates decoded from the sealed file after the freeze, D45; openings table quoted, empty at the freeze commit `17063f58`); §12 timeline |
+| 2. Primary outcome window | §5: mean over sweeps 25–30 inclusive (D31) |
+| 3. Operational horizon | §4: 30 sweeps |
+| 4. Tier and cluster count | §7: Strong at ρ = 1, **61 clusters on the window outcome** (D31 kept 61 rather than 48, to protect generalisation) |
+| 5. Story random effect; conditional and generalisation inference | §5, §11 (B6) |
+| 6. Confirmatory seed rule and bank manifest hash | §3 |
+| 7. Decisions in force (D14/A16, D19–D21, D23–D26) | §2–§6 |
+
+The checklist below is kept as written before the freeze.
+
 1. **Sealed pilot estimates (owner, 2026-11-03; coordination D30).** State that the S8 pilot's point estimates of both
    confirmatory contrasts were sealed when computed and not seen before the freeze:
    - live − blind;
