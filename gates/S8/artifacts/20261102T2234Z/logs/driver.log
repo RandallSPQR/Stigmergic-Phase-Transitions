@@ -1,0 +1,38 @@
+=== 2026-11-02T22:34:30Z stack
+NVIDIA RTX PRO 6000 Blackwell Server Edition, 595.91.07, 97887 MiB
+3.11.13 vllm 0.19.1 torch 2.10.0+cu128 NVIDIA RTX PRO 6000 Blackwell Server Edition
+=== 2026-11-02T22:35:03Z payload
+payload verified 9edec3a6050e9ec4 ['board.py', 'prompts.py', 's8_core.py']
+=== 2026-11-02T22:35:03Z qwen3.5-27b: weights
+overlay         200G   22G  179G  11% /
+=== 2026-11-02T22:35:46Z qwen3.5-27b: cold start 1
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+qwen3.5-27b start 1 cluster 1 i S_a calls 8200 seconds 516.3
+qwen3.5-27b start 1 cluster 2 i S_a calls 8200 seconds 505.6
+qwen3.5-27b start 1 cluster 4 i S_b calls 8200 seconds 495.4
+qwen3.5-27b start 1 cluster 7 ii S_a calls 6000 seconds 368.7
+qwen3.5-27b start 1 probes identical True calls 30640
+=== 2026-11-02T23:12:15Z qwen3.5-27b: cold start 2
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+qwen3.5-27b start 2 cluster 3 i S_a calls 8200 seconds 503.7
+qwen3.5-27b start 2 cluster 5 i S_b calls 8200 seconds 506.1
+qwen3.5-27b start 2 cluster 6 i S_b calls 8200 seconds 508.9
+qwen3.5-27b start 2 cluster 8 ii S_b calls 6000 seconds 370.2
+qwen3.5-27b start 2 probes identical True calls 30640
+=== 2026-11-02T23:48:31Z gemma-2-9b-it: weights
+overlay         200G   74G  127G  37% /
+=== 2026-11-02T23:48:47Z gemma-2-9b-it: cold start 1
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+gemma-2-9b-it start 1 cluster 1 i S_a calls 8200 seconds 203.3
+gemma-2-9b-it start 1 cluster 2 i S_a calls 8200 seconds 197.5
+gemma-2-9b-it start 1 cluster 4 i S_b calls 8200 seconds 196.4
+gemma-2-9b-it start 1 cluster 7 ii S_a calls 6000 seconds 145.0
+gemma-2-9b-it start 1 probes identical True calls 30640
+=== 2026-11-03T00:04:49Z gemma-2-9b-it: cold start 2
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+gemma-2-9b-it start 2 cluster 3 i S_a calls 8200 seconds 194.1
+gemma-2-9b-it start 2 cluster 5 i S_b calls 8200 seconds 196.7
+gemma-2-9b-it start 2 cluster 6 i S_b calls 8200 seconds 195.3
+gemma-2-9b-it start 2 cluster 8 ii S_b calls 6000 seconds 144.0
+gemma-2-9b-it start 2 probes identical True calls 30640
+=== 2026-11-03T00:21:40Z done

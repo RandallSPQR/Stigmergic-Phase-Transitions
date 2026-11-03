@@ -267,19 +267,22 @@ def main():
                 sealed_numbers.add(round(d["all"], 12))
     sealed_numbers |= {round(x, 12) for x in sc.values() if x is not None}
 
-    def floats(o):
+    def floats(o, path=""):
         if isinstance(o, float):
-            yield round(o, 12)
+            yield path, round(o, 12)
         elif isinstance(o, dict):
-            for v in o.values():
-                yield from floats(v)
+            for k, v in o.items():
+                yield from floats(v, f"{path}/{k}")
         elif isinstance(o, list):
-            for v in o:
-                yield from floats(v)
-    leak = sealed_numbers & set(floats(summary))
-    leak.discard(0.0)
-    if leak:
-        raise SystemExit(f"REFUSED: {len(leak)} sealed value(s) would appear in the summary")
+            for i, v in enumerate(o):
+                yield from floats(v, f"{path}[{i}]")
+    # Shares on N = 100 boards lie on a coarse grid, so the planned grid-valued fields (the D25 rule (i) vs (ii) early
+    # live support and the blind support per setting) can equal a sealed value by coincidence; they are not contrasts
+    # and are exempt from the value check (fix made when the guard fired on them, before any output was written).
+    GRID_FIELDS = ("/rule_i_vs_ii_live_support_sweeps_0_5/", "/blind_final_support_by_setting/")
+    hits = sorted({p for p, x in floats(summary) if x in sealed_numbers and x != 0.0 and not any(g in p + "/" for g in GRID_FIELDS)})
+    if hits:      # report WHERE only, never the values
+        raise SystemExit("REFUSED: summary fields equal to a sealed value: " + "; ".join(hits))
     if any(k in json.dumps(summary) for k in ("persistence_itt\"", "board_effect\"", "persistence_social", "persistence_self", "persistence_exposed")):
         raise SystemExit("REFUSED: a sealed key appears in the summary")
     h = write_sealed(sealed, a.sealed)

@@ -1,0 +1,54 @@
+=== 2026-11-02T22:23:43Z stack
+NVIDIA RTX PRO 6000 Blackwell Server Edition, 595.91.07, 97887 MiB
+3.11.13 vllm 0.19.1 torch 2.10.0+cu128 NVIDIA RTX PRO 6000 Blackwell Server Edition
+=== 2026-11-02T22:24:19Z payload
+payload verified 9edec3a6050e9ec4 ['board.py', 'prompts.py', 's8_core.py']
+=== 2026-11-02T22:24:19Z gemma-3-27b-it: weights
+overlay         200G   22G  179G  11% /
+=== 2026-11-02T22:26:10Z gemma-3-27b-it: cold start 1
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+gemma-3-27b-it start 1 cluster 1 i S_a calls 8200 seconds 464.3
+gemma-3-27b-it start 1 cluster 2 i S_a calls 8200 seconds 448.4
+gemma-3-27b-it start 1 cluster 4 i S_b calls 8200 seconds 452.3
+gemma-3-27b-it start 1 cluster 7 ii S_a calls 6000 seconds 337.3
+gemma-3-27b-it start 1 probes identical True calls 30640
+=== 2026-11-02T22:57:11Z gemma-3-27b-it: cold start 2
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+gemma-3-27b-it start 2 cluster 3 i S_a calls 8200 seconds 452.7
+gemma-3-27b-it start 2 cluster 5 i S_b calls 8200 seconds 449.1
+gemma-3-27b-it start 2 cluster 6 i S_b calls 8200 seconds 449.5
+gemma-3-27b-it start 2 cluster 8 ii S_b calls 6000 seconds 339.1
+gemma-3-27b-it start 2 probes identical True calls 30640
+=== 2026-11-02T23:27:54Z qwen3.5-9b: weights
+overlay         200G   73G  128G  37% /
+=== 2026-11-02T23:28:33Z qwen3.5-9b: cold start 1
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+qwen3.5-9b start 1 cluster 1 i S_a calls 8200 seconds 232.9
+qwen3.5-9b start 1 cluster 2 i S_a calls 8200 seconds 231.0
+qwen3.5-9b start 1 cluster 4 i S_b calls 8200 seconds 233.8
+qwen3.5-9b start 1 cluster 7 ii S_a calls 6000 seconds 170.5
+qwen3.5-9b start 1 probes identical True calls 30640
+=== 2026-11-02T23:46:43Z qwen3.5-9b: cold start 2
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+qwen3.5-9b start 2 cluster 3 i S_a calls 8200 seconds 237.9
+qwen3.5-9b start 2 cluster 5 i S_b calls 8200 seconds 238.1
+qwen3.5-9b start 2 cluster 6 i S_b calls 8200 seconds 245.1
+qwen3.5-9b start 2 cluster 8 ii S_b calls 6000 seconds 182.8
+qwen3.5-9b start 2 probes identical True calls 30640
+=== 2026-11-03T00:05:59Z llama-3.1-8b-it: weights
+overlay         200G   91G  110G  46% /
+=== 2026-11-03T00:06:33Z llama-3.1-8b-it: cold start 1
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+llama-3.1-8b-it start 1 cluster 1 i S_a calls 8200 seconds 167.4
+llama-3.1-8b-it start 1 cluster 2 i S_a calls 8200 seconds 161.5
+llama-3.1-8b-it start 1 cluster 4 i S_b calls 8200 seconds 162.2
+llama-3.1-8b-it start 1 cluster 7 ii S_a calls 6000 seconds 116.6
+llama-3.1-8b-it start 1 probes identical True calls 30640
+=== 2026-11-03T00:20:08Z llama-3.1-8b-it: cold start 2
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+llama-3.1-8b-it start 2 cluster 3 i S_a calls 8200 seconds 157.0
+llama-3.1-8b-it start 2 cluster 5 i S_b calls 8200 seconds 157.4
+llama-3.1-8b-it start 2 cluster 6 i S_b calls 8200 seconds 159.2
+llama-3.1-8b-it start 2 cluster 8 ii S_b calls 6000 seconds 117.1
+llama-3.1-8b-it start 2 probes identical True calls 30640
+=== 2026-11-03T00:32:27Z done

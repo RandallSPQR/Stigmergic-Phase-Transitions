@@ -1,0 +1,776 @@
+{
+ "plan": "gates/S8/S8_PLAN.md (D27)",
+ "models": {
+  "gemma-2-9b-it": {
+   "clusters": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "execution": {
+    "rows": 57600,
+    "missing": 0,
+    "missing_share": 0.0,
+    "letter_A_as_A_share_main": 0.5
+   },
+   "exposure_itt": {
+    "mean": 0.9583333333333335,
+    "n_pulses": 12
+   },
+   "immediate_response_by_cluster": {
+    "1": 0.19533333333333333,
+    "2": 0.08966666666666669,
+    "3": 0.08149999999999999,
+    "4": 0.16983333333333334,
+    "5": 0.07116666666666667,
+    "6": 0.09616666666666664
+   },
+   "immediate_response_mean": 0.11727777777777777,
+   "variance_components": {
+    "board_effect_between_cluster": {
+     "s2": 0.011116666666666665,
+     "sd": 0.10543560435956473,
+     "df": 4,
+     "s2_q80": 0.02696949130612156,
+     "sd_q80": 0.16422390601286269
+    },
+    "persistence_itt_between_cluster": {
+     "s2": 0.0022612983333333355,
+     "sd": 0.04755311065885528,
+     "df": 4,
+     "s2_q80": 0.005486002915266618,
+     "sd_q80": 0.0740675564283487
+    },
+    "persistence_within_cluster_between_branch_s2": 0.007321020000000002,
+    "assumption": "between-cluster variance pooled across the two evidence settings, each centred on its own mean (D27)"
+   },
+   "blind_final_support_by_setting": {
+    "S_a": 0.6066666666666666,
+    "S_b": 0.5399999999999999
+   },
+   "settling_sweep": {
+    "live": 30,
+    "blind": 22
+   },
+   "rule_i_vs_ii_live_support_sweeps_0_5": {
+    "rule_i": [
+     0.58,
+     0.605,
+     0.645,
+     0.645,
+     0.6566666666666666,
+     0.66
+    ],
+    "rule_ii": [
+     0.51,
+     0.55,
+     0.635,
+     0.63,
+     0.6100000000000001,
+     0.5549999999999999
+    ],
+    "difference": [
+     0.06999999999999995,
+     0.05499999999999994,
+     0.010000000000000009,
+     0.015000000000000013,
+     0.04666666666666652,
+     0.1050000000000001
+    ],
+    "n_clusters": [
+     6,
+     2
+    ]
+   },
+   "live_kernel_at_T": {
+    "a_u": 0.19569364020704497,
+    "c_u": 1.056572720667081,
+    "a_i": 0.8332489005058706,
+    "b_i": 0.3812976858171579,
+    "c_i": 0.5634108510419634,
+    "n_uninformed": 11913,
+    "n_informed": 12087
+   },
+   "cost": [
+    {
+     "cluster": 1,
+     "seconds": 203.3,
+     "calls": 8200
+    },
+    {
+     "cluster": 2,
+     "seconds": 197.5,
+     "calls": 8200
+    },
+    {
+     "cluster": 3,
+     "seconds": 194.0,
+     "calls": 8200
+    },
+    {
+     "cluster": 4,
+     "seconds": 196.3,
+     "calls": 8200
+    },
+    {
+     "cluster": 5,
+     "seconds": 196.6,
+     "calls": 8200
+    },
+    {
+     "cluster": 6,
+     "seconds": 195.2,
+     "calls": 8200
+    },
+    {
+     "cluster": 7,
+     "seconds": 144.9,
+     "calls": 6000
+    },
+    {
+     "cluster": 8,
+     "seconds": 143.9,
+     "calls": 6000
+    }
+   ],
+   "within_start_probes_identical": {
+    "1": true,
+    "2": true
+   },
+   "between_start_shift": {
+    "rms_logit_diff_nats": 0.0,
+    "S_p_at_T": 0.0
+   }
+  },
+  "gemma-3-27b-it": {
+   "clusters": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "execution": {
+    "rows": 57600,
+    "missing": 0,
+    "missing_share": 0.0,
+    "letter_A_as_A_share_main": 0.5
+   },
+   "exposure_itt": {
+    "mean": 0.9583333333333335,
+    "n_pulses": 12
+   },
+   "immediate_response_by_cluster": {
+    "1": 0.21350000000000002,
+    "2": 0.118,
+    "3": 0.1923333333333333,
+    "4": 0.14816666666666664,
+    "5": 0.1415,
+    "6": 0.19766666666666666
+   },
+   "immediate_response_mean": 0.16852777777777775,
+   "variance_components": {
+    "board_effect_between_cluster": {
+     "s2": 0.00023333333333333317,
+     "sd": 0.015275252316519461,
+     "df": 4,
+     "s2_q80": 0.000566076279288908,
+     "sd_q80": 0.02379235758156194
+    },
+    "persistence_itt_between_cluster": {
+     "s2": 0.003181173333333334,
+     "sd": 0.05640189122124659,
+     "df": 4,
+     "s2_q80": 0.0077176575613132625,
+     "sd_q80": 0.08785019955192624
+    },
+    "persistence_within_cluster_between_branch_s2": 0.01226952,
+    "assumption": "between-cluster variance pooled across the two evidence settings, each centred on its own mean (D27)"
+   },
+   "blind_final_support_by_setting": {
+    "S_a": 0.61,
+    "S_b": 0.52
+   },
+   "settling_sweep": {
+    "live": 30,
+    "blind": 30
+   },
+   "rule_i_vs_ii_live_support_sweeps_0_5": {
+    "rule_i": [
+     0.5616666666666666,
+     0.5683333333333334,
+     0.5916666666666667,
+     0.5816666666666667,
+     0.61,
+     0.5933333333333333
+    ],
+    "rule_ii": [
+     0.51,
+     0.5549999999999999,
+     0.63,
+     0.72,
+     0.74,
+     0.705
+    ],
+    "difference": [
+     0.05166666666666664,
+     0.01333333333333342,
+     -0.03833333333333333,
+     -0.1383333333333333,
+     -0.13,
+     -0.11166666666666669
+    ],
+    "n_clusters": [
+     6,
+     2
+    ]
+   },
+   "live_kernel_at_T": {
+    "a_u": 0.6740583258508329,
+    "c_u": 0.7717324883549147,
+    "a_i": 0.5943404797383651,
+    "b_i": 0.5678090238917696,
+    "c_i": 0.4261427904781532,
+    "n_uninformed": 11913,
+    "n_informed": 12087
+   },
+   "cost": [
+    {
+     "cluster": 1,
+     "seconds": 464.2,
+     "calls": 8200
+    },
+    {
+     "cluster": 2,
+     "seconds": 448.3,
+     "calls": 8200
+    },
+    {
+     "cluster": 3,
+     "seconds": 452.6,
+     "calls": 8200
+    },
+    {
+     "cluster": 4,
+     "seconds": 452.2,
+     "calls": 8200
+    },
+    {
+     "cluster": 5,
+     "seconds": 449.0,
+     "calls": 8200
+    },
+    {
+     "cluster": 6,
+     "seconds": 449.4,
+     "calls": 8200
+    },
+    {
+     "cluster": 7,
+     "seconds": 337.3,
+     "calls": 6000
+    },
+    {
+     "cluster": 8,
+     "seconds": 339.1,
+     "calls": 6000
+    }
+   ],
+   "within_start_probes_identical": {
+    "1": true,
+    "2": true
+   },
+   "between_start_shift": {
+    "rms_logit_diff_nats": 0.24843250557256488,
+    "S_p_at_T": 0.005971143228833554
+   }
+  },
+  "llama-3.1-8b-it": {
+   "clusters": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "execution": {
+    "rows": 57600,
+    "missing": 0,
+    "missing_share": 0.0,
+    "letter_A_as_A_share_main": 0.5
+   },
+   "exposure_itt": {
+    "mean": 0.9583333333333335,
+    "n_pulses": 12
+   },
+   "immediate_response_by_cluster": {
+    "1": 0.015333333333333338,
+    "2": -0.0031666666666666683,
+    "3": -0.050333333333333334,
+    "4": -0.008,
+    "5": -0.001166666666666667,
+    "6": 0.034833333333333334
+   },
+   "immediate_response_mean": -0.002083333333333334,
+   "variance_components": {
+    "board_effect_between_cluster": {
+     "s2": 0.006549999999999998,
+     "sd": 0.08093207028119322,
+     "df": 4,
+     "s2_q80": 0.015890569840038636,
+     "sd_q80": 0.1260578035666124
+    },
+    "persistence_itt_between_cluster": {
+     "s2": 0.0003531733333333335,
+     "sd": 0.018792906463166722,
+     "df": 4,
+     "s2_q80": 0.0008568130563316921,
+     "sd_q80": 0.029271369225434128
+    },
+    "persistence_within_cluster_between_branch_s2": 0.000481476666666667,
+    "assumption": "between-cluster variance pooled across the two evidence settings, each centred on its own mean (D27)"
+   },
+   "blind_final_support_by_setting": {
+    "S_a": 0.63,
+    "S_b": 0.5133333333333333
+   },
+   "settling_sweep": {
+    "live": 30,
+    "blind": 30
+   },
+   "rule_i_vs_ii_live_support_sweeps_0_5": {
+    "rule_i": [
+     0.5416666666666666,
+     0.5266666666666667,
+     0.5533333333333333,
+     0.52,
+     0.5266666666666667,
+     0.5416666666666666
+    ],
+    "rule_ii": [
+     0.51,
+     0.515,
+     0.54,
+     0.575,
+     0.55,
+     0.475
+    ],
+    "difference": [
+     0.03166666666666662,
+     0.011666666666666714,
+     0.013333333333333308,
+     -0.05499999999999994,
+     -0.023333333333333317,
+     0.06666666666666665
+    ],
+    "n_clusters": [
+     6,
+     2
+    ]
+   },
+   "live_kernel_at_T": {
+    "a_u": 0.6924476589834605,
+    "c_u": 0.2131126506325097,
+    "a_i": 0.4501582022698973,
+    "b_i": 0.2771641882745928,
+    "c_i": 0.09766225807697874,
+    "n_uninformed": 11913,
+    "n_informed": 12087
+   },
+   "cost": [
+    {
+     "cluster": 1,
+     "seconds": 167.3,
+     "calls": 8200
+    },
+    {
+     "cluster": 2,
+     "seconds": 161.5,
+     "calls": 8200
+    },
+    {
+     "cluster": 3,
+     "seconds": 157.0,
+     "calls": 8200
+    },
+    {
+     "cluster": 4,
+     "seconds": 162.1,
+     "calls": 8200
+    },
+    {
+     "cluster": 5,
+     "seconds": 157.3,
+     "calls": 8200
+    },
+    {
+     "cluster": 6,
+     "seconds": 159.1,
+     "calls": 8200
+    },
+    {
+     "cluster": 7,
+     "seconds": 116.5,
+     "calls": 6000
+    },
+    {
+     "cluster": 8,
+     "seconds": 117.1,
+     "calls": 6000
+    }
+   ],
+   "within_start_probes_identical": {
+    "1": true,
+    "2": true
+   },
+   "between_start_shift": {
+    "rms_logit_diff_nats": 0.083852556982483,
+    "S_p_at_T": 0.04151952687439238
+   }
+  },
+  "qwen3.5-27b": {
+   "clusters": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "execution": {
+    "rows": 57600,
+    "missing": 0,
+    "missing_share": 0.0,
+    "letter_A_as_A_share_main": 0.5
+   },
+   "exposure_itt": {
+    "mean": 0.9583333333333335,
+    "n_pulses": 12
+   },
+   "immediate_response_by_cluster": {
+    "1": 0.23249999999999998,
+    "2": 0.13266666666666665,
+    "3": 0.19716666666666666,
+    "4": 0.1723333333333333,
+    "5": 0.16183333333333333,
+    "6": 0.0945
+   },
+   "immediate_response_mean": 0.16516666666666668,
+   "variance_components": {
+    "board_effect_between_cluster": {
+     "s2": 0.0009333333333333327,
+     "sd": 0.030550504633038923,
+     "df": 4,
+     "s2_q80": 0.002264305117155632,
+     "sd_q80": 0.04758471516312388
+    },
+    "persistence_itt_between_cluster": {
+     "s2": 0.0005831633333333338,
+     "sd": 0.024148774986183747,
+     "df": 4,
+     "s2_q80": 0.0014147782712187903,
+     "sd_q80": 0.03761353840333013
+    },
+    "persistence_within_cluster_between_branch_s2": 0.005221356666666666,
+    "assumption": "between-cluster variance pooled across the two evidence settings, each centred on its own mean (D27)"
+   },
+   "blind_final_support_by_setting": {
+    "S_a": 0.6533333333333333,
+    "S_b": 0.5433333333333333
+   },
+   "settling_sweep": {
+    "live": null,
+    "blind": 30
+   },
+   "rule_i_vs_ii_live_support_sweeps_0_5": {
+    "rule_i": [
+     0.5666666666666665,
+     0.5950000000000001,
+     0.6016666666666667,
+     0.5916666666666667,
+     0.5983333333333333,
+     0.6166666666666667
+    ],
+    "rule_ii": [
+     0.51,
+     0.575,
+     0.655,
+     0.695,
+     0.72,
+     0.655
+    ],
+    "difference": [
+     0.05666666666666653,
+     0.02000000000000013,
+     -0.053333333333333344,
+     -0.10333333333333328,
+     -0.1216666666666667,
+     -0.03833333333333333
+    ],
+    "n_clusters": [
+     6,
+     2
+    ]
+   },
+   "live_kernel_at_T": {
+    "a_u": 0.25616069453811763,
+    "c_u": 0.7746757779121675,
+    "a_i": 0.7089701036319032,
+    "b_i": 0.33158050489309043,
+    "c_i": 0.4574157788900202,
+    "n_uninformed": 11913,
+    "n_informed": 12087
+   },
+   "cost": [
+    {
+     "cluster": 1,
+     "seconds": 516.2,
+     "calls": 8200
+    },
+    {
+     "cluster": 2,
+     "seconds": 505.5,
+     "calls": 8200
+    },
+    {
+     "cluster": 3,
+     "seconds": 503.6,
+     "calls": 8200
+    },
+    {
+     "cluster": 4,
+     "seconds": 495.3,
+     "calls": 8200
+    },
+    {
+     "cluster": 5,
+     "seconds": 506.0,
+     "calls": 8200
+    },
+    {
+     "cluster": 6,
+     "seconds": 508.8,
+     "calls": 8200
+    },
+    {
+     "cluster": 7,
+     "seconds": 368.7,
+     "calls": 6000
+    },
+    {
+     "cluster": 8,
+     "seconds": 370.1,
+     "calls": 6000
+    }
+   ],
+   "within_start_probes_identical": {
+    "1": true,
+    "2": true
+   },
+   "between_start_shift": {
+    "rms_logit_diff_nats": 0.06846536149766147,
+    "S_p_at_T": 0.005947958114417805
+   }
+  },
+  "qwen3.5-9b": {
+   "clusters": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "execution": {
+    "rows": 57600,
+    "missing": 0,
+    "missing_share": 0.0,
+    "letter_A_as_A_share_main": 0.5
+   },
+   "exposure_itt": {
+    "mean": 0.9583333333333335,
+    "n_pulses": 12
+   },
+   "immediate_response_by_cluster": {
+    "1": 0.24083333333333334,
+    "2": 0.16633333333333333,
+    "3": 0.17633333333333331,
+    "4": 0.14266666666666666,
+    "5": 0.14983333333333332,
+    "6": 0.13649999999999998
+   },
+   "immediate_response_mean": 0.16874999999999998,
+   "variance_components": {
+    "board_effect_between_cluster": {
+     "s2": 0.0018333333333333366,
+     "sd": 0.0428174419288838,
+     "df": 4,
+     "s2_q80": 0.004447742194412859,
+     "sd_q80": 0.06669139520517516
+    },
+    "persistence_itt_between_cluster": {
+     "s2": 0.002296541666666666,
+     "sd": 0.0479222460519816,
+     "df": 4,
+     "s2_q80": 0.005571504693851206,
+     "sd_q80": 0.07464251264427803
+    },
+    "persistence_within_cluster_between_branch_s2": 0.007323003333333332,
+    "assumption": "between-cluster variance pooled across the two evidence settings, each centred on its own mean (D27)"
+   },
+   "blind_final_support_by_setting": {
+    "S_a": 0.6266666666666667,
+    "S_b": 0.5433333333333333
+   },
+   "settling_sweep": {
+    "live": null,
+    "blind": 20
+   },
+   "rule_i_vs_ii_live_support_sweeps_0_5": {
+    "rule_i": [
+     0.5599999999999999,
+     0.5866666666666667,
+     0.6183333333333333,
+     0.5916666666666667,
+     0.6016666666666667,
+     0.6150000000000001
+    ],
+    "rule_ii": [
+     0.51,
+     0.59,
+     0.655,
+     0.685,
+     0.6950000000000001,
+     0.64
+    ],
+    "difference": [
+     0.04999999999999993,
+     -0.0033333333333332993,
+     -0.036666666666666736,
+     -0.09333333333333338,
+     -0.09333333333333338,
+     -0.02499999999999991
+    ],
+    "n_clusters": [
+     6,
+     2
+    ]
+   },
+   "live_kernel_at_T": {
+    "a_u": 0.5465509062463689,
+    "c_u": 0.7436489690208334,
+    "a_i": 0.7700616165462989,
+    "b_i": 0.360978672151225,
+    "c_i": 0.598920358277937,
+    "n_uninformed": 11913,
+    "n_informed": 12087
+   },
+   "cost": [
+    {
+     "cluster": 1,
+     "seconds": 232.8,
+     "calls": 8200
+    },
+    {
+     "cluster": 2,
+     "seconds": 230.9,
+     "calls": 8200
+    },
+    {
+     "cluster": 3,
+     "seconds": 237.8,
+     "calls": 8200
+    },
+    {
+     "cluster": 4,
+     "seconds": 233.7,
+     "calls": 8200
+    },
+    {
+     "cluster": 5,
+     "seconds": 238.0,
+     "calls": 8200
+    },
+    {
+     "cluster": 6,
+     "seconds": 245.0,
+     "calls": 8200
+    },
+    {
+     "cluster": 7,
+     "seconds": 170.5,
+     "calls": 6000
+    },
+    {
+     "cluster": 8,
+     "seconds": 182.8,
+     "calls": 6000
+    }
+   ],
+   "within_start_probes_identical": {
+    "1": true,
+    "2": true
+   },
+   "between_start_shift": {
+    "rms_logit_diff_nats": 0.0,
+    "S_p_at_T": 0.0
+   }
+  }
+ },
+ "pooled_confirmatory": {
+  "manipulation_check_immediate_response": {
+   "n": 24,
+   "mean": 0.15493055555555554,
+   "lo95": 0.13504583374483312,
+   "hi95": 0.17481527736627797
+  },
+  "manipulation_check_pass": true,
+  "live_slope_sweeps_20_30_descriptive": {
+   "n": 24,
+   "mean": 0.002977272727272719,
+   "lo95": 0.0007718656738609241,
+   "hi95": 0.005182679780684514,
+   "implied_change_over_10_sweeps": [
+    0.007718656738609241,
+    0.05182679780684514
+   ],
+   "role": "descriptive consistency check only (D28); the horizon is decided in S9 by simulation"
+  },
+  "variance_components": {
+   "board_effect_between_cluster": {
+    "s2": 0.003529166666666667,
+    "sd": 0.05940678973540539,
+    "df": 16,
+    "s2_q80": 0.005063313929035579,
+    "sd_q80": 0.07115696683414477
+   },
+   "persistence_itt_between_cluster": {
+    "s2": 0.002080544166666667,
+    "sd": 0.045612982435559585,
+    "df": 16,
+    "s2_q80": 0.0029849676294848803,
+    "sd_q80": 0.05463485727523117
+   },
+   "assumption": "centred per model x setting; pooled across settings and the four confirmatory models (D27)"
+  }
+ },
+ "sealed_file": {
+  "path": "gates/S8/sealed/s8_sealed.json.gz.b64",
+  "sha256": "e6b1bc7ac35d28591428efc8dbc9836f8b9d6ff98b2cb55fcf76fa72f16a95a8"
+ }
+}

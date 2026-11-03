@@ -249,7 +249,8 @@
    "max_cost_usd": 11.21,
    "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
    "cost_per_hr": 2.49,
-   "repo": "RandallSPQR/stpt-gate-artifacts"
+   "repo": "RandallSPQR/stpt-gate-artifacts",
+   "ended": "gone at 2026-11-03T00:33:30.008004+00:00 (self-stop or terminated)"
   },
   "nfr1mn4olf3pc7": {
    "name": "stpt-s8-driver-20261102T2234Z",
