@@ -14,8 +14,9 @@ A running checklist. S10 does not freeze until each item is in the pre-registrat
    - **At freeze, also state** whether the file was ever opened, quoting the openings table of `SEALED.md` (empty if
      never opened).
 2. **Primary outcome window:** final sweep or the mean over a final window (D28 item 3), as decided after S9.
-3. **Operational horizon** (D28; decided in S9).
-4. **Tier and cluster count** (D29: Strong at ρ = 1; the exact n from S9).
+3. **Operational horizon:** 30 sweeps (D28 rule met in S9; `gates/S9/S9_REPORT.md`).
+4. **Tier and cluster count** (D29: Strong at ρ = 1): 61 clusters on the final-sweep outcome, or 48 on the window
+   outcome (S9; owner's decision).
 5. **Story random effect;** conditional-on-bank and generalisation inference (D29).
 6. **Confirmatory seed rule** (`gates/S2/CONFIRMATORY_SEED_RULE.md`) and the bank manifest hash.
 7. **Decisions in force:**
