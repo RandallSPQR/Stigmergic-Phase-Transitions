@@ -14,7 +14,8 @@
    "tost_power_alpha05": 0.9892750452648309,
    "tost_power_alpha025": 0.9746760323983548,
    "tost_power_alpha05_t15": 0.9726025410709824,
-   "power_at_0.05_alpha025_t15": 0.9997900739543983
+   "power_at_0.05_alpha025_t15": 0.9997900739543983,
+   "tost_power_alpha05_t60": 0.9857960302470512
   },
   "board_final_sweep": {
    "se": 0.009116225851222194,
@@ -23,7 +24,8 @@
    "tost_power_alpha05": 0.9002325166480283,
    "tost_power_alpha025": 0.816768721101528,
    "tost_power_alpha05_t15": 0.8550741841907703,
-   "power_at_0.05_alpha025_t15": 0.9954663068349799
+   "power_at_0.05_alpha025_t15": 0.9954663068349799,
+   "tost_power_alpha05_t60": 0.8895632862432399
   },
   "persistence": {
    "se": 0.008022392211098997,
@@ -32,7 +34,8 @@
    "tost_power_alpha05": 0.9638004913678018,
    "tost_power_alpha025": 0.924853470812361,
    "tost_power_alpha05_t15": 0.9344359873153014,
-   "power_at_0.05_alpha025_t15": 0.9990199415631535
+   "power_at_0.05_alpha025_t15": 0.9990199415631535,
+   "tost_power_alpha05_t60": 0.9571266696529064
   }
  },
  "generalisation_story_sd": {

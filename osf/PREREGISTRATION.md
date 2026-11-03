@@ -108,13 +108,16 @@ Everything else is secondary (§6), reported with intervals and no power target.
   shared clusters this is the mean over clusters of c_j = mean_m(effect_mj).
 - **Model** (`gates/S10/analysis/confirmatory.py`): c_j = θ + u_block(j) + e_j, with a random intercept for the
   server-start block; REML. **Inference is conditional on the story bank** (the confirmatory tests).
-  - t reference with containment df = blocks − 1 = 15.
+  - t reference with **Satterthwaite** df (as lmerTest; a variance component at its boundary is held fixed). This is
+    about 60 when the start-block variance is negligible (as S4 measured) and about 15 at worst.
+  - The first validation run used containment df (blocks − 1 = 15) and failed its pre-stated type I error criterion
+    by being conservative. The switch was made on synthetic data only, before any confirmatory data (§11).
   - **Superiority:** two-sided, Holm across the two contrasts at family α = 0.05.
   - **Equivalence:** TOST at **±0.03**, α = 0.05 (the 90% interval inside the bound).
   - **Decision per contrast:** effect / small effect within the bound / equivalence (no effect beyond ±0.03) /
     inconclusive.
   - **Reference effect:** 0.05.
-- **Generalisation to new stories (D29):** the same model plus a story random intercept; df = min(blocks, stories) − 1.
+- **Generalisation to new stories (D29):** the same model plus a story random intercept, with Satterthwaite df.
   Reported beside the conditional result.
 - **Missing data:** missing calls are counted by condition and model. No cluster or run is excluded on any outcome. A
   cluster whose live/blind pairing or branch alignment fails the code's integrity checks is reported as a protocol
@@ -158,12 +161,13 @@ Everything else is secondary (§6), reported with intervals and no power target.
   ±0.03 on both contrasts.
 - **Sizing SDs** (D27; the larger of the simulated 80th-percentile SD and S8's conservative SD; `gates/S9/S9_REPORT.md`):
   window board effect 0.056, persistence 0.063.
-- **At 61 clusters** (`gates/S9/results/power_at_61.json`), with the containment df of 15:
+- **At 61 clusters** (`gates/S9/results/power_at_61.json`). TOST power is given at df 60 (negligible start-block
+  variance, as S4 measured) and at df 15 (the worst case):
 
-  | contrast | MDE (80% power) | TOST power at ±0.03 (α 0.05) | power at the 0.05 reference effect |
+  | contrast | MDE (80% power) | TOST power at ±0.03 (α 0.05), df 60 / df 15 | power at the 0.05 reference effect |
   |---|---|---|---|
-  | board effect (window) | 0.022 | 0.973 | > 0.999 |
-  | persistence | 0.025 | 0.934 | 0.999 |
+  | board effect (window) | 0.022 | 0.986 / 0.973 | > 0.999 |
+  | persistence | 0.025 | 0.957 / 0.934 | 0.999 |
 
   - Generalisation to new stories, TOST power for the board effect: 0.96 at story SD 0.02, 0.76 at 0.04.
   - The simulated cross-model correlation is about 0.30 (board) and 0.41 (persistence), so ρ = 1 is conservative.
@@ -176,7 +180,7 @@ Everything else is secondary (§6), reported with intervals and no power target.
   and the S4 start jitter, 5 runs per draw. Kernel uncertainty is propagated.
 - **The predictions:** the predictive distribution (mean; 5th, 50th and 95th percentiles) of both pooled estimands and
   of each model's estimates, plus per-cluster predictions.
-- **Sealed file:** `gates/S10/sealed/s10_predictions.json.gz.b64`, sha256 **[filled at the freeze commit]**. It was
+- **Sealed file:** `gates/S10/sealed/s10_predictions.json.gz.b64`, sha256 **`1a73a88d2a5efb4bb351b2078f59cb405b1719b7063518aeb17a5d13858b58c2`**. It was
   written once and not opened before the freeze.
 - **Calibration and discrepancy measures, reported after the run:**
   - whether each observed pooled estimate lies inside its 90% predictive interval;

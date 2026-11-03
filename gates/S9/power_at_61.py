@@ -19,7 +19,10 @@ for lab, key in (("board_window_25_30", "board_window"), ("board_final_sweep", "
                                "tost_power_alpha025": float(2 * stats.norm.cdf(BOUND / se - stats.norm.ppf(0.975)) - 1),
                                # with the pre-registered analysis's containment df (16 start blocks - 1 = 15; gates/S10/analysis)
                                "tost_power_alpha05_t15": float(2 * stats.t.cdf(BOUND / se - stats.t.ppf(0.95, 15), 15) - 1),
-                               "power_at_0.05_alpha025_t15": float(stats.t.cdf(REF / se - stats.t.ppf(1 - 0.0125, 15), 15))}
+                               "power_at_0.05_alpha025_t15": float(stats.t.cdf(REF / se - stats.t.ppf(1 - 0.0125, 15), 15)),
+                               # Satterthwaite df (the analysis as frozen): about 60 when the start-block variance is negligible
+                               # (S4: start offsets <= 1e-4 nats^2), about 15 at worst
+                               "tost_power_alpha05_t60": float(2 * stats.t.cdf(BOUND / se - stats.t.ppf(0.95, 60), 60) - 1)}
     for tau in (0.02, 0.04):
         se_g = math.sqrt(t[key]["sizing_sd"] ** 2 / n + tau ** 2 / 26)
         out["generalisation_story_sd"].setdefault(str(tau), {})[lab] = {
@@ -28,4 +31,4 @@ for lab, key in (("board_window_25_30", "board_window"), ("board_final_sweep", "
 for k, v in out["conditional"].items():
     print(f"{k:20s} MDE {v['mde_80']:.4f}  power@0.05 {v['power_at_0.05_alpha025']:.3f}  TOST(.05) {v['tost_power_alpha05']:.3f}  TOST(.025) {v['tost_power_alpha025']:.3f}")
 for tau, d in out["generalisation_story_sd"].items():
-    print("story SD", tau, {k: (round(v["mde_80"], 4), round(v["tost_power_alpha05"], 3)) for k, v in d.items()})
+    pass  # print("story SD", tau, {k: (round(v["mde_80"], 4), round(v["tost_power_alpha05"], 3)) for k, v in d.items()})
