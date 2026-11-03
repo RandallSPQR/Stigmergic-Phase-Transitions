@@ -1,0 +1,215 @@
+{
+ "coordination_files": {
+  "AMENDMENTS.md": {
+   "at_pinned_commit_matches": true,
+   "identical_at_current_main": true,
+   "pass": true
+  },
+  "DATA_SEPARATION.md": {
+   "at_pinned_commit_matches": true,
+   "identical_at_current_main": true,
+   "pass": true
+  },
+  "DECISIONS.md": {
+   "at_pinned_commit_matches": true,
+   "identical_at_current_main": true,
+   "pass": true
+  },
+  "PIPELINE.md": {
+   "at_pinned_commit_matches": true,
+   "identical_at_current_main": true,
+   "pass": true
+  },
+  "PROTOCOL_SPEC.md": {
+   "at_pinned_commit_matches": true,
+   "identical_at_current_main": true,
+   "pass": true
+  },
+  "SEALED.md": {
+   "append_only_openings_rows": true,
+   "appended_lines": [
+    "| 2026-11-03 06:22 | `gates/S10/sealed/s10_predictions.json.gz.b64` | owner (D45) | inclusion in the pre-registration at freeze (D45; after the freeze commit 17063f58c9fb6f9064477c555c5e42200e70115f) |",
+    "| 2026-11-03 06:22 | `gates/S8/sealed/s8_sealed.json.gz.b64` | owner (D45) | inclusion in the pre-registration at freeze (D45; after the freeze commit 17063f58c9fb6f9064477c555c5e42200e70115f) |"
+   ],
+   "at_pinned_commit_matches": true,
+   "frozen_text_is_prefix": true,
+   "identical_at_current_main": false,
+   "pass": true
+  },
+  "schema/evidence_schema_v1.0.json": {
+   "at_pinned_commit_matches": true,
+   "identical_at_current_main": true,
+   "pass": true
+  }
+ },
+ "coordination_record": {
+  "current_main": "7e1f6d36f078e7a60d1f7b09bdfee2d25f52ae7e",
+  "pinned_commit": "80e9992f43e50f08a85b2f3d218ff9b2ea9d8c41"
+ },
+ "design_files": {
+  "CLAUDE.md": {
+   "identical": true
+  },
+  "analysis/CONFIRMATORY_SET.md": {
+   "identical": true
+  },
+  "analysis/DECISION_NOISE_T.md": {
+   "identical": true
+  },
+  "analysis/INITIAL_VOTE_RULE.md": {
+   "identical": true
+  },
+  "analysis/PREREGISTERED_D21.md": {
+   "identical": true
+  },
+  "analysis/PREREGISTRATION_ITEMS.md": {
+   "identical": true
+  },
+  "analysis/PROMPT_SENSITIVITY.md": {
+   "identical": true
+  },
+  "analysis/PULSE_SETTINGS.md": {
+   "identical": true
+  },
+  "analysis/SECONDARY_INFORMED_SPLIT.md": {
+   "identical": true
+  },
+  "analysis/SENSITIVITY_WITHOUT_QWEN9B.md": {
+   "identical": true
+  },
+  "gates/S10/analysis/confirmatory.py": {
+   "identical": true
+  },
+  "gates/S10/analysis/reml_classical_check.py": {
+   "identical": true
+  },
+  "gates/S10/analysis/validate_confirmatory.py": {
+   "identical": true
+  },
+  "gates/S10/clusters/MANIFEST.json": {
+   "identical": true
+  },
+  "gates/S10/clusters/confirmatory_clusters.json": {
+   "identical": true
+  },
+  "gates/S10/draw_clusters.py": {
+   "identical": true
+  },
+  "gates/S10/predictions.py": {
+   "identical": true
+  },
+  "gates/S10/results/analysis_validation.json": {
+   "identical": true
+  },
+  "gates/S10/results/analysis_validation_run1_containment_df.log": {
+   "identical": true
+  },
+  "gates/S10/results/analysis_validation_run2_satterthwaite.log": {
+   "identical": true
+  },
+  "gates/S10/results/reml_classical_check.json": {
+   "identical": true
+  },
+  "gates/S10/s10_core.py": {
+   "identical": true
+  },
+  "gates/S2/CONFIRMATORY_SEED_RULE.md": {
+   "identical": true
+  },
+  "gates/S2/banks/MANIFEST.json": {
+   "identical": true
+  },
+  "gates/S2/lint_stories.py": {
+   "identical": true
+  },
+  "gates/S2/make_banks.py": {
+   "identical": true
+  },
+  "gates/S8/s8_core.py": {
+   "identical": true
+  },
+  "gates/S9/power_at_61.py": {
+   "identical": true
+  },
+  "gates/S9/results/kernels_s8.json": {
+   "identical": true
+  },
+  "gates/S9/results/power_at_61.json": {
+   "identical": true
+  },
+  "gates/S9/results/s9_tiers.json": {
+   "identical": true
+  },
+  "gates/S9/s9_kernels.py": {
+   "identical": true
+  },
+  "gates/S9/s9_run.py": {
+   "identical": true
+  },
+  "gates/S9/s9_sim.py": {
+   "identical": true
+  },
+  "osf/PREREGISTRATION.md": {
+   "frozen_version_matches_hash": true,
+   "parts_differing_outside_D45c": [],
+   "parts_filled_after_freeze": [
+    "12",
+    "8",
+    "9",
+    "status"
+   ],
+   "parts_required_identical": [
+    "1",
+    "10",
+    "11",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "preamble"
+   ],
+   "pass": true,
+   "unexpected_new_parts": []
+  },
+  "pins.yaml": {
+   "identical": true
+  },
+  "stpt/board.py": {
+   "identical": true
+  },
+  "stpt/evidence.py": {
+   "identical": true
+  },
+  "stpt/manifest.py": {
+   "identical": true
+  },
+  "stpt/prompts.py": {
+   "identical": true
+  },
+  "stpt/sim.py": {
+   "identical": true
+  }
+ },
+ "freeze_commit": "17063f58c9fb6f9064477c555c5e42200e70115f",
+ "pass": true,
+ "run_utc": "2026-11-03T15:01:58+00:00",
+ "sealed_files": {
+  "gates/S10/sealed/s10_predictions.json.gz.b64": {
+   "identical": true
+  },
+  "gates/S8/sealed/s8_sealed.json.gz.b64": {
+   "identical": true
+  }
+ },
+ "summary": {
+  "coordination_files": 7,
+  "coordination_files_pass": 7,
+  "design_files": 41,
+  "design_files_byte_identical": 40,
+  "design_files_checked_byte_identical": 40,
+  "preregistration_changes_confined_to_D45c": true,
+  "sealed_files_identical": 2
+ }
+}

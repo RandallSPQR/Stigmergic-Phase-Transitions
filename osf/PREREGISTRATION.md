@@ -1,8 +1,11 @@
 # Stigmergic Phase Transitions (StPT), core study: pre-registration
 
-**Status:** frozen at the StPT commit tagged `stpt-prereg-v1` (tag pushed by the owner). Posted to OSF before any
-confirmatory run. The OSF registration DOI and the Zenodo DOI of the frozen commit are recorded in the coordination
-record when issued.
+**Status:** the design was frozen in StPT commit `17063f58c9fb6f9064477c555c5e42200e70115f` (2026-11-03 06:21:58 UTC).
+That commit hashes every design file in `osf/FREEZE_MANIFEST.json` before any sealed file was opened. This final
+version adds only what D45 step (c) provides: the predictions (§8), the sealed pilot estimates (§9), the timeline and
+the freeze re-verification (§12), and this paragraph. It is the StPT commit tagged `stpt-prereg-v1` (tag pushed by the
+owner). It was posted to OSF before any confirmatory run. The OSF registration DOI and the Zenodo DOI of the tagged
+commit are recorded in the coordination record when issued.
 
 - **Repositories:** StPT `RandallSPQR/Stigmergic-Phase-Transitions`; coordination record `RandallSPQR/StPT-MP-Coordination`
   (StPT decisions D1–D31, D45, D46 and the shared ones; amendments A1–A29 and the shared ones; deviations DV1–DV2; sealed-file register `SEALED.md`. Missing Piece's entries, D32–D44 and A30–A34, concern that study: those marked "both" carry StPT's practices over to Missing Piece and keep StPT on pipeline v1.2.0 (D41), and none changes this design).
@@ -179,14 +182,38 @@ Everything else is secondary (§6), reported with intervals and no power target.
 - **No interim analysis and no early stopping.** All 61 clusters are run.
 - **Cost (accepted, D31):** about $77 core and $144 with all secondary arms. Spend is flagged to the owner at 80%.
 
-## 8. Predictions (sealed until posting; proposed to be unsealed into this registration)
+## 8. Predictions (sealed at S10; opened after the freeze for this registration, D45)
 - **Procedure** (`gates/S10/predictions.py`): kernels estimated from the S8 development readouts at each model's T (200
   cluster-bootstrap draws), simulated on the 61 confirmatory graphs and allocations with the D25 start, the D26 pulse
   and the S4 start jitter, 5 runs per draw. Kernel uncertainty is propagated.
-- **The predictions:** the predictive distribution (mean; 5th, 50th and 95th percentiles) of both pooled estimands and
-  of each model's estimates, plus per-cluster predictions.
-- **Sealed file:** `gates/S10/sealed/s10_predictions.json.gz.b64`, sha256 **`1a73a88d2a5efb4bb351b2078f59cb405b1719b7063518aeb17a5d13858b58c2`**. It was
-  written once and not opened before the freeze.
+- **Sealed file:** `gates/S10/sealed/s10_predictions.json.gz.b64`, sha256 **`1a73a88d2a5efb4bb351b2078f59cb405b1719b7063518aeb17a5d13858b58c2`**.
+  It was written once, hashed in the freeze commit, and opened after the freeze (§12). The values below were decoded
+  directly from it by `osf/sealed_tables.py`. That script refuses unless the file's sha256 matches the freeze manifest
+  and the coordination record's register.
+- **The predictions:** the predictive distribution of each estimand as the confirmatory analysis defines it (§5),
+  over the simulated studies. Both estimands are in support-share units (live − blind; pulsed − unpulsed). Llama-3.1-8B
+  is the secondary comparison agent (D24) and is not part of the pooled estimand.
+
+<!-- decoded from gates/S10/sealed/s10_predictions.json.gz.b64, sha256 1a73a88d2a5efb4bb351b2078f59cb405b1719b7063518aeb17a5d13858b58c2 (matches the freeze manifest) -->
+Simulated studies: 1000. Clusters: 61.
+
+| estimand | mean | 5th pct | median | 95th pct |
+|---|---|---|---|---|
+| **pooled, four confirmatory models:** board effect, sweeps 25–30 (live − blind) | +0.066 | +0.056 | +0.066 | +0.076 |
+| **pooled, four confirmatory models:** pulse persistence (ITT) | +0.065 | +0.055 | +0.065 | +0.076 |
+| Gemma-2-9B-IT: board effect, sweeps 25–30 (live − blind) | +0.071 | +0.052 | +0.071 | +0.092 |
+| Gemma-2-9B-IT: pulse persistence (ITT) | +0.059 | +0.044 | +0.059 | +0.075 |
+| Qwen3.5-9B: board effect, sweeps 25–30 (live − blind) | +0.071 | +0.054 | +0.071 | +0.088 |
+| Qwen3.5-9B: pulse persistence (ITT) | +0.070 | +0.055 | +0.069 | +0.084 |
+| Gemma-3-27B-IT: board effect, sweeps 25–30 (live − blind) | +0.075 | +0.059 | +0.075 | +0.090 |
+| Gemma-3-27B-IT: pulse persistence (ITT) | +0.074 | +0.059 | +0.073 | +0.089 |
+| Qwen3.5-27B: board effect, sweeps 25–30 (live − blind) | +0.046 | +0.032 | +0.046 | +0.059 |
+| Qwen3.5-27B: pulse persistence (ITT) | +0.058 | +0.046 | +0.059 | +0.071 |
+| Llama-3.1-8B (secondary, D24): board effect, sweeps 25–30 (live − blind) | -0.023 | -0.033 | -0.024 | -0.013 |
+| Llama-3.1-8B (secondary, D24): pulse persistence (ITT) | +0.016 | +0.006 | +0.016 | +0.025 |
+
+- **Per-cluster predictions** (mean and 5th/95th percentiles for each model, cluster and estimand) are in the sealed
+  file. They are used only for the calibration measures below.
 - **Calibration and discrepancy measures, reported after the run:**
   - whether each observed pooled estimate lies inside its 90% predictive interval;
   - the share of per-model estimates inside their 90% intervals;
@@ -198,14 +225,41 @@ Everything else is secondary (§6), reported with intervals and no power target.
 
 ## 9. Sealed pilot estimates (D30)
 - The S8 pilot's point estimates of both confirmatory contrasts were **sealed when computed and not seen** by anyone
-  before this freeze:
-  - live − blind;
-  - pulse persistence, with its self/social decomposition and ITT vs exposed.
-- The sealed file is `gates/S8/sealed/s8_sealed.json.gz.b64`, sha256
-  **`e6b1bc7ac35d28591428efc8dbc9836f8b9d6ff98b2cb55fcf76fa72f16a95a8`**.
-- The study was sized on variance components only (D27): S8's between-cluster SDs and S9's simulation.
-- **Openings of the sealed files (from `SEALED.md` at the freeze):** none. This table is copied from the coordination
-  record at the freeze commit.
+  before the freeze. The study was sized on variance components only (D27): S8's between-cluster SDs and S9's
+  simulation.
+- **Sealed file:** `gates/S8/sealed/s8_sealed.json.gz.b64`, sha256
+  **`e6b1bc7ac35d28591428efc8dbc9836f8b9d6ff98b2cb55fcf76fa72f16a95a8`**. It was hashed in the freeze commit and opened
+  after the freeze (§12). The values below were decoded directly from it by `osf/sealed_tables.py`, which checks the
+  hash first.
+- **What the pilot estimates are** (`gates/S8/analyse_s8.py`; plan `gates/S8/S8_PLAN.md`):
+  - development data from 8 pilot clusters per model: 6 under rule (i) and 2 under rule (ii), split across two
+    evidence settings (S_a, the confirmatory setting; S_b, a provisional one);
+  - the board effect here is live − blind at the final sweep (30), not the sweep 25–30 window used in the
+    confirmatory analysis (D31);
+  - persistence ITT is the mean over the two pulsed branches;
+  - "exposed" restricts persistence to recipients who updated during the pulse;
+  - the social and self parts come from the one self-reset branch per cluster: social is that branch's persistence,
+    and self is the pulsed branch's persistence minus social. They therefore do not sum to the ITT mean;
+  - n is the number of clusters. With n = 6 or 2, these are point estimates with wide uncertainty;
+  - pilot clusters are never reused, and these values are not pooled with confirmatory data (§10).
+
+<!-- decoded from gates/S8/sealed/s8_sealed.json.gz.b64, sha256 e6b1bc7ac35d28591428efc8dbc9836f8b9d6ff98b2cb55fcf76fa72f16a95a8 (matches the freeze manifest) -->
+| model | board effect, rule (i) | board effect, rule (ii) | persistence ITT | persistence, exposed | social part | self part |
+|---|---|---|---|---|---|---|
+| Gemma-2-9B-IT | +0.073 (n 6) | +0.040 (n 2) | +0.067 (n 6) | +0.069 (n 6) | -0.034 (n 6) | +0.086 (n 6) |
+| Qwen3.5-9B | +0.062 (n 6) | +0.060 (n 2) | +0.067 (n 6) | +0.070 (n 6) | -0.023 (n 6) | +0.085 (n 6) |
+| Gemma-3-27B-IT | +0.082 (n 6) | +0.095 (n 2) | +0.095 (n 6) | +0.097 (n 6) | -0.029 (n 6) | +0.140 (n 6) |
+| Qwen3.5-27B | +0.030 (n 6) | +0.060 (n 2) | +0.087 (n 6) | +0.090 (n 6) | -0.004 (n 6) | +0.069 (n 6) |
+| Llama-3.1-8B (secondary, D24) | -0.025 (n 6) | +0.095 (n 2) | +0.002 (n 6) | +0.003 (n 6) | -0.016 (n 6) | +0.018 (n 6) |
+| **mean of the four confirmatory models** | +0.062 | +0.064 | +0.079 | +0.082 | -0.022 | +0.095 |
+
+- **Openings of the sealed files** (the coordination record's `SEALED.md`). At the freeze commit the openings table was
+  empty (`osf/FREEZE_MANIFEST.json`: `openings_table_rows_at_freeze` 0). After the freeze, the table reads:
+
+  | date (UTC) | file | requested by | reason |
+  |---|---|---|---|
+  | 2026-11-03 06:22 | `gates/S10/sealed/s10_predictions.json.gz.b64` | owner (D45) | inclusion in the pre-registration at freeze (D45; after the freeze commit 17063f58c9fb6f9064477c555c5e42200e70115f) |
+  | 2026-11-03 06:22 | `gates/S8/sealed/s8_sealed.json.gz.b64` | owner (D45) | inclusion in the pre-registration at freeze (D45; after the freeze commit 17063f58c9fb6f9064477c555c5e42200e70115f) |
 
 ## 10. Deviations
 - Every post-registration change goes in the coordination record's `AMENDMENTS.md`, labelled prospective or
@@ -239,3 +293,31 @@ Synthetic data only, before any confirmatory data. Sources: `gates/S10/results/a
 - The first run used containment df (blocks − 1). It was conservative across the scenarios (B1 missed) and was
   replaced by Satterthwaite df before run 2. The remaining shortfall was kept by the owner (D46) as a known
   conservative property.
+## 12. Timeline and freeze re-verification
+**Timeline (UTC, 2026-11-03).**
+
+| time | event | record |
+|---|---|---|
+| 06:21:58 | Freeze commit `17063f58c9fb6f9064477c555c5e42200e70115f`. It hashes 41 design files, 7 coordination-record files (at coordination commit `80e9992f43e50f08a85b2f3d218ff9b2ea9d8c41`) and both sealed files. The openings table had 0 rows. | `osf/FREEZE_MANIFEST.json` |
+| 06:22 | Both sealed files opened by the opening script. Each opening was appended to `SEALED.md` before the file was decoded. | `SEALED.md` openings table (§9) |
+| 14:58:38 | The two opening rows committed to the coordination record, as written at 06:22. | coordination commit `7e1f6d36f078e7a60d1f7b09bdfee2d25f52ae7e` |
+| 14:59–15:01 | §8 and §9 values decoded directly from the sealed files by `osf/sealed_tables.py`, after the hash check (run three times; identical output). This re-reads files already opened; it is not a new opening. | this document |
+| 15:01:58 | Freeze re-verification (below). | `osf/FREEZE_VERIFICATION.json` |
+| at posting | Posted to OSF by the owner. The posting time is the OSF registration's own timestamp, recorded with its DOI in the coordination record. | OSF registration |
+
+**Freeze re-verification before posting** (`osf/verify_freeze.py`; result `osf/FREEZE_VERIFICATION.json`, run
+15:01:58 UTC):
+- **Design files:** 40 of the 40 design files other than this document are byte-identical to their
+  frozen sha256.
+- **This document** (`osf/PREREGISTRATION.md`) is the one design file that changes after the freeze, by D45 step (c).
+  Its frozen version (in the freeze commit) matches its frozen hash. Its current text differs from the frozen text only
+  in the status paragraph, §8, §9 and the new §12. The rest of the preamble, §1–§7, §10 and §11 are identical to the
+  frozen text: confirmed.
+- **Sealed files:** 2 of 2 byte-identical to their registered sha256.
+- **Coordination record:** 7 of 7 files pass. At the pinned commit `80e9992f43e50f08a85b2f3d218ff9b2ea9d8c41`, each file matches
+  its frozen hash. At the coordination record's main (`7e1f6d36f078e7a60d1f7b09bdfee2d25f52ae7e`), six files are still identical. `SEALED.md`
+  differs only by the two appended opening rows above: its frozen text is an exact prefix of the current text.
+- **Overall:** PASS.
+- No design file other than this document has changed between the freeze commit and this version.
+- Anyone can re-run the check:
+  `python osf/verify_freeze.py <path to a clone of the coordination record> --out <file>`.
