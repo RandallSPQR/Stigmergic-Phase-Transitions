@@ -1,0 +1,36 @@
+{
+ "bank": "confirmatory",
+ "challenge_set": false,
+ "conventions": "gates/S2/CONVENTIONS.md; confirmatory source set {3/4, 9/10} at informed fraction 0.5 (coordination D18)",
+ "evidence_model": {
+  "accuracy_mix": [
+   "3/4",
+   "9/10"
+  ],
+  "accuracy_weights": [
+   1,
+   1
+  ],
+  "informed_fraction": 0.5,
+  "reports_per_informed_agent": 1,
+  "shared": [],
+  "type": "independent_reports"
+ },
+ "hidden_state": "B",
+ "pooled_margin_logodds": 3.0,
+ "prior": 0.5,
+ "scenario_id": "conf-hotel-B",
+ "schema_version": "1.0",
+ "story": {
+  "options": {
+   "A": "floor 6",
+   "B": "floor 8"
+  },
+  "question": "Which floor is the lost suitcase on: {A} or {B}?",
+  "report": "{source} who is right {freq} says the lost suitcase is on {option}.",
+  "source": "a bellhop",
+  "uninformed": "You have no report about which floor the lost suitcase is on."
+ },
+ "story_key": "hotel",
+ "study": "StPT"
+}

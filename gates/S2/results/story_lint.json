@@ -1,0 +1,45 @@
+{
+ "dev": {
+  "bridge": [],
+  "well": [],
+  "trail": [],
+  "crate": [],
+  "room": [],
+  "drawer": []
+ },
+ "conf": {
+  "ferry": [],
+  "tunnel": [],
+  "market": [],
+  "train": [],
+  "parcel": [],
+  "orchard": [],
+  "shuttle": [],
+  "library": [],
+  "garden": [],
+  "hotel": [],
+  "clinic": [],
+  "lake": [],
+  "museum": [],
+  "garage": [],
+  "bakery": [],
+  "mailbag": [],
+  "campsite": [],
+  "exam": [],
+  "pier": [],
+  "printer": [],
+  "barn": [],
+  "stadium": [],
+  "theatre": [],
+  "pharmacy": [],
+  "airport": [],
+  "kitchen": []
+ },
+ "L7_keys_disjoint": true,
+ "L7_options_disjoint": [],
+ "n": {
+  "dev": 6,
+  "conf": 26
+ },
+ "pass": true
+}

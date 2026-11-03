@@ -1,0 +1,36 @@
+{
+ "bank": "confirmatory",
+ "challenge_set": false,
+ "conventions": "gates/S2/CONVENTIONS.md; confirmatory source set {3/4, 9/10} at informed fraction 0.5 (coordination D18)",
+ "evidence_model": {
+  "accuracy_mix": [
+   "3/4",
+   "9/10"
+  ],
+  "accuracy_weights": [
+   1,
+   1
+  ],
+  "informed_fraction": 0.5,
+  "reports_per_informed_agent": 1,
+  "shared": [],
+  "type": "independent_reports"
+ },
+ "hidden_state": "A",
+ "pooled_margin_logodds": 3.0,
+ "prior": 0.5,
+ "scenario_id": "conf-stadium-A",
+ "schema_version": "1.0",
+ "story": {
+  "options": {
+   "A": "entrance 11",
+   "B": "entrance 15"
+  },
+  "question": "Which entrance is open for fans: {A} or {B}?",
+  "report": "{source} who is right {freq} says {option} is open for fans.",
+  "source": "a steward",
+  "uninformed": "You have no report about which entrance is open for fans."
+ },
+ "story_key": "stadium",
+ "study": "StPT"
+}

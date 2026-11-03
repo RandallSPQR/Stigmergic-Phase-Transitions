@@ -1,0 +1,36 @@
+{
+ "bank": "confirmatory",
+ "challenge_set": false,
+ "conventions": "gates/S2/CONVENTIONS.md; confirmatory source set {3/4, 9/10} at informed fraction 0.5 (coordination D18)",
+ "evidence_model": {
+  "accuracy_mix": [
+   "3/4",
+   "9/10"
+  ],
+  "accuracy_weights": [
+   1,
+   1
+  ],
+  "informed_fraction": 0.5,
+  "reports_per_informed_agent": 1,
+  "shared": [],
+  "type": "independent_reports"
+ },
+ "hidden_state": "B",
+ "pooled_margin_logodds": 3.0,
+ "prior": 0.5,
+ "scenario_id": "conf-garage-B",
+ "schema_version": "1.0",
+ "story": {
+  "options": {
+   "A": "level 1",
+   "B": "level 3"
+  },
+  "question": "Which level has free parking spaces: {A} or {B}?",
+  "report": "{source} who is right {freq} says {option} has free parking spaces.",
+  "source": "an attendant",
+  "uninformed": "You have no report about which level has free parking spaces."
+ },
+ "story_key": "garage",
+ "study": "StPT"
+}

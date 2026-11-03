@@ -1,0 +1,36 @@
+{
+ "bank": "confirmatory",
+ "challenge_set": false,
+ "conventions": "gates/S2/CONVENTIONS.md; confirmatory source set {3/4, 9/10} at informed fraction 0.5 (coordination D18)",
+ "evidence_model": {
+  "accuracy_mix": [
+   "3/4",
+   "9/10"
+  ],
+  "accuracy_weights": [
+   1,
+   1
+  ],
+  "informed_fraction": 0.5,
+  "reports_per_informed_agent": 1,
+  "shared": [],
+  "type": "independent_reports"
+ },
+ "hidden_state": "B",
+ "pooled_margin_logodds": 3.0,
+ "prior": 0.5,
+ "scenario_id": "conf-museum-B",
+ "schema_version": "1.0",
+ "story": {
+  "options": {
+   "A": "the glass hall",
+   "B": "the stone hall"
+  },
+  "question": "Which hall has the new exhibit: {A} or {B}?",
+  "report": "{source} who is right {freq} says the new exhibit is in {option}.",
+  "source": "a museum guide",
+  "uninformed": "You have no report about which hall has the new exhibit."
+ },
+ "story_key": "museum",
+ "study": "StPT"
+}

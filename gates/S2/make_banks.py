@@ -59,19 +59,86 @@ CONF_STORIES = {
     "orchard": {"question": "Which orchard row is ready to pick: {A} or {B}?", "options": {"A": "the first row", "B": "the last row"},
                 "source": "a farmhand", "report": "{source} who is right {freq} says {option} is ready to pick.",
                 "uninformed": "You have no report about which orchard row is ready to pick."},
+    # Added 2026-11-03 (coordination D29): 20 further confirmatory stories, so that clusters span many stories.
+    "shuttle": {"question": "Which stop does the shuttle leave from: {A} or {B}?", "options": {"A": "the front gate", "B": "the side gate"},
+                "source": "a driver", "report": "{source} who is right {freq} says the shuttle leaves from {option}.",
+                "uninformed": "You have no report about which stop the shuttle leaves from."},
+    "library": {"question": "Which shelf holds the atlas: {A} or {B}?", "options": {"A": "the top shelf", "B": "the bottom shelf"},
+                "source": "a librarian", "report": "{source} who is right {freq} says the atlas is on {option}.",
+                "uninformed": "You have no report about which shelf holds the atlas."},
+    "garden": {"question": "Which bed has the ripe tomatoes: {A} or {B}?", "options": {"A": "the sunny bed", "B": "the shaded bed"},
+               "source": "a gardener", "report": "{source} who is right {freq} says {option} has the ripe tomatoes.",
+               "uninformed": "You have no report about which bed has the ripe tomatoes."},
+    "hotel": {"question": "Which floor is the lost suitcase on: {A} or {B}?", "options": {"A": "floor 6", "B": "floor 8"},
+              "source": "a bellhop", "report": "{source} who is right {freq} says the lost suitcase is on {option}.",
+              "uninformed": "You have no report about which floor the lost suitcase is on."},
+    "clinic": {"question": "Which desk is handling flu shots today: {A} or {B}?", "options": {"A": "the main desk", "B": "the annex desk"},
+               "source": "a nurse", "report": "{source} who is right {freq} says {option} is handling flu shots today.",
+               "uninformed": "You have no report about which desk is handling flu shots today."},
+    "lake": {"question": "Which shore is the rowboat tied to: {A} or {B}?", "options": {"A": "the sandy shore", "B": "the rocky shore"},
+             "source": "a fisher", "report": "{source} who is right {freq} says the rowboat is tied to {option}.",
+             "uninformed": "You have no report about which shore the rowboat is tied to."},
+    "museum": {"question": "Which hall has the new exhibit: {A} or {B}?", "options": {"A": "the glass hall", "B": "the stone hall"},
+               "source": "a museum guide", "report": "{source} who is right {freq} says the new exhibit is in {option}.",
+               "uninformed": "You have no report about which hall has the new exhibit."},
+    "garage": {"question": "Which level has free parking spaces: {A} or {B}?", "options": {"A": "level 1", "B": "level 3"},
+               "source": "an attendant", "report": "{source} who is right {freq} says {option} has free parking spaces.",
+               "uninformed": "You have no report about which level has free parking spaces."},
+    "bakery": {"question": "Which oven has the finished loaves: {A} or {B}?", "options": {"A": "the brick oven", "B": "the steel oven"},
+               "source": "a baker", "report": "{source} who is right {freq} says the finished loaves are in {option}.",
+               "uninformed": "You have no report about which oven has the finished loaves."},
+    "mailbag": {"question": "Which bag holds the urgent letters: {A} or {B}?", "options": {"A": "the canvas bag", "B": "the leather bag"},
+                "source": "a postal worker", "report": "{source} who is right {freq} says the urgent letters are in {option}.",
+                "uninformed": "You have no report about which bag holds the urgent letters."},
+    "campsite": {"question": "Which campsite has a working tap: {A} or {B}?", "options": {"A": "site 10", "B": "site 16"},
+                 "source": "a ranger", "report": "{source} who is right {freq} says {option} has a working tap.",
+                 "uninformed": "You have no report about which campsite has a working tap."},
+    "exam": {"question": "Which classroom is the exam in: {A} or {B}?", "options": {"A": "the music room", "B": "the art room"},
+             "source": "a teacher", "report": "{source} who is right {freq} says the exam is in {option}.",
+             "uninformed": "You have no report about which classroom the exam is in."},
+    "pier": {"question": "Which pier is the fishing boat at: {A} or {B}?", "options": {"A": "the old pier", "B": "the new pier"},
+             "source": "a lighthouse keeper", "report": "{source} who is right {freq} says the fishing boat is at {option}.",
+             "uninformed": "You have no report about which pier the fishing boat is at."},
+    "printer": {"question": "Which printer is working: {A} or {B}?", "options": {"A": "the hallway printer", "B": "the lobby printer"},
+                "source": "an office manager", "report": "{source} who is right {freq} says {option} is working.",
+                "uninformed": "You have no report about which printer is working."},
+    "barn": {"question": "Which barn are the goats in: {A} or {B}?", "options": {"A": "the hay barn", "B": "the tool barn"},
+             "source": "a shepherd", "report": "{source} who is right {freq} says the goats are in {option}.",
+             "uninformed": "You have no report about which barn the goats are in."},
+    "stadium": {"question": "Which entrance is open for fans: {A} or {B}?", "options": {"A": "entrance 11", "B": "entrance 15"},
+                "source": "a steward", "report": "{source} who is right {freq} says {option} is open for fans.",
+                "uninformed": "You have no report about which entrance is open for fans."},
+    "theatre": {"question": "Which row are the reserved seats in: {A} or {B}?", "options": {"A": "the front row", "B": "the back row"},
+                "source": "an usher", "report": "{source} who is right {freq} says the reserved seats are in {option}.",
+                "uninformed": "You have no report about which row the reserved seats are in."},
+    "pharmacy": {"question": "Which counter has the prescription: {A} or {B}?", "options": {"A": "the window counter", "B": "the back counter"},
+                 "source": "a pharmacist", "report": "{source} who is right {freq} says the prescription is at {option}.",
+                 "uninformed": "You have no report about which counter has the prescription."},
+    "airport": {"question": "Which gate is the flight boarding at: {A} or {B}?", "options": {"A": "gate 21", "B": "gate 23"},
+                "source": "a gate agent", "report": "{source} who is right {freq} says the flight is boarding at {option}.",
+                "uninformed": "You have no report about which gate the flight is boarding at."},
+    "kitchen": {"question": "Which pot has the soup: {A} or {B}?", "options": {"A": "the large pot", "B": "the small pot"},
+                "source": "a cook", "report": "{source} who is right {freq} says the soup is in {option}.",
+                "uninformed": "You have no report about which pot has the soup."},
 }
 SHARED_VARIANTS = {"bridge", "crate"}       # development bank only: one weak shared report against the truth, 10 holders
 
 
+CONF_EM = {"type": "independent_reports", "accuracy_mix": ["3/4", "9/10"], "accuracy_weights": [1, 1],
+           "informed_fraction": 0.5, "reports_per_informed_agent": 1, "shared": []}            # D18
+CONF_CONVENTIONS = "gates/S2/CONVENTIONS.md; confirmatory source set {3/4, 9/10} at informed fraction 0.5 (coordination D18)"
+
+
 def spec(story_key, story, truth, bank, shared=False):
-    em = json.loads(json.dumps(EM))
+    em = json.loads(json.dumps(CONF_EM if bank == "confirmatory" else EM))
     sid = f"{'dev' if bank == 'development' else 'conf'}-{story_key}-{truth}"
     if shared:
         em["shared"] = [{"favours": "against_truth", "accuracy": "3/5", "holders": 10}]
         sid += "-shared"
     return {"schema_version": E.SCHEMA_VERSION, "scenario_id": sid, "study": "StPT", "bank": bank, "story_key": story_key,
             "story": story, "hidden_state": truth, "prior": 0.5, "evidence_model": em, "pooled_margin_logodds": MARGIN,
-            "challenge_set": False, "conventions": "gates/S2/CONVENTIONS.md (provisional)"}
+            "challenge_set": False,
+            "conventions": CONF_CONVENTIONS if bank == "confirmatory" else "gates/S2/CONVENTIONS.md (provisional)"}
 
 
 def draw(scenario, label, maxtries=100):

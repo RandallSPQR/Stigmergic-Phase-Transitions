@@ -3,7 +3,7 @@
  "problems": {},
  "n_specs": {
   "development": 16,
-  "confirmatory": 12
+  "confirmatory": 52
  },
  "truth_balance": {
   "development": {
@@ -11,8 +11,8 @@
    "B": 8
   },
   "confirmatory": {
-   "A": 6,
-   "B": 6
+   "A": 26,
+   "B": 26
   }
  },
  "stories_disjoint": true,

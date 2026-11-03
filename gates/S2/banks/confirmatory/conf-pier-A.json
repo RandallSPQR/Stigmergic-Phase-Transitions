@@ -1,0 +1,36 @@
+{
+ "bank": "confirmatory",
+ "challenge_set": false,
+ "conventions": "gates/S2/CONVENTIONS.md; confirmatory source set {3/4, 9/10} at informed fraction 0.5 (coordination D18)",
+ "evidence_model": {
+  "accuracy_mix": [
+   "3/4",
+   "9/10"
+  ],
+  "accuracy_weights": [
+   1,
+   1
+  ],
+  "informed_fraction": 0.5,
+  "reports_per_informed_agent": 1,
+  "shared": [],
+  "type": "independent_reports"
+ },
+ "hidden_state": "A",
+ "pooled_margin_logodds": 3.0,
+ "prior": 0.5,
+ "scenario_id": "conf-pier-A",
+ "schema_version": "1.0",
+ "story": {
+  "options": {
+   "A": "the old pier",
+   "B": "the new pier"
+  },
+  "question": "Which pier is the fishing boat at: {A} or {B}?",
+  "report": "{source} who is right {freq} says the fishing boat is at {option}.",
+  "source": "a lighthouse keeper",
+  "uninformed": "You have no report about which pier the fishing boat is at."
+ },
+ "story_key": "pier",
+ "study": "StPT"
+}
