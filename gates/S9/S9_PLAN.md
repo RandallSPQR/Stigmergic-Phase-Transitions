@@ -1,5 +1,19 @@
 # Gate S9: power simulation and tier table. Plan for the owner's approval; nothing is run before approval.
 
+**Owner's decisions so far (2026-11-03, D29).**
+- **Tier: Strong, sized at ρ = 1.** S9 computes the exact cluster count at ρ = 1 under the Strong definition (TOST power
+  ≥ 0.90 at ±0.03 on both contrasts), from the sizing SD rule of §4. The back-of-envelope count was 61; a different
+  count is brought for approval.
+- **ρ from S8 variance components:** 0.09 for the board effect and 0.35 for persistence, df 4
+  (`results/rho_from_s8.json`). Reported, not used for sizing.
+- **Story is a random effect** in the analysis; the confirmatory bank has 26 stories (52 specs). The simulator carries a
+  story component, but S8 cannot estimate it (6 stories, 8 clusters). So the generalisation-to-new-stories precision is
+  reported as a sensitivity (story SD 0, 0.02, 0.04 in support). The confirmatory (conditional) tests are sized as above.
+- The other defaults of §6 stand unless the owner says otherwise:
+  - shared clusters;
+  - α = 0.025 two-sided for power;
+  - the secondary-arm shares.
+
 **Brief.** S9 returns a tier table (Lean / Standard / Strong) for the **two confirmatory contrasts only**: the board
 effect (live − blind) and pulse persistence.
 - One pooled test per contrast: the average over the four confirmatory models as fixed strata (D2, D24). Holm across
