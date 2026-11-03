@@ -1,6 +1,6 @@
 # Confirmation packet: the seven fixes (addendum 1)
 
-For the reviewer of the execution review of `cb10726e3d359d8094fbd083f336453d6af9280d`. Fixed code: `FIX_COMMIT`
+For the reviewer of the execution review of `cb10726e3d359d8094fbd083f336453d6af9280d`. Fixed code: `1031a83559f70a9ba82739cb7ea10c791d515f3d`
 (tag `stpt-run-v1` on the commit that adds the addendum). Everything below runs on CPU with a mock model; no model call.
 
 ## Reproduce
@@ -11,7 +11,7 @@ python osf/addendum1/before_after.py                        # each defect on cb1
 python gates/S10/run/validate_driver_cpu.py /tmp/drv        # driver criteria D1-D5 (about 1 min)
 python gates/S10/analysis/validate_confirmatory.py          # synthetic validation of the analysis (about 20 min)
 python osf/verify_freeze.py <clone of StPT-MP-Coordination> --addendum osf/addendum1/DECLARED_CHANGES.json --out /tmp/v.json
-git diff cb10726 FIX_COMMIT -- gates/S10/s10_core.py gates/S10/analysis/confirmatory.py
+git diff cb10726 1031a83559f70a9ba82739cb7ea10c791d515f3d -- gates/S10/s10_core.py gates/S10/analysis/confirmatory.py
 ```
 
 ## Per finding

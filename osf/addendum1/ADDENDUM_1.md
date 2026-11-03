@@ -3,7 +3,7 @@
 **Registration:** OSF https://osf.io/sm8xr (DOI 10.17605/OSF.IO/SM8XR); registered text = `osf/PREREGISTRATION.md` at
 commit `cb10726e3d359d8094fbd083f336453d6af9280d` (tag `stpt-prereg-v1-final`; Zenodo 10.5281/zenodo.23924793).
 **This addendum:** filed after registration and **before any confirmatory data exist** (no confirmatory model call has
-been made). Code commit with the fixes: `FIX_COMMIT`. Tag: `stpt-run-v1` (on the commit that adds this text).
+been made). Code commit with the fixes: `1031a83559f70a9ba82739cb7ea10c791d515f3d`. Tag: `stpt-run-v1` (on the commit that adds this text).
 Coordination record: D48, D49, A36.
 
 ## What happened
@@ -48,10 +48,10 @@ measures in §8 are reported against them as registered, with this note.
 - **Tests:** 93 tests pass, including every adversarial case of the review as a permanent test that must refuse
   (`tests/test_review_fixes.py`).
 - **Synthetic validation of the analysis code**, rerun on the fixed code (`gates/S10/results/analysis_validation.json`,
-  run 3; log `analysis_validation_run3_addendum1.log`): VALIDATION_RESULT
-- **Driver**, CPU with the mock model: DRIVER_RESULT
+  run 3; log `analysis_validation_run3_addendum1.log`): every numeric result is identical to run 2 (criteria A1–A3 and B1–B6 in all four scenarios). The B1 lower-band shortfall in one scenario remains, as accepted in D46 (DV2).
+- **Driver**, CPU with the mock model: criteria D1–D5 pass (`gates/S10/results/driver_cpu_validation.json`).
 - **Freeze** (`osf/verify_freeze.py --addendum osf/addendum1/DECLARED_CHANGES.json`, result
-  `osf/addendum1/FREEZE_VERIFICATION_ADDENDUM1.json`, run VERIFY_TIME UTC): VERIFY_RESULT
+  `osf/addendum1/FREEZE_VERIFICATION_ADDENDUM1.json`, run 2026-11-03 19:07:39 UTC): **PASS.** 35 of 35 unchanged design files byte-identical to the freeze; 5 declared changes, each with its reason, and no undeclared change; the registered text byte-identical to `cb10726` and its design parts identical to the freeze; sealed files 2 of 2 identical; the coordination record's protocol files unchanged and its logs insert-only (7 of 7 pass).
 
 ## What did not change
 `stpt/board.py`, the prompts and wordings, the cluster files, the bank, every parameter (H 30, t0 5, D 3, W 5, r 10,

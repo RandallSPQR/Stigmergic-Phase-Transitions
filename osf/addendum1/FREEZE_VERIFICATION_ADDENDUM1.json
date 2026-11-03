@@ -1,0 +1,297 @@
+{
+ "coordination_files": {
+  "AMENDMENTS.md": {
+   "at_pinned_commit_matches": true,
+   "identical_at_current_main": false,
+   "insert_only": true,
+   "pass": true
+  },
+  "DATA_SEPARATION.md": {
+   "at_pinned_commit_matches": true,
+   "identical_at_current_main": true,
+   "insert_only": null,
+   "pass": true
+  },
+  "DECISIONS.md": {
+   "at_pinned_commit_matches": true,
+   "identical_at_current_main": false,
+   "insert_only": true,
+   "pass": true
+  },
+  "PIPELINE.md": {
+   "at_pinned_commit_matches": true,
+   "identical_at_current_main": true,
+   "insert_only": null,
+   "pass": true
+  },
+  "PROTOCOL_SPEC.md": {
+   "at_pinned_commit_matches": true,
+   "identical_at_current_main": true,
+   "insert_only": null,
+   "pass": true
+  },
+  "SEALED.md": {
+   "at_pinned_commit_matches": true,
+   "identical_at_current_main": false,
+   "insert_only": true,
+   "pass": true
+  },
+  "schema/evidence_schema_v1.0.json": {
+   "at_pinned_commit_matches": true,
+   "identical_at_current_main": true,
+   "insert_only": null,
+   "pass": true
+  }
+ },
+ "coordination_record": {
+  "current_main": "593bab184d5b94eb941acc9bf91317c97955d697",
+  "pinned_commit": "80e9992f43e50f08a85b2f3d218ff9b2ea9d8c41"
+ },
+ "declared": {
+  "analysis/PREREGISTRATION_ITEMS.md": "after registration (D47, A35): checklist marked complete with section references; no design content",
+  "gates/S10/analysis/confirmatory.py": "review #2 (exact run shape, two opposite pulsed branches, distinct recipients, finite rows) and #3 (frozen 61-cluster universe, blocks from recorded server starts, primary-arm identity, no mock, NaN refused)",
+  "gates/S10/analysis/validate_confirmatory.py": "interface change required by #3 (no caller metadata; synthetic entries carry identity and start IDs); draws and criteria unchanged; rerun",
+  "gates/S10/results/analysis_validation.json": "synthetic validation rerun on the fixed analysis code (run 3); every numeric result must equal run 2",
+  "gates/S10/s10_core.py": "review #1 (uninformed first vote = placeholder, no call), #5 (placeholders balanced per start block), #6 (arms from c['arms']; self-reset only when drawn; T never free), #7 (initial call always W3); checkpoint store for the driver (#4)"
+ },
+ "design_files": {
+  "CLAUDE.md": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  },
+  "analysis/CONFIRMATORY_SET.md": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  },
+  "analysis/DECISION_NOISE_T.md": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  },
+  "analysis/INITIAL_VOTE_RULE.md": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  },
+  "analysis/PREREGISTERED_D21.md": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  },
+  "analysis/PREREGISTRATION_ITEMS.md": {
+   "declared": true,
+   "identical": false,
+   "pass": true
+  },
+  "analysis/PROMPT_SENSITIVITY.md": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  },
+  "analysis/PULSE_SETTINGS.md": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  },
+  "analysis/SECONDARY_INFORMED_SPLIT.md": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  },
+  "analysis/SENSITIVITY_WITHOUT_QWEN9B.md": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  },
+  "gates/S10/analysis/confirmatory.py": {
+   "declared": true,
+   "identical": false,
+   "pass": true
+  },
+  "gates/S10/analysis/reml_classical_check.py": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  },
+  "gates/S10/analysis/validate_confirmatory.py": {
+   "declared": true,
+   "identical": false,
+   "pass": true
+  },
+  "gates/S10/clusters/MANIFEST.json": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  },
+  "gates/S10/clusters/confirmatory_clusters.json": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  },
+  "gates/S10/draw_clusters.py": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  },
+  "gates/S10/predictions.py": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  },
+  "gates/S10/results/analysis_validation.json": {
+   "declared": true,
+   "identical": false,
+   "pass": true
+  },
+  "gates/S10/results/analysis_validation_run1_containment_df.log": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  },
+  "gates/S10/results/analysis_validation_run2_satterthwaite.log": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  },
+  "gates/S10/results/reml_classical_check.json": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  },
+  "gates/S10/s10_core.py": {
+   "declared": true,
+   "identical": false,
+   "pass": true
+  },
+  "gates/S2/CONFIRMATORY_SEED_RULE.md": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  },
+  "gates/S2/banks/MANIFEST.json": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  },
+  "gates/S2/lint_stories.py": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  },
+  "gates/S2/make_banks.py": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  },
+  "gates/S8/s8_core.py": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  },
+  "gates/S9/power_at_61.py": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  },
+  "gates/S9/results/kernels_s8.json": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  },
+  "gates/S9/results/power_at_61.json": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  },
+  "gates/S9/results/s9_tiers.json": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  },
+  "gates/S9/s9_kernels.py": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  },
+  "gates/S9/s9_run.py": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  },
+  "gates/S9/s9_sim.py": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  },
+  "pins.yaml": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  },
+  "stpt/board.py": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  },
+  "stpt/evidence.py": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  },
+  "stpt/manifest.py": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  },
+  "stpt/prompts.py": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  },
+  "stpt/sim.py": {
+   "declared": false,
+   "identical": true,
+   "pass": true
+  }
+ },
+ "freeze_commit": "17063f58c9fb6f9064477c555c5e42200e70115f",
+ "mode": "addendum",
+ "pass": true,
+ "preregistration": {
+  "declared": false,
+  "design_parts_identical_to_freeze": true,
+  "identical_to_registered_commit": true,
+  "pass": true
+ },
+ "registered_commit": "cb10726e3d359d8094fbd083f336453d6af9280d",
+ "run_utc": "2026-11-03T19:07:39+00:00",
+ "sealed_files": {
+  "gates/S10/sealed/s10_predictions.json.gz.b64": {
+   "identical": true
+  },
+  "gates/S8/sealed/s8_sealed.json.gz.b64": {
+   "identical": true
+  }
+ },
+ "summary": {
+  "coordination_files": 7,
+  "coordination_files_pass": 7,
+  "declared_but_identical": [],
+  "declared_changed": [
+   "analysis/PREREGISTRATION_ITEMS.md",
+   "gates/S10/analysis/confirmatory.py",
+   "gates/S10/analysis/validate_confirmatory.py",
+   "gates/S10/results/analysis_validation.json",
+   "gates/S10/s10_core.py"
+  ],
+  "design_files": 41,
+  "preregistration_pass": true,
+  "sealed_files_identical": 2,
+  "unchanged_byte_identical": 35,
+  "unchanged_expected": 35,
+  "undeclared_changes": [],
+  "unknown_declarations": []
+ }
+}
