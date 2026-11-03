@@ -91,7 +91,7 @@ Everything else is secondary (§6), reported with intervals and no power target.
   recipient's own vote is reset to its value at pulse onset; all other votes are unchanged.
 - **Variant wordings (D21):** each model runs, on a seeded 20% of clusters, each variant wording valid for it on the
   held-out check, for the per-model consistency check.
-- **Tie rule (D32):** not applicable to the confirmatory outcomes, which are shares, not majorities. Any descriptive
+- **Tie rule (D45):** not applicable to the confirmatory outcomes, which are shares, not majorities. Any descriptive
   majority reports ties as ties, never broken.
 - **Isolation:** probes and branches never feed back. Main trajectories were byte-identical with and without probes
   and branches on all five models (S7, `gates/S7/S7_REPORT.md`).
