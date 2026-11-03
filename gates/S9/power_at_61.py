@@ -16,7 +16,10 @@ for lab, key in (("board_window_25_30", "board_window"), ("board_final_sweep", "
     out["conditional"][lab] = {"se": se, "mde_80": zmde * se,
                                "power_at_0.05_alpha025": float(stats.norm.cdf(REF / se - stats.norm.ppf(1 - 0.0125))),
                                "tost_power_alpha05": float(2 * stats.norm.cdf(BOUND / se - stats.norm.ppf(0.95)) - 1),
-                               "tost_power_alpha025": float(2 * stats.norm.cdf(BOUND / se - stats.norm.ppf(0.975)) - 1)}
+                               "tost_power_alpha025": float(2 * stats.norm.cdf(BOUND / se - stats.norm.ppf(0.975)) - 1),
+                               # with the pre-registered analysis's containment df (16 start blocks - 1 = 15; gates/S10/analysis)
+                               "tost_power_alpha05_t15": float(2 * stats.t.cdf(BOUND / se - stats.t.ppf(0.95, 15), 15) - 1),
+                               "power_at_0.05_alpha025_t15": float(stats.t.cdf(REF / se - stats.t.ppf(1 - 0.0125, 15), 15))}
     for tau in (0.02, 0.04):
         se_g = math.sqrt(t[key]["sizing_sd"] ** 2 / n + tau ** 2 / 26)
         out["generalisation_story_sd"].setdefault(str(tau), {})[lab] = {
