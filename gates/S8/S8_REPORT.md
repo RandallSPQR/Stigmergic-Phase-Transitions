@@ -91,8 +91,8 @@ Plan: `S8_PLAN.md` (approved, D27; horizon amended, D28). Results:
   - Qwen3.5-27B about 505 s;
   - Llama about 160 s.
 
-  That is about 31 min of GPU per rule-(i) cluster across the four confirmatory models, **about $1.30 per cluster for
-  all four** at $2.49/h.
+  That is about 23 min of GPU per rule-(i) cluster across the four confirmatory models (196 + 236 + 452 + 506 s),
+  **about $0.96 per cluster for all four** at $2.49/h.
 
 ## Sealing (D27)
 - The point estimates of the two confirmatory contrasts are **sealed, not reported**: live − blind, persistence, its

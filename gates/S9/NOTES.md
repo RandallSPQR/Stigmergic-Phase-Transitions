@@ -40,7 +40,7 @@
 
 - **S8 inputs (2026-11-03, `gates/S8/results/s8_summary.json`).** Live-fitted kernels per model; between-cluster SD of
   the board effect (pooled four models 0.059, df 16, conservative 0.071) and of ITT persistence (0.046, df 16,
-  conservative 0.055); between-branch s²; cost about $1.30 per rule-(i) cluster for the four confirmatory models. Size
+  conservative 0.055); between-branch s²; cost about $0.96 (about 23 GPU-minutes) per rule-(i) cluster for the four confirmatory models. Size
   tiers on the conservative SDs (D27). Live support still rose over sweeps 20–30 (+0.008 to +0.052 per 10 sweeps,
   descriptive): the horizon simulation (D28) must check whether the live kernels reproduce it. The D25 rule (i) vs
   (ii) comparison from the pilot is uninformative (6 vs 2 clusters on different allocations); simulate it paired.
