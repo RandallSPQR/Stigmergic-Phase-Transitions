@@ -91,8 +91,8 @@ Everything else is secondary (§6), reported with intervals and no power target.
   recipient's own vote is reset to its value at pulse onset; all other votes are unchanged.
 - **Variant wordings (D21):** each model runs, on a seeded 20% of clusters, each variant wording valid for it on the
   held-out check, for the per-model consistency check.
-- **Tie rule:** no core outcome uses a majority (both outcomes are shares), so no tie rule enters the confirmatory
-  analysis. In any descriptive majority, ties are reported as ties.
+- **Tie rule (D32):** not applicable to the confirmatory outcomes, which are shares, not majorities. Any descriptive
+  majority reports ties as ties, never broken.
 - **Isolation:** probes and branches never feed back. Main trajectories were byte-identical with and without probes
   and branches on all five models (S7, `gates/S7/S7_REPORT.md`).
 
@@ -122,7 +122,7 @@ Everything else is secondary (§6), reported with intervals and no power target.
 - **Missing data:** missing calls are counted by condition and model. No cluster or run is excluded on any outcome. A
   cluster whose live/blind pairing or branch alignment fails the code's integrity checks is reported as a protocol
   failure; it is never silently dropped.
-- **Validation before data:** `gates/S10/results/analysis_validation.json`.
+- **Validation before data:** `gates/S10/results/analysis_validation.json` and `gates/S10/results/reml_classical_check.json`.
   - Extraction is exact against an independent recomputation, and tampered pairing or branches are refused.
   - Type I error, Holm family-wise error, sign recovery, interval coverage and TOST behaviour were checked on synthetic
     data on this cluster layout; see §11.
