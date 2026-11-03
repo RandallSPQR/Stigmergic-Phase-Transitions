@@ -1,0 +1,11 @@
+{
+ "doc": "Design files (osf/FREEZE_MANIFEST.json) that addendum 1 changes, each with its reason. Every other design file must be byte-identical to the freeze; osf/PREREGISTRATION.md must be byte-identical to the registered commit. Checked by osf/verify_freeze.py --addendum osf/addendum1/DECLARED_CHANGES.json.",
+ "registered_commit": "cb10726e3d359d8094fbd083f336453d6af9280d",
+ "changed": {
+  "gates/S10/s10_core.py": "review #1 (uninformed first vote = placeholder, no call), #5 (placeholders balanced per start block), #6 (arms from c['arms']; self-reset only when drawn; T never free), #7 (initial call always W3); checkpoint store for the driver (#4)",
+  "gates/S10/analysis/confirmatory.py": "review #2 (exact run shape, two opposite pulsed branches, distinct recipients, finite rows) and #3 (frozen 61-cluster universe, blocks from recorded server starts, primary-arm identity, no mock, NaN refused)",
+  "gates/S10/analysis/validate_confirmatory.py": "interface change required by #3 (no caller metadata; synthetic entries carry identity and start IDs); draws and criteria unchanged; rerun",
+  "gates/S10/results/analysis_validation.json": "synthetic validation rerun on the fixed analysis code (run 3); every numeric result must equal run 2",
+  "analysis/PREREGISTRATION_ITEMS.md": "after registration (D47, A35): checklist marked complete with section references; no design content"
+ }
+}

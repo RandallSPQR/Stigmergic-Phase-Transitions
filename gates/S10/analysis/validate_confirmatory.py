@@ -14,6 +14,9 @@ Criteria, fixed before the run:
      B5 TOST passes at theta = 0 at a rate >= 0.85 (both contrasts; S9 expects >= 0.95);
      B6 generalisation CI coverage of theta with story SD 0.02: within [0.92, 0.98];
      scenarios: rho in {0.3, 1.0}; start-block SD in {0, 0.01}.
+Revised after the independent execution review of cb10726 (addendum 1): primary() now takes no cluster metadata. Each
+synthetic entry carries the primary-arm identity and a server-start ID per model that follows the frozen schedule
+(blocks of 4); the random draws and the criteria are unchanged, so the results should equal validation run 2.
 """
 from __future__ import annotations
 
@@ -76,7 +79,11 @@ J = sorted(meta); blocks = np.array([meta[j]["start_block"] for j in J]); storie
 story_idx = {s: k for k, s in enumerate(sorted(set(stories)))}; sidx = np.array([story_idx[s] for s in stories])
 sizing = json.load(open(ROOT / "gates/S9/results/s9_tiers.json"))["sizing"]["rho1"]
 SD = {"board": sizing["board_window"]["sizing_sd"], "persistence": sizing["persistence"]["sizing_sd"]}
-REPS = 1000
+REPS = int(sys.argv[1]) if len(sys.argv) > 1 else 1000
+OUT = ROOT / (sys.argv[2] if len(sys.argv) > 2 else "gates/S10/results/analysis_validation.json")
+IDENT = {m: {"arm": "primary", "T": CA.primary_T(m), "wording": "w3", "init_wording": "w3", "rule": "i", "prm": CA.PRM,
+             "mock": False} for m in CA.CONF}
+assert all(CA.frozen_universe()[j]["story"] == meta[j]["story_key"] for j in J), "manifest stories differ from the cluster file"
 rng = np.random.Generator(np.random.PCG64(20261103))
 
 
@@ -91,7 +98,9 @@ def dataset(theta, rho, sd_block, sd_story):
         for m in CA.CONF:
             y = base + rng.normal(0, se, len(J))
             for jj, j in enumerate(J):
-                table.setdefault((m, j), {})[contrast] = float(y[jj])
+                e = table.setdefault((m, j), {"identity": {**IDENT[m], "model": m, "cluster": j, "run_key": f"CONF-c{j}"},
+                                              "server_start": f"{m}/synthetic-start{meta[j]['start_block']}"})
+                e[contrast] = float(y[jj])
     return table, bank_mean
 
 
@@ -106,7 +115,7 @@ for sc in scen:
          "pos": {"right": 0, "wrong": 0}, "neg": {"right": 0, "wrong": 0}, "cover": 0}
     for _ in range(REPS):
         tab, _ = dataset((0.0, 0.0), sc["rho"], sc["sd_block"], 0.0)
-        P = CA.primary(tab, meta, generalisation=False)
+        P = CA.primary(tab, generalisation=False)
         for ctr in ("board", "persistence"):
             p = P[ctr]["conditional"]["p_two_sided"]
             r["null"]["rej025"][ctr] += p < 0.025; r["null"]["rej05"][ctr] += p < 0.05
@@ -115,13 +124,13 @@ for sc in scen:
     for sign, lab in ((1, "pos"), (-1, "neg")):
         for _ in range(REPS // 2):
             tab, _ = dataset((0.05 * sign, 0.05 * sign), sc["rho"], sc["sd_block"], 0.0)
-            P = CA.primary(tab, meta, generalisation=False)
+            P = CA.primary(tab, generalisation=False)
             for ctr in ("board", "persistence"):
                 th = P[ctr]["conditional"]["theta"]; sig = P[ctr]["holm_significant"]
                 r[lab]["right"] += sig and np.sign(th) == sign; r[lab]["wrong"] += sig and np.sign(th) != sign
     for _ in range(REPS // 2):
         tab, bm = dataset((0.02, 0.02), sc["rho"], sc["sd_block"], 0.0)
-        P = CA.primary(tab, meta, generalisation=False)
+        P = CA.primary(tab, generalisation=False)
         lo, hi = P["board"]["conditional"]["ci95"]; r["cover"] += lo <= bm["board"] <= hi
     n_null = REPS
     res_B[key] = {"type1_alpha025": {k: v / n_null for k, v in r["null"]["rej025"].items()},
@@ -134,7 +143,7 @@ for sc in scen:
 cov = 0
 for _ in range(REPS // 2):
     tab, _ = dataset((0.02, 0.02), 1.0, 0.01, 0.02)
-    P = CA.primary(tab, meta)
+    P = CA.primary(tab)
     lo, hi = P["board"]["generalisation"]["ci95"]; cov += lo <= 0.02 <= hi
 res_B["generalisation_coverage_story_sd_0.02"] = cov / (REPS // 2)
 out["B"] = res_B
@@ -150,6 +159,6 @@ crit.append(0.92 <= res_B["generalisation_coverage_story_sd_0.02"] <= 0.98)
 out["B_pass"] = all(crit)
 out["pass"] = out["A"]["pass"] and out["B_pass"]
 out["seconds"] = round(time.time() - t0, 1)
-(ROOT / "gates/S10/results").mkdir(parents=True, exist_ok=True)
-(ROOT / "gates/S10/results/analysis_validation.json").write_text(json.dumps(out, indent=1, default=float))
+OUT.parent.mkdir(parents=True, exist_ok=True)
+OUT.write_text(json.dumps(out, indent=1, default=float))
 print("generalisation coverage", res_B["generalisation_coverage_story_sd_0.02"], "| pass", out["pass"], "| seconds", out["seconds"])

@@ -17,17 +17,59 @@ Generalisation to new stories (D29): c_j = theta + u_block + v_story + e_j, REML
 Tests per contrast: superiority, two-sided, Holm across the two contrasts at family alpha 0.05; equivalence, TOST at
 +/-0.03 with alpha 0.05 (90% interval inside the bound). Decision: effect / small effect within bound / equivalence /
 inconclusive.
+
+Input checks (independent execution review of cb10726, addendum 1; every failure raises Refused, nothing is dropped):
+  #2 a run must have exactly H x N = 3,000 updates (live and blind), with consecutive steps; a rule-(i) record must have
+     exactly two pulsed branches, toward A and toward B, each with r = 10 distinct recipients in 0..99 and exactly
+     (D + W) x N rows aligned with the main run; every row is well formed and every number in it finite.
+  #3 primary() takes the cluster universe from the frozen, hashed 61-cluster manifest only (no caller metadata); the
+     block label of a cluster is built from the server-start IDs recorded in its run records (all branches of a
+     (model, cluster) must share one start); every entry must be the primary arm (model's primary T, W3 for the
+     initial call and the updates, rule (i), the frozen parameters, the cluster's run key) and not a mock run; NaN or
+     infinite values are refused at every input.
 """
 from __future__ import annotations
 
+import hashlib
+import json
 import math
+from pathlib import Path
 
 import numpy as np
 from scipy import optimize, stats
 
 CONF = ["gemma-2-9b-it", "qwen3.5-9b", "gemma-3-27b-it", "qwen3.5-27b"]
+ALL_MODELS = CONF + ["llama-3.1-8b-it"]
 BOUND, FAMILY_ALPHA, TOST_ALPHA = 0.03, 0.05, 0.05
 N = 100
+PRM = {"H": 30, "t0": 5, "D": 3, "W": 5, "r": 10, "k": 3}
+ROOT = Path(__file__).resolve().parents[3]
+MANIFEST_SHA256 = "dcdac6768510baa8b417945abab5206b9bd06a96322392374e174170058c351d"   # osf/FREEZE_MANIFEST.json
+
+
+class Refused(ValueError):
+    """An input that does not conform to the registered protocol."""
+
+
+def _finite(x):
+    return isinstance(x, (int, float)) and not isinstance(x, bool) and math.isfinite(x)
+
+
+def primary_T(model):
+    opt = json.loads((ROOT / "analysis/results/t_options.json").read_text())["options"]["C_per_model_evidence_anchored"]
+    return float(opt[model]["T"])
+
+
+def frozen_universe(root=ROOT):
+    """{cluster: {'story', 'scheduled_block'}} for clusters 1..61, from the frozen manifest only."""
+    p = Path(root) / "gates/S10/clusters/MANIFEST.json"
+    if hashlib.sha256(p.read_bytes()).hexdigest() != MANIFEST_SHA256:
+        raise Refused("cluster MANIFEST.json does not match its frozen sha256")
+    man = json.loads(p.read_text())
+    u = {e["cluster"]: {"story": e["scenario_id"].rsplit("-", 1)[0].removeprefix("conf-"), "scheduled_block": e["start_block"]} for e in man["clusters"]}
+    if man["n_clusters"] != 61 or sorted(u) != list(range(1, 62)):
+        raise Refused("the frozen manifest does not list clusters 1..61")
+    return u
 
 
 # ---------------------------------------------------------------- outcomes from records
@@ -44,6 +86,51 @@ def replay(votes0, rows, every=None, watch=None, direction=None):
 
 def support(v, truth):
     return sum(x == truth for x in v) / len(v)
+
+
+def _check_rows(rows, first_step, n, what):
+    if not isinstance(rows, list) or len(rows) != n:
+        raise Refused(f"{what}: {0 if not isinstance(rows, list) else len(rows)} rows, protocol requires exactly {n}")
+    for k, r in enumerate(rows):
+        if not isinstance(r, list) or len(r) != 9:
+            raise Refused(f"{what}: malformed row {k}")
+        step, agent, own, shown, vote, lA, u, miss, amap = r
+        if step != first_step + k:
+            raise Refused(f"{what}: step {step} at row {k} (expected {first_step + k})")
+        if not (isinstance(agent, int) and 0 <= agent < N) or own not in ("A", "B") or vote not in ("A", "B"):
+            raise Refused(f"{what}: invalid agent or vote at row {k}")
+        if not (_finite(u) and 0 <= u < 1) or miss not in (0, 1) or amap not in (0, 1):
+            raise Refused(f"{what}: invalid draw or flag at row {k}")
+        if (lA is None) != (miss == 1) or (lA is not None and not _finite(lA)):
+            raise Refused(f"{what}: non-finite or inconsistent logit at row {k}")
+
+
+def check_record(res, H=30, t0=5, D=3, W=5, r=10):
+    """Review #2: the run has the registered shape; refuse anything else."""
+    v0 = res.get("initial_votes")
+    if not (isinstance(v0, list) and len(v0) == N and all(v in ("A", "B") for v in v0)):
+        raise Refused("initial votes missing or invalid")
+    _check_rows(res.get("live"), 0, H * N, "live run")
+    _check_rows(res.get("blind"), 0, H * N, "blind run")
+    rule = res.get("rule", "i")
+    pulses = res.get("pulses") or []
+    if rule == "ii":
+        if pulses:
+            raise Refused("a rule (ii) run has no pulsed branches")
+        return
+    if rule != "i":
+        raise Refused(f"unknown initial-vote rule {rule!r}")
+    if len(pulses) != 2:
+        raise Refused(f"{len(pulses)} pulsed branches; protocol requires exactly two")
+    if sorted(p.get("direction") for p in pulses) != ["A", "B"]:
+        raise Refused("the two pulsed branches must point in opposite directions (one toward A, one toward B)")
+    for p in pulses:
+        rec = p.get("recipients")
+        if not (isinstance(rec, list) and len(rec) == r and all(isinstance(i, int) and 0 <= i < N for i in rec)):
+            raise Refused(f"pulse {p.get('index')}: recipients must be {r} agent IDs in 0..{N - 1}")
+        if len(set(rec)) != len(rec):
+            raise Refused(f"pulse {p.get('index')}: duplicate recipient IDs")
+        _check_rows(p.get("rows"), t0 * N, (D + W) * N, f"pulse {p.get('index')}")
 
 
 def check_pairing(res):
@@ -63,6 +150,9 @@ def check_branch(res, t0):
 
 
 def outcomes(res, truth, t0=5, D=3, W=5, window=(25, 30)):
+    if truth not in ("A", "B"):
+        raise Refused("truth must be A or B")
+    check_record(res, t0=t0, D=D, W=W)
     check_pairing(res)
     v0 = res["initial_votes"]
     _, sl, _ = replay(v0, res["live"], every=N)
@@ -90,6 +180,15 @@ def outcomes(res, truth, t0=5, D=3, W=5, window=(25, 30)):
                 exp_.append(float((np.array(ep) - np.array(eu))[D * N:].mean()))
         out.update({"persistence": float(np.mean(itt)), "immediate": float(np.mean(imm)),
                     "persistence_exposed": float(np.mean(exp_)) if exp_ else None})
+    out["identity"] = {k: res.get(k) for k in ("model", "cluster", "arm", "T", "wording", "init_wording", "rule", "run_key",
+                                               "prm", "mock")}
+    starts = res.get("server_start_ids")
+    out["server_start"] = None
+    if isinstance(starts, dict) and starts:
+        ids = set(starts.values())
+        if len(ids) != 1 or None in ids:
+            raise Refused("the branches of one run were not all in one server start (paired contrasts must be; D14)")
+        out["server_start"] = ids.pop()
     return out
 
 
@@ -180,6 +279,8 @@ def _satterthwaite(y, Zs, var):
 
 def infer(y, blocks, stories=None):
     """Conditional (block RE) or generalisation (block + story RE) inference for one contrast."""
+    if not all(_finite(float(v)) for v in y):
+        raise Refused("non-finite outcome")
     groups = [blocks] if stories is None else [blocks, stories]
     fit = reml(y, groups)
     df = fit["df_satterthwaite"]       # Satterthwaite (replaces containment df after the first validation run; S10)
@@ -208,16 +309,40 @@ def decide(sig, eq):
             (False, True): "equivalence (no effect beyond +/-0.03)", (False, False): "inconclusive"}[(sig, eq)]
 
 
-def primary(table, cluster_meta, generalisation=True):
-    """table[(model, cluster)] = outcomes dict; cluster_meta[cluster] = {'start_block', 'story_key'}.
+def check_table(table, models=CONF, contrasts=("board", "persistence")):
+    """Review #3. table[(model, cluster)] = outcomes() dict. Returns (clusters, block labels, stories)."""
+    U = frozen_universe()
+    want = {(m, j) for m in models for j in U}
+    got = set(table)
+    if got != want:
+        extra, missing = sorted(got - want, key=str), sorted(want - got, key=str)
+        raise Refused(f"table must hold exactly the frozen clusters for {list(models)}; extra {extra[:5]}, missing {missing[:5]}")
+    T = {m: primary_T(m) for m in models}
+    for (m, j), o in table.items():
+        idn = o.get("identity") or {}
+        exp = {"model": m, "cluster": j, "arm": "primary", "T": T[m], "wording": "w3", "init_wording": "w3", "rule": "i",
+               "run_key": f"CONF-c{j}", "prm": PRM}
+        bad = {k: idn.get(k) for k, v in exp.items() if idn.get(k) != v}
+        if bad:
+            raise Refused(f"({m}, cluster {j}) is not the primary arm: {bad}")
+        if idn.get("mock"):
+            raise Refused(f"({m}, cluster {j}) comes from a mock run")
+        if not o.get("server_start"):
+            raise Refused(f"({m}, cluster {j}) has no recorded server-start ID")
+        for ctr in contrasts:
+            if not _finite(o.get(ctr)):
+                raise Refused(f"({m}, cluster {j}): {ctr} is missing or not finite")
+    clusters = sorted(U)
+    blocks = ["|".join(str(table[(m, j)]["server_start"]) for m in models) for j in clusters]
+    stories = [U[j]["story"] for j in clusters]
+    return clusters, blocks, stories
+
+
+def primary(table, *, generalisation=True):
+    """table[(model, cluster)] = outcomes dict for the four confirmatory models x the 61 frozen clusters (primary arm).
+    Cluster universe and stories from the frozen manifest; start blocks from the recorded server-start IDs.
     Returns the two confirmatory results (conditional = confirmatory; generalisation reported beside)."""
-    clusters = sorted(cluster_meta)
-    for m in CONF:
-        for j in clusters:
-            if (m, j) not in table:
-                raise ValueError(f"missing outcome for {m}, cluster {j}")
-    blocks = [cluster_meta[j]["start_block"] for j in clusters]
-    stories = [cluster_meta[j]["story_key"] for j in clusters]
+    clusters, blocks, stories = check_table(table)
     res = {}
     for contrast in ("board", "persistence"):
         c = [float(np.mean([table[(m, j)][contrast] for m in CONF])) for j in clusters]
@@ -228,11 +353,17 @@ def primary(table, cluster_meta, generalisation=True):
     for k in res:
         res[k]["holm_significant"] = rej[k]
         res[k]["decision"] = decide(rej[k], res[k]["conditional"]["tost_equivalent"])
+    U = frozen_universe()
+    sched = [U[j]["scheduled_block"] for j in clusters]
+    res["blocks"] = {"n_recorded_starts": len(set(blocks)),
+                     "matches_scheduled_blocks": len({(a, b) for a, b in zip(blocks, sched)}) == len(set(blocks)) == len(set(sched))}
     return res
 
 
-def subset_estimate(table, cluster_meta, models, contrast):
-    """Secondary/sensitivity: the same conditional model on the mean over a subset of models (D20, D21, D24)."""
-    clusters = sorted(cluster_meta)
-    c = [float(np.mean([table[(m, j)][contrast] for m in models])) for j in clusters]
-    return infer(c, [cluster_meta[j]["start_block"] for j in clusters])
+def subset_estimate(table, models, contrast):
+    """Secondary/sensitivity: the same conditional model on the mean over a subset of models (D20, D21, D24); same
+    checks as primary() for the models used."""
+    sub = {k: v for k, v in table.items() if k[0] in models}
+    clusters, blocks, _ = check_table(sub, models=tuple(models), contrasts=(contrast,))
+    c = [float(np.mean([sub[(m, j)][contrast] for m in models])) for j in clusters]
+    return infer(c, blocks)

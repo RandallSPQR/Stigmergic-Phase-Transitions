@@ -57,6 +57,7 @@ across the two; a TOST for each.
 | S8: pilot (GPU) | **PASSES 2026-11-03**: rules 1–3 met; horizon to S9 (D28); confirmatory-contrast estimates sealed (D27; `gates/S8/S8_REPORT.md`) |
 | S9: power simulation (CPU) | **done 2026-11-03**: horizon 30 sweeps stands; Strong at ρ = 1 = 61 clusters (final sweep; $77 core / $144 all arms) or 48 (window 25–30; $61 / $113); 3 validation flags to the owner (`gates/S9/S9_REPORT.md`) |
 | S10: freeze and pre-registration | **passes 2026-11-03** (D47): freeze commit `17063f5`; final pre-registration `cb10726` (tag `stpt-prereg-v1-final`; freeze re-verification PASS, `osf/FREEZE_VERIFICATION.json`); OSF https://osf.io/sm8xr (DOI 10.17605/OSF.IO/SM8XR); Zenodo DOI 10.5281/zenodo.23924793 |
+| S10 addendum 1: execution review | 7 findings accepted (D48): fixes #2–#7 and clarification #1 in `gates/S10/s10_core.py` and `gates/S10/analysis/confirmatory.py`; collection driver `gates/S10/run/` (CPU-validated); every adversarial case a test (`tests/test_review_fixes.py`); freeze re-verified (`osf/addendum1/`); OSF addendum and confirmation pass pending; **no confirmatory run before both** |
 
 ## Layout
 

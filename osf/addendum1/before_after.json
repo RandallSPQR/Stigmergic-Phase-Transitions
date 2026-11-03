@@ -1,0 +1,74 @@
+{
+ "doc": "Addendum 1, evidence per finding: each defect demonstrated on the registered code (commit cb10726) and its absence\non the fixed code. CPU only, mock model; reads the old files with `git show`, imports them under other names.\n\n  python osf/addendum1/before_after.py -> osf/addendum1/before_after.json\n",
+ "registered_commit": "cb10726e3d359d8094fbd083f336453d6af9280d",
+ "1_initial_vote": {
+  "informed_agents": 50,
+  "registered_code_init_calls": 100,
+  "fixed_code_init_calls": 50,
+  "fixed_uninformed_first_vote_equals_placeholder": true
+ },
+ "2_run_shape": {
+  "both_runs_truncated_to_2900": {
+   "registered_code_accepts": true,
+   "fixed_code_accepts": false
+  },
+  "one_pulsed_branch": {
+   "registered_code_accepts": true,
+   "fixed_code_accepts": false
+  },
+  "same_direction_twice": {
+   "registered_code_accepts": true,
+   "fixed_code_accepts": false
+  },
+  "duplicate_recipient": {
+   "registered_code_accepts": true,
+   "fixed_code_accepts": false
+  },
+  "pulsed_rows_truncated": {
+   "registered_code_accepts": false,
+   "fixed_code_accepts": false
+  },
+  "nan_draw": {
+   "registered_code_accepts": false,
+   "fixed_code_accepts": false
+  }
+ },
+ "3_primary": {
+  "T1_entry_in_primary_table": {
+   "registered_code_accepts": true,
+   "fixed_code_accepts": false
+  },
+  "nan_outcome": {
+   "registered_code_accepts": true,
+   "fixed_code_accepts": false
+  },
+  "caller_metadata_drops_a_cluster": {
+   "registered_code_accepts": true,
+   "fixed_code_accepts": false
+  },
+  "caller_block_labels_change_the_test": {
+   "registered_df_with_scheduled_blocks": 59.9999793844377,
+   "registered_df_with_caller_blocks_all_one": 1.0,
+   "fixed_code_takes_caller_blocks": false
+  },
+  "mock_entry": {
+   "registered_code_accepts": null,
+   "fixed_code_accepts": false
+  }
+ },
+ "5_placeholders": {
+  "registered_max_block_imbalance_A_minus_B": 3,
+  "fixed_max_block_imbalance": 1
+ },
+ "6_arms": {
+  "registered_runs_self_reset_when_not_drawn": true,
+  "registered_runs_T1_when_not_drawn": true,
+  "fixed_runs_self_reset_when_not_drawn": false,
+  "fixed_runs_T1_when_not_drawn": false
+ },
+ "7_initial_wording": {
+  "variant": "w4",
+  "registered_init_prompts_equal_W3": false,
+  "fixed_init_prompts_equal_W3": true
+ }
+}

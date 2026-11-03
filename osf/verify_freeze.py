@@ -12,6 +12,14 @@ Checks, all against the hashes recorded in the freeze commit 17063f58c9fb6f90644
   3. Coordination record (7 files): at the pinned commit, each file matches its frozen hash. At the coordination
      record's current main, each file is still identical, except SEALED.md, whose frozen text must be an exact prefix
      of the current text, with only rows of the openings table appended (D45 step (b)).
+
+Addendum mode (--addendum DECLARED_CHANGES.json; addendum 1, after the independent execution review):
+  1'. every design file NOT declared in the file is byte-identical to its frozen hash; every declared file is listed
+      with its reason and actually differs (a stale declaration fails); osf/PREREGISTRATION.md is byte-identical to the
+      registered commit, and its design parts are identical to the frozen text (check 1);
+  3'. the coordination record's protocol files (PROTOCOL_SPEC.md, PIPELINE.md, DATA_SEPARATION.md, the evidence schema)
+      are byte-identical to the freeze; its logs (DECISIONS.md, AMENDMENTS.md, SEALED.md) only gained lines: every
+      frozen line is still there, in order, unchanged (insert-only).
 """
 import datetime as dt
 import hashlib
@@ -53,8 +61,76 @@ def parts(md):
     return out
 
 
+LOGS = {"DECISIONS.md", "AMENDMENTS.md", "SEALED.md"}
+
+
+def insert_only(old, new):
+    """Every line of `old` is in `new`, in order and unchanged (lines may only have been inserted)."""
+    import difflib
+    a, b = old.splitlines(), new.splitlines()
+    return all(tag == "insert" or tag == "equal" for tag, *_ in difflib.SequenceMatcher(None, a, b, autojunk=False).get_opcodes())
+
+
+def addendum(coord, decl_path, out_path):
+    man = json.loads(git(ROOT, "show", f"{FREEZE}:osf/FREEZE_MANIFEST.json"))
+    decl = json.loads((ROOT / decl_path).read_text())
+    reg = decl["registered_commit"]
+    R = {"run_utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"), "mode": "addendum",
+         "freeze_commit": FREEZE, "registered_commit": reg, "declared": decl["changed"], "design_files": {},
+         "coordination_files": {}}
+    for f, h in man["design_files"].items():
+        same = sha((ROOT / f).read_bytes()) == h
+        if f == PREREG:
+            continue
+        R["design_files"][f] = {"identical": same, "declared": f in decl["changed"],
+                                "pass": (not same) if f in decl["changed"] else same}
+    unknown = sorted(set(decl["changed"]) - set(man["design_files"]))
+    cur = (ROOT / PREREG).read_bytes()
+    frozen = git(ROOT, "show", f"{FREEZE}:{PREREG}")
+    pf, pc = parts(frozen.decode()), parts(cur.decode())
+    R["preregistration"] = {"identical_to_registered_commit": cur == git(ROOT, "show", f"{reg}:{PREREG}"),
+                            "design_parts_identical_to_freeze": [k for k in sorted(set(pf) - FILLED) if pf.get(k) != pc.get(k)] == [],
+                            "declared": PREREG in decl["changed"]}
+    R["preregistration"]["pass"] = R["preregistration"]["identical_to_registered_commit"] and \
+        R["preregistration"]["design_parts_identical_to_freeze"] and not R["preregistration"]["declared"]
+    for f, v in man["sealed_files"].items():
+        R.setdefault("sealed_files", {})[f] = {"identical": sha((ROOT / f).read_bytes()) == v["sha256"]}
+    pin = man["coordination_record"]["commit"]
+    git(coord, "fetch", "-q", "origin", "main")
+    head = git(coord, "rev-parse", "FETCH_HEAD", text=True).strip()
+    for f, h in man["coordination_record"]["files"].items():
+        at_pin = git(coord, "show", f"{pin}:{f}"); now = git(coord, "show", f"{head}:{f}")
+        e = {"at_pinned_commit_matches": sha(at_pin) == h, "identical_at_current_main": sha(now) == h}
+        e["insert_only"] = insert_only(at_pin.decode(), now.decode()) if f in LOGS else None
+        e["pass"] = e["at_pinned_commit_matches"] and (e["insert_only"] if f in LOGS else e["identical_at_current_main"])
+        R["coordination_files"][f] = e
+    R["coordination_record"] = {"pinned_commit": pin, "current_main": head}
+    d = R["design_files"]
+    R["summary"] = {"design_files": len(man["design_files"]),
+                    "unchanged_byte_identical": sum(v["identical"] for v in d.values() if not v["declared"]),
+                    "unchanged_expected": sum(1 for v in d.values() if not v["declared"]),
+                    "declared_changed": sorted(f for f, v in d.items() if v["declared"]),
+                    "declared_but_identical": sorted(f for f, v in d.items() if v["declared"] and v["identical"]),
+                    "undeclared_changes": sorted(f for f, v in d.items() if not v["declared"] and not v["identical"]),
+                    "unknown_declarations": unknown,
+                    "preregistration_pass": R["preregistration"]["pass"],
+                    "sealed_files_identical": sum(v["identical"] for v in R["sealed_files"].values()),
+                    "coordination_files_pass": sum(v["pass"] for v in R["coordination_files"].values()),
+                    "coordination_files": len(R["coordination_files"])}
+    s_ = R["summary"]
+    R["pass"] = (all(v["pass"] for v in d.values()) and not unknown and R["preregistration"]["pass"]
+                 and s_["sealed_files_identical"] == len(man["sealed_files"]) and s_["coordination_files_pass"] == s_["coordination_files"])
+    out_path.write_text(json.dumps(R, indent=1, sort_keys=True) + "\n")
+    print(json.dumps(s_), "| PASS" if R["pass"] else "| FAIL")
+    sys.exit(0 if R["pass"] else 1)
+
+
 def main():
     coord = Path(sys.argv[1])
+    if "--addendum" in sys.argv:
+        decl = sys.argv[sys.argv.index("--addendum") + 1]
+        outp = ROOT / (sys.argv[sys.argv.index("--out") + 1] if "--out" in sys.argv else "osf/addendum1/FREEZE_VERIFICATION_ADDENDUM1.json")
+        return addendum(coord, decl, outp)
     out_path = ROOT / (sys.argv[sys.argv.index("--out") + 1] if "--out" in sys.argv else "osf/FREEZE_VERIFICATION.json")
     man = json.loads(git(ROOT, "show", f"{FREEZE}:osf/FREEZE_MANIFEST.json"))
     if json.loads((ROOT / "osf/FREEZE_MANIFEST.json").read_text()) != man:
