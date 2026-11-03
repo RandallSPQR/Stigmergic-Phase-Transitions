@@ -1,12 +1,14 @@
 # Confirmation packet: the seven fixes (addendum 1)
 
-For the reviewer of the execution review of `cb10726e3d359d8094fbd083f336453d6af9280d`. Fixed code: `1031a83559f70a9ba82739cb7ea10c791d515f3d`
-(tag `stpt-run-v1` on the commit that adds the addendum). Everything below runs on CPU with a mock model; no model call.
+For the reviewer of the execution review of `cb10726e3d359d8094fbd083f336453d6af9280d`. Round 1 fixes:
+`1031a83559f70a9ba82739cb7ea10c791d515f3d` (packet at `bb0f12a`). Round 2 fixes, after your confirmation pass on
+`bb0f12a`: `ROUND2_COMMIT` (tag `stpt-run-v1` on the commit that adds the final addendum). Everything below runs on CPU with a mock model; no model call.
 
 ## Reproduce
 ```bash
 git checkout stpt-run-v1
-python -m pytest -q tests                                   # 93 tests; tests/test_review_fixes.py holds every adversarial case
+python -m pytest -q tests                                   # TESTS_PASSED tests; tests/test_review_fixes.py and tests/test_review_followup.py
+python osf/addendum1/reviewer_cases/stpt_reviewer_followup_bb0f12a.py .   # your round-2 script: every flag false
 python osf/addendum1/before_after.py                        # each defect on cb10726, and its absence on the fix
 python gates/S10/run/validate_driver_cpu.py /tmp/drv        # driver criteria D1-D5 (about 1 min)
 python gates/S10/analysis/validate_confirmatory.py          # synthetic validation of the analysis (about 20 min)
@@ -30,15 +32,27 @@ Also: `tests/test_s10_core.py::test_after_the_initial_state_the_runner_is_s8s`. 
 runner reproduces S8's live, blind, pulsed and self-reset branches byte for byte, so nothing after the initial state
 changed.
 
+## Round 2 (your confirmation pass on `bb0f12a`)
+
+| | where the fix is | tests | evidence |
+|---|---|---|---|
+| R2.1 cap stop swallowed by retries | `gates/S10/run/driver.py`: `Stop(BaseException)`, `CHECK_EVERY = 10` | `test_stop_escapes_the_retry_handler`, `test_cap_stop_bounds_calls`, driver validation D6 | `reviewer_cases/results_before_after.json`: 3,050 → 209 calls |
+| R2.2 altered records accepted | `gates/S10/analysis/confirmatory.py`: `verify_record`, `_verify_rows` (called by `outcomes`) | `test_recorded_value_tampering_refused` (28 cases: initial vote, informed initial vote, placeholder, init call flag, live / blind / pulse / self-reset vote flipped, missing call with a changed vote, own vote, displayed contacts, pulse display override, agent, draw, letter mapping, directions, recipients, altered contacts, saved state, self-reset present when not drawn / removed, start IDs incomplete / extra / two starts, run key, truth, T, undrawn arm) | each refusal names the recomputed field |
+| R2.3 block split on resume | `driver.py`: block folder, `_finalize`, `block_abandoned`; `confirmatory.py` `check_table`: each scheduled block one start per model | `test_4_cap_kill_then_resume_reruns_the_block_in_one_start`, `test_3_start_layout_not_matching_scheduled_blocks_refused` (3 layouts), driver validation D2 | split → one start |
+| R2.4 hard-kill gap unmetered | `driver.py` `Ledger`: wall clock, persisted open interval, `close()` on a clean stop | `test_unclosed_interval_is_charged`, driver validation D4/D7 (real SIGKILL; the gap is charged) | $0.01 → $1.01 |
+| R2.5 incomplete start-ID map | `confirmatory.py` `verify_record` | `start_ids_only_init`, `start_ids_extra_branch`, `start_ids_two_starts` | refused |
+
 ## Not changed
 `stpt/board.py` (byte-identical), prompts, clusters, bank, parameters, T values, the analysis model and its numbers
 (the synthetic validation reproduces run 2 exactly), the registered text. Design files changed, with reasons:
 `osf/addendum1/DECLARED_CHANGES.json`.
 
 ## Known limits
+- A recorded logit altered together with its vote (a consistent pair) cannot be detected from the record; detecting it
+  would need the model to be read again. Every other recorded value is recomputed.
 - `pod.py` and `s10_driver.sh` (real vLLM control) mirror the S8 pod code but have not run on a GPU. The first paid use
   starts with one smoke block, after the owner's OK.
 - The proposed caps are the S9 cost model split by stage, scaled to the accepted totals; the owner approves them
   before any paid run (the driver refuses a caps file not marked APPROVED).
-- Branch-level resume reuses checkpoints only within one server start. After a cap stop the server is stopped, so a
-  resumed arm restarts from its initial state, and the partial branches are kept under `abandoned/` with a log entry.
+- Resume reuses checkpoints only within one server start (re-attach after a hard kill). After a clean stop the server
+  is stopped, so an interrupted block reruns whole in the next start; its earlier output is kept under `abandoned/`.
