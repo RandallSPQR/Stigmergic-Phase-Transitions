@@ -7,13 +7,18 @@ Criteria, fixed before the run (each must hold):
      cluster and arm (the driver adds only checkpoints and start IDs); T is the model's primary T (1.0 in the T1 arm);
      every arm's branches share one server start; each block has its own start; the analysis accepts every primary
      record (exact shape, pairing, branch alignment, one start).
-  D2 cap kill mid-cluster: a stage cap reached inside a branch stops the driver mid-cluster; nothing is recorded for
-     the unfinished arm; resuming (new server start, raised cap) abandons the partial branches (logged), restarts that
-     arm, never re-runs a finished arm, and ends with records identical to D1 (apart from start IDs).
+  D2 cap kill mid-cluster: a stage cap reached inside a branch stops the driver mid-cluster; nothing becomes a final
+     record for the interrupted block; resuming (new server start, raised cap) abandons the block's output (logged),
+     reruns the whole block in one start, makes each final record once, and ends with records identical to D1 (apart
+     from start IDs), every block in exactly one start (revised after the confirmation pass on bb0f12a).
   D3 80% flag: the driver stops at 80% of a stage cap; a resume without the owner's acknowledgement stops again before
      any server start or model call; with it, the run completes.
   D4 hard kill (SIGKILL of the driver process while the server keeps running): the resumed driver re-attaches to the
      same start, reuses the branches checkpointed in it, runs only the rest, and ends with records identical to D1.
+  D6 cap precision (confirmation pass): with a $0.20 cap at $1 per 1,000 calls the driver stops within CHECK_EVERY
+     calls of the cap; a Stop raised inside a model call is not retried by the harness.
+  D7 hard-kill billing (confirmation pass): the time between a SIGKILL of the driver and the resume (server alive) is
+     charged to the stage that was open.
   D5 refusals: failed environment (pipeline pin) check -> stop before any model call; unknown model; a stage without
      a cap; a cluster that is not one of the 61 frozen clusters; an undrawn arm.
 """
@@ -38,6 +43,7 @@ import confirmatory as CA  # noqa: E402
 import driver as DR  # noqa: E402
 import s10_core as C  # noqa: E402
 import s7_core  # noqa: E402
+from stpt import board as B  # noqa: E402
 
 MODEL = "gemma-2-9b-it"
 RATE = 3.6                        # USD per metered hour; with the call clock below (1 s per call), $1 per 1,000 calls
@@ -87,8 +93,10 @@ class ClockedKernel:
         return self.k(msgs)
 
 
-def make_driver(out, caps, ack=(), env_ok=True, slow=0.0, model=MODEL):
+def make_driver(out, caps, ack=(), env_ok=True, slow=0.0, model=MODEL, wall=False):
     clock = CallClock(); kern = ClockedKernel(clock, slow)
+    if wall:
+        clock = time.time
 
     def env_check(m):
         if not env_ok:
@@ -143,7 +151,7 @@ def main():
         ok_start &= len(ids) == 1 and rec["manifest"]["server_start"]["id"] in ids
         starts_by_block.setdefault(frozen[j]["start_block"], set()).update(ids)
         if arm == "primary":
-            o = CA.outcomes(res, frozen[j]["truth"])
+            o = CA.outcomes(res)
             ok_analysis &= o["server_start"] is not None and o["identity"]["arm"] == "primary"
     expected_arms = sum(len(C.arms_for(frozen[j], MODEL)) for j in frozen if frozen[j]["start_block"] in blocks)
     one_start_per_block = all(len(v) == 1 for v in starts_by_block.values()) and len({next(iter(v)) for v in starts_by_block.values()}) == len(blocks)
@@ -163,17 +171,24 @@ def main():
     drv, _ = make_driver(d2, {CORE: cap, SEC: 1e9}, ack=(CORE,))
     s1 = drv.run(stages=("core", "secondary"), blocks=blocks)
     R2a = records(d2); ev = events(d2)
-    partial = list((d2 / MODEL / "partial").glob("*")) if (d2 / MODEL / "partial").exists() else []
-    stopped_mid = s1.startswith("stopped") and "cap reached" in s1 and len(partial) == 1
+    blk = d2 / MODEL / "blocks"
+    in_block = sorted(p.name for p in blk.rglob("*") if p.is_dir() and p.parent.name == "partial") if blk.exists() else []
+    stopped_mid = s1.startswith("stopped") and "cap reached" in s1 and len(in_block) == 1 and len(R2a) == 0
     drv, _ = make_driver(d2, {CORE: 1e9, SEC: 1e9})
     s2 = drv.run(stages=("core", "secondary"), blocks=blocks)
     R2 = records(d2); ev = events(d2)
-    abandoned = [e for e in ev if e["event"] == "partial_abandoned"]
-    done_twice = len([e for e in ev if e["event"] == "arm_done"]) != len({(e["cluster"], e["arm"]) for e in ev if e["event"] == "arm_done"})
-    out["criteria"]["D2"] = {"first_status": s1, "records_before_resume": len(R2a), "partial_dirs_at_stop": len(partial),
-                             "stopped_mid_cluster": stopped_mid, "resume_status": s2, "partials_abandoned": len(abandoned),
-                             "an_arm_recorded_twice": done_twice, "records_equal_D1": same_as_d1(R2)}
-    out["criteria"]["D2"]["pass"] = stopped_mid and s2 == "complete" and len(abandoned) == 1 and not done_twice and same_as_d1(R2)
+    abandoned = [e for e in ev if e["event"] == "block_abandoned"]
+    final = [e["record"] for e in ev if e["event"] == "arm_final"]
+    by_block = {}
+    for n, r_ in R2.items():
+        by_block.setdefault(frozen[r_["result"]["cluster"]]["start_block"], set()).update(r_["result"]["server_start_ids"].values())
+    one_start_each = all(len(v) == 1 for v in by_block.values())
+    out["criteria"]["D2"] = {"first_status": s1, "final_records_before_resume": len(R2a), "partial_arm_dirs_at_stop": in_block,
+                             "stopped_mid_cluster": stopped_mid, "resume_status": s2, "blocks_abandoned": len(abandoned),
+                             "final_records_made_once": len(final) == len(set(final)) == len(R2), "every_block_in_one_start": one_start_each,
+                             "records_equal_D1": same_as_d1(R2)}
+    out["criteria"]["D2"]["pass"] = stopped_mid and s2 == "complete" and len(abandoned) == 1 and len(final) == len(set(final)) == len(R2) \
+        and one_start_each and same_as_d1(R2)
     print("D2", out["criteria"]["D2"], round(time.time() - t0), "s", flush=True)
 
     # ---- D3 80% flag
@@ -207,20 +222,44 @@ def main():
         time.sleep(0.05)
     ev_kill = events(d4)
     server_alive = json.loads((d4 / "fake_server.json").read_text())["alive"]
-    drv, _ = make_driver(d4, BIG)
+    t_kill = time.time()
+    time.sleep(2.0)                                                     # downtime with the server alive
+    drv, _ = make_driver(d4, BIG, wall=True)
     s2 = drv.run(stages=("core", "secondary"), blocks=blocks)
+    gaps = json.loads((d4 / "ledger.json").read_text())["unclosed_gaps"]
     ev = events(d4)[len(ev_kill):]
     attached = any(e["event"] == "server_attach" for e in ev)
-    no_abandon = not any(e["event"] == "partial_abandoned" for e in ev)
+    no_abandon = not any(e["event"] in ("partial_abandoned", "block_abandoned") for e in ev)
+    gap_charged = len(gaps) == 1 and gaps[0]["seconds"] >= 2.0
     # the interrupted arm: its branches checkpointed before the kill are not run again
     pre = [(e["cluster"], e["arm"], e["branch"]) for e in ev_kill if e["event"] == "branch_done"]
     post = [(e["cluster"], e["arm"], e["branch"]) for e in ev if e["event"] == "branch_done"]
     rerun = sorted(set(pre) & set(post))
     out["criteria"]["D4"] = {"killed_after_branches": killed_after, "server_alive_after_kill": server_alive,
-                             "resume_status": s2, "re_attached_same_start": attached, "no_partial_abandoned": no_abandon,
+                             "resume_status": s2, "re_attached_same_start": attached, "nothing_abandoned": no_abandon, "kill_gap_charged": gaps,
                              "branches_rerun": rerun, "records_equal_D1": same_as_d1(records(d4))}
-    out["criteria"]["D4"]["pass"] = bool(killed_after) and server_alive and s2 == "complete" and attached and no_abandon and not rerun and same_as_d1(records(d4))
+    out["criteria"]["D4"]["pass"] = bool(killed_after) and server_alive and s2 == "complete" and attached and no_abandon and gap_charged and not rerun and same_as_d1(records(d4))
     print("D4", out["criteria"]["D4"], round(time.time() - t0), "s", flush=True)
+
+    # ---- D6 cap precision; a Stop inside a model call is not retried
+    d6 = base / "D6"
+    drv, kern = make_driver(d6, {CORE: 0.2, SEC: 1e9}, ack=(CORE,))
+    s6 = drv.run(stages=("core",), blocks=[1])
+    calls6 = int(kern.clock.t)
+    tries = []
+
+    def stopper(msgs):
+        tries.append(1); raise DR.Stop("cap")
+    cb = C.make_board(frozen[1]["spec"], frozen[1]["alloc"], frozen[1]["adj"], frozen[1]["run_key"], True, 1.0)
+    try:
+        B.update(cb, B.State(0, ["A"] * 100), stopper); escaped = False
+    except DR.Stop:
+        escaped = True
+    out["criteria"]["D6"] = {"status": s6, "calls": calls6, "bound": 200 + DR.CHECK_EVERY, "stop_escapes_retry": escaped,
+                             "calls_in_retried_call": len(tries)}
+    out["criteria"]["D6"]["pass"] = "cap reached" in s6 and calls6 <= 200 + DR.CHECK_EVERY and escaped and len(tries) == 1
+    print("D6", out["criteria"]["D6"], flush=True)
+    out["criteria"]["D7"] = {"see": "D4 kill_gap_charged", "pass": out["criteria"]["D4"]["pass"] and bool(out["criteria"]["D4"]["kill_gap_charged"])}
 
     # ---- D5 refusals
     r = {}
@@ -259,7 +298,7 @@ def main():
 
 
 def child(out):
-    drv, _ = make_driver(out, BIG, slow=0.0004)
+    drv, _ = make_driver(out, BIG, slow=0.0004, wall=True)
     drv.run(stages=("core", "secondary"), blocks=[1, 2])
 
 

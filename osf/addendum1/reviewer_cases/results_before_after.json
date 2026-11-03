@@ -1,0 +1,55 @@
+{
+ "script": "osf/addendum1/reviewer_cases/stpt_reviewer_followup_bb0f12a.py (reviewer's, verbatim)",
+ "on_bb0f12a": {
+  "initial_vote_valid_letter_changed_accepted": true,
+  "live_vote_changed_hashes_unchanged_accepted": true,
+  "missing_flag_but_vote_changes_accepted": true,
+  "missing_branch_start_ids_accepted": true,
+  "cap_stop_actual_calls": 3050,
+  "cap_spent_usd": 3.0500000000000016,
+  "cap_overshot_at_branch_boundary": true,
+  "resumed_block_cluster_starts": {
+   "3": [
+    "cpu/start2/t"
+   ],
+   "2": [
+    "cpu/start2/t"
+   ],
+   "4": [
+    "cpu/start2/t"
+   ],
+   "1": [
+    "cpu/start1/t"
+   ]
+  },
+  "resumed_block_split": true,
+  "gap_metered_usd": 0.01,
+  "unmetered_billable_gap": true
+ },
+ "on_fixed_tree": {
+  "initial_vote_valid_letter_changed_accepted": false,
+  "live_vote_changed_hashes_unchanged_accepted": false,
+  "missing_flag_but_vote_changes_accepted": false,
+  "missing_branch_start_ids_accepted": false,
+  "cap_stop_actual_calls": 209,
+  "cap_spent_usd": 0.20900000000000005,
+  "cap_overshot_at_branch_boundary": false,
+  "resumed_block_cluster_starts": {
+   "3": [
+    "cpu/start2/t"
+   ],
+   "2": [
+    "cpu/start2/t"
+   ],
+   "4": [
+    "cpu/start2/t"
+   ],
+   "1": [
+    "cpu/start2/t"
+   ]
+  },
+  "resumed_block_split": false,
+  "gap_metered_usd": 1.01,
+  "unmetered_billable_gap": false
+ }
+}

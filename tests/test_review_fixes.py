@@ -166,10 +166,21 @@ def test_3_caller_metadata_not_accepted():
 
 
 def test_3_block_labels_come_from_recorded_starts():
-    one = CA.primary(_table(start=lambda m, j: f"{m}/single-start"), generalisation=False)
-    assert one["blocks"]["n_recorded_starts"] == 1 and not one["blocks"]["matches_scheduled_blocks"]
+    named = CA.primary(_table(start=lambda m, j: f"{m}/pod-x/start{100 - F[j]['start_block']}"), generalisation=False)
+    assert named["blocks"]["n_recorded_starts"] == 16 and named["blocks"]["matches_scheduled_blocks"]
     _, blocks, _ = CA.check_table(_table())
     assert len(set(blocks)) == 16
+
+
+@pytest.mark.parametrize("layout", ["one_start_for_everything", "block_split_1_vs_2to4", "two_blocks_share_a_start"])
+def test_3_start_layout_not_matching_scheduled_blocks_refused(layout):
+    if layout == "one_start_for_everything":
+        st = lambda m, j: f"{m}/single"
+    elif layout == "block_split_1_vs_2to4":
+        st = lambda m, j: f"{m}/start{F[j]['start_block']}" + ("b" if j in (2, 3, 4) else "")
+    else:
+        st = lambda m, j: f"{m}/start{min(F[j]['start_block'], 2) if F[j]['start_block'] <= 3 else F[j]['start_block']}"
+    refuses(CA.primary, _table(start=st), generalisation=False)
 
 
 @pytest.mark.parametrize("case", ["extra_cluster", "missing_cluster", "llama_included", "no_start", "arm_T1", "T_one",
@@ -343,7 +354,7 @@ def test_4_records_carry_one_start_per_arm_and_T(tmp_path):
             CA.outcomes(r, F[r["cluster"]]["truth"])
 
 
-def test_4_cap_kill_then_resume_without_duplication(tmp_path):
+def test_4_cap_kill_then_resume_reruns_the_block_in_one_start(tmp_path):
     class Clock:
         t = 0.0
 
@@ -357,13 +368,17 @@ def test_4_cap_kill_then_resume_without_duplication(tmp_path):
     caps = {f"{M}:core": 10.0, f"{M}:secondary": 1e9}                    # $1 per 1,000 calls: stops inside cluster 2
     d = DR.Driver(M, K(), _Server(), lambda m: {}, caps, tmp_path, 3.6, {}, mock=True, clock=clk, ack_flags=(f"{M}:core",))
     s1 = d.run(blocks=[1])
-    assert "cap reached" in s1 and len(list((tmp_path / M / "partial").glob("*"))) == 1
+    assert "cap reached" in s1 and not list((tmp_path / M).glob("rec_*.json.gz"))          # nothing final mid-block
     d = DR.Driver(M, K(), _Server(), lambda m: {}, {f"{M}:core": 1e9}, tmp_path, 3.6, {}, mock=True, clock=clk)
     d.ledger.d["spent_usd"] = {}                                          # owner raised the cap
     assert d.run(blocks=[1]) == "complete"
+    import gzip
+    starts = {json.loads(gzip.decompress(p.read_bytes()))["result"]["cluster"]:
+              set(json.loads(gzip.decompress(p.read_bytes()))["result"]["server_start_ids"].values()) for p in (tmp_path / M).glob("rec_*.json.gz")}
+    assert sorted(starts) == [1, 2, 3, 4] and len(set().union(*starts.values())) == 1
     ev = [json.loads(x) for x in (tmp_path / "events.jsonl").read_text().splitlines()]
-    done = [(e["cluster"], e["arm"]) for e in ev if e["event"] == "arm_done"]
-    assert len(done) == len(set(done)) == 4 and any(e["event"] == "partial_abandoned" for e in ev)
+    final = [e["record"] for e in ev if e["event"] == "arm_final"]
+    assert len(final) == len(set(final)) == 4 and sum(e["event"] == "block_abandoned" for e in ev) == 1
 
 
 def test_4_reused_start_id_refused(tmp_path):

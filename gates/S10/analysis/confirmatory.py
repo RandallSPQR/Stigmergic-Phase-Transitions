@@ -22,9 +22,14 @@ Input checks (independent execution review of cb10726, addendum 1; every failure
   #2 a run must have exactly H x N = 3,000 updates (live and blind), with consecutive steps; a rule-(i) record must have
      exactly two pulsed branches, toward A and toward B, each with r = 10 distinct recipients in 0..99 and exactly
      (D + W) x N rows aligned with the main run; every row is well formed and every number in it finite.
+     Follow-up (confirmation pass on bb0f12a): every recorded value is recomputed (verify_record): agents, draws and
+     letter mappings from the run key; each agent's own vote and displayed contacts from the replayed state (pulse
+     displays included); each vote from its logit and u at T, or kept when the call was missing; initial votes from
+     the block-balanced placeholders and the informed calls; pulse directions, recipients and altered contacts; a
+     start ID for every branch of the arm.
   #3 primary() takes the cluster universe from the frozen, hashed 61-cluster manifest only (no caller metadata); the
      block label of a cluster is built from the server-start IDs recorded in its run records (all branches of a
-     (model, cluster) must share one start); every entry must be the primary arm (model's primary T, W3 for the
+     (model, cluster) must share one start, and for every model each scheduled block of 4 must be exactly one start); every entry must be the primary arm (model's primary T, W3 for the
      initial call and the updates, rule (i), the frozen parameters, the cluster's run key) and not a mock run; NaN or
      infinite values are refused at every input.
 """
@@ -44,6 +49,12 @@ BOUND, FAMILY_ALPHA, TOST_ALPHA = 0.03, 0.05, 0.05
 N = 100
 PRM = {"H": 30, "t0": 5, "D": 3, "W": 5, "r": 10, "k": 3}
 ROOT = Path(__file__).resolve().parents[3]
+import sys  # noqa: E402
+for _p in (str(ROOT), str(ROOT / "gates/S10")):
+    if _p not in sys.path:
+        sys.path.insert(0, _p)
+import s10_core as RC  # noqa: E402
+from stpt import board as BB  # noqa: E402
 MANIFEST_SHA256 = "dcdac6768510baa8b417945abab5206b9bd06a96322392374e174170058c351d"   # osf/FREEZE_MANIFEST.json
 
 
@@ -149,10 +160,156 @@ def check_branch(res, t0):
                 raise ValueError("pulsed branch does not share the main trajectory's agents and draws")
 
 
-def outcomes(res, truth, t0=5, D=3, W=5, window=(25, 30)):
-    if truth not in ("A", "B"):
-        raise Refused("truth must be A or B")
-    check_record(res, t0=t0, D=D, W=W)
+
+
+_PH = {}
+
+
+def _placeholders(c):
+    if c["cluster"] not in _PH:
+        _PH.update(RC.block_placeholders([x for x in RC.load_clusters().values() if x["start_block"] == c["start_block"]]))
+    return _PH[c["cluster"]]
+
+
+def _drawn(u, lA, T):
+    """The vote the protocol draws (u < sigma(l / T)); None if u is within rounding of the threshold."""
+    p = BB.sigmoid(lA / T)
+    return None if abs(u - p) < 1e-6 else ("A" if u < p else "B")
+
+
+def _verify_rows(rows, v, c, T, live, first_step, what, override=None):
+    """Recompute every row from the run key and the replayed state (review follow-up): agent, draw, letter mapping,
+    own vote before the update, displayed contacts, and the vote (sampled at T, or kept when the call was missing).
+    `override(t, viewer, contact)` returns the pulse display or None. Mutates v."""
+    rk, adj = c["run_key"], c["adj"]
+    for k, r in enumerate(rows):
+        t = first_step + k
+        step, agent, own, shown, vote, lA, u, miss, amap = r
+        if agent != int(BB.unif(rk, "agent", t) * N) or u != BB.unif(rk, "draw", t):
+            raise Refused(f"{what}: row {k} agent or draw is not the run key's")
+        if amap != int(BB.layout_for(rk, "upd", t, len(adj[agent]))["letter_of_content"]["A"] == "A"):
+            raise Refused(f"{what}: row {k} letter mapping is not the run key's")
+        if own != v[agent]:
+            raise Refused(f"{what}: row {k} own vote {own} does not match the replayed state ({v[agent]})")
+        if live:
+            exp = "".join((override(t, agent, j) if override else None) or v[j] for j in adj[agent])
+        else:
+            exp = ""
+        if shown != exp:
+            raise Refused(f"{what}: row {k} displayed contacts do not match the replayed state")
+        if miss == 1:
+            if vote != own:
+                raise Refused(f"{what}: row {k} is a missing call but the vote changed (the previous vote is kept)")
+        else:
+            d = _drawn(u, lA, T)
+            if d is not None and vote != d:
+                raise Refused(f"{what}: row {k} vote {vote} is not the vote drawn from its logit and u at T")
+        v[agent] = vote
+
+
+def verify_record(res, truth=None, H=30, t0=5, D=3, W=5):
+    """Review #2 and its follow-up: the run is one arm of one frozen cluster, with the registered shape, and every
+    recorded value is the one the protocol produces from the run key, the frozen cluster and the recorded logits.
+    Returns the frozen cluster."""
+    frozen = RC.load_clusters()
+    j = res.get("cluster")
+    if j not in frozen:
+        raise Refused(f"cluster {j!r} is not one of the 61 frozen clusters")
+    c = frozen[j]
+    if res.get("run_key") != c["run_key"]:
+        raise Refused("run key is not the frozen cluster's")
+    if truth is not None and truth != c["truth"]:
+        raise Refused("truth differs from the frozen cluster's")
+    model, arm = res.get("model"), res.get("arm")
+    spec = RC.arm_spec(c, model, arm)
+    for k in ("T", "wording", "rule"):
+        if res.get(k) != spec[k]:
+            raise Refused(f"{k} {res.get(k)!r} is not the arm's ({spec[k]!r})")
+    if res.get("init_wording") != "w3" or res.get("prm") != PRM:
+        raise Refused("initial wording or run parameters differ from the registered ones")
+    check_record(res, H=H, t0=t0, D=D, W=W)
+    T, rk = spec["T"], c["run_key"]
+    # server starts: one ID for every branch of the arm (D14)
+    starts = res.get("server_start_ids")
+    names = RC.branch_names(c, model, arm)
+    if not isinstance(starts, dict) or sorted(starts) != sorted(names):
+        raise Refused(f"server-start IDs must be recorded for exactly the branches {names}")
+    ids = set(starts.values())
+    if len(ids) != 1 or not all(isinstance(x, str) and x for x in ids):
+        raise Refused("the branches of one run were not all in one server start (paired contrasts must be; D14)")
+    # initial state
+    v0 = res["initial_votes"]
+    if spec["rule"] == "ii":
+        if res.get("init") != [] or v0 != ["A" if BB.unif(rk, "init-rand", i) < 0.5 else "B" for i in range(N)]:
+            raise Refused("rule (ii) initial votes are not the run key's 50/50 start")
+    else:
+        ph = _placeholders(c)
+        informed = {int(pos) for pos, ids_ in c["alloc"]["holders"].items() if ids_}
+        if res.get("placeholders") != ph:
+            raise Refused("placeholders are not the block-balanced placeholders of the frozen layout")
+        init = res.get("init")
+        if not isinstance(init, list) or [x[0] for x in init] != list(range(N)):
+            raise Refused("initial records missing or out of order")
+        for i, (agent, phi, vote, call, lA, miss) in enumerate(init):
+            if phi != ph[i] or vote != v0[i] or call != int(i in informed):
+                raise Refused(f"initial record {i} does not match the placeholder, the initial vote or the evidence")
+            if not call or miss:
+                if vote != ph[i] or lA is not None:
+                    raise Refused(f"initial vote {i} must be the placeholder (uninformed, or a missing call)")
+            else:
+                if not _finite(lA):
+                    raise Refused(f"initial record {i}: non-finite logit")
+                d = _drawn(BB.unif(rk, "init-draw", i), lA, T)
+                if d is not None and vote != d:
+                    raise Refused(f"initial vote {i} is not the vote drawn from its logit at T")
+    # main runs
+    _verify_rows(res["live"], list(v0), c, T, True, 0, "live run")
+    _verify_rows(res["blind"], list(v0), c, T, False, 0, "blind run")
+    if spec["rule"] == "ii":
+        if res.get("self_reset") is not None:
+            raise Refused("a rule (ii) run has no self-reset branch")
+        return c
+    # pulsed branches from the live run's saved state at t0
+    vt0 = list(v0)
+    for r in res["live"][:t0 * N]:
+        vt0[r[1]] = r[4]
+    dirs = ["A", "B"] if BB.unif(rk, "direction-order") < 0.5 else ["B", "A"]
+    adj = c["adj"]
+    for d_i, p in enumerate(res["pulses"]):
+        rec = BB.perm(N, rk, "recipients", d_i)[:PRM["r"]]
+        altered = {str(x): [adj[x][q] for q in BB.perm(len(adj[x]), rk, "pulse", f"pulse{d_i}", x)[:PRM["k"]]] for x in rec}
+        if p.get("index") != d_i or p.get("direction") != dirs[d_i] or p.get("recipients") != rec or p.get("altered") != altered \
+                or p.get("votes_at_pulse") != vt0:
+            raise Refused(f"pulse {d_i}: direction, recipients, altered contacts or saved state are not the protocol's")
+        end_on = (t0 + D) * N
+        alt = {(int(x), q) for x, qs in altered.items() for q in qs}
+        ov = lambda t, viewer, q, _d=dirs[d_i], _a=alt, _e=end_on: _d if (t < _e and (viewer, q) in _a) else None
+        vp = list(vt0)
+        _verify_rows(p["rows"][:D * N], vp, c, T, True, t0 * N, f"pulse {d_i}", ov)
+        restore = list(vp)
+        _verify_rows(p["rows"][D * N:], vp, c, T, True, end_on, f"pulse {d_i}")
+        sr = res.get("self_reset")
+        if spec["self_reset"] and d_i == c["cluster"] % 2:
+            if not sr or sr.get("pulse_index") != d_i or sr.get("start_step") != end_on:
+                raise Refused("self-reset branch missing or misplaced")
+            vs = list(restore)
+            changed = sorted(int(x) for x in rec if vs[x] != vt0[x])
+            for x in rec:
+                vs[x] = vt0[x]
+            if sorted(sr.get("recipients_reset", [])) != changed:
+                raise Refused("self-reset: recipients reset do not match the replayed state")
+            _check_rows(sr.get("rows"), end_on, W * N, "self-reset")
+            _verify_rows(sr["rows"], vs, c, T, True, end_on, "self-reset")
+    if not spec["self_reset"] and res.get("self_reset") is not None:
+        raise Refused("a self-reset branch was recorded but not drawn")
+    return c
+
+
+def outcomes(res, truth=None, t0=5, D=3, W=5, window=(25, 30)):
+    """Outcomes of one verified run record (verify_record). The truth is the frozen cluster's; a caller's truth, if
+    given, must equal it."""
+    c = verify_record(res, truth, t0=t0, D=D, W=W)
+    truth = c["truth"]
     check_pairing(res)
     v0 = res["initial_votes"]
     _, sl, _ = replay(v0, res["live"], every=N)
@@ -182,13 +339,7 @@ def outcomes(res, truth, t0=5, D=3, W=5, window=(25, 30)):
                     "persistence_exposed": float(np.mean(exp_)) if exp_ else None})
     out["identity"] = {k: res.get(k) for k in ("model", "cluster", "arm", "T", "wording", "init_wording", "rule", "run_key",
                                                "prm", "mock")}
-    starts = res.get("server_start_ids")
-    out["server_start"] = None
-    if isinstance(starts, dict) and starts:
-        ids = set(starts.values())
-        if len(ids) != 1 or None in ids:
-            raise Refused("the branches of one run were not all in one server start (paired contrasts must be; D14)")
-        out["server_start"] = ids.pop()
+    out["server_start"] = next(iter(set(res["server_start_ids"].values())))
     return out
 
 
@@ -333,6 +484,15 @@ def check_table(table, models=CONF, contrasts=("board", "persistence")):
             if not _finite(o.get(ctr)):
                 raise Refused(f"({m}, cluster {j}): {ctr} is missing or not finite")
     clusters = sorted(U)
+    for m in models:                       # the registered layout: clusters go to starts in blocks of 4 (D14, §4)
+        by_block = {}
+        for j in clusters:
+            by_block.setdefault(U[j]["scheduled_block"], set()).add(table[(m, j)]["server_start"])
+        if any(len(v) != 1 for v in by_block.values()):
+            split = {b_: sorted(v) for b_, v in by_block.items() if len(v) != 1}
+            raise Refused(f"{m}: a scheduled block of clusters ran in more than one server start: {split}")
+        if len({next(iter(v)) for v in by_block.values()}) != len(by_block):
+            raise Refused(f"{m}: two scheduled blocks share one server start")
     blocks = ["|".join(str(table[(m, j)]["server_start"]) for m in models) for j in clusters]
     stories = [U[j]["story"] for j in clusters]
     return clusters, blocks, stories

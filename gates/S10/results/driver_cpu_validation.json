@@ -1,5 +1,5 @@
 {
- "doc": "CPU validation of the confirmatory driver (review #4, addendum 1). Mock model only; no GPU, no API call.\n\n  python gates/S10/run/validate_driver_cpu.py [out_dir] -> gates/S10/results/driver_cpu_validation.json\n\nCriteria, fixed before the run (each must hold):\n  D1 uninterrupted run (Gemma-2-9B, blocks 1-2, core + secondary arms): every record equals run_cluster() for that\n     cluster and arm (the driver adds only checkpoints and start IDs); T is the model's primary T (1.0 in the T1 arm);\n     every arm's branches share one server start; each block has its own start; the analysis accepts every primary\n     record (exact shape, pairing, branch alignment, one start).\n  D2 cap kill mid-cluster: a stage cap reached inside a branch stops the driver mid-cluster; nothing is recorded for\n     the unfinished arm; resuming (new server start, raised cap) abandons the partial branches (logged), restarts that\n     arm, never re-runs a finished arm, and ends with records identical to D1 (apart from start IDs).\n  D3 80% flag: the driver stops at 80% of a stage cap; a resume without the owner's acknowledgement stops again before\n     any server start or model call; with it, the run completes.\n  D4 hard kill (SIGKILL of the driver process while the server keeps running): the resumed driver re-attaches to the\n     same start, reuses the branches checkpointed in it, runs only the rest, and ends with records identical to D1.\n  D5 refusals: failed environment (pipeline pin) check -> stop before any model call; unknown model; a stage without\n     a cap; a cluster that is not one of the 61 frozen clusters; an undrawn arm.\n",
+ "doc": "CPU validation of the confirmatory driver (review #4, addendum 1). Mock model only; no GPU, no API call.\n\n  python gates/S10/run/validate_driver_cpu.py [out_dir] -> gates/S10/results/driver_cpu_validation.json\n\nCriteria, fixed before the run (each must hold):\n  D1 uninterrupted run (Gemma-2-9B, blocks 1-2, core + secondary arms): every record equals run_cluster() for that\n     cluster and arm (the driver adds only checkpoints and start IDs); T is the model's primary T (1.0 in the T1 arm);\n     every arm's branches share one server start; each block has its own start; the analysis accepts every primary\n     record (exact shape, pairing, branch alignment, one start).\n  D2 cap kill mid-cluster: a stage cap reached inside a branch stops the driver mid-cluster; nothing becomes a final\n     record for the interrupted block; resuming (new server start, raised cap) abandons the block's output (logged),\n     reruns the whole block in one start, makes each final record once, and ends with records identical to D1 (apart\n     from start IDs), every block in exactly one start (revised after the confirmation pass on bb0f12a).\n  D3 80% flag: the driver stops at 80% of a stage cap; a resume without the owner's acknowledgement stops again before\n     any server start or model call; with it, the run completes.\n  D4 hard kill (SIGKILL of the driver process while the server keeps running): the resumed driver re-attaches to the\n     same start, reuses the branches checkpointed in it, runs only the rest, and ends with records identical to D1.\n  D6 cap precision (confirmation pass): with a $0.20 cap at $1 per 1,000 calls the driver stops within CHECK_EVERY\n     calls of the cap; a Stop raised inside a model call is not retried by the harness.\n  D7 hard-kill billing (confirmation pass): the time between a SIGKILL of the driver and the resume (server alive) is\n     charged to the stage that was open.\n  D5 refusals: failed environment (pipeline pin) check -> stop before any model call; unknown model; a stage without\n     a cap; a cluster that is not one of the 61 frozen clusters; an undrawn arm.\n",
  "criteria": {
   "D1": {
    "status": "complete",
@@ -13,19 +13,22 @@
    "pass": true
   },
   "D2": {
-   "first_status": "stopped: stage gemma-2-9b-it:core: cap reached ($18.85 of $18.36)",
-   "records_before_resume": 2,
-   "partial_dirs_at_stop": 1,
+   "first_status": "stopped: stage gemma-2-9b-it:core: cap reached ($18.37 of $18.36)",
+   "final_records_before_resume": 0,
+   "partial_arm_dirs_at_stop": [
+    "c3__primary"
+   ],
    "stopped_mid_cluster": true,
    "resume_status": "complete",
-   "partials_abandoned": 1,
-   "an_arm_recorded_twice": false,
+   "blocks_abandoned": 1,
+   "final_records_made_once": true,
+   "every_block_in_one_start": true,
    "records_equal_D1": true,
    "pass": true
   },
   "D3": {
-   "first_status": "stopped: stage gemma-2-9b-it:core: 80% of the cap reached ($23.45 of $28.66); flagged to the owner, awaiting acknowledgement",
-   "unacknowledged_resume": "stopped: stage gemma-2-9b-it:core: 80% of the cap reached ($23.45 of $28.66); flagged to the owner, awaiting acknowledgement",
+   "first_status": "stopped: stage gemma-2-9b-it:core: 80% of the cap reached ($22.93 of $28.66); flagged to the owner, awaiting acknowledgement",
+   "unacknowledged_resume": "stopped: stage gemma-2-9b-it:core: 80% of the cap reached ($22.93 of $28.66); flagged to the owner, awaiting acknowledgement",
    "no_server_start_or_call_without_ack": true,
    "acknowledged_resume": "complete",
    "records_equal_D1": true,
@@ -36,9 +39,27 @@
    "server_alive_after_kill": true,
    "resume_status": "complete",
    "re_attached_same_start": true,
-   "no_partial_abandoned": true,
+   "nothing_abandoned": true,
+   "kill_gap_charged": [
+    {
+     "seconds": 2.032282590866089,
+     "stage": "gemma-2-9b-it:core"
+    }
+   ],
    "branches_rerun": [],
    "records_equal_D1": true,
+   "pass": true
+  },
+  "D6": {
+   "status": "stopped: stage gemma-2-9b-it:core: cap reached ($0.21 of $0.20)",
+   "calls": 209,
+   "bound": 210,
+   "stop_escapes_retry": true,
+   "calls_in_retried_call": 1,
+   "pass": true
+  },
+  "D7": {
+   "see": "D4 kill_gap_charged",
    "pass": true
   },
   "D5": {
@@ -52,5 +73,5 @@
   }
  },
  "pass": true,
- "seconds": 44.9
+ "seconds": 59.6
 }

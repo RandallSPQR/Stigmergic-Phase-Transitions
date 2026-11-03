@@ -14,7 +14,9 @@ Criteria, fixed before the run:
      B5 TOST passes at theta = 0 at a rate >= 0.85 (both contrasts; S9 expects >= 0.95);
      B6 generalisation CI coverage of theta with story SD 0.02: within [0.92, 0.98];
      scenarios: rho in {0.3, 1.0}; start-block SD in {0, 0.01}.
-Revised after the independent execution review of cb10726 (addendum 1): primary() now takes no cluster metadata. Each
+Revised after the independent execution review of cb10726 (addendum 1): part A runs on a frozen confirmatory cluster
+through the confirmatory runner (the extraction now verifies every record against the frozen layout and run key);
+primary() takes no cluster metadata. Each
 synthetic entry carries the primary-arm identity and a server-start ID per model that follows the frozen schedule
 (blocks of 4); the random draws and the criteria are unchanged, so the results should equal validation run 2.
 """
@@ -40,16 +42,21 @@ out = {"doc": __doc__, "A": {}, "B": {}}
 t0 = time.time()
 
 # ---------------- A: extraction ----------------
-clusters = json.load(open(ROOT / "gates/S8/inputs/clusters.json"))
-prm = {"H": 30, "t0": 5, "D": 3, "W": 5, "r": 10, "k": 3}
-c = next(x for x in clusters if x["rule"] == "i")
-res = s8_core.run_cluster(c, 1.0, s7_core.MockKernel(), prm)
-truth = c["spec"]["hidden_state"]
-o = CA.outcomes(res, truth)
-# independent recomputation via the harness state
-live = s8_core.make_board(c["spec"], c["alloc"], c["adj"], c["run_key"], True, 1.0)
-blind = s8_core.make_board(c["spec"], c["alloc"], c["adj"], c["run_key"], False, 1.0)
-st0, _ = B.initial_state(live, s7_core.MockKernel(), "i")
+# On a frozen confirmatory cluster through the confirmatory runner (s10_core), mock model; the extraction verifies the
+# whole record against the frozen layout and the run key (verify_record), so it is exercised on the real record format.
+import s10_core  # noqa: E402
+FROZ = s10_core.load_clusters()
+c = FROZ[2]; MM = "gemma-2-9b-it"
+res = s10_core.run_cluster(c, MM, s7_core.MockKernel())
+res["server_start_ids"] = {n: "cpu/start1" for n in s10_core.branch_names(c, MM, "primary")}; res["mock"] = True
+truth = c["truth"]
+o = CA.outcomes(res)
+# independent recomputation via the harness state (board.update), from the runner's own initial state
+T = s10_core.primary_T(MM)
+w3 = s10_core.make_board(c["spec"], c["alloc"], c["adj"], c["run_key"], False, T, "w3")
+st0, _ = s10_core.initial_state(w3, s7_core.MockKernel(), s10_core.placeholders_for(c, FROZ))
+live = s10_core.make_board(c["spec"], c["alloc"], c["adj"], c["run_key"], True, T)
+blind = s10_core.make_board(c["spec"], c["alloc"], c["adj"], c["run_key"], False, T)
 sl, sb = B.branch(st0), B.branch(st0)
 yl, yb = [], []
 for sweep in range(1, 31):
@@ -60,12 +67,13 @@ for sweep in range(1, 31):
 out["A"]["A1_window_outcome_exact"] = bool(abs(o["Y_live"] - np.mean(yl)) < 1e-12 and abs(o["Y_blind"] - np.mean(yb)) < 1e-12)
 bad = copy.deepcopy(res); bad["blind"][100][1] = (bad["blind"][100][1] + 1) % 100
 try:
-    CA.outcomes(bad, truth); out["A"]["A2_bad_pairing_refused"] = False
+    CA.outcomes(bad); out["A"]["A2_bad_pairing_refused"] = False
 except ValueError:
     out["A"]["A2_bad_pairing_refused"] = True
-bad = copy.deepcopy(res); bad["pulses"][0]["rows"][10][6] = 0.123
+bad = copy.deepcopy(res); bad["pulses"][0]["rows"][10][5] = 0.123 if bad["pulses"][0]["rows"][10][5] != 0.123 else 0.456
+bad["pulses"][0]["rows"][10][4] = "A" if bad["pulses"][0]["rows"][10][4] == "B" else "B"
 try:
-    CA.outcomes(bad, truth); out["A"]["A3_bad_branch_refused"] = False
+    CA.outcomes(bad); out["A"]["A3_bad_branch_refused"] = False
 except ValueError:
     out["A"]["A3_bad_branch_refused"] = True
 out["A"]["pass"] = all(out["A"].values())
