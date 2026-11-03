@@ -1,0 +1,62 @@
+{
+ "n_clusters": 61,
+ "rho": 1,
+ "sizing_sd": {
+  "board_final": 0.0712,
+  "board_window": 0.055835507713983,
+  "persistence": 0.06265688616673201
+ },
+ "conditional": {
+  "board_window_25_30": {
+   "se": 0.007149004197167528,
+   "mde_80": 0.022040551238428588,
+   "power_at_0.05_alpha025": 0.9999989958054323,
+   "tost_power_alpha05": 0.9892750452648309,
+   "tost_power_alpha025": 0.9746760323983548
+  },
+  "board_final_sweep": {
+   "se": 0.009116225851222194,
+   "mde_80": 0.028105542734827068,
+   "power_at_0.05_alpha025": 0.9994092793891454,
+   "tost_power_alpha05": 0.9002325166480283,
+   "tost_power_alpha025": 0.816768721101528
+  },
+  "persistence": {
+   "se": 0.008022392211098997,
+   "mde_80": 0.02473322741278485,
+   "power_at_0.05_alpha025": 0.9999671234663147,
+   "tost_power_alpha05": 0.9638004913678018,
+   "tost_power_alpha025": 0.924853470812361
+  }
+ },
+ "generalisation_story_sd": {
+  "0.02": {
+   "board_window_25_30": {
+    "mde_80": 0.025139952932240854,
+    "tost_power_alpha05": 0.9580664960672058
+   },
+   "board_final_sweep": {
+    "mde_80": 0.030596615286019466,
+    "tost_power_alpha05": 0.8318131527926589
+   },
+   "persistence": {
+    "mde_80": 0.027531143688448938,
+    "tost_power_alpha05": 0.9135888634495577
+   }
+  },
+  "0.04": {
+   "board_window_25_30": {
+    "mde_80": 0.03272172423726712,
+    "tost_power_alpha05": 0.7626874993878747
+   },
+   "board_final_sweep": {
+    "mde_80": 0.03707892758137901,
+    "tost_power_alpha05": 0.6044382902262284
+   },
+   "persistence": {
+    "mde_80": 0.03459274311786347,
+    "tost_power_alpha05": 0.6964495082586519
+   }
+  }
+ }
+}

@@ -1,0 +1,467 @@
+{
+ "all_solvable": true,
+ "arm_counts": {
+  "T1": 16,
+  "rule_ii": 12,
+  "self_reset": 33,
+  "variant_runs": {
+   "gemma-2-9b-it": 11,
+   "gemma-3-27b-it": 32,
+   "llama-3.1-8b-it": 23,
+   "qwen3.5-27b": 28,
+   "qwen3.5-9b": 18
+  }
+ },
+ "clusters": [
+  {
+   "allocation_sha256": "581fecff6dcf4291b7148b4496ac1a2785a741b3689225e1b2856de1b3e4ea3f",
+   "cluster": 1,
+   "graph_fingerprint": "15e0cf58e8e9825c",
+   "scenario_id": "conf-theatre-A",
+   "start_block": 1
+  },
+  {
+   "allocation_sha256": "bdddc1236da2e3b143b2f65e6f7267c7505f0afdef222de6e4883bf44122d1cb",
+   "cluster": 2,
+   "graph_fingerprint": "13b3b0c2fa1f3bfb",
+   "scenario_id": "conf-garden-B",
+   "start_block": 1
+  },
+  {
+   "allocation_sha256": "98ddfab7256063d9a55f8262fbce5ea3a7bb3be8ec9a1602c5d30e40ab79b936",
+   "cluster": 3,
+   "graph_fingerprint": "d2610ba011a0d5bc",
+   "scenario_id": "conf-garden-A",
+   "start_block": 1
+  },
+  {
+   "allocation_sha256": "279a8098eade1a3f73d804b47545db5e18282796a70ce2df18795c9bd05c4b7f",
+   "cluster": 4,
+   "graph_fingerprint": "d59f38440a9ba2cb",
+   "scenario_id": "conf-kitchen-B",
+   "start_block": 1
+  },
+  {
+   "allocation_sha256": "b857a411cfb0c20f72032addb34aa54b9d7ac2c0c4b0b3696567cf7815fdaf55",
+   "cluster": 5,
+   "graph_fingerprint": "d2e422dbc058f4df",
+   "scenario_id": "conf-market-A",
+   "start_block": 2
+  },
+  {
+   "allocation_sha256": "cf8d35f67427853690529fdf64b36ceb1a6e69a016aef191b97698451b05c1b6",
+   "cluster": 6,
+   "graph_fingerprint": "7fc9b91c93ad65ff",
+   "scenario_id": "conf-airport-B",
+   "start_block": 2
+  },
+  {
+   "allocation_sha256": "c23d1195af1f11fb8122034052ee39ef35d5fb03999a7157815b4635bc1046ce",
+   "cluster": 7,
+   "graph_fingerprint": "ed106a437abf7d64",
+   "scenario_id": "conf-mailbag-A",
+   "start_block": 2
+  },
+  {
+   "allocation_sha256": "93101edcfc77bfbb12c149fdf5dcd460785c3cc7e2f6ba7bb7fd8b6ffbba5766",
+   "cluster": 8,
+   "graph_fingerprint": "b0c0abfe8be756a8",
+   "scenario_id": "conf-garage-B",
+   "start_block": 2
+  },
+  {
+   "allocation_sha256": "088b7258a31a5f6f45ef943d7ac681687d2c20b52b612af9f02b021634a57f4c",
+   "cluster": 9,
+   "graph_fingerprint": "9d96d6169c84d640",
+   "scenario_id": "conf-campsite-A",
+   "start_block": 3
+  },
+  {
+   "allocation_sha256": "2f8f32034de3288e125e6231332a400e698351050a59de65103dacac1af4f703",
+   "cluster": 10,
+   "graph_fingerprint": "f665651a3e21b1c3",
+   "scenario_id": "conf-stadium-B",
+   "start_block": 3
+  },
+  {
+   "allocation_sha256": "e7e35672deff52234dfa5868b50030a1de0b8f23127c26670dfa5a9765b9aff2",
+   "cluster": 11,
+   "graph_fingerprint": "6c797640cf319862",
+   "scenario_id": "conf-lake-A",
+   "start_block": 3
+  },
+  {
+   "allocation_sha256": "b2cd68a3e81ed693b9fc1e44a2b6197f52a1ac658e93222934835bbea5d20d18",
+   "cluster": 12,
+   "graph_fingerprint": "5d642c0abc72087d",
+   "scenario_id": "conf-campsite-B",
+   "start_block": 3
+  },
+  {
+   "allocation_sha256": "c05a48acf1ed8deebe0c67906b11ea7846cbb643965b8379286f8cc34ba94f05",
+   "cluster": 13,
+   "graph_fingerprint": "b04c2c8500e77d84",
+   "scenario_id": "conf-bakery-A",
+   "start_block": 4
+  },
+  {
+   "allocation_sha256": "020d259c6ed1f63d2bf33ff08c5e3d72013fa34ad12bb634f54097c9881febdb",
+   "cluster": 14,
+   "graph_fingerprint": "9fd9bbe03beabaaa",
+   "scenario_id": "conf-theatre-B",
+   "start_block": 4
+  },
+  {
+   "allocation_sha256": "cbfb8aef01fccfb285dc41a205e2f780064b23e76d3c56c2758ba159bee7bb23",
+   "cluster": 15,
+   "graph_fingerprint": "4ab2e4b94c8a0a22",
+   "scenario_id": "conf-clinic-A",
+   "start_block": 4
+  },
+  {
+   "allocation_sha256": "c9aef078e4f99cc1f83e09b317bf2231e492ba0df9e0e4bbdb37c526b1c401f9",
+   "cluster": 16,
+   "graph_fingerprint": "b95b1bcefe64d805",
+   "scenario_id": "conf-exam-B",
+   "start_block": 4
+  },
+  {
+   "allocation_sha256": "b5e93bab2b3b57ba672f649a1d45cdea73aebfa0c365c916d74d5dbf3abbb903",
+   "cluster": 17,
+   "graph_fingerprint": "4b60107911ced113",
+   "scenario_id": "conf-parcel-A",
+   "start_block": 5
+  },
+  {
+   "allocation_sha256": "758511e2479196ff28ed11a86375110c63decc720cd474daf5dba940b1977f61",
+   "cluster": 18,
+   "graph_fingerprint": "cfbfbf7729c13735",
+   "scenario_id": "conf-parcel-B",
+   "start_block": 5
+  },
+  {
+   "allocation_sha256": "7defa90126bf82d86128c882c617775457c0aed3c1b4d0e81c00d65a796a4f7d",
+   "cluster": 19,
+   "graph_fingerprint": "8c9466fef9bcf53c",
+   "scenario_id": "conf-barn-A",
+   "start_block": 5
+  },
+  {
+   "allocation_sha256": "905e68dcd936a3d4de556b38c2b594a4a5841da65864405e4e0d4838dea34562",
+   "cluster": 20,
+   "graph_fingerprint": "565600700f6ebde8",
+   "scenario_id": "conf-hotel-B",
+   "start_block": 5
+  },
+  {
+   "allocation_sha256": "b48a5498ba9087ce291ef600eecde5573fecd37621789cec4fadbd9831e96f96",
+   "cluster": 21,
+   "graph_fingerprint": "457e11199db2a802",
+   "scenario_id": "conf-shuttle-A",
+   "start_block": 6
+  },
+  {
+   "allocation_sha256": "bdbdd5090394f2bacc392ca2c730294cfdf713af0181526ed53efae676e55944",
+   "cluster": 22,
+   "graph_fingerprint": "5045954bad162d21",
+   "scenario_id": "conf-printer-B",
+   "start_block": 6
+  },
+  {
+   "allocation_sha256": "6fccd5e1850b7729e63607452a362a3427eb6d96233a7d8a83b2c432e4a871c6",
+   "cluster": 23,
+   "graph_fingerprint": "f8e9bb7d6035a927",
+   "scenario_id": "conf-hotel-A",
+   "start_block": 6
+  },
+  {
+   "allocation_sha256": "f5c0326d0d82a7431c5cf7f2d4ababe4c50dcc7e8bc558deef4999e21fcf3138",
+   "cluster": 24,
+   "graph_fingerprint": "43b22486da5d2d00",
+   "scenario_id": "conf-tunnel-B",
+   "start_block": 6
+  },
+  {
+   "allocation_sha256": "ac29af6d313165bf7f68631aa25855c37f6763e6fd51d56a69f0ff050111a2a7",
+   "cluster": 25,
+   "graph_fingerprint": "759dfb7d65f780d3",
+   "scenario_id": "conf-printer-A",
+   "start_block": 7
+  },
+  {
+   "allocation_sha256": "66128f623dac5d56ca5c6ddfb2bab0b4fc0d862c2a2ec9e186dd0a9bb70bba26",
+   "cluster": 26,
+   "graph_fingerprint": "945dfe2e2212f48f",
+   "scenario_id": "conf-orchard-B",
+   "start_block": 7
+  },
+  {
+   "allocation_sha256": "59cbfac4392fecc2d9351f7701ca04bc0668cc9f2ed3df295b76264edb0afb35",
+   "cluster": 27,
+   "graph_fingerprint": "5d862913d68a3ad4",
+   "scenario_id": "conf-orchard-A",
+   "start_block": 7
+  },
+  {
+   "allocation_sha256": "22e99d23c6e98f0c0a7ae787265d6d6d25d148c662ac2832499c56a11f3f223e",
+   "cluster": 28,
+   "graph_fingerprint": "c689c1b6fef9ea1c",
+   "scenario_id": "conf-train-B",
+   "start_block": 7
+  },
+  {
+   "allocation_sha256": "7eb57ffafcaa6a221b6fbb23d60ec9eed01e6a121c38bb90459f077aa8e53d20",
+   "cluster": 29,
+   "graph_fingerprint": "6b4351b99a74c39e",
+   "scenario_id": "conf-stadium-A",
+   "start_block": 8
+  },
+  {
+   "allocation_sha256": "13fd5e6a7ced062e4cc197a2f5784747fa63a08ae11db79d3407b3eed22cf873",
+   "cluster": 30,
+   "graph_fingerprint": "505de45fd8185aac",
+   "scenario_id": "conf-library-B",
+   "start_block": 8
+  },
+  {
+   "allocation_sha256": "2161755a2903ff529ef92775acaac2253fd3bc8dfe92b4c4deff066bb75393cd",
+   "cluster": 31,
+   "graph_fingerprint": "5f812df56e92084e",
+   "scenario_id": "conf-train-A",
+   "start_block": 8
+  },
+  {
+   "allocation_sha256": "9df053c1d9122d8f2f861e492c27526cdfa0c83f1d011d7947a97bc74bef06e7",
+   "cluster": 32,
+   "graph_fingerprint": "ce8023dbcd4ecbb6",
+   "scenario_id": "conf-museum-B",
+   "start_block": 8
+  },
+  {
+   "allocation_sha256": "737f54061a6aae78bd65e2a1c67f6684616fdb033a625bfc81e06c11e443a5b2",
+   "cluster": 33,
+   "graph_fingerprint": "87db5eff3d71c43b",
+   "scenario_id": "conf-pharmacy-A",
+   "start_block": 9
+  },
+  {
+   "allocation_sha256": "849495f88c2805589614674f2d974b9c32be5a4f3908623dd3836c5a43748661",
+   "cluster": 34,
+   "graph_fingerprint": "0ee71791b6d49ab0",
+   "scenario_id": "conf-ferry-B",
+   "start_block": 9
+  },
+  {
+   "allocation_sha256": "9a4088fed3aca8e3d001b7b3d888e1b9ccc9b902feabb80e957b1cc2730398a4",
+   "cluster": 35,
+   "graph_fingerprint": "7e936256c4524d87",
+   "scenario_id": "conf-ferry-A",
+   "start_block": 9
+  },
+  {
+   "allocation_sha256": "735e4ba5f0830af535baacb92697e4339ec974fb4cf11fe2b9314ea7e4cc71a2",
+   "cluster": 36,
+   "graph_fingerprint": "53856a0ae1a6b46f",
+   "scenario_id": "conf-shuttle-B",
+   "start_block": 9
+  },
+  {
+   "allocation_sha256": "a416747d1a36ac7c3adc2464c4592223875db57fc72bd3785e04012940e575d2",
+   "cluster": 37,
+   "graph_fingerprint": "8e6f1e9fd0690dcd",
+   "scenario_id": "conf-pier-A",
+   "start_block": 10
+  },
+  {
+   "allocation_sha256": "509c61d96bc54eb76b113fa58f2d3e63aea1805ad726585076d93dd995b6aa6f",
+   "cluster": 38,
+   "graph_fingerprint": "43fde201786a7bd0",
+   "scenario_id": "conf-clinic-B",
+   "start_block": 10
+  },
+  {
+   "allocation_sha256": "a78bb06a545aa14f4e78db3c94a39b73cfaecdfd150e0c635dcb98c87d53acb1",
+   "cluster": 39,
+   "graph_fingerprint": "c2467b44dd3f4847",
+   "scenario_id": "conf-garage-A",
+   "start_block": 10
+  },
+  {
+   "allocation_sha256": "95b2631775f10fa75802ef30200abd74b3d32323e0adf8afa1a453ab105ef24a",
+   "cluster": 40,
+   "graph_fingerprint": "e93430ad9975dca4",
+   "scenario_id": "conf-barn-B",
+   "start_block": 10
+  },
+  {
+   "allocation_sha256": "705da03997b9daf1c95e9c7e9cd65eb433322f0959a8a7675fa17a999482866e",
+   "cluster": 41,
+   "graph_fingerprint": "1e0ae2583bf82a49",
+   "scenario_id": "conf-airport-A",
+   "start_block": 11
+  },
+  {
+   "allocation_sha256": "26d069dd70d61ace4d55e388b9683d18783a1f7363e880e752f0256914677318",
+   "cluster": 42,
+   "graph_fingerprint": "d79d201f3a20a31b",
+   "scenario_id": "conf-pier-B",
+   "start_block": 11
+  },
+  {
+   "allocation_sha256": "de20b94437ede95d67981482f8b48ee3804bbd88bbce44061ef6e3f26f0b9515",
+   "cluster": 43,
+   "graph_fingerprint": "10190021e403c63c",
+   "scenario_id": "conf-library-A",
+   "start_block": 11
+  },
+  {
+   "allocation_sha256": "0f9419b06dea2d9fd6db2bd043cd7f8569bad035e0b016d12bb0fe958c28a5eb",
+   "cluster": 44,
+   "graph_fingerprint": "9993ebf6e386a347",
+   "scenario_id": "conf-pharmacy-B",
+   "start_block": 11
+  },
+  {
+   "allocation_sha256": "27bd55c2f59db14b3221952c77927a9f741148da28212621e6d919facea666ee",
+   "cluster": 45,
+   "graph_fingerprint": "b8c5702beac4163d",
+   "scenario_id": "conf-kitchen-A",
+   "start_block": 12
+  },
+  {
+   "allocation_sha256": "592c2ef87db407d1c3db315808e9b621f1eaebd516eaa81237a03690e8d24f1d",
+   "cluster": 46,
+   "graph_fingerprint": "4765c2264be967f8",
+   "scenario_id": "conf-mailbag-B",
+   "start_block": 12
+  },
+  {
+   "allocation_sha256": "4ffe88555153a6735505c2edff8310052d0ea68238259f79a93311748eda7604",
+   "cluster": 47,
+   "graph_fingerprint": "a744be7df54130f2",
+   "scenario_id": "conf-museum-A",
+   "start_block": 12
+  },
+  {
+   "allocation_sha256": "5c7f859371ecc54efea22596ba693925c3c37339141f8d88bb38f8d538a320d0",
+   "cluster": 48,
+   "graph_fingerprint": "644a356a7217a2a2",
+   "scenario_id": "conf-lake-B",
+   "start_block": 12
+  },
+  {
+   "allocation_sha256": "7fd5670e90f0b27d8bddd4513a0dec77a5791870c6f3e1c690dcda1378a6b056",
+   "cluster": 49,
+   "graph_fingerprint": "36bf5a59db1182f3",
+   "scenario_id": "conf-tunnel-A",
+   "start_block": 13
+  },
+  {
+   "allocation_sha256": "b3f9a81f14ecfcbadf47ae6e9888f7dff97695a2adac7da07a208efdc1ffff8f",
+   "cluster": 50,
+   "graph_fingerprint": "86d61b18f25adc12",
+   "scenario_id": "conf-bakery-B",
+   "start_block": 13
+  },
+  {
+   "allocation_sha256": "d718233255ea1a2bf3a86f94339eb25421490ca270b0badaa5c59f887304acdd",
+   "cluster": 51,
+   "graph_fingerprint": "2247b9c0a0efad23",
+   "scenario_id": "conf-exam-A",
+   "start_block": 13
+  },
+  {
+   "allocation_sha256": "7292cf9d233e485ed6292d315bab305170b5dfdb3b71d15b00b1300fecd5fdb6",
+   "cluster": 52,
+   "graph_fingerprint": "bb3adfa01f9ff668",
+   "scenario_id": "conf-market-B",
+   "start_block": 13
+  },
+  {
+   "allocation_sha256": "7bd0518664802fc8260cda4c7adc2db05aab846ef72b36c765b5166734a9f22c",
+   "cluster": 53,
+   "graph_fingerprint": "f965e097e1bdc3f4",
+   "scenario_id": "conf-theatre-A",
+   "start_block": 14
+  },
+  {
+   "allocation_sha256": "235c23314a8b58873072dd7805c766400f156a7b1634e80a975079cb91b52266",
+   "cluster": 54,
+   "graph_fingerprint": "2680c4384cb2a212",
+   "scenario_id": "conf-garden-B",
+   "start_block": 14
+  },
+  {
+   "allocation_sha256": "cff98f6ce62085bff4aefdc0a90b335ba911e929770e39d1f233c318fd96ad88",
+   "cluster": 55,
+   "graph_fingerprint": "334c9fd18b7af559",
+   "scenario_id": "conf-garden-A",
+   "start_block": 14
+  },
+  {
+   "allocation_sha256": "66682b5fea940f707d46b11f5db5ff3fb296449f47aa38f60cb2b1ccd9985c4f",
+   "cluster": 56,
+   "graph_fingerprint": "ca620057dd7f349e",
+   "scenario_id": "conf-kitchen-B",
+   "start_block": 14
+  },
+  {
+   "allocation_sha256": "984e2a6d358482ab622053ae8ffab48cd4957ec39dbdeda2f8ce6432c04f1e61",
+   "cluster": 57,
+   "graph_fingerprint": "30bf6fd012f3e964",
+   "scenario_id": "conf-market-A",
+   "start_block": 15
+  },
+  {
+   "allocation_sha256": "1f9b855505c39f423454d0d698fb32145c3be067b26ab1885c68e314a688bd58",
+   "cluster": 58,
+   "graph_fingerprint": "d06aba0c0b329f88",
+   "scenario_id": "conf-airport-B",
+   "start_block": 15
+  },
+  {
+   "allocation_sha256": "8231146b3ba245d719991067398b7da7943036634def204ee1c87a68b72ece66",
+   "cluster": 59,
+   "graph_fingerprint": "a330fd14011bd772",
+   "scenario_id": "conf-mailbag-A",
+   "start_block": 15
+  },
+  {
+   "allocation_sha256": "dca569455afcd8668704eb7909f66852a4f0d0a47a4f8757fa95ff8cd7da0a23",
+   "cluster": 60,
+   "graph_fingerprint": "4b24f6c534c0070d",
+   "scenario_id": "conf-garage-B",
+   "start_block": 15
+  },
+  {
+   "allocation_sha256": "e9e99324827017479b1e734243d4b98d72c0d2ee1abe2ccae0f09e725bea4dcc",
+   "cluster": 61,
+   "graph_fingerprint": "59d7dddad063be13",
+   "scenario_id": "conf-campsite-A",
+   "start_block": 16
+  }
+ ],
+ "confirmatory_bank_manifest_sha256": "f9058fb6347bf5acc6b08f40efcbb5cf40d786702900520aef07b4e96aac5098",
+ "confirmatory_clusters_json_sha256": "48a3eb8da9ec0052cef13b43551f3156d4d874133feb32a724c01e95895c42f0",
+ "graphs_regular_connected": true,
+ "informed_positions": [
+  50
+ ],
+ "n_clusters": 61,
+ "never_reused": "pilot (S8) clusters and development allocations are disjoint from these (D27)",
+ "replaced_draws": 0,
+ "seed_rule": "gates/S2/CONFIRMATORY_SEED_RULE.md (D29)",
+ "shares": {
+  "T1": 0.2,
+  "rule_ii": 0.2,
+  "self_reset": 0.5,
+  "variant_wording": 0.2
+ },
+ "specs_used": 52,
+ "start_blocks": 16,
+ "stories_used": 26,
+ "truth_balance": {
+  "A": 31,
+  "B": 30
+ }
+}
