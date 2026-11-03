@@ -1,0 +1,72 @@
+{
+ "coordination_record": {
+  "commit": "80e9992f43e50f08a85b2f3d218ff9b2ea9d8c41",
+  "files": {
+   "AMENDMENTS.md": "b474fa7124cebfb502790bdad96edce0c3b600fb8bf560366bdf48cec0c67500",
+   "DATA_SEPARATION.md": "f450acdc000d7dcb8f3bc511dee507b9ba4a72b5affc36b8b02a8bcc4cd35d79",
+   "DECISIONS.md": "3fbc5e6f23b3eccfa64a5cd660fb632fa6bad5c20e8c4b809ba0816a7ffd108f",
+   "PIPELINE.md": "08e656d7fcc42cef0a8fa534d4bff32d2f4e5869230792de0be6a19b1f30efa4",
+   "PROTOCOL_SPEC.md": "40c851f6fcf2a88b36ce461abf0d80be5735236e5740b06b7c78f94e0a1c668d",
+   "SEALED.md": "060c812c2110017d654321bd7053de0065860dd86726b530d73cfb4777e65466",
+   "schema/evidence_schema_v1.0.json": "cd186ef99b4dfa129c618b37f7a88e9a07acac9af788b408502df2890619b51b"
+  },
+  "repo": "RandallSPQR/StPT-MP-Coordination"
+ },
+ "design_files": {
+  "CLAUDE.md": "602406be54681152fbbf7415f2c9d1712b99fe09024f1bb4c22813136309beaa",
+  "analysis/CONFIRMATORY_SET.md": "cafa0a9a6d37dd8acdd4af4f619b8b9fe1159b3698599193dd01390124a89e2e",
+  "analysis/DECISION_NOISE_T.md": "eab7ea021d2facbe05e3c9ae66dff5a4b7c8d8895684196b3c4cad18cc94b954",
+  "analysis/INITIAL_VOTE_RULE.md": "812ccab40f777a1d81dcb616f2cead716b188b76e25238e376e672fa65a02f73",
+  "analysis/PREREGISTERED_D21.md": "7bfff4bf9ab4848a41af30f90c2df35815a577d8f6d261aded313faa12dba18c",
+  "analysis/PREREGISTRATION_ITEMS.md": "c561b27fbc679feb7e2f35e3cdd062dbdabdfa0634bd0833cef66cdbc0e16a31",
+  "analysis/PROMPT_SENSITIVITY.md": "aae891bc1fc5c2e3c336457a32d19af9efae1841e172232ac9e6e15e6a983267",
+  "analysis/PULSE_SETTINGS.md": "d6670fcf7033b515ccde994cb357d016489785f734063e847e82d45985f9a873",
+  "analysis/SECONDARY_INFORMED_SPLIT.md": "c5fa4eafa04fc1d23f5c1c07ca6e837d30b4bd0ef4cec34640f312daa56f0dd7",
+  "analysis/SENSITIVITY_WITHOUT_QWEN9B.md": "3182862dbf5e9cff1818c43bcb2f70e0ef5fbb99c19efd97b432d8a259017c57",
+  "gates/S10/analysis/confirmatory.py": "45a0f294c258ada66aca45e47210b1afff3d4d4cadcc90cf49b38b64cb898cc3",
+  "gates/S10/analysis/reml_classical_check.py": "1704c696599a5fa1445b7a7de8cc1275af5e5c832c2a6a38bab9c71ffe882558",
+  "gates/S10/analysis/validate_confirmatory.py": "0534f6f63e319108a1f62dc86b9517b01dd36f1f513360be5ab8d6cc81d1abc2",
+  "gates/S10/clusters/MANIFEST.json": "dcdac6768510baa8b417945abab5206b9bd06a96322392374e174170058c351d",
+  "gates/S10/clusters/confirmatory_clusters.json": "48a3eb8da9ec0052cef13b43551f3156d4d874133feb32a724c01e95895c42f0",
+  "gates/S10/draw_clusters.py": "9bd9c65e9561768e2a53d4905b2477690c3e85e51a533c4b96408220bf508812",
+  "gates/S10/predictions.py": "1e4a9b653ea8b907dccbab91a0186ffd8552a57d6a87fe88bb61aab1618af168",
+  "gates/S10/results/analysis_validation.json": "5e1c7e684634a42386e4f817bbf9467b2d36eafb80c67ee47683127579f02c87",
+  "gates/S10/results/analysis_validation_run1_containment_df.log": "1b0aa131fb1692f8714094775d3022f98445708a19a8faaec0cbcc588de66914",
+  "gates/S10/results/analysis_validation_run2_satterthwaite.log": "ab91ce43ed0848b39fef1de5fc1104b68bb4926b719f2de7662c3d5c0802df23",
+  "gates/S10/results/reml_classical_check.json": "20078ea1a2c4335ad0988f8d50b493d83ecbe44240dd9b885f0dd978f002b8e4",
+  "gates/S10/s10_core.py": "e3614404be5eb4bf2cea522aa47520425e7371c78d182226a5617655f6ddcc34",
+  "gates/S2/CONFIRMATORY_SEED_RULE.md": "3c4d48588a18b82b29bde302672bff94a5eefe05c50f1aeccab3bcab484c7b1c",
+  "gates/S2/banks/MANIFEST.json": "f9058fb6347bf5acc6b08f40efcbb5cf40d786702900520aef07b4e96aac5098",
+  "gates/S2/lint_stories.py": "6b2b606841187ee7e6492aab1adbce5c71eb64b2e259eac284df24dd377f0cb7",
+  "gates/S2/make_banks.py": "a8b4250dcd739fed047e12a1d060ef6dc85d5e5c051ad08b638cf667d1754ad0",
+  "gates/S8/s8_core.py": "513973db73d9f15905bacf4b9511dcfdd7915d23ec44a252cbfb054bf3d67f7b",
+  "gates/S9/power_at_61.py": "746aa1e3f217a31d1c3a02d9924382c89df5e4a9ad26087f9d77ed9890ab3d82",
+  "gates/S9/results/kernels_s8.json": "e28e363e50b203f597d578e5204270cdb7607111ec4ffb6bf349c95a7caed033",
+  "gates/S9/results/power_at_61.json": "fd1eefa930737a7af619f3480d8f17a7055dc48082d074c3d748a611b7d2f401",
+  "gates/S9/results/s9_tiers.json": "0a7491c9bcf4f9c07035e6d4b1fee6106671e1eca7e9579d542b3d7cab7f217b",
+  "gates/S9/s9_kernels.py": "0b95d932734cb4ef4a9eda6e303ce490bb34ded0a75387d0e2fc61af08ce328f",
+  "gates/S9/s9_run.py": "7e53e66c9e939cf4bbd1e3ad9d71f96eb3afd665fbec91d0790510f07a1a12f6",
+  "gates/S9/s9_sim.py": "35b87c656495f3a5a842673c6cff05ed8955281cc20f47324155aa539491ac16",
+  "osf/PREREGISTRATION.md": "4bc35cd001b142753e8f5a2619c2d7171a8c676c37091dc9cbcb6cf2aade6677",
+  "pins.yaml": "a82cdc3f3827eef194d6eaa6910e0a3034af514f9b060a778628c2b7df736aa4",
+  "stpt/board.py": "dcd4fc62814674fb5418a37aadf2dbfe86b298821e94c7222f9181cac451b6b3",
+  "stpt/evidence.py": "f56e1265eb1f957220fc54db1f440f47ddfac027e63caff2ee175fbd69583a37",
+  "stpt/manifest.py": "6cce5d9afa81ba161daa0a1df64008552e88b567e10d2772ed1b822e7606536e",
+  "stpt/prompts.py": "feda61eee99736c72932b32705c1e40cf2a8ef79bcf8bc1029529ce5a80a046a",
+  "stpt/sim.py": "276d0539f8d9663c9414b2e44537a2274040ac1ec71886dbef666706a302ca6e"
+ },
+ "openings_table_rows_at_freeze": 0,
+ "sealed_files": {
+  "gates/S10/sealed/s10_predictions.json.gz.b64": {
+   "opened_before_freeze": false,
+   "sha256": "1a73a88d2a5efb4bb351b2078f59cb405b1719b7063518aeb17a5d13858b58c2"
+  },
+  "gates/S8/sealed/s8_sealed.json.gz.b64": {
+   "opened_before_freeze": false,
+   "sha256": "e6b1bc7ac35d28591428efc8dbc9836f8b9d6ff98b2cb55fcf76fa72f16a95a8"
+  }
+ },
+ "statement": "All design files below were hashed in this freeze commit before any sealed file was opened (D45).",
+ "stpt_parent_commit": "a98e5e0d72cdfccf471a7b772ab521fafdff1644",
+ "written_utc": "2026-11-03T06:21:58+00:00"
+}

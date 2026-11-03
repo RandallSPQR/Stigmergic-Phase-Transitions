@@ -5,7 +5,7 @@ confirmatory run. The OSF registration DOI and the Zenodo DOI of the frozen comm
 record when issued.
 
 - **Repositories:** StPT `RandallSPQR/Stigmergic-Phase-Transitions`; coordination record `RandallSPQR/StPT-MP-Coordination`
-  (decisions D1–D31, amendments A1–A29, sealed-file register `SEALED.md`).
+  (StPT decisions D1–D31, D45, D46 and the shared ones; amendments A1–A29 and the shared ones; deviations DV1–DV2; sealed-file register `SEALED.md`. Missing Piece's entries, D32–D44 and A30–A34, concern that study: those marked "both" carry StPT's practices over to Missing Piece and keep StPT on pipeline v1.2.0 (D41), and none changes this design).
 - **Every number below comes from a committed results file, cited in place.**
 
 ## 1. Question and hypotheses
@@ -112,6 +112,11 @@ Everything else is secondary (§6), reported with intervals and no power target.
     about 60 when the start-block variance is negligible (as S4 measured) and about 15 at worst.
   - The first validation run used containment df (blocks − 1 = 15) and failed its pre-stated type I error criterion
     by being conservative. The switch was made on synthetic data only, before any confirmatory data (§11).
+  - **The test is conservative when start blocks do not differ (D46, DV2).** Then about half of the fits estimate a
+    small positive block variance by chance, which inflates the SE and lowers the df. On synthetic data its false-
+    positive rate at nominal 0.05 was 0.026–0.047 across scenarios, never above nominal. This **widens the intervals
+    in both directions**: an effect is harder to detect, and equivalence is harder to show. The validation still found
+    equivalence power ≥ 0.914 at a true zero, in every scenario and for both contrasts (§11).
   - **Superiority:** two-sided, Holm across the two contrasts at family α = 0.05.
   - **Equivalence:** TOST at **±0.03**, α = 0.05 (the 90% interval inside the bound).
   - **Decision per contrast:** effect / small effect within the bound / equivalence (no effect beyond ±0.03) /
@@ -208,4 +213,29 @@ Everything else is secondary (§6), reported with intervals and no power target.
 - Pilot (S8) data are development data and are not pooled with confirmatory data.
 
 ## 11. Analysis-code validation results
-**[filled at the freeze commit from `gates/S10/results/analysis_validation.json`]**
+Synthetic data only, before any confirmatory data. Sources: `gates/S10/results/analysis_validation.json` (run 2),
+`analysis_validation_run2_satterthwaite.log`, `analysis_validation_run1_containment_df.log` and
+`reml_classical_check.json`.
+
+- **REML + Satterthwaite against closed forms.** On a balanced design (16 blocks × 4), the implementation reproduces the
+  classical t-tests:
+  - 48 interior cases (the t-test on block means, df 15): θ to 5e-18, SE to 1.5e-7, df within 0.002, p within 2.5e-6;
+  - 12 boundary cases (the t-test on all values, df 63): θ to 3.5e-18, SE to 2.9e-8, df within 2e-5, p within 5e-9.
+- **Extraction:** the window outcome equals an independent recomputation from the harness state exactly. Tampered
+  live/blind pairing and tampered pulsed branches are refused.
+- **Inference** (1,000 datasets per scenario on the confirmatory layout: 61 clusters, 16 start blocks, 26 stories;
+  scenarios ρ ∈ {0.3, 1}, start-block SD ∈ {0, 0.01}):
+
+  | criterion (fixed before the run) | result | met |
+  |---|---|---|
+  | B1, type I error at α 0.025 within [0.013, 0.037] | 0.013–0.029 | yes |
+  | B1, type I error at α 0.05 within [0.035, 0.065] | 0.038–0.047, but **0.026 / 0.031** at ρ = 0.3 with no block effect | **no** (conservative; DV2) |
+  | B2, Holm family-wise error ≤ 0.06 | 0.027–0.050 | yes |
+  | B3, sign recovery at ±0.05 | correct 1.000, wrong 0.000 | yes |
+  | B4, 95% CI coverage of the bank mean within [0.93, 0.97] | 0.958–0.968 | yes |
+  | B5, TOST passes at θ = 0, ≥ 0.85 | board ≥ 0.966; persistence ≥ 0.914 | yes |
+  | B6, generalisation coverage with story SD 0.02 within [0.92, 0.98] | 0.958 | yes |
+
+- The first run used containment df (blocks − 1). It was conservative across the scenarios (B1 missed) and was
+  replaced by Satterthwaite df before run 2. The remaining shortfall was kept by the owner (D46) as a known
+  conservative property.

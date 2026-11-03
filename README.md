@@ -3,7 +3,7 @@
 **Question.** Agents see only their contacts' current votes. Do those votes change how memoryless LLM agents use
 dispersed private evidence? And does a temporary change to what agents see leave a lasting mark on the board?
 
-**Status (2026-11-02): S0 and S1 closed; S2 passed (D15–D19); S3 passes with W3, confirmed on a held-out set (D20–D21); S4 passes, D14 tripwire triggered (blocking by start mandatory, A16); S5 passes (all models monotone in strength and direction; wide spread in responsiveness); S6 fails on Llama-3.1-8B, which leaves the pooled confirmatory tests (D24; four-model confirmatory set); initial-vote rule decided (D25); S7 passes (branch isolation exact on CPU and on all five models); pulse settings decided (D26); S8 passes (execution, exposure 0.958, manipulation check 0.155 [0.135, 0.175]; contrast estimates sealed); S9 done: horizon 30 stands; Strong = 61 clusters (or 48 with the window outcome); awaiting the owner.**
+**Status (2026-11-02): S0 and S1 closed; S2 passed (D15–D19); S3 passes with W3, confirmed on a held-out set (D20–D21); S4 passes, D14 tripwire triggered (blocking by start mandatory, A16); S5 passes (all models monotone in strength and direction; wide spread in responsiveness); S6 fails on Llama-3.1-8B, which leaves the pooled confirmatory tests (D24; four-model confirmatory set); initial-vote rule decided (D25); S7 passes (branch isolation exact on CPU and on all five models); pulse settings decided (D26); S8 passes (execution, exposure 0.958, manipulation check 0.155 [0.135, 0.175]; contrast estimates sealed); S9 done (61 clusters; window outcome, D31); S10 freeze commit made (design hashed in `osf/FREEZE_MANIFEST.json`).**
 - Not frozen. No paid collection. Nothing confirmatory.
 - Brief: https://claude.ai/artifact/Q36cWtMumtJPs3semD76ni (revision 3).
 - Missing Piece is the complementary study. Both share the pipeline and the coordination record below.
@@ -14,7 +14,7 @@ dispersed private evidence? And does a temporary change to what agents see leave
 |---|---|---|---|
 | Shared five-model pipeline (LOCKED) | RandallSPQR/SAE-Ethos-Calibration | `v1.2.0` | `5ca15f56a71f35d5818d0392f7f3b4acb2d85d1b` |
 | SPT release (harness + simulator source; S0 replay) | RandallSPQR/social-phase-transitions-public | `v1.0.1` | `c37a91d2d2561fdf78fc61af500ea000aac3ea2f` |
-| Shared coordination record | RandallSPQR/StPT-MP-Coordination | none | `25b6d2326830a2dd6ef356148aeca49d8a35fe07` |
+| Shared coordination record | RandallSPQR/StPT-MP-Coordination | none | `80e9992f43e50f08a85b2f3d218ff9b2ea9d8c41` |
 
 Models (pipeline v1.2.0):
 - Llama-3.1-8B-Instruct, Gemma-2-9B-IT, Gemma-3-27B-IT.
