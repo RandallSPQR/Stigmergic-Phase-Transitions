@@ -5,7 +5,7 @@ commit `cb10726e3d359d8094fbd083f336453d6af9280d` (tag `stpt-prereg-v1-final`; Z
 **This addendum:** filed after registration and **before any confirmatory data exist** (no confirmatory model call has
 been made). Fixes: round 1 in commit `1031a83559f70a9ba82739cb7ea10c791d515f3d`; round 2 (the reviewer's confirmation
 pass on `bb0f12a`) in commit `e8f156de84bf3b82db1e0c0cce0cbefec8e2201e`; round 3 (the reviewer's operational review of
-`fc0fc0c`) in commit `ROUND3_COMMIT`. Tag: `stpt-run-v1` (on the commit that adds the final text).
+`fc0fc0c`) in commit `06572ae13c5f84707325f3be525dd7374f906fa3`. Tag: `stpt-run-v1` (on the commit that adds the final text).
 Coordination record: D48, D49, A36, A37, A38.
 
 ## What happened
@@ -75,13 +75,13 @@ agents is 0.5 either way. The predictions are registered and are **not** re-run 
 measures in §8 are reported against them as registered, with this note.
 
 ## Verification
-- **Tests:** TESTS_PASSED tests pass, including every adversarial case of the three review rounds as a permanent test
+- **Tests:** 148 tests pass, including every adversarial case of the three review rounds as a permanent test
   that must refuse (`tests/test_review_fixes.py`, `tests/test_review_followup.py`, `tests/test_review_round3.py`).
 - **Synthetic validation of the analysis code**, rerun on the fixed code (`gates/S10/results/analysis_validation.json`,
-  run 5; log `analysis_validation_run5_addendum1_round3.log`): VALIDATION_RESULT
-- **Driver**, CPU with the mock model: DRIVER_RESULT
+  run 5; log `analysis_validation_run5_addendum1_round3.log`): every numeric result is identical to run 2 (criteria A1–A3 and B1–B6 in all four scenarios; part A on a frozen confirmatory cluster, records with the non-A/B mass). The B1 lower-band shortfall in one scenario remains, as accepted in D46 (DV2).
+- **Driver**, CPU with the mock model: criteria D1–D10 pass (`gates/S10/results/driver_cpu_validation.json`), including a cap stop within 10 calls, an interrupted block rerun whole in one start, a real SIGKILL whose billable gap is charged, a server start refused without headroom, a readiness wait stopped at the cap, the pod script keeping its records and the pod when the upload fails, and the non-A/B mass in every record.
 - **Freeze** (`osf/verify_freeze.py --addendum osf/addendum1/DECLARED_CHANGES.json`, result
-  `osf/addendum1/FREEZE_VERIFICATION_ADDENDUM1.json`, run VERIFY_TIME UTC): VERIFY_RESULT
+  `osf/addendum1/FREEZE_VERIFICATION_ADDENDUM1.json`, run 2026-11-05 17:08:14 UTC): **PASS.** 35 of 35 unchanged design files byte-identical to the freeze; 5 declared changes, each with its reason, and no undeclared change; the registered text byte-identical to `cb10726` and its design parts identical to the freeze; sealed files 2 of 2 identical; the coordination record's protocol files unchanged and its logs insert-only (7 of 7 pass).
 
 ## What did not change
 `stpt/board.py`, the prompts and wordings, the cluster files, the bank, every parameter (H 30, t0 5, D 3, W 5, r 10,

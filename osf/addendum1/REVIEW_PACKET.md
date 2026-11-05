@@ -3,12 +3,12 @@
 For the reviewer of the execution review of `cb10726e3d359d8094fbd083f336453d6af9280d`. Round 1 fixes:
 `1031a83559f70a9ba82739cb7ea10c791d515f3d` (packet at `bb0f12a`). Round 2 fixes, after your confirmation pass on
 `bb0f12a`: `e8f156de84bf3b82db1e0c0cce0cbefec8e2201e`. Round 3 fixes, after your operational review of `fc0fc0c`:
-`ROUND3_COMMIT` (tag `stpt-run-v1` on the commit that adds the final addendum). Everything below runs on CPU with a mock model; no model call.
+`06572ae13c5f84707325f3be525dd7374f906fa3` (tag `stpt-run-v1` on the commit that adds the final addendum). Everything below runs on CPU with a mock model; no model call.
 
 ## Reproduce
 ```bash
 git checkout stpt-run-v1
-python -m pytest -q tests                                   # TESTS_PASSED tests: test_review_fixes, test_review_followup, test_review_round3
+python -m pytest -q tests                                   # 148 tests: test_review_fixes, test_review_followup, test_review_round3
 python osf/addendum1/reviewer_cases/stpt_reviewer_followup_bb0f12a.py .   # your round-2 script: every flag false
 python osf/addendum1/before_after.py                        # each defect on cb10726, and its absence on the fix
 python gates/S10/run/validate_driver_cpu.py /tmp/drv        # driver criteria D1-D5 (about 1 min)
