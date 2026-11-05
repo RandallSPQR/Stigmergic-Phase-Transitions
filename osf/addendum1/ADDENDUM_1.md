@@ -4,8 +4,9 @@
 commit `cb10726e3d359d8094fbd083f336453d6af9280d` (tag `stpt-prereg-v1-final`; Zenodo 10.5281/zenodo.23924793).
 **This addendum:** filed after registration and **before any confirmatory data exist** (no confirmatory model call has
 been made). Fixes: round 1 in commit `1031a83559f70a9ba82739cb7ea10c791d515f3d`; round 2 (the reviewer's confirmation
-pass on `bb0f12a`) in commit `e8f156de84bf3b82db1e0c0cce0cbefec8e2201e`. Tag: `stpt-run-v1` (on the commit that adds the final text).
-Coordination record: D48, D49, A36, A37.
+pass on `bb0f12a`) in commit `e8f156de84bf3b82db1e0c0cce0cbefec8e2201e`; round 3 (the reviewer's operational review of
+`fc0fc0c`) in commit `ROUND3_COMMIT`. Tag: `stpt-run-v1` (on the commit that adds the final text).
+Coordination record: D48, D49, A36, A37, A38.
 
 ## What happened
 An independent execution review of the registered code (commit `cb10726`) checked whether the code does what the
@@ -46,6 +47,18 @@ and run by the tests; its results on `bb0f12a` and on the fix: `osf/addendum1/re
 **Known limit.** A recorded logit changed together with its vote, so that the pair stays consistent, cannot be detected
 from the record. The logits are the readouts themselves; detecting it would need the model to be read again.
 
+## Round 3: the reviewer's operational review of `fc0fc0c`
+Three more defects, in the collection's operations rather than its analysis, all accepted. The reviewer's script is kept
+verbatim (`osf/addendum1/reviewer_cases/stpt_final_operational_cases_fc0fc0c.py`); it reads `fc0fc0c`'s shell layout,
+which this round restructured, so each of its cases is reproduced by `tests/test_review_round3.py` and by the driver's
+CPU validation (D8–D10). Results on `fc0fc0c` and on the fix: `osf/addendum1/reviewer_cases/results_round3_before_after.json`.
+
+| | defect in `fc0fc0c` | fix | on `fc0fc0c` → fixed |
+|---|---|---|---|
+| R3.1 | a failed upload returned success; the script then wrote DONE and removed the pod, so records not yet uploaded could be lost | outputs live on a persistent volume (`launch.py --data-safe`); `UPLOAD_PENDING` is set before the first paid model phase and cleared only after an upload verified file by file (name and size) on the dataset; upload failures are returned and retried; the pod script never deletes the pod; the launcher deletes it only when the marker is gone and otherwise **stops** it (the volume and every record survive); a restarted pod only retries the upload | exit 0, DONE written, pod removed → exit 5, marker kept, no DONE, pod stopped, not deleted |
+| R3.2 | installation and weight downloads were not metered; a server's readiness wait had no cap check ($0.20 cap: $1.00 spent with no model call) | the ledger (stdlib-only `gates/S10/run/ledger.py`) opens at the pod script's first line and charges every phase (install, downloads, server starts, calls, teardown, the gaps between phases); a watchdog enforces the caps every 5 s during every paid phase (never an upload); a server start needs headroom for one start (300 s) and its readiness wait checks the cap every 5 s; a run resumed on a new pod takes the earlier pods' spend (caps are cumulative) and restores their finished records | $1.00 with no call → start refused at $0.00; a readiness wait past the cap stops within one check |
+| R3.3 | non-A/B mass, which the registration (§2) says is recorded, was not saved | the runner records each call's mass (rows gain a 10th field, initial records a 7th); a readout without a valid mass stops the run; the analysis refuses records without it | no mass field → mass in every row, verified |
+
 ## Clarification (#1): the initial vote of uninformed agents
 The registered text (§4, rule (i)) says both "each agent's first vote is sampled at T from its W3 blind, evidence-only
 call" and "Uninformed agents' first votes follow the balanced placeholder". The registered code read the first
@@ -62,15 +75,16 @@ agents is 0.5 either way. The predictions are registered and are **not** re-run 
 measures in §8 are reported against them as registered, with this note.
 
 ## Verification
-- **Tests:** 129 tests pass, including every adversarial case of both review rounds as a permanent test that
-  must refuse (`tests/test_review_fixes.py`, `tests/test_review_followup.py`).
+- **Tests:** TESTS_PASSED tests pass, including every adversarial case of the three review rounds as a permanent test
+  that must refuse (`tests/test_review_fixes.py`, `tests/test_review_followup.py`, `tests/test_review_round3.py`).
 - **Synthetic validation of the analysis code**, rerun on the fixed code (`gates/S10/results/analysis_validation.json`,
-  run 4; log `analysis_validation_run4_addendum1_round2.log`): every numeric result is identical to run 2 (criteria A1–A3 and B1–B6 in all four scenarios; part A now on a frozen confirmatory cluster through the confirmatory runner). The B1 lower-band shortfall in one scenario remains, as accepted in D46 (DV2).
-- **Driver**, CPU with the mock model: criteria D1–D7 pass (`gates/S10/results/driver_cpu_validation.json`), including a cap stop inside a branch that ends within 10 calls of the cap, an interrupted block rerun whole in one start, and a real SIGKILL whose billable gap is charged.
+  run 5; log `analysis_validation_run5_addendum1_round3.log`): VALIDATION_RESULT
+- **Driver**, CPU with the mock model: DRIVER_RESULT
 - **Freeze** (`osf/verify_freeze.py --addendum osf/addendum1/DECLARED_CHANGES.json`, result
-  `osf/addendum1/FREEZE_VERIFICATION_ADDENDUM1.json`, run 2026-11-03 20:13:08 UTC): **PASS.** 35 of 35 unchanged design files byte-identical to the freeze; 5 declared changes, each with its reason, and no undeclared change; the registered text byte-identical to `cb10726` and its design parts identical to the freeze; sealed files 2 of 2 identical; the coordination record's protocol files unchanged and its logs insert-only (7 of 7 pass).
+  `osf/addendum1/FREEZE_VERIFICATION_ADDENDUM1.json`, run VERIFY_TIME UTC): VERIFY_RESULT
 
 ## What did not change
 `stpt/board.py`, the prompts and wordings, the cluster files, the bank, every parameter (H 30, t0 5, D 3, W 5, r 10,
 k 3), the T values, the outcomes, the model, the tests and bounds, the sample size, the sealed files and the
-registered text. The S8 pilot used the registered initial-vote code; it is development data and is unaffected.
+registered text. The external execution review came after the freeze; the owner will run it before the freeze in
+future studies (for Missing Piece it is a pre-freeze gate, D49). The S8 pilot used the registered initial-vote code; it is development data and is unaffected.

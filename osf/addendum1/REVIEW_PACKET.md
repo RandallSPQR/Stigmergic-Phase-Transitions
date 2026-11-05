@@ -2,12 +2,13 @@
 
 For the reviewer of the execution review of `cb10726e3d359d8094fbd083f336453d6af9280d`. Round 1 fixes:
 `1031a83559f70a9ba82739cb7ea10c791d515f3d` (packet at `bb0f12a`). Round 2 fixes, after your confirmation pass on
-`bb0f12a`: `e8f156de84bf3b82db1e0c0cce0cbefec8e2201e` (tag `stpt-run-v1` on the commit that adds the final addendum). Everything below runs on CPU with a mock model; no model call.
+`bb0f12a`: `e8f156de84bf3b82db1e0c0cce0cbefec8e2201e`. Round 3 fixes, after your operational review of `fc0fc0c`:
+`ROUND3_COMMIT` (tag `stpt-run-v1` on the commit that adds the final addendum). Everything below runs on CPU with a mock model; no model call.
 
 ## Reproduce
 ```bash
 git checkout stpt-run-v1
-python -m pytest -q tests                                   # 129 tests; tests/test_review_fixes.py and tests/test_review_followup.py
+python -m pytest -q tests                                   # TESTS_PASSED tests: test_review_fixes, test_review_followup, test_review_round3
 python osf/addendum1/reviewer_cases/stpt_reviewer_followup_bb0f12a.py .   # your round-2 script: every flag false
 python osf/addendum1/before_after.py                        # each defect on cb10726, and its absence on the fix
 python gates/S10/run/validate_driver_cpu.py /tmp/drv        # driver criteria D1-D5 (about 1 min)
@@ -42,6 +43,17 @@ changed.
 | R2.4 hard-kill gap unmetered | `driver.py` `Ledger`: wall clock, persisted open interval, `close()` on a clean stop | `test_unclosed_interval_is_charged`, driver validation D4/D7 (real SIGKILL; the gap is charged) | $0.01 → $1.01 |
 | R2.5 incomplete start-ID map | `confirmatory.py` `verify_record` | `start_ids_only_init`, `start_ids_extra_branch`, `start_ids_two_starts` | refused |
 
+## Round 3 (your operational review of `fc0fc0c`)
+
+| | where the fix is | tests | evidence |
+|---|---|---|---|
+| R3.1 failed upload deleted the pod | `gates/S10/gpu/s10_driver.sh`: `upload` (verified, returns failure), `upload_until_verified`, `finish` (never deletes; exit 5 keeps `UPLOAD_PENDING`), recovery mode; `gates/S0/gpu/launch.py --data-safe` (volume at /workspace; delete only without the marker, else stop) | `test_upload_failure_keeps_marker_and_never_deletes`, `test_verified_upload_clears_marker`, `test_upload_function_returns_failure`, `test_launch_data_safe_deletes_only_after_verified_upload` (2 cases); driver validation D9 | `reviewer_cases/results_round3_before_after.json` |
+| R3.2 caps missed install, downloads and the readiness wait | `gates/S10/run/ledger.py` (meter from the pod's first line; continuous within a pod session; watchdog; cumulative `seed` across pods); `driver.py` (`headroom` before a start; `server.start(check=...)`); `pod.py` (`check()` every 5 s of the readiness wait; vLLM registered for the watchdog) | `test_server_start_needs_headroom`, `test_readiness_wait_is_cap_checked`, `test_pod_start_is_metered_from_its_first_line`, `test_time_between_phases_is_charged_within_a_pod_session`, `test_watchdog_stops_a_paid_phase_at_the_cap`, `test_cumulative_caps_across_pods`; driver validation D8 | $1.00 → $0.00 (refused) |
+| R3.3 non-A/B mass not saved | `gates/S10/s10_core.py`: `MassRecorder`, `compact`, init records; `confirmatory.py`: 10-field rows, 7-field initial records, mass required | `test_mass_recorded_for_every_call`, `test_mass_tampering_refused` (6 cases), `test_kernel_without_mass_stops_the_run`; driver validation D10 | no field → every row |
+
+Your round-3 script reads `fc0fc0c`'s shell layout by text slicing; the restructured script no longer has those
+slices, so the script itself does not run on the fix. Its cases are the tests above.
+
 ## Not changed
 `stpt/board.py` (byte-identical), prompts, clusters, bank, parameters, T values, the analysis model and its numbers
 (the synthetic validation reproduces run 2 exactly), the registered text. Design files changed, with reasons:
@@ -50,7 +62,8 @@ changed.
 ## Known limits
 - A recorded logit altered together with its vote (a consistent pair) cannot be detected from the record; detecting it
   would need the model to be read again. Every other recorded value is recomputed.
-- `pod.py` and `s10_driver.sh` (real vLLM control) mirror the S8 pod code but have not run on a GPU. The first paid use
+- `pod.py`, `s10_driver.sh` and `launch.py --data-safe` (real vLLM control, volume, uploads) mirror the S8 pod code and
+  are tested on CPU with stubs, but have not run on a GPU or against RunPod. The first paid use
   starts with one smoke block, after the owner's OK.
 - The proposed caps are the S9 cost model split by stage, scaled to the accepted totals; the owner approves them
   before any paid run (the driver refuses a caps file not marked APPROVED).
