@@ -1,0 +1,45 @@
+{
+ "script": "osf/addendum1/reviewer_cases/stpt_launch_path_cases_0778869.py (reviewer's, verbatim)",
+ "on_0778869": {
+  "acknowledged_new_pod_resume": {
+   "seed_rc": 0,
+   "STPT_ACK": "gemma-2-9b-it:core",
+   "open_rc": 3,
+   "open_output": "STOP: stage gemma-2-9b-it:core: 80% of the cap reached ($8.10 of $10.00); flagged to the owner, awaiting acknowledgement",
+   "ack_in_ledger": {}
+  },
+  "final_upload_gap": {
+   "simulated_billable_usd": 1.1,
+   "recorded_usd": 0.1,
+   "watchdog_stop": null,
+   "cap_usd": 0.2
+  },
+  "actual_adapter_missing_mass": {
+   "stopped": false,
+   "attempts": 4,
+   "counted_as_missing": true
+  }
+ },
+ "on_fixed_tree": {
+  "acknowledged_new_pod_resume": {
+   "seed_rc": 0,
+   "STPT_ACK": "gemma-2-9b-it:core",
+   "open_rc": 0,
+   "open_output": "",
+   "ack_in_ledger": {
+    "gemma-2-9b-it:core": true
+   }
+  },
+  "final_upload_gap": {
+   "simulated_billable_usd": 1.1,
+   "recorded_usd": 1.1,
+   "watchdog_stop": "stage gemma-2-9b-it:core: cap reached ($1.10 of $0.20) [watchdog]",
+   "cap_usd": 0.2
+  },
+  "actual_adapter_missing_mass": {
+   "stopped": true,
+   "attempts": 1,
+   "error": "readout without its A/B logits or non-A/B mass (KeyError('non_option_mass')): the run stops"
+  }
+ }
+}

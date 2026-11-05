@@ -118,10 +118,20 @@ class HTTPKernel:
         self.calls, self.mass_max = 0, 0.0
 
     def __call__(self, msgs):
+        """A transport failure raises an ordinary exception, which the harness retries (registered: 3 retries, then a
+        missing call). A readout that arrives without its A/B logits or its non-A/B mass breaks the readout contract:
+        that raises ProtocolError, a BaseException the retry cannot catch, so the run stops (round 4)."""
+        import math
         self.calls += 1
         r = self.readout(self.tr, self.served, self.ser.apply_to_tokenizer(self.tok, msgs), self.opt)
-        self.mass_max = max(self.mass_max, r["non_option_mass"])
-        return {"logp_A": r["logp"]["A"], "logp_B": r["logp"]["B"], "non_option_mass": r["non_option_mass"]}
+        try:
+            lA, lB, m = r["logp"]["A"], r["logp"]["B"], r["non_option_mass"]
+        except (KeyError, TypeError) as e:
+            raise C.ProtocolError(f"readout without its A/B logits or non-A/B mass ({e!r}): the run stops")
+        if not isinstance(m, (int, float)) or isinstance(m, bool) or not math.isfinite(m) or not 0.0 <= m <= 1.0:
+            raise C.ProtocolError(f"readout with an invalid non-A/B mass {m!r}: the run stops")
+        self.mass_max = max(self.mass_max, m)
+        return {"logp_A": lA, "logp_B": lB, "non_option_mass": m}
 
 
 def env_check_factory():

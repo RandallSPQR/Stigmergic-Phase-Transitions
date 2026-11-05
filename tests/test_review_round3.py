@@ -131,13 +131,13 @@ def test_pod_start_is_metered_from_its_first_line(tmp_path):
 def test_time_between_phases_is_charged_within_a_pod_session(tmp_path):
     clk = Clock(); lp = tmp_path / "ledger.json"
     L = LG.Ledger(lp, {"a": 10, "b": 10}, 3.6, clk, session="pod1"); L.begin("a"); clk.t = 100; L.close()
-    clk.t = 160                                         # 60 s between the driver's exit and the next download
+    clk.t = 160                                         # 60 s after stage a's driver exited (its uploads): charged to a
     L2 = LG.Ledger(lp, {"a": 10, "b": 10}, 3.6, clk, session="pod1"); L2.begin("b")
-    assert abs(L2.spent("b") - 0.06) < 1e-9 and abs(L2.spent("a") - 0.1) < 1e-9
-    clk.t = 200; L2.close()                             # 40 s more on b, then a clean close
+    assert abs(L2.spent("a") - 0.16) < 1e-9 and L2.spent("b") == 0.0
+    clk.t = 200; L2.close()                             # 40 s on b, then a driver close (not final)
     clk.t = 10000                                       # a later pod (another session) is not charged for the gap
     L3 = LG.Ledger(lp, {"a": 10, "b": 10}, 3.6, clk, session="pod2"); L3.begin("b")
-    assert abs(L3.spent("b") - 0.10) < 1e-9
+    assert abs(L3.spent("b") - 0.04) < 1e-9
 
 
 def test_watchdog_stops_a_paid_phase_at_the_cap(tmp_path):
@@ -147,7 +147,7 @@ def test_watchdog_stops_a_paid_phase_at_the_cap(tmp_path):
     (tmp_path / "paid.pids").write_text(f"{proc.pid}\n")
     assert LG.watchdog_once(tmp_path, {"s": 1.0}, 3.6, now=500) is None          # $0.50: under the cap and the flag
     r = LG.watchdog_once(tmp_path, {"s": 1.0}, 3.6, now=1001)                     # $1.001: past the cap
-    assert r and "cap reached" in r and (tmp_path / "CAP_STOP").exists()
+    assert r and "cap reached" in r and LG.stop_file(tmp_path, "s").exists()
     proc.wait(timeout=20)
     assert proc.returncode is not None
 

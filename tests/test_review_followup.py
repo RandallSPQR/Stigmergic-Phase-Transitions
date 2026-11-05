@@ -184,6 +184,6 @@ def test_unclosed_interval_is_charged(tmp_path):
     clk.t = 1010                                                          # driver killed; server billable for 1,000 s
     l2 = DR.Ledger(lp, {"s": 1000}, 3.6, clk); l2.begin("s"); l2.charge()
     assert abs(l2.d["spent_usd"]["s"] - 1.01) < 1e-9 and l2.d["unclosed_gaps"][0]["seconds"] == 1000
-    l2.close(); clk.t = 5000                                              # a clean stop closes the interval
+    l2.close(final=True); clk.t = 5000                                    # the pod script's final close ends billing
     l3 = DR.Ledger(lp, {"s": 1000}, 3.6, clk); l3.begin("s")
     assert abs(l3.d["spent_usd"]["s"] - 1.01) < 1e-9

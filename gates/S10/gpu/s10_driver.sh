@@ -56,30 +56,38 @@ upload_until_verified() {
   return 1
 }
 
+ledger() { python3 "$SRC/gates/S10/run/ledger.py" "$1" --out "$OUT" --caps "$SRC/gates/S10/run/caps_approved.json" "${@:2}"; }
+
 finish() {
-  # $1: exit status to report. The pod is never deleted here.
+  # $1: exit status to report. The pod is never deleted here. The ledger stays open (and the watchdog running) through
+  # the final uploads, so their time is charged (round 4); the last close is final.
   local rc=$1
-  [ -n "${WDOG:-}" ] && kill "$WDOG" 2>/dev/null
   [ -n "${UPL:-}" ] && kill "$UPL" 2>/dev/null
+  ledger reopen --no-check >/dev/null 2>&1
   if upload_until_verified; then
-    python3 "$SRC/gates/S10/run/ledger.py" close --out "$OUT" --caps "$SRC/gates/S10/run/caps_approved.json" >/dev/null 2>&1
     touch "$OUT/DONE"; upload_until_verified || echo "DONE marker not uploaded (records are verified)"
+    [ -n "${WDOG:-}" ] && kill "$WDOG" 2>/dev/null
+    ledger close --final --allowance 120 >/dev/null 2>&1   # all upload time charged; 120 s in advance for the next one
+    upload_until_verified || echo "final ledger not uploaded (records are verified)"   # the dataset gets the final ledger
     rm -f "$MARKER"
     step "uploads verified; UPLOAD_PENDING cleared; exit $rc"
     exit "$rc"
   fi
-  python3 "$SRC/gates/S10/run/ledger.py" close --out "$OUT" --caps "$SRC/gates/S10/run/caps_approved.json" >/dev/null 2>&1
+  [ -n "${WDOG:-}" ] && kill "$WDOG" 2>/dev/null
+  ledger close --final --allowance 120 >/dev/null 2>&1
   step "UPLOAD NOT VERIFIED: UPLOAD_PENDING kept; the pod will be stopped, not deleted, and its volume kept"
   exit 5
 }
 
 paid() {
-  # Run a paid phase in its own process group, registered for the watchdog; refuse after a cap stop.
-  [ -e "$OUT/CAP_STOP" ] && { echo "CAP_STOP present: $(cat "$OUT/CAP_STOP")"; return 3; }
+  # Run a paid phase of stage $CUR_STAGE in its own process group, registered for the watchdog; refuse after that
+  # stage's cap stop (the watchdog writes one stop file per stage, so another stage's work is not blocked).
+  local sf="$OUT/CAP_STOP_${CUR_STAGE//:/_}"
+  [ -e "$sf" ] && { echo "cap stop for $CUR_STAGE: $(cat "$sf")"; return 3; }
   setsid "$@" & local pid=$!
   echo "$pid" >> "$OUT/paid.pids"
   wait "$pid"; local rc=$?
-  [ -e "$OUT/CAP_STOP" ] && { echo "stopped by the watchdog: $(cat "$OUT/CAP_STOP")"; return 3; }
+  [ -e "$sf" ] && { echo "stopped by the watchdog: $(cat "$sf")"; return 3; }
   return $rc
 }
 
@@ -122,7 +130,8 @@ if [ -n "${STPT_PRIOR_RUNS:-}" ]; then              # cumulative caps across pod
   done
   python3 "$SRC/gates/S10/run/ledger.py" seed --out "$OUT" --caps "$CAPS" --prior "${PRIORS[@]}" || exit 3
 fi
-python3 "$SRC/gates/S10/run/ledger.py" open --out "$OUT" --caps "$CAPS" --stage "$(first_stage)" --since "$POD_T0" \
+CUR_STAGE=$(first_stage)
+python3 "$SRC/gates/S10/run/ledger.py" open --out "$OUT" --caps "$CAPS" --stage "$CUR_STAGE" --since "$POD_T0" \
   || { echo "STOP: ledger refused the first stage (no paid work done)"; exit 3; }
 python3 "$SRC/gates/S10/run/ledger.py" watchdog --out "$OUT" --caps "$CAPS" > "$OUT/logs/watchdog.log" 2>&1 & WDOG=$!
 
@@ -158,6 +167,7 @@ for M in ${STPT_MODELS}; do
     *" $M "*) case " ${STPT_STAGES:-core} " in *" core "*) ST="$M:core";; *) ST="$M:secondary";; esac;;
     *) ST="$M:secondary";;
   esac
+  CUR_STAGE=$ST
   python3 "$SRC/gates/S10/run/ledger.py" open --out "$OUT" --caps "$CAPS" --stage "$ST" || { RC=3; break; }
   step "$M: weights"; df -h / | tail -1
   export MODEL_PROFILE_FILE=$($PY -c "import sae_ethos_pipeline, lineup; print(lineup.profile_path('$M'))")
@@ -171,6 +181,7 @@ for M in ${STPT_MODELS}; do
   paid $PY "$SRC/gates/S10/run/pod.py" --model "$M" --caps "$CAPS" --out "$OUT" \
       --stages ${STPT_STAGES:-core} ${STPT_BLOCKS:+--blocks $STPT_BLOCKS} ${STPT_ACK:+--ack $STPT_ACK}
   RC=$?; step "$M: driver exit $RC"
+  ledger reopen --no-check >/dev/null 2>&1          # the pod still bills while uploading (round 4)
   upload_until_verified || { echo "STOP: uploads not verified after $M; no further paid work"; RC=5; break; }
   [ $RC = 0 ] || { echo "STOP: $M did not complete (flag, cap or error)"; break; }
   rm -rf "$HF_HOME/hub/models--${HFID//\//--}" "$HF_HOME/xet"

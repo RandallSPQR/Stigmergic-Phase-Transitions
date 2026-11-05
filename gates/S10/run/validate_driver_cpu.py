@@ -25,6 +25,9 @@ Criteria, fixed before the run (each must hold):
      exits 5 and issues no pod command; with a verified upload it clears the marker and writes DONE; launch.py
      --data-safe stops (never deletes) a pod whose marker remains, and deletes one whose marker was cleared.
   D10 non-A/B mass (round 3): every call's mass is in the driver's records and the analysis accepts them.
+  D11 round 4 (the reviewer's script on 0778869, run verbatim): an acknowledged 80% flag lets a new pod resume; the time
+     after a driver exits (final uploads) is charged and the watchdog stops at the cap; a readout without its mass
+     stops the run on the first attempt (no retry, not a missing call).
   D5 refusals: failed environment (pipeline pin) check -> stop before any model call; unknown model; a stage without
      a cap; a cluster that is not one of the 61 frozen clusters; an undrawn arm.
 """
@@ -349,6 +352,18 @@ def main():
     out["criteria"]["D10"] = {"status": st, "records": len(R10), "mass_in_every_row": rows_ok, "analysis_accepts": acc,
                               "pass": st == "complete" and len(R10) == 4 and rows_ok and acc}
     print("D10", out["criteria"]["D10"], flush=True)
+
+    # ---- D11 round 4: the reviewer's script, verbatim
+    p11 = subprocess.run([sys.executable, str(ROOT / "osf/addendum1/reviewer_cases/stpt_launch_path_cases_0778869.py"), str(ROOT)],
+                         capture_output=True, text=True, timeout=600)
+    o11 = json.loads(p11.stdout[p11.stdout.index("{"):]) if "{" in p11.stdout else {}
+    r11 = {"exit": p11.returncode, "acknowledged_new_pod_resume": o11.get("acknowledged_new_pod_resume"),
+           "final_upload_gap": o11.get("final_upload_gap"), "actual_adapter_missing_mass": o11.get("actual_adapter_missing_mass")}
+    r11["pass"] = (p11.returncode == 0 and r11["acknowledged_new_pod_resume"]["open_rc"] == 0
+                   and abs(r11["final_upload_gap"]["recorded_usd"] - 1.1) < 1e-9 and bool(r11["final_upload_gap"]["watchdog_stop"])
+                   and r11["actual_adapter_missing_mass"]["stopped"] and r11["actual_adapter_missing_mass"]["attempts"] == 1)
+    out["criteria"]["D11"] = r11
+    print("D11", r11, flush=True)
 
     # ---- D5 refusals
     r = {}

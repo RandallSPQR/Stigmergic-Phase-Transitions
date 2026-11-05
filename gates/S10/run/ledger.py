@@ -4,8 +4,9 @@ so the pod can meter from its first line, before anything is installed.
 Metering covers the whole paid lifecycle of a pod (round 3): the pod script opens an interval at its first line
 (`open --since <pod start>`), so installation, weight downloads, server starts, model calls and teardown are all
 charged. Each interval is charged to a stage ("<model>:core" or "<model>:secondary"; install time to the first
-stage the pod runs). Within one pod session (STPT_POD_SESSION), the time between a close and the next open is charged
-too (`continuous`). A driver that dies without closing leaves the interval open, and the next begin() charges the
+stage the pod runs). A driver's close is not final: until the pod script's final close after its last upload, the
+time after a close is still charged (by the next begin or the final close) and counted by the watchdog (round 4).
+STPT_ACK acknowledgements are applied by every check (round 4). A driver that dies without closing leaves the interval open, and the next begin() charges the
 whole gap (round 2).
 
 Enforcement: the driver checks in process (every 10 model calls, every 5 s of a server's readiness wait, and before a
@@ -15,7 +16,9 @@ registered paid processes (downloads, the driver, vLLM). It never terminates an 
 
   python ledger.py open --out OUT --caps CAPS --stage STAGE [--since EPOCH]     (charges the gap; leaves it open)
   python ledger.py check --out OUT --caps CAPS                                    (exit 3 at a cap or flag)
-  python ledger.py close --out OUT --caps CAPS
+  python ledger.py reopen --out OUT --caps CAPS [--no-check]                     (after a driver exits: keep charging)
+  python ledger.py close --out OUT --caps CAPS [--final [--allowance S]]         (--final: the pod script's last close;
+                                                                                 S seconds charged for the one upload after it)
   python ledger.py watchdog --out OUT --caps CAPS [--every 5]
   python ledger.py seed --out OUT --caps CAPS --prior LEDGER.json ...           (a resumed run on a new pod: earlier
                                                                                  pods' spend counts against the caps)
@@ -68,8 +71,8 @@ class Ledger:
             if o:                                                   # an earlier process died with its interval open
                 gap = now - o["t_last"]; self._add(o["stage"], gap)
                 self.d["unclosed_gaps"].append({"stage": o["stage"], "seconds": max(0.0, gap)})
-            elif c and self.session and c.get("session") == self.session:
-                self._add(stage, now - c["at"])                     # continuous within one pod session
+            elif c and not c.get("final") and (c.get("session") == self.session or not (c.get("session") and self.session)):
+                self._add(c.get("stage", stage), now - c["at"])     # the pod kept running since that close (round 4)
             if since is not None:                                   # the pod's first line: charge from then
                 self._add(stage, now - float(since))
         else:
@@ -87,10 +90,26 @@ class Ledger:
             if save:
                 self.save()
 
-    def close(self):
-        """A clean stop: charge up to now and close the interval."""
-        self.charge(save=False)
-        self.d["open"] = None; self.d["closed"] = {"at": self.clock(), "session": self.session}
+    def close(self, final=False, allowance=0.0):
+        """Close the interval. A driver's close is not final: the pod keeps running (uploads, the next phase), so the
+        time after it is still charged, by the next begin or by the final close, and the watchdog still counts it.
+        Only the pod script's last close, after its last upload, is final (round 4)."""
+        now = self.clock()
+        if self.stage is not None:
+            self.charge(save=False)
+        else:
+            o, c = self.d.get("open"), self.d.get("closed")
+            if o:
+                self._add(o["stage"], now - o["t_last"]); last = o["stage"]
+            elif c and not c.get("final"):
+                self._add(c.get("stage"), now - c["at"]); last = c.get("stage")
+            else:
+                last = (c or {}).get("stage")
+            self.stage = last
+        if final and allowance and self.stage:          # the one upload after the final close, charged in advance
+            self._add(self.stage, allowance); self.d["final_upload_allowance_s"] = allowance
+        self.d["open"] = None
+        self.d["closed"] = {"at": now, "session": self.session, "stage": self.stage, "final": bool(final)}
         self.stage = self.t_last = None
         self.save()
 
@@ -98,7 +117,7 @@ class Ledger:
         cap = self.caps[stage]
         if spent >= cap:
             return "cap"
-        if spent >= 0.8 * cap and not self.d["acked"].get(stage):
+        if spent >= 0.8 * cap and not self.d["acked"].get(stage) and stage not in env_acks(self.caps):
             return "flag"
         return "ok"
 
@@ -141,13 +160,28 @@ class Ledger:
 
 
 # ---------------------------------------------------------------- watchdog
-def provisional(d, rate, now):
-    """Spend per stage including the open interval up to now (read-only)."""
-    sp = dict(d.get("spent_usd", {}))
-    o = d.get("open")
+def billing_stage(d):
+    """The stage the pod's time is currently charged to: the open interval's, or that of a non-final close (a driver
+    exited; the pod still runs). None after the pod script's final close."""
+    o, c = d.get("open"), d.get("closed")
     if o:
-        sp[o["stage"]] = sp.get(o["stage"], 0.0) + max(0.0, now - o["t_last"]) * rate / 3600
+        return o["stage"], o["t_last"]
+    if c and not c.get("final") and c.get("stage"):
+        return c["stage"], c["at"]
+    return None, None
+
+
+def provisional(d, rate, now):
+    """Spend per stage including the time not yet charged up to now (read-only)."""
+    sp = dict(d.get("spent_usd", {}))
+    s, t = billing_stage(d)
+    if s:
+        sp[s] = sp.get(s, 0.0) + max(0.0, now - t) * rate / 3600
     return sp
+
+
+def stop_file(out, stage):
+    return Path(out) / f"CAP_STOP_{stage.replace(':', '_')}"
 
 
 def terminate_paid(out):
@@ -167,24 +201,36 @@ def terminate_paid(out):
 def watchdog_once(out, caps, rate, now=None):
     """One check: returns None, or the reason the paid processes were terminated."""
     p = Path(out) / "ledger.json"
-    if not p.exists() or (Path(out) / "CAP_STOP").exists():
+    if not p.exists():
         return None
     d = json.loads(p.read_text())
-    o = d.get("open")
-    if not o:
+    s, _ = billing_stage(d)
+    if not s or stop_file(out, s).exists():
         return None
-    s = o["stage"]; spent = provisional(d, rate, now if now is not None else time.time()).get(s, 0.0); cap = caps.get(s)
+    acked = {**d.get("acked", {}), **{a: True for a in env_acks(caps)}}
+    spent = provisional(d, rate, now if now is not None else time.time()).get(s, 0.0); cap = caps.get(s)
     if cap is None:
         reason = f"open stage {s} has no cap"
     elif spent >= cap:
         reason = f"stage {s}: cap reached (${spent:.2f} of ${cap:.2f}) [watchdog]"
-    elif spent >= 0.8 * cap and not d.get("acked", {}).get(s):
+    elif spent >= 0.8 * cap and not acked.get(s):
         reason = f"stage {s}: 80% of the cap reached (${spent:.2f} of ${cap:.2f}) [watchdog]"
     else:
         return None
-    (Path(out) / "CAP_STOP").write_text(json.dumps({"reason": reason, "utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}))
+    stop_file(out, s).write_text(json.dumps({"stage": s, "reason": reason, "utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}))
     terminate_paid(out)
     return reason
+
+
+def env_acks(caps):
+    """The owner's acknowledgements of 80% flags (STPT_ACK, space-separated stage keys). Applied by every check, in
+    the shell, the watchdog and the driver, so an acknowledged flag lets a new pod resume (round 4). An
+    acknowledgement for a stage that has no cap is refused (a typo must not pass silently)."""
+    acks = os.environ.get("STPT_ACK", "").split()
+    bad = [a for a in acks if a not in caps]
+    if bad:
+        raise Stop(f"STPT_ACK names stages without a cap: {bad}")
+    return acks
 
 
 def _caps(path):
@@ -194,7 +240,9 @@ def _caps(path):
 
 def main(argv=None):
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["open", "check", "close", "watchdog", "seed"])
+    ap.add_argument("cmd", choices=["open", "reopen", "check", "close", "watchdog", "seed"])
+    ap.add_argument("--final", action="store_true"); ap.add_argument("--no-check", action="store_true")
+    ap.add_argument("--allowance", type=float, default=0.0, help="with --final: seconds charged for the last upload")
     ap.add_argument("--prior", nargs="*", default=[])
     ap.add_argument("--out", required=True); ap.add_argument("--caps", required=True)
     ap.add_argument("--stage"); ap.add_argument("--since", type=float); ap.add_argument("--every", type=float, default=5.0)
@@ -202,19 +250,28 @@ def main(argv=None):
     caps, rate = _caps(a.caps)
     L = Ledger(Path(a.out) / "ledger.json", caps, rate)
     try:
-        if a.cmd == "seed":
+        for s_ in env_acks(caps):
+            if not L.d["acked"].get(s_):
+                L.ack(s_)
+        if a.cmd == "reopen":                                       # metering only: reopen the stage last charged
+            s_, _ = billing_stage(L.d)
+            st = s_ or (L.d.get("closed") or {}).get("stage")
+            if st:
+                L.begin(st)
+                if not a.no_check:
+                    L.check()
+        elif a.cmd == "seed":
             L.seed([(p, json.loads(Path(p).read_text())) for p in a.prior])
         elif a.cmd == "open":
-            L.begin(a.stage, since=a.since); L.check()
+            L.begin(a.stage, since=a.since)
+            if not a.no_check:
+                L.check()
         elif a.cmd == "check":
             o = L.d.get("open")
             if o:
                 L.stage, L.t_last = o["stage"], o["t_last"]; L.check()
         elif a.cmd == "close":
-            o = L.d.get("open")
-            if o:
-                L.stage, L.t_last = o["stage"], o["t_last"]
-            L.close()
+            L.close(final=a.final, allowance=a.allowance)
         else:
             while True:
                 r = watchdog_once(a.out, caps, rate)
