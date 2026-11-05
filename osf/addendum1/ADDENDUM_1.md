@@ -5,8 +5,9 @@ commit `cb10726e3d359d8094fbd083f336453d6af9280d` (tag `stpt-prereg-v1-final`; Z
 **This addendum:** filed after registration and **before any confirmatory data exist** (no confirmatory model call has
 been made). Fixes: round 1 in commit `1031a83559f70a9ba82739cb7ea10c791d515f3d`; round 2 (the reviewer's confirmation
 pass on `bb0f12a`) in commit `e8f156de84bf3b82db1e0c0cce0cbefec8e2201e`; round 3 (the reviewer's operational review of
-`fc0fc0c`) in commit `06572ae13c5f84707325f3be525dd7374f906fa3`. Tag: `stpt-run-v1` (on the commit that adds the final text).
-Coordination record: D48, D49, A36, A37, A38.
+`fc0fc0c`) in commit `06572ae13c5f84707325f3be525dd7374f906fa3`; round 4 (the reviewer's launch-path review of
+`0778869`) in commit `238de3ab8eaf04d705c779980ddd077ebd9072ef`. Tag: `stpt-run-v1` (on the commit that adds the final text).
+Coordination record: D48, D49, A36, A37, A38, A39.
 
 ## What happened
 An independent execution review of the registered code (commit `cb10726`) checked whether the code does what the
@@ -59,6 +60,17 @@ CPU validation (D8–D10). Results on `fc0fc0c` and on the fix: `osf/addendum1/r
 | R3.2 | installation and weight downloads were not metered; a server's readiness wait had no cap check ($0.20 cap: $1.00 spent with no model call) | the ledger (stdlib-only `gates/S10/run/ledger.py`) opens at the pod script's first line and charges every phase (install, downloads, server starts, calls, teardown, the gaps between phases); a watchdog enforces the caps every 5 s during every paid phase (never an upload); a server start needs headroom for one start (300 s) and its readiness wait checks the cap every 5 s; a run resumed on a new pod takes the earlier pods' spend (caps are cumulative) and restores their finished records | $1.00 with no call → start refused at $0.00; a readiness wait past the cap stops within one check |
 | R3.3 | non-A/B mass, which the registration (§2) says is recorded, was not saved | the runner records each call's mass (rows gain a 10th field, initial records a 7th); a readout without a valid mass stops the run; the analysis refuses records without it | no mass field → mass in every row, verified |
 
+## Round 4: the reviewer's launch-path review of `0778869`
+Three integration gaps between the pod script, the ledger and the model adapter, all accepted. No design file changed
+in this round. The reviewer's script is kept verbatim and run by the tests and by the driver's CPU validation (D11);
+results on `0778869` and on the fix: `osf/addendum1/reviewer_cases/results_round4_before_after.json`.
+
+| | defect in `0778869` | fix | on `0778869` → fixed |
+|---|---|---|---|
+| R4.1 | an acknowledged 80% flag did not let a new pod resume: the pod script checked the cumulative ledger before the acknowledgement reached the driver | the ledger tool applies the owner's acknowledgements (`STPT_ACK`) in every check (pod script, watchdog, driver); an acknowledgement for a stage without a cap is refused | $8.10 of $10 with the acknowledgement: refused → resumes |
+| R4.2 | the driver closed the ledger before the final uploads, so their time was not charged and the watchdog was idle | a driver's close is not the end of billing: the time after it is charged (to the stage that ran) and counted by the watchdog until the pod script's final close, which comes after the last upload and charges 120 s in advance for the one upload of the final ledger; each stage has its own stop file | $1.10 billable: $0.10 recorded, no stop → $1.10 recorded, watchdog stop |
+| R4.3 | the real model adapter raised an ordinary error for a readout without its non-A/B mass, so the harness retried it and counted a missing call | the adapter checks the readout (both logits and a valid mass) and raises the non-retryable protocol error on a malformed one; transport failures are still retried, then missing, as registered | 4 attempts, missing → stopped after 1 |
+
 ## Clarification (#1): the initial vote of uninformed agents
 The registered text (§4, rule (i)) says both "each agent's first vote is sampled at T from its W3 blind, evidence-only
 call" and "Uninformed agents' first votes follow the balanced placeholder". The registered code read the first
@@ -75,13 +87,14 @@ agents is 0.5 either way. The predictions are registered and are **not** re-run 
 measures in §8 are reported against them as registered, with this note.
 
 ## Verification
-- **Tests:** 148 tests pass, including every adversarial case of the three review rounds as a permanent test
-  that must refuse (`tests/test_review_fixes.py`, `tests/test_review_followup.py`, `tests/test_review_round3.py`).
-- **Synthetic validation of the analysis code**, rerun on the fixed code (`gates/S10/results/analysis_validation.json`,
+- **Tests:** 164 tests pass, including every adversarial case of the four review rounds as a permanent test
+  that must refuse (`tests/test_review_fixes.py`, `tests/test_review_followup.py`, `tests/test_review_round3.py`,
+  `tests/test_review_round4.py`).
+- **Synthetic validation of the analysis code** (round 4 changed no analysis code), rerun on the fixed code (`gates/S10/results/analysis_validation.json`,
   run 5; log `analysis_validation_run5_addendum1_round3.log`): every numeric result is identical to run 2 (criteria A1–A3 and B1–B6 in all four scenarios; part A on a frozen confirmatory cluster, records with the non-A/B mass). The B1 lower-band shortfall in one scenario remains, as accepted in D46 (DV2).
-- **Driver**, CPU with the mock model: criteria D1–D10 pass (`gates/S10/results/driver_cpu_validation.json`), including a cap stop within 10 calls, an interrupted block rerun whole in one start, a real SIGKILL whose billable gap is charged, a server start refused without headroom, a readiness wait stopped at the cap, the pod script keeping its records and the pod when the upload fails, and the non-A/B mass in every record.
+- **Driver**, CPU with the mock model: criteria D1–D11 pass (`gates/S10/results/driver_cpu_validation.json`), including a cap stop within 10 calls, an interrupted block rerun whole in one start, a real SIGKILL whose billable gap is charged, a server start refused without headroom, a readiness wait stopped at the cap, the pod script keeping its records and the pod when the upload fails, the non-A/B mass in every record, and the reviewer's round-4 script (D11).
 - **Freeze** (`osf/verify_freeze.py --addendum osf/addendum1/DECLARED_CHANGES.json`, result
-  `osf/addendum1/FREEZE_VERIFICATION_ADDENDUM1.json`, run 2026-11-05 17:08:14 UTC): **PASS.** 35 of 35 unchanged design files byte-identical to the freeze; 5 declared changes, each with its reason, and no undeclared change; the registered text byte-identical to `cb10726` and its design parts identical to the freeze; sealed files 2 of 2 identical; the coordination record's protocol files unchanged and its logs insert-only (7 of 7 pass).
+  `osf/addendum1/FREEZE_VERIFICATION_ADDENDUM1.json`, run 2026-11-05 22:59:02 UTC): **PASS.** 35 of 35 unchanged design files byte-identical to the freeze; 5 declared changes, each with its reason, and no undeclared change; the registered text byte-identical to `cb10726` and its design parts identical to the freeze; sealed files 2 of 2 identical; the coordination record's protocol files unchanged and its logs insert-only (7 of 7 pass).
 
 ## What did not change
 `stpt/board.py`, the prompts and wordings, the cluster files, the bank, every parameter (H 30, t0 5, D 3, W 5, r 10,

@@ -3,12 +3,13 @@
 For the reviewer of the execution review of `cb10726e3d359d8094fbd083f336453d6af9280d`. Round 1 fixes:
 `1031a83559f70a9ba82739cb7ea10c791d515f3d` (packet at `bb0f12a`). Round 2 fixes, after your confirmation pass on
 `bb0f12a`: `e8f156de84bf3b82db1e0c0cce0cbefec8e2201e`. Round 3 fixes, after your operational review of `fc0fc0c`:
-`06572ae13c5f84707325f3be525dd7374f906fa3` (tag `stpt-run-v1` on the commit that adds the final addendum). Everything below runs on CPU with a mock model; no model call.
+`06572ae13c5f84707325f3be525dd7374f906fa3`. Round 4 fixes, after your launch-path review of `0778869`: `238de3ab8eaf04d705c779980ddd077ebd9072ef`
+(tag `stpt-run-v1` on the commit that adds the final addendum). Everything below runs on CPU with a mock model; no model call.
 
 ## Reproduce
 ```bash
 git checkout stpt-run-v1
-python -m pytest -q tests                                   # 148 tests: test_review_fixes, test_review_followup, test_review_round3
+python -m pytest -q tests                                   # 164 tests: review rounds 1-4
 python osf/addendum1/reviewer_cases/stpt_reviewer_followup_bb0f12a.py .   # your round-2 script: every flag false
 python osf/addendum1/before_after.py                        # each defect on cb10726, and its absence on the fix
 python gates/S10/run/validate_driver_cpu.py /tmp/drv        # driver criteria D1-D5 (about 1 min)
@@ -54,6 +55,17 @@ changed.
 Your round-3 script reads `fc0fc0c`'s shell layout by text slicing; the restructured script no longer has those
 slices, so the script itself does not run on the fix. Its cases are the tests above.
 
+## Round 4 (your launch-path review of `0778869`)
+
+| | where the fix is | tests | evidence |
+|---|---|---|---|
+| R4.1 acknowledgement did not reach the pod script's check | `gates/S10/run/ledger.py`: `env_acks` applied by the CLI, the watchdog and `Ledger.status` | `test_ack_lets_a_new_pod_resume`, `test_flag_without_ack_still_stops`, `test_ack_for_an_unknown_stage_is_refused`, `test_watchdog_honours_ack` | `reviewer_cases/results_round4_before_after.json` |
+| R4.2 final uploads unmetered | `ledger.py`: non-final `close`, `billing_stage`, `reopen`, `close --final --allowance`, per-stage stop files; `gpu/s10_driver.sh`: reopen after each driver, final close after the last upload | `test_driver_close_is_not_the_end_of_billing`, `test_pod_finish_meters_its_uploads` (the real `finish()`), `test_one_stages_stop_does_not_block_another` | $0.10 → $1.10 |
+| R4.3 adapter error retried as a missing call | `gates/S10/run/pod.py`: `HTTPKernel.__call__` validates the readout, raises `ProtocolError` | `test_malformed_readout_stops_the_run` (6 readouts), `test_transport_failure_is_retried_then_missing`, `test_valid_readout_passes_with_its_mass` | 4 attempts → 1 |
+
+Your round-4 script runs verbatim in `tests/test_review_round4.py::test_reviewer_script_all_three_fixed` and in driver
+validation D11.
+
 ## Not changed
 `stpt/board.py` (byte-identical), prompts, clusters, bank, parameters, T values, the analysis model and its numbers
 (the synthetic validation reproduces run 2 exactly), the registered text. Design files changed, with reasons:
@@ -67,5 +79,7 @@ slices, so the script itself does not run on the fix. Its cases are the tests ab
   starts with one smoke block, after the owner's OK.
 - The proposed caps are the S9 cost model split by stage, scaled to the accepted totals; the owner approves them
   before any paid run (the driver refuses a caps file not marked APPROVED).
+- The pod script's final close charges 120 s in advance for the one upload that carries the final ledger; that upload's
+  real time is not metered beyond this allowance (it is one small file).
 - Resume reuses checkpoints only within one server start (re-attach after a hard kill). After a clean stop the server
   is stopped, so an interrupted block reruns whole in the next start; its earlier output is kept under `abandoned/`.
