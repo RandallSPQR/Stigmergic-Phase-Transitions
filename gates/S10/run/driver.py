@@ -19,7 +19,10 @@ What it enforces:
   finished arms and the same-start branches; nothing is run twice within a start.
 - **Caps:** per stage, keyed "<model>:core" (the primary arm of a confirmatory model) or "<model>:secondary" (every
   other arm, and every Llama arm), in USD from metered time. At 80% of a stage's cap the driver writes a flag and stops
-  until the owner acknowledges (ack_flags); at 100% it stops. The meter is checked every 10 calls inside a branch (overshoot <= 10 calls).
+  until the owner acknowledges (ack_flags); at 100% it stops. The meter is checked every 10 calls inside a branch (overshoot <= 10 calls),
+  every 5 s of a server's readiness wait (server.start(check=...)), and before a server start, which needs headroom
+  for one start (STARTUP_ALLOWANCE_S) (round 3). The ledger (gates/S10/run/ledger.py) meters the pod's whole paid
+  lifecycle; its watchdog enforces the same caps during installation and downloads.
   A stop is a BaseException (Stop), so the harness's retry of failed model calls (which catches Exception) cannot
   swallow it; the unfinished branch is discarded and rerun on resume. The ledger meters wall-clock time and persists an
   open interval: if a driver dies without closing it (hard kill; the server may still run and bill), the next driver
@@ -40,7 +43,7 @@ import time
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-sys.path.insert(0, str(HERE.parent))
+sys.path.insert(0, str(HERE.parent)); sys.path.insert(0, str(HERE))
 try:
     import s10_core as C                                  # in the repository (gates/S10) or next to this file on the pod
 except ImportError:  # pragma: no cover
@@ -50,10 +53,9 @@ CONF = ["gemma-2-9b-it", "qwen3.5-9b", "gemma-3-27b-it", "qwen3.5-27b"]
 CHECK_EVERY = 10                     # cap overshoot is bounded by 10 model calls
 
 
-class Stop(BaseException):
-    """The driver stops (cap, flag, failed environment check, refused start); state is checkpointed. A BaseException,
-    like KeyboardInterrupt, so that `except Exception` (the retry around every model call, stpt/board.py _call) cannot
-    swallow it (confirmation pass on bb0f12a)."""
+from ledger import Ledger, Stop  # noqa: E402,F401  (stdlib-only module; also used by the pod script and the watchdog)
+
+STARTUP_ALLOWANCE_S = 300            # a server start must fit in what is left of the stage cap (S9: 240 s per start)
 
 
 def stage_of(model, arm):
@@ -61,72 +63,7 @@ def stage_of(model, arm):
     return f"{model}:" + ("core" if (model in CONF and arm == "primary") else "secondary")
 
 
-# ---------------------------------------------------------------- ledger and meter
-class Ledger:
-    """Spend per stage, persisted. clock() gives wall-clock seconds; spend = metered seconds x usd_per_hour / 3600.
-    The open interval (stage, last charge time) is persisted: a driver that dies without close() leaves it open, and the
-    next driver's begin() charges the whole gap to that stage (the server, and the pod, may have run all along)."""
-
-    def __init__(self, path, caps, usd_per_hour, clock=time.time):
-        self.path, self.caps, self.rate, self.clock = Path(path), caps, usd_per_hour, clock
-        self.d = json.loads(self.path.read_text()) if self.path.exists() else {}
-        for k in ("spent_usd", "flagged", "acked"):
-            self.d.setdefault(k, {})
-        self.d.setdefault("open", None); self.d.setdefault("unclosed_gaps", [])
-        self.stage, self.t_last = None, None
-
-    def save(self):
-        tmp = self.path.with_suffix(".tmp"); tmp.write_text(json.dumps(self.d, indent=1, sort_keys=True)); os.replace(tmp, self.path)
-
-    def _add(self, stage, seconds):
-        self.d["spent_usd"][stage] = self.d["spent_usd"].get(stage, 0.0) + max(0.0, seconds) * self.rate / 3600
-
-    def begin(self, stage):
-        if stage not in self.caps:
-            raise Stop(f"no cap set for stage {stage}: refused")
-        now = self.clock()
-        if self.stage is None and self.d.get("open"):            # an earlier driver died with its interval open
-            o = self.d["open"]; gap = now - o["t_last"]
-            self._add(o["stage"], gap)
-            self.d["unclosed_gaps"].append({"stage": o["stage"], "seconds": max(0.0, gap)})
-        else:
-            self.charge(save=False)
-        self.stage, self.t_last = stage, now
-        self.d["open"] = {"stage": stage, "t_last": now}
-        self.save()
-
-    def charge(self, save=True):
-        if self.stage is not None and self.t_last is not None:
-            now = self.clock()
-            self._add(self.stage, now - self.t_last)
-            self.t_last = now
-            self.d["open"] = {"stage": self.stage, "t_last": now}
-            if save:
-                self.save()
-
-    def close(self):
-        """A clean stop: charge up to now and close the interval (the server is stopped)."""
-        self.charge(save=False)
-        self.d["open"] = None; self.stage = self.t_last = None
-        self.save()
-
-    def check(self, log):
-        """Raise Stop at the 80% flag (until acknowledged) or at the cap."""
-        self.charge()
-        s = self.stage; spent = self.d["spent_usd"].get(s, 0.0); cap = self.caps[s]
-        if spent >= cap:
-            log({"event": "cap_reached", "stage": s, "spent_usd": round(spent, 4), "cap_usd": cap})
-            raise Stop(f"stage {s}: cap reached (${spent:.2f} of ${cap:.2f})")
-        if spent >= 0.8 * cap and not self.d["acked"].get(s):
-            if not self.d["flagged"].get(s):
-                self.d["flagged"][s] = True; self.save()
-                log({"event": "flag_80pct", "stage": s, "spent_usd": round(spent, 4), "cap_usd": cap})
-            raise Stop(f"stage {s}: 80% of the cap reached (${spent:.2f} of ${cap:.2f}); flagged to the owner, awaiting acknowledgement")
-
-    def ack(self, stage):
-        self.d["acked"][stage] = True; self.save()
-
-
+# ---------------------------------------------------------------- meter
 class MeteredKernel:
     def __init__(self, kernel, ledger, log):
         self.k, self.ledger, self.log, self.calls = kernel, ledger, log, 0
@@ -205,7 +142,13 @@ class Driver:
     def _start_server(self, block):
         """server.start() returns {"id", ..., "attached": bool}: a new start, or (after a hard kill of the driver while
         the server kept running) the same start re-attached, in which case same-start checkpoints are reused."""
-        st = self.server.start()
+        import inspect
+        if "check" in inspect.signature(self.server.start).parameters:
+            st = self.server.start(check=lambda: self.ledger.check(self.log))   # cap checked during the readiness wait
+        else:                                                   # test doubles only; the pod's VLLMServer takes check
+            self.log({"event": "server_without_cap_check"})
+            st = self.server.start()
+        self.ledger.check(self.log)                             # a start that ran past the cap stops here
         p = self.out / "events.jsonl"
         seen = {json.loads(l)["server_start"]["id"] for l in (p.read_text().splitlines() if p.exists() else [])
                 if json.loads(l).get("event") in ("server_start", "server_attach")}
@@ -273,8 +216,10 @@ class Driver:
                 todo = [(j, a) for j, a in items if not self.rec_path(j, a).exists()]
                 if not todo:
                     continue
-                self.ledger.begin(stage_of(self.model, todo[0][1]))       # the start's overhead is metered too
+                st0 = stage_of(self.model, todo[0][1])
+                self.ledger.begin(st0)                                    # the start's overhead is metered too
                 self.ledger.check(self.log)                               # no server is started past a flag or cap
+                self.ledger.headroom(st0, STARTUP_ALLOWANCE_S)            # ... nor one the cap cannot cover (round 3)
                 try:
                     self._start_server(b)
                     sid = self.start["id"]
@@ -292,10 +237,12 @@ class Driver:
                             self._arm(j, arm, bd)
                     self._finalize(b, bd)
                 finally:
-                    self.server.stop(); self.ledger.close(); self.log({"event": "server_stop", "block": b})
+                    self.server.stop(); self.ledger.charge(); self.log({"event": "server_stop", "block": b})
                     self.start = None
             self.log({"event": "complete", "stages": list(stages), "blocks": blocks})
             return "complete"
         except Stop as e:
             self.log({"event": "stopped", "reason": str(e)})
             return f"stopped: {e}"
+        finally:
+            self.ledger.close()                                           # clean exit: the interval is closed

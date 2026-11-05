@@ -1,5 +1,5 @@
 {
- "doc": "CPU validation of the confirmatory driver (review #4, addendum 1). Mock model only; no GPU, no API call.\n\n  python gates/S10/run/validate_driver_cpu.py [out_dir] -> gates/S10/results/driver_cpu_validation.json\n\nCriteria, fixed before the run (each must hold):\n  D1 uninterrupted run (Gemma-2-9B, blocks 1-2, core + secondary arms): every record equals run_cluster() for that\n     cluster and arm (the driver adds only checkpoints and start IDs); T is the model's primary T (1.0 in the T1 arm);\n     every arm's branches share one server start; each block has its own start; the analysis accepts every primary\n     record (exact shape, pairing, branch alignment, one start).\n  D2 cap kill mid-cluster: a stage cap reached inside a branch stops the driver mid-cluster; nothing becomes a final\n     record for the interrupted block; resuming (new server start, raised cap) abandons the block's output (logged),\n     reruns the whole block in one start, makes each final record once, and ends with records identical to D1 (apart\n     from start IDs), every block in exactly one start (revised after the confirmation pass on bb0f12a).\n  D3 80% flag: the driver stops at 80% of a stage cap; a resume without the owner's acknowledgement stops again before\n     any server start or model call; with it, the run completes.\n  D4 hard kill (SIGKILL of the driver process while the server keeps running): the resumed driver re-attaches to the\n     same start, reuses the branches checkpointed in it, runs only the rest, and ends with records identical to D1.\n  D6 cap precision (confirmation pass): with a $0.20 cap at $1 per 1,000 calls the driver stops within CHECK_EVERY\n     calls of the cap; a Stop raised inside a model call is not retried by the harness.\n  D7 hard-kill billing (confirmation pass): the time between a SIGKILL of the driver and the resume (server alive) is\n     charged to the stage that was open.\n  D5 refusals: failed environment (pipeline pin) check -> stop before any model call; unknown model; a stage without\n     a cap; a cluster that is not one of the 61 frozen clusters; an undrawn arm.\n",
+ "doc": "CPU validation of the confirmatory driver (review #4, addendum 1). Mock model only; no GPU, no API call.\n\n  python gates/S10/run/validate_driver_cpu.py [out_dir] -> gates/S10/results/driver_cpu_validation.json\n\nCriteria, fixed before the run (each must hold):\n  D1 uninterrupted run (Gemma-2-9B, blocks 1-2, core + secondary arms): every record equals run_cluster() for that\n     cluster and arm (the driver adds only checkpoints and start IDs); T is the model's primary T (1.0 in the T1 arm);\n     every arm's branches share one server start; each block has its own start; the analysis accepts every primary\n     record (exact shape, pairing, branch alignment, one start).\n  D2 cap kill mid-cluster: a stage cap reached inside a branch stops the driver mid-cluster; nothing becomes a final\n     record for the interrupted block; resuming (new server start, raised cap) abandons the block's output (logged),\n     reruns the whole block in one start, makes each final record once, and ends with records identical to D1 (apart\n     from start IDs), every block in exactly one start (revised after the confirmation pass on bb0f12a).\n  D3 80% flag: the driver stops at 80% of a stage cap; a resume without the owner's acknowledgement stops again before\n     any server start or model call; with it, the run completes.\n  D4 hard kill (SIGKILL of the driver process while the server keeps running): the resumed driver re-attaches to the\n     same start, reuses the branches checkpointed in it, runs only the rest, and ends with records identical to D1.\n  D6 cap precision (confirmation pass): with a $0.50 cap at $1 per 1,000 calls the driver stops within CHECK_EVERY\n     calls of the cap; a Stop raised inside a model call is not retried by the harness.\n  D7 hard-kill billing (confirmation pass): the time between a SIGKILL of the driver and the resume (server alive) is\n     charged to the stage that was open.\n  D8 startup caps (round 3): a server start is refused when the stage cap cannot cover one start; a readiness wait\n     that runs past the cap stops within one 5 s check, with no model call.\n  D9 data safety (round 3): with the upload failing, the pod script's finish() keeps UPLOAD_PENDING, writes no DONE,\n     exits 5 and issues no pod command; with a verified upload it clears the marker and writes DONE; launch.py\n     --data-safe stops (never deletes) a pod whose marker remains, and deletes one whose marker was cleared.\n  D10 non-A/B mass (round 3): every call's mass is in the driver's records and the analysis accepts them.\n  D5 refusals: failed environment (pipeline pin) check -> stop before any model call; unknown model; a stage without\n     a cap; a cluster that is not one of the 61 frozen clusters; an undrawn arm.\n",
  "criteria": {
   "D1": {
    "status": "complete",
@@ -42,7 +42,7 @@
    "nothing_abandoned": true,
    "kill_gap_charged": [
     {
-     "seconds": 2.032282590866089,
+     "seconds": 2.0214099884033203,
      "stage": "gemma-2-9b-it:core"
     }
    ],
@@ -51,15 +51,57 @@
    "pass": true
   },
   "D6": {
-   "status": "stopped: stage gemma-2-9b-it:core: cap reached ($0.21 of $0.20)",
-   "calls": 209,
-   "bound": 210,
+   "status": "stopped: stage gemma-2-9b-it:core: cap reached ($0.51 of $0.50)",
+   "calls": 509,
+   "bound": 510,
    "stop_escapes_retry": true,
    "calls_in_retried_call": 1,
    "pass": true
   },
   "D7": {
    "see": "D4 kill_gap_charged",
+   "pass": true
+  },
+  "D8": {
+   "headroom_refused": {
+    "status": "stopped: stage gemma-2-9b-it:core: $0.20 left, less than one server start (300 s = $0.30): refused",
+    "spent_usd": 0.0,
+    "model_calls": 0
+   },
+   "readiness_wait_capped": {
+    "status": "stopped: stage gemma-2-9b-it:core: cap reached ($0.50 of $0.50)",
+    "spent_usd": 0.5,
+    "model_calls": 0
+   },
+   "pass": true
+  },
+  "D9": {
+   "finish_upload_failed": {
+    "exit": 5,
+    "marker_kept": true,
+    "DONE": false,
+    "pod_commands": []
+   },
+   "finish_upload_ok": {
+    "exit": 0,
+    "marker_kept": false,
+    "DONE": true,
+    "pod_commands": []
+   },
+   "launch_marker_kept": [
+    "runpodctl stop pod fake-pod"
+   ],
+   "launch_marker_cleared": [
+    "curl -s -X DELETE -H Authorization: Bearer x https://rest.runpod.io/v1/pods/fake-pod",
+    "runpodctl remove pod fake-pod"
+   ],
+   "pass": true
+  },
+  "D10": {
+   "status": "complete",
+   "records": 4,
+   "mass_in_every_row": true,
+   "analysis_accepts": true,
    "pass": true
   },
   "D5": {
@@ -73,5 +115,5 @@
   }
  },
  "pass": true,
- "seconds": 59.6
+ "seconds": 65.4
 }

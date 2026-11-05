@@ -25,7 +25,9 @@ Branches are produced through a checkpoint store (store.get/put) so a driver can
 resume (gates/S10/run/driver.py). With no store, an in-memory store is used and the result is the same.
 
 Rows are compact: [step, agent, own_before, shown ("" on the blind board), vote, content-A logit (None if missing), u,
-missing 0/1, letter mapping A-as-A 0/1]. Every run also carries the sha256 of its full harness records.
+missing 0/1, letter mapping A-as-A 0/1, non-A/B mass (None if missing)]; initial records: [agent, placeholder, vote,
+call 0/1, logit, missing 0/1, non-A/B mass]. The mass is recorded for every call (registration §2; review round 3).
+Every run also carries the sha256 of its full harness records.
 """
 from __future__ import annotations
 
@@ -52,6 +54,32 @@ CLUSTERS_SHA256 = "48a3eb8da9ec0052cef13b43551f3156d4d874133feb32a724c01e95895c4
 
 class Refused(ValueError):
     """A run or input that does not conform to the registered protocol."""
+
+
+class ProtocolError(BaseException):
+    """A model readout that breaks the protocol's contract (no non-A/B mass, or an invalid one). A BaseException so the
+    harness's retry of failed calls (which catches Exception) cannot swallow it; the run stops."""
+
+
+class MassRecorder:
+    """Wraps a kernel and keeps the non-A/B mass of the last call (registration §2: non-A/B mass is recorded; review
+    round 3). stpt/board.py drops it from its records, so the runner takes it from here, call by call."""
+
+    def __init__(self, kernel):
+        self.k, self.last = kernel, None
+
+    def __call__(self, msgs):
+        r = self.k(msgs)
+        if r is not None:
+            m = r.get("non_option_mass") if isinstance(r, dict) else None
+            if not isinstance(m, (int, float)) or isinstance(m, bool) or not (0.0 <= m <= 1.0):
+                raise ProtocolError(f"readout without a valid non-A/B mass: {m!r}")
+            self.last = float(m)
+        return r
+
+
+def _recorder(kernel):
+    return kernel if isinstance(kernel, MassRecorder) else MassRecorder(kernel)
 
 
 # ---------------------------------------------------------------- frozen inputs
@@ -195,12 +223,14 @@ def initial_state(board_w3, kernel, ph):
     sampled at T. Letter mappings balanced in pairs over the informed agents."""
     if board_w3.wording != "w3" or board_w3.live:
         raise Refused("the rule (i) initial call uses the W3 blind board")
+    kernel = _recorder(kernel)
     recs, votes, k = [], [], 0
     for i in range(board_w3.N):
         if board_w3.private[i] is None:
             recs.append({"kind": "init", "agent": i, "placeholder": ph[i], "call": False, "vote": ph[i]})
             votes.append(ph[i]); continue
         layout = B.layout_for(board_w3.run_key, "init-informed", k); k += 1
+        kernel.last = None
         msgs, r = B._call(board_w3, kernel, i, ph[i], [], layout, "vote", live=False)
         u = B.unif(board_w3.run_key, "init-draw", i)
         if r is None:
@@ -211,7 +241,8 @@ def initial_state(board_w3, kernel, ph):
             lA = B.content_logit_A(layout, r["logp_A"], r["logp_B"])
             v = "A" if u < B.sigmoid(lA / board_w3.T) else "B"
             recs.append({"kind": "init", "agent": i, "placeholder": ph[i], "call": True, "prompt_sha": B.sha(msgs),
-                         "layout": layout, "logp_A": r["logp_A"], "logp_B": r["logp_B"], "u": u, "vote": v})
+                         "layout": layout, "logp_A": r["logp_A"], "logp_B": r["logp_B"], "u": u, "vote": v,
+                         "non_option_mass": kernel.last})
         votes.append(v)
     return B.State(0, votes), recs
 
@@ -221,16 +252,24 @@ def initial_state_rule_ii(board):
 
 
 # ---------------------------------------------------------------- runs
-def compact(rec):
+def compact(rec, mass=None):
+    """[step, agent, own_before, shown, vote, content-A logit, u, missing, A-as-A, non-A/B mass]; the logit and the
+    mass are None for a missing call."""
     miss = bool(rec.get("missing"))
     lA = None if miss else round(B.content_logit_A(rec["layout"], rec["logp_A"], rec["logp_B"]), 6)
     return [rec["step"], rec["agent"], rec["own_before"], "".join(rec["shown"]) if rec["shown"] else "", rec["vote"], lA,
-            rec["u"], int(miss), int(rec["layout"]["letter_of_content"]["A"] == "A")]
+            rec["u"], int(miss), int(rec["layout"]["letter_of_content"]["A"] == "A"),
+            None if miss or mass is None else round(mass, 9)]
 
 
 def _run(board, state, kernel, n):
-    recs = [B.update(board, state, kernel) for _ in range(n)]
-    return [compact(r) for r in recs], B.sha(recs)
+    kernel = _recorder(kernel)
+    recs, rows = [], []
+    for _ in range(n):
+        kernel.last = None
+        rec = B.update(board, state, kernel)
+        recs.append(rec); rows.append(compact(rec, kernel.last))
+    return rows, B.sha(recs)
 
 
 class MemoryStore:
@@ -255,6 +294,7 @@ def run_cluster(c, model, kernel, prm=None, arm="primary", store=None, frozen=No
     spec = arm_spec(c, model, arm)
     prm = prm or PRM
     store = store or MemoryStore()
+    kernel = _recorder(kernel)
     T, wording, rule = spec["T"], spec["wording"], spec["rule"]
     N = len(c["adj"])
     live = make_board(c["spec"], c["alloc"], c["adj"], c["run_key"], True, T, wording)
@@ -272,7 +312,9 @@ def run_cluster(c, model, kernel, prm=None, arm="primary", store=None, frozen=No
             ini = {"initial_votes": list(st0.votes), "placeholders": ph,
                    "init": [[r["agent"], r["placeholder"], r["vote"], int(r["call"]),
                              None if (not r["call"] or r.get("missing")) else round(B.content_logit_A(r["layout"], r["logp_A"], r["logp_B"]), 6),
-                             int(bool(r.get("missing")))] for r in init],
+                             int(bool(r.get("missing"))),
+                             None if (not r["call"] or r.get("missing") or r.get("non_option_mass") is None) else round(r["non_option_mass"], 9)]
+                            for r in init],
                    "init_sha": B.sha(init)}
         else:
             st0, _ = initial_state_rule_ii(live)

@@ -15,10 +15,16 @@ Criteria, fixed before the run (each must hold):
      any server start or model call; with it, the run completes.
   D4 hard kill (SIGKILL of the driver process while the server keeps running): the resumed driver re-attaches to the
      same start, reuses the branches checkpointed in it, runs only the rest, and ends with records identical to D1.
-  D6 cap precision (confirmation pass): with a $0.20 cap at $1 per 1,000 calls the driver stops within CHECK_EVERY
+  D6 cap precision (confirmation pass): with a $0.50 cap at $1 per 1,000 calls the driver stops within CHECK_EVERY
      calls of the cap; a Stop raised inside a model call is not retried by the harness.
   D7 hard-kill billing (confirmation pass): the time between a SIGKILL of the driver and the resume (server alive) is
      charged to the stage that was open.
+  D8 startup caps (round 3): a server start is refused when the stage cap cannot cover one start; a readiness wait
+     that runs past the cap stops within one 5 s check, with no model call.
+  D9 data safety (round 3): with the upload failing, the pod script's finish() keeps UPLOAD_PENDING, writes no DONE,
+     exits 5 and issues no pod command; with a verified upload it clears the marker and writes DONE; launch.py
+     --data-safe stops (never deletes) a pod whose marker remains, and deletes one whose marker was cleared.
+  D10 non-A/B mass (round 3): every call's mass is in the driver's records and the analysis accepts them.
   D5 refusals: failed environment (pipeline pin) check -> stop before any model call; unknown model; a stage without
      a cap; a cluster that is not one of the 61 frozen clusters; an undrawn arm.
 """
@@ -58,7 +64,8 @@ class FakeServer:
     def _st(self):
         return json.loads(self.path.read_text()) if self.path.exists() else {"index": 0, "alive": False, "started_at": None}
 
-    def start(self):
+    def start(self, check=lambda: None):
+        check()
         st = self._st()
         if st["alive"]:
             return {"id": f"{self.pod}/start{st['index']}/{st['started_at']}", "pod": self.pod, "index": st["index"],
@@ -243,7 +250,7 @@ def main():
 
     # ---- D6 cap precision; a Stop inside a model call is not retried
     d6 = base / "D6"
-    drv, kern = make_driver(d6, {CORE: 0.2, SEC: 1e9}, ack=(CORE,))
+    drv, kern = make_driver(d6, {CORE: 0.5, SEC: 1e9}, ack=(CORE,))
     s6 = drv.run(stages=("core",), blocks=[1])
     calls6 = int(kern.clock.t)
     tries = []
@@ -255,11 +262,93 @@ def main():
         B.update(cb, B.State(0, ["A"] * 100), stopper); escaped = False
     except DR.Stop:
         escaped = True
-    out["criteria"]["D6"] = {"status": s6, "calls": calls6, "bound": 200 + DR.CHECK_EVERY, "stop_escapes_retry": escaped,
+    out["criteria"]["D6"] = {"status": s6, "calls": calls6, "bound": 500 + DR.CHECK_EVERY, "stop_escapes_retry": escaped,
                              "calls_in_retried_call": len(tries)}
-    out["criteria"]["D6"]["pass"] = "cap reached" in s6 and calls6 <= 200 + DR.CHECK_EVERY and escaped and len(tries) == 1
+    out["criteria"]["D6"]["pass"] = "cap reached" in s6 and calls6 <= 500 + DR.CHECK_EVERY and escaped and len(tries) == 1
     print("D6", out["criteria"]["D6"], flush=True)
     out["criteria"]["D7"] = {"see": "D4 kill_gap_charged", "pass": out["criteria"]["D4"]["pass"] and bool(out["criteria"]["D4"]["kill_gap_charged"])}
+
+    # ---- D8 startup caps
+    class SlowStart:
+        def __init__(self, clk, with_check):
+            self.clk, self.with_check = clk, with_check
+
+        def start(self, check=lambda: None):
+            for _ in range(200):
+                self.clk.t += 5
+                if self.with_check:
+                    check()
+            return {"id": f"slow/start/{time.time_ns()}", "attached": False}
+
+        def stop(self):
+            pass
+    r8 = {}
+    for name, cap in (("headroom_refused", 0.2), ("readiness_wait_capped", 0.5)):
+        clk = CallClock(); k = ClockedKernel(clk)
+        d = DR.Driver(MODEL, k, SlowStart(clk, True), lambda m: {}, {CORE: cap, SEC: 1e9}, base / f"D8_{name}", RATE,
+                      {}, mock=True, clock=clk, ack_flags=(CORE,))
+        st = d.run(stages=("core",), blocks=[1]); sp = d.ledger.d["spent_usd"].get(CORE, 0.0)
+        r8[name] = {"status": st, "spent_usd": round(sp, 4), "model_calls": k.k.calls}
+    r8["pass"] = ("less than one server start" in r8["headroom_refused"]["status"] and r8["headroom_refused"]["spent_usd"] == 0
+                  and "cap reached" in r8["readiness_wait_capped"]["status"] and r8["readiness_wait_capped"]["model_calls"] == 0
+                  and r8["readiness_wait_capped"]["spent_usd"] <= 0.5 + 5 * RATE / 3600 + 1e-9)
+    out["criteria"]["D8"] = r8
+    print("D8", r8, flush=True)
+
+    # ---- D9 data safety (the real finish() of the pod script, and launch.py --data-safe)
+    sys.path.insert(0, str(ROOT / "gates/S0/gpu")); import launch  # noqa: E402
+    import base64
+    sh = ROOT / "gates/S10/gpu/s10_driver.sh"
+    r9 = {}
+    for ok in (False, True):
+        t = base / f"D9_finish_{'ok' if ok else 'fail'}"; (t / "bin").mkdir(parents=True)
+        stub = t / "py"; stub.write_text(f"#!/bin/sh\ncat > /dev/null\nexit {0 if ok else 1}\n"); stub.chmod(0o755)
+        for nm in ("runpodctl", "curl"):
+            b_ = t / "bin" / nm; b_.write_text(f"#!/bin/sh\necho {nm} \"$@\" >> {t}/pod_commands.log\n"); b_.chmod(0o755)
+        ws = t / "ws"; (ws / "out/run1").mkdir(parents=True); (ws / "out/run1/rec.json").write_text("{}"); (ws / "UPLOAD_PENDING").write_text("")
+        env = {**os.environ, "PATH": f"{t / 'bin'}:{os.environ['PATH']}", "STPT_WORKSPACE": str(ws), "STPT_RUN_ID": "run1",
+               "STPT_PY": str(stub), "STPT_SRC": str(ROOT), "S10_SOURCE_ONLY": "1", "STPT_MODELS": MODEL}
+        p = subprocess.run(["bash", "-c", f'source "{sh}"; sleep() {{ :; }}; finish 0'], env=env, capture_output=True, text=True)
+        r9[f"finish_upload_{'ok' if ok else 'failed'}"] = {"exit": p.returncode, "marker_kept": (ws / "UPLOAD_PENDING").exists(),
+                                                          "DONE": (ws / "out/run1/DONE").exists(),
+                                                          "pod_commands": (t / "pod_commands.log").read_text().split("\n")[:-1] if (t / "pod_commands.log").exists() else []}
+    for keep in (True, False):
+        t = base / f"D9_launch_{'kept' if keep else 'cleared'}"; (t / "bin").mkdir(parents=True)
+        for nm in ("runpodctl", "curl"):
+            b_ = t / "bin" / nm; b_.write_text(f"#!/bin/sh\necho {nm} \"$@\" >> {t}/pod_commands.log\n"); b_.chmod(0o755)
+        mk = t / "UPLOAD_PENDING"; mk.write_text("")
+        drv = f"#!/bin/bash\n{'true' if keep else f'rm -f {mk}'}\nexit 0\n"
+        env = {**os.environ, "PATH": f"{t / 'bin'}:{os.environ['PATH']}", "STPT_MARKER": str(mk), "STPT_END_GRACE": "0",
+               "RUNPOD_POD_ID": "fake-pod", "RUNPOD_API_KEY": "x", "STPT_DRIVER_B64": base64.b64encode(drv.encode()).decode()}
+        cmd = launch.start_cmd_data_safe(1.0).replace("/root/driver.sh", str(t / "driver.sh")).replace("> /tmp/selfstop.log", f"> {t}/selfstop.log")
+        subprocess.run(["bash", "-c", cmd], env=env, timeout=60)
+        subprocess.run(["pkill", "-f", "sleep 3600"], check=False)
+        r9[f"launch_marker_{'kept' if keep else 'cleared'}"] = (t / "pod_commands.log").read_text().split("\n")[:-1]
+    f_, o_ = r9["finish_upload_failed"], r9["finish_upload_ok"]
+    r9["pass"] = (f_["exit"] == 5 and f_["marker_kept"] and not f_["DONE"] and f_["pod_commands"] == []
+                  and o_["exit"] == 0 and not o_["marker_kept"] and o_["DONE"] and o_["pod_commands"] == []
+                  and r9["launch_marker_kept"] == ["runpodctl stop pod fake-pod"]
+                  and any("remove pod fake-pod" in x for x in r9["launch_marker_cleared"])
+                  and not any("stop pod" in x for x in r9["launch_marker_cleared"]))
+    out["criteria"]["D9"] = r9
+    print("D9", r9, flush=True)
+
+    # ---- D10 non-A/B mass in the driver's records
+    class MassKernel(s7_core.MockKernel):
+        def __call__(self, msgs):
+            return {**super().__call__(msgs), "non_option_mass": 0.123456789}
+    d10 = base / "D10"
+    d = DR.Driver(MODEL, MassKernel(), FakeServer(d10 / "fake_server.json"), lambda m: {}, BIG, d10, RATE, {}, mock=True)
+    st = d.run(stages=("core",), blocks=[1]); R10 = records(d10)
+    rows_ok, acc = True, True
+    for n, rec in R10.items():
+        res = rec["result"]
+        rows = res["live"] + res["blind"] + [x for p in res["pulses"] for x in p["rows"]] + ((res["self_reset"] or {}).get("rows") or [])
+        rows_ok &= all(r[9] == 0.123456789 for r in rows) and all((x[6] == 0.123456789) == (x[3] == 1) for x in res["init"])
+        acc &= CA.outcomes(res) is not None
+    out["criteria"]["D10"] = {"status": st, "records": len(R10), "mass_in_every_row": rows_ok, "analysis_accepts": acc,
+                              "pass": st == "complete" and len(R10) == 4 and rows_ok and acc}
+    print("D10", out["criteria"]["D10"], flush=True)
 
     # ---- D5 refusals
     r = {}

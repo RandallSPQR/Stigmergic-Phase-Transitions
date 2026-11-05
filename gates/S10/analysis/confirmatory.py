@@ -27,6 +27,8 @@ Input checks (independent execution review of cb10726, addendum 1; every failure
      displays included); each vote from its logit and u at T, or kept when the call was missing; initial votes from
      the block-balanced placeholders and the informed calls; pulse directions, recipients and altered contacts; a
      start ID for every branch of the arm.
+     Round 3: every non-missing call carries its non-A/B mass (finite, in [0, 1]); a missing call carries none
+     (registration §2: non-A/B mass is recorded).
   #3 primary() takes the cluster universe from the frozen, hashed 61-cluster manifest only (no caller metadata); the
      block label of a cluster is built from the server-start IDs recorded in its run records (all branches of a
      (model, cluster) must share one start, and for every model each scheduled block of 4 must be exactly one start); every entry must be the primary arm (model's primary T, W3 for the
@@ -103,9 +105,9 @@ def _check_rows(rows, first_step, n, what):
     if not isinstance(rows, list) or len(rows) != n:
         raise Refused(f"{what}: {0 if not isinstance(rows, list) else len(rows)} rows, protocol requires exactly {n}")
     for k, r in enumerate(rows):
-        if not isinstance(r, list) or len(r) != 9:
+        if not isinstance(r, list) or len(r) != 10:
             raise Refused(f"{what}: malformed row {k}")
-        step, agent, own, shown, vote, lA, u, miss, amap = r
+        step, agent, own, shown, vote, lA, u, miss, amap, mass = r
         if step != first_step + k:
             raise Refused(f"{what}: step {step} at row {k} (expected {first_step + k})")
         if not (isinstance(agent, int) and 0 <= agent < N) or own not in ("A", "B") or vote not in ("A", "B"):
@@ -114,6 +116,8 @@ def _check_rows(rows, first_step, n, what):
             raise Refused(f"{what}: invalid draw or flag at row {k}")
         if (lA is None) != (miss == 1) or (lA is not None and not _finite(lA)):
             raise Refused(f"{what}: non-finite or inconsistent logit at row {k}")
+        if (mass is None) != (miss == 1) or (mass is not None and not (_finite(mass) and 0.0 <= mass <= 1.0)):
+            raise Refused(f"{what}: non-A/B mass missing, invalid or inconsistent at row {k} (registration §2)")
 
 
 def check_record(res, H=30, t0=5, D=3, W=5, r=10):
@@ -184,7 +188,7 @@ def _verify_rows(rows, v, c, T, live, first_step, what, override=None):
     rk, adj = c["run_key"], c["adj"]
     for k, r in enumerate(rows):
         t = first_step + k
-        step, agent, own, shown, vote, lA, u, miss, amap = r
+        step, agent, own, shown, vote, lA, u, miss, amap, mass = r
         if agent != int(BB.unif(rk, "agent", t) * N) or u != BB.unif(rk, "draw", t):
             raise Refused(f"{what}: row {k} agent or draw is not the run key's")
         if amap != int(BB.layout_for(rk, "upd", t, len(adj[agent]))["letter_of_content"]["A"] == "A"):
@@ -250,15 +254,19 @@ def verify_record(res, truth=None, H=30, t0=5, D=3, W=5):
         init = res.get("init")
         if not isinstance(init, list) or [x[0] for x in init] != list(range(N)):
             raise Refused("initial records missing or out of order")
-        for i, (agent, phi, vote, call, lA, miss) in enumerate(init):
+        if any(not isinstance(x, list) or len(x) != 7 for x in init):
+            raise Refused("initial records must have 7 fields (non-A/B mass included)")
+        for i, (agent, phi, vote, call, lA, miss, mass) in enumerate(init):
             if phi != ph[i] or vote != v0[i] or call != int(i in informed):
                 raise Refused(f"initial record {i} does not match the placeholder, the initial vote or the evidence")
             if not call or miss:
-                if vote != ph[i] or lA is not None:
+                if vote != ph[i] or lA is not None or mass is not None:
                     raise Refused(f"initial vote {i} must be the placeholder (uninformed, or a missing call)")
             else:
                 if not _finite(lA):
                     raise Refused(f"initial record {i}: non-finite logit")
+                if not (_finite(mass) and 0.0 <= mass <= 1.0):
+                    raise Refused(f"initial record {i}: non-A/B mass missing or invalid (registration §2)")
                 d = _drawn(BB.unif(rk, "init-draw", i), lA, T)
                 if d is not None and vote != d:
                     raise Refused(f"initial vote {i} is not the vote drawn from its logit at T")

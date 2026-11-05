@@ -167,10 +167,10 @@ def test_cap_stop_bounds_calls(tmp_path):
 
         def stop(self):
             pass
-    k = K(); stage = f"{M}:core"
-    d = DR.Driver(M, k, S(), lambda m: {}, {stage: 0.2}, tmp_path, 3.6, {}, mock=True, clock=clk, ack_flags=(stage,))
+    k = K(); stage = f"{M}:core"                      # $0.50 covers one server start's headroom ($0.30), then calls
+    d = DR.Driver(M, k, S(), lambda m: {}, {stage: 0.5}, tmp_path, 3.6, {}, mock=True, clock=clk, ack_flags=(stage,))
     assert "cap reached" in d.run(blocks=[1])
-    assert k.calls <= 200 + DR.CHECK_EVERY and d.ledger.d["spent_usd"][stage] <= 0.2 + DR.CHECK_EVERY / 1000 + 1e-9
+    assert k.calls <= 500 + DR.CHECK_EVERY and d.ledger.d["spent_usd"][stage] <= 0.5 + DR.CHECK_EVERY / 1000 + 1e-9
 
 
 def test_unclosed_interval_is_charged(tmp_path):

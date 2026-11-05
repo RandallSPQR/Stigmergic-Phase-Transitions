@@ -56,7 +56,9 @@ class VLLMServer:
     def _st(self):
         return json.loads(self.state.read_text()) if self.state.exists() else {"index": 0, "pid": None, "started_at": None, "model": None}
 
-    def start(self):
+    def start(self, check=lambda: None):
+        """check() is the driver's cap check; it runs every 5 s while the server comes up (round 3) and may raise
+        Stop, after which the driver's finally stops this server."""
         st = self._st()
         if st["pid"] and st["model"] == self.model and _alive(st["pid"]) and _healthy():
             return {"id": f"{self.pod}/start{st['index']}/{st['started_at']}", "pod": self.pod, "index": st["index"],
@@ -70,7 +72,10 @@ class VLLMServer:
         log = open(self.state.parent / f"vllm_{self.model}_start{idx}.log", "w")
         p = subprocess.Popen(["bash", "-c", cmd], stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
         self.state.write_text(json.dumps({"index": idx, "pid": p.pid, "started_at": started, "model": self.model}))
+        with open(self.state.parent / "paid.pids", "a") as f:          # the watchdog may terminate it (round 3)
+            f.write(f"{p.pid}\n")
         for _ in range(360):
+            check()
             if _healthy():
                 break
             if p.poll() is not None:

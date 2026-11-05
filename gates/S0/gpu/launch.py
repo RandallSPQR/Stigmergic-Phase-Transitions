@@ -53,6 +53,21 @@ def save(reg):
     REG.write_text(json.dumps(reg, indent=1) + "\n")
 
 
+def start_cmd_data_safe(hours: float) -> str:
+    """--data-safe (S10, round 3): the driver's outputs live on the pod's persistent volume (/workspace), and the pod is
+    deleted only when the driver has cleared /workspace/UPLOAD_PENDING after a verified upload. Otherwise, both after the
+    driver exits and at the deadline, the pod is STOPPED: GPU billing ends and the volume, with every record, is kept.
+    A stopped pod that is restarted runs the driver again, which then only retries the upload (recovery mode)."""
+    secs = int(hours * 3600)
+    marker = "${STPT_MARKER:-/workspace/UPLOAD_PENDING}"
+    end = (f"if [ -e \"{marker}\" ]; then runpodctl stop pod $RUNPOD_POD_ID; "
+           "else curl -s -X DELETE -H \"Authorization: Bearer $RUNPOD_API_KEY\" https://rest.runpod.io/v1/pods/$RUNPOD_POD_ID; "
+           "runpodctl remove pod $RUNPOD_POD_ID || runpodctl stop pod $RUNPOD_POD_ID; fi")
+    return (f"(sleep {secs}; {end}) > /tmp/selfstop.log 2>&1 & "
+            "echo \"$STPT_DRIVER_B64\" | base64 -d > /root/driver.sh && bash /root/driver.sh; "
+            f"sleep ${{STPT_END_GRACE:-60}}; {end}")
+
+
 def start_cmd(hours: float) -> str:
     secs = int(hours * 3600)
     return (f"(sleep {secs}; curl -s -X DELETE -H \"Authorization: Bearer $RUNPOD_API_KEY\" "
@@ -81,9 +96,12 @@ def cmd_create(a):
     body = {"name": f"stpt-{Path(a.driver).stem.replace('_', '-')}-{run_id}", "imageName": IMAGE, "cloudType": "SECURE",
             "gpuTypeIds": GPU_SETS[a.gpu_set][0], "gpuTypePriority": "custom", "gpuCount": 1,
             "containerDiskInGb": a.disk, "volumeInGb": 0,
-            "ports": [], "dockerEntrypoint": ["bash", "-c"], "dockerStartCmd": [start_cmd(a.hours)],
+            "ports": [], "dockerEntrypoint": ["bash", "-c"],
+            "dockerStartCmd": [start_cmd_data_safe(a.hours) if a.data_safe else start_cmd(a.hours)],
             "env": {"HF_TOKEN": "{{ RUNPOD_SECRET_HF_TOKEN }}", "STPT_RESULTS_REPO": a.repo, "STPT_RUN_ID": run_id,
                     "PIPE_COMMIT": PIPE_COMMIT, "STPT_DRIVER_B64": base64.b64encode(driver).decode()}}
+    if a.data_safe:                    # S10: a persistent volume holds the outputs until a verified upload
+        body["volumeInGb"] = a.volume_gb; body["volumeMountPath"] = "/workspace"
     if a.models:
         body["env"]["STPT_MODELS"] = " ".join(a.models)
     for k, v in (a.extra_env or []):
@@ -148,6 +166,9 @@ def main(argv=None):
                    help="a driver in gates/S0/gpu/ by name, or a repository-relative path (e.g. gates/S3/gpu/s3_driver.sh)")
     c.add_argument("--env", dest="extra_env", nargs=2, action="append", metavar=("NAME", "VALUE"),
                    help="extra pod env (non-secret values only)")
+    c.add_argument("--data-safe", action="store_true",
+                   help="S10: persistent volume at /workspace; delete the pod only after a verified upload, else stop it")
+    c.add_argument("--volume-gb", type=int, default=20)
     sub.add_parser("status")
     t = sub.add_parser("terminate"); t.add_argument("--why", required=True); t.add_argument("--pod", required=True)
     a = ap.parse_args(argv)

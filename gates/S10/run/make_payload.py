@@ -15,7 +15,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
 FILES = ["pins.yaml", "stpt/__init__.py", "stpt/board.py", "stpt/prompts.py", "gates/S10/s10_core.py",
-         "gates/S10/run/driver.py", "gates/S10/run/pod.py", "gates/S10/clusters/MANIFEST.json",
+         "gates/S10/run/driver.py", "gates/S10/run/ledger.py", "gates/S10/run/pod.py", "gates/S10/clusters/MANIFEST.json",
          "gates/S10/clusters/confirmatory_clusters.json", "analysis/results/t_options.json"]
 
 

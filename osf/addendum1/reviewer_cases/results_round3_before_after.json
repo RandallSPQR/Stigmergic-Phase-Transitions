@@ -1,0 +1,68 @@
+{
+ "script": "osf/addendum1/reviewer_cases/stpt_final_operational_cases_fc0fc0c.py (reviewer's, verbatim; reads fc0fc0c's shell layout)",
+ "on_fc0fc0c": {
+  "upload_failure": {
+   "exit_code": 0,
+   "stdout": "upload failed",
+   "DONE_written": true,
+   "pod_commands": [
+    "remove pod fake-pod"
+   ]
+  },
+  "startup_cap": {
+   "cap_usd": 0.2,
+   "status": "stopped: stage gemma-2-9b-it:core: cap reached ($1.00 of $0.20)",
+   "spent_usd": 1.0,
+   "model_calls": 0
+  },
+  "non_option_mass": {
+   "readout_supplied_mass": 0.123456789,
+   "mass_fields_in_run_result": []
+  }
+ },
+ "on_fixed_tree": {
+  "upload_failure": {
+   "finish_upload_failed": {
+    "exit": 5,
+    "marker_kept": true,
+    "DONE": false,
+    "pod_commands": []
+   },
+   "finish_upload_ok": {
+    "exit": 0,
+    "marker_kept": false,
+    "DONE": true,
+    "pod_commands": []
+   },
+   "launch_marker_kept": [
+    "runpodctl stop pod fake-pod"
+   ],
+   "launch_marker_cleared": [
+    "curl -s -X DELETE -H Authorization: Bearer x https://rest.runpod.io/v1/pods/fake-pod",
+    "runpodctl remove pod fake-pod"
+   ],
+   "pass": true
+  },
+  "startup_cap": {
+   "headroom_refused": {
+    "status": "stopped: stage gemma-2-9b-it:core: $0.20 left, less than one server start (300 s = $0.30): refused",
+    "spent_usd": 0.0,
+    "model_calls": 0
+   },
+   "readiness_wait_capped": {
+    "status": "stopped: stage gemma-2-9b-it:core: cap reached ($0.50 of $0.50)",
+    "spent_usd": 0.5,
+    "model_calls": 0
+   },
+   "pass": true
+  },
+  "non_option_mass": {
+   "status": "complete",
+   "records": 4,
+   "mass_in_every_row": true,
+   "analysis_accepts": true,
+   "pass": true
+  },
+  "note": "the script's slicing of s10_driver.sh does not apply to the restructured script; its three cases are reproduced by tests/test_review_round3.py and by driver validation D8-D10"
+ }
+}

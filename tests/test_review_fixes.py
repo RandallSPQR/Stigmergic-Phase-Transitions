@@ -310,7 +310,8 @@ class _Server:
     def __init__(self, reuse_ids=False):
         self.i, self.alive, self.reuse = 0, False, reuse_ids
 
-    def start(self):
+    def start(self, check=lambda: None):
+        check()
         import uuid
         if not self.alive:
             self.i += 1; self.alive = True

@@ -32,11 +32,17 @@ def test_after_the_initial_state_the_runner_is_s8s(monkeypatch):
         return st, [dict(r, call=True) for r in recs]
     monkeypatch.setattr(s10_core, "initial_state", s8_init)
     b = s10_core.run_cluster(c, M, s7_core.MockKernel(), PRM)
+    nine = lambda rows: [r[:9] for r in rows]                 # S8's row format; field 10 is the non-A/B mass (round 3)
     assert a["initial_votes"] == b["initial_votes"]
-    for k in ("live", "live_sha", "live_final", "blind", "blind_sha", "blind_final"):
+    for k in ("live_sha", "live_final", "blind_sha", "blind_final"):
         assert a[k] == b[k], k
-    assert json.dumps(a["pulses"], sort_keys=True) == json.dumps(b["pulses"], sort_keys=True)
-    assert json.dumps(a["self_reset"], sort_keys=True) == json.dumps(b["self_reset"], sort_keys=True)
+    for k in ("live", "blind"):
+        assert a[k] == nine(b[k]), k
+        assert all(r[9] == 0.0 for r in b[k])                 # the mock's mass, recorded for every call
+    for pa, pb in zip(a["pulses"], b["pulses"]):
+        assert pa["rows"] == nine(pb["rows"]) and {k: v for k, v in pa.items() if k != "rows"} == {k: v for k, v in pb.items() if k != "rows"}
+    sa, sb = a["self_reset"], b["self_reset"]
+    assert sa["rows"] == nine(sb["rows"]) and {k: v for k, v in sa.items() if k != "rows"} == {k: v for k, v in sb.items() if k != "rows"}
 
 
 def test_rule_ii_arm():
