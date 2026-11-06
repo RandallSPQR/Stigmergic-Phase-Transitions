@@ -3,13 +3,14 @@
 For the reviewer of the execution review of `cb10726e3d359d8094fbd083f336453d6af9280d`. Round 1 fixes:
 `1031a83559f70a9ba82739cb7ea10c791d515f3d` (packet at `bb0f12a`). Round 2 fixes, after your confirmation pass on
 `bb0f12a`: `e8f156de84bf3b82db1e0c0cce0cbefec8e2201e`. Round 3 fixes, after your operational review of `fc0fc0c`:
-`06572ae13c5f84707325f3be525dd7374f906fa3`. Round 4 fixes, after your launch-path review of `0778869`: `238de3ab8eaf04d705c779980ddd077ebd9072ef`
-(tag `stpt-run-v1` on the commit that adds the final addendum). Everything below runs on CPU with a mock model; no model call.
+`06572ae13c5f84707325f3be525dd7374f906fa3`. Round 4 fixes, after your launch-path review of `0778869`: `238de3ab8eaf04d705c779980ddd077ebd9072ef`. Round 5
+fixes, after your final-upload review of `de1cb9a`: `ROUND5_COMMIT` (tag `stpt-run-v1` on the commit that adds the final
+addendum). Everything below runs on CPU with a mock model; no model call.
 
 ## Reproduce
 ```bash
 git checkout stpt-run-v1
-python -m pytest -q tests                                   # 164 tests: review rounds 1-4
+python -m pytest -q tests                                   # TESTS_PASSED tests: review rounds 1-5
 python osf/addendum1/reviewer_cases/stpt_reviewer_followup_bb0f12a.py .   # your round-2 script: every flag false
 python osf/addendum1/before_after.py                        # each defect on cb10726, and its absence on the fix
 python gates/S10/run/validate_driver_cpu.py /tmp/drv        # driver criteria D1-D5 (about 1 min)
@@ -66,6 +67,13 @@ slices, so the script itself does not run on the fix. Its cases are the tests ab
 Your round-4 script runs verbatim in `tests/test_review_round4.py::test_reviewer_script_all_three_fixed` and in driver
 validation D11.
 
+## Round 5 (your final-upload review of `de1cb9a`)
+
+| | where the fix is | tests | evidence |
+|---|---|---|---|
+| R5.1 final ledger upload optional | `gates/S10/gpu/s10_driver.sh`: `final_ledger_upload` (required, verified), `finish` (marker cleared only after it; exit 5 otherwise), recovery mode runs the same step | `test_reviewer_script_both_cases`, `test_ledger_failure_keeps_the_marker`; driver validation D9, D12 | `reviewer_cases/results_round5_before_after.json` |
+| R5.2 allowance shorter than the retries | `ledger.py` `close(final, allowance, since)` with `charged_through`; `s10_driver.sh`: charge before each attempt (its 300 s limit, enforced by `UPLOAD_TIMEOUT`) and before each sleep | `test_final_closes_accumulate_to_the_worst_case`, `test_restarted_pod_charges_only_its_own_time`, `test_real_finish_charges_real_retry_time` (real sleeps; the uploaded ledger covers the successful attempt's end), `test_upload_attempt_is_time_limited` | 120 s → 2,730 s for the full schedule |
+
 ## Not changed
 `stpt/board.py` (byte-identical), prompts, clusters, bank, parameters, T values, the analysis model and its numbers
 (the synthetic validation reproduces run 2 exactly), the registered text. Design files changed, with reasons:
@@ -79,7 +87,7 @@ validation D11.
   starts with one smoke block, after the owner's OK.
 - The proposed caps are the S9 cost model split by stage, scaled to the accepted totals; the owner approves them
   before any paid run (the driver refuses a caps file not marked APPROVED).
-- The pod script's final close charges 120 s in advance for the one upload that carries the final ledger; that upload's
-  real time is not metered beyond this allowance (it is one small file).
+- The final uploads are charged in advance at their worst case (each attempt's 300 s limit and each sleep); a fast
+  final upload is therefore over-charged by up to 300 s, never under-charged.
 - Resume reuses checkpoints only within one server start (re-attach after a hard kill). After a clean stop the server
   is stopped, so an interrupted block reruns whole in the next start; its earlier output is kept under `abandoned/`.
