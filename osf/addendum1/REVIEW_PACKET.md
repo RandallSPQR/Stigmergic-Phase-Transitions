@@ -4,13 +4,13 @@ For the reviewer of the execution review of `cb10726e3d359d8094fbd083f336453d6af
 `1031a83559f70a9ba82739cb7ea10c791d515f3d` (packet at `bb0f12a`). Round 2 fixes, after your confirmation pass on
 `bb0f12a`: `e8f156de84bf3b82db1e0c0cce0cbefec8e2201e`. Round 3 fixes, after your operational review of `fc0fc0c`:
 `06572ae13c5f84707325f3be525dd7374f906fa3`. Round 4 fixes, after your launch-path review of `0778869`: `238de3ab8eaf04d705c779980ddd077ebd9072ef`. Round 5
-fixes, after your final-upload review of `de1cb9a`: `ROUND5_COMMIT` (tag `stpt-run-v1` on the commit that adds the final
+fixes, after your final-upload review of `de1cb9a`: `39e60d3768aef59eb8def09f25531532220c1423` (tag `stpt-run-v1` on the commit that adds the final
 addendum). Everything below runs on CPU with a mock model; no model call.
 
 ## Reproduce
 ```bash
 git checkout stpt-run-v1
-python -m pytest -q tests                                   # TESTS_PASSED tests: review rounds 1-5
+python -m pytest -q tests                                   # 170 tests: review rounds 1-5
 python osf/addendum1/reviewer_cases/stpt_reviewer_followup_bb0f12a.py .   # your round-2 script: every flag false
 python osf/addendum1/before_after.py                        # each defect on cb10726, and its absence on the fix
 python gates/S10/run/validate_driver_cpu.py /tmp/drv        # driver criteria D1-D5 (about 1 min)
