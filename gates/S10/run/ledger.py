@@ -17,8 +17,9 @@ registered paid processes (downloads, the driver, vLLM). It never terminates an 
   python ledger.py open --out OUT --caps CAPS --stage STAGE [--since EPOCH]     (charges the gap; leaves it open)
   python ledger.py check --out OUT --caps CAPS                                    (exit 3 at a cap or flag)
   python ledger.py reopen --out OUT --caps CAPS [--no-check]                     (after a driver exits: keep charging)
-  python ledger.py close --out OUT --caps CAPS [--final [--allowance S]]         (--final: the pod script's last close;
-                                                                                 S seconds charged for the one upload after it)
+  python ledger.py close --out OUT --caps CAPS [--final [--allowance S] [--since EPOCH]]
+                                                                (--final: around the final uploads; S seconds charged in
+                                                                 advance for the next attempt or sleep; see close())
   python ledger.py watchdog --out OUT --caps CAPS [--every 5]
   python ledger.py seed --out OUT --caps CAPS --prior LEDGER.json ...           (a resumed run on a new pod: earlier
                                                                                  pods' spend counts against the caps)
@@ -90,26 +91,40 @@ class Ledger:
             if save:
                 self.save()
 
-    def close(self, final=False, allowance=0.0):
+    def close(self, final=False, allowance=0.0, since=None):
         """Close the interval. A driver's close is not final: the pod keeps running (uploads, the next phase), so the
         time after it is still charged, by the next begin or by the final close, and the watchdog still counts it.
-        Only the pod script's last close, after its last upload, is final (round 4)."""
+        The pod script's closes around its final uploads are final (round 4).
+
+        Final closes keep `charged_through`, the time up to which the pod is already charged. Each final close with an
+        allowance X moves it to max(now, charged_through) + X and charges the difference, so successive allowances
+        (each final upload attempt's hard time limit, each backoff sleep) add up to their worst-case bound, are never
+        counted twice, and never fall short of real time (round 5). `since` (a restarted pod's start, recovery mode)
+        keeps the time the pod sat stopped from being charged."""
         now = self.clock()
+        c = self.d.get("closed")
         if self.stage is not None:
-            self.charge(save=False)
+            self.charge(save=False); last = self.stage
         else:
-            o, c = self.d.get("open"), self.d.get("closed")
+            o = self.d.get("open")
             if o:
                 self._add(o["stage"], now - o["t_last"]); last = o["stage"]
             elif c and not c.get("final"):
                 self._add(c.get("stage"), now - c["at"]); last = c.get("stage")
             else:
                 last = (c or {}).get("stage")
-            self.stage = last
-        if final and allowance and self.stage:          # the one upload after the final close, charged in advance
-            self._add(self.stage, allowance); self.d["final_upload_allowance_s"] = allowance
+        if final:
+            ct = self.d.get("charged_through")
+            if ct is None or not (c and c.get("final")):     # first final close: charged up to now just above
+                ct = now
+            new_ct = max(now, ct) + float(allowance)
+            start = max(ct, float(since)) if since is not None else ct
+            if last:
+                self._add(last, new_ct - start)
+            self.d["charged_through"] = new_ct
+            self.d["final_upload_allowance_s"] = self.d.get("final_upload_allowance_s", 0.0) + float(allowance)
         self.d["open"] = None
-        self.d["closed"] = {"at": now, "session": self.session, "stage": self.stage, "final": bool(final)}
+        self.d["closed"] = {"at": now, "session": self.session, "stage": last, "final": bool(final)}
         self.stage = self.t_last = None
         self.save()
 
@@ -242,7 +257,8 @@ def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("cmd", choices=["open", "reopen", "check", "close", "watchdog", "seed"])
     ap.add_argument("--final", action="store_true"); ap.add_argument("--no-check", action="store_true")
-    ap.add_argument("--allowance", type=float, default=0.0, help="with --final: seconds charged for the last upload")
+    ap.add_argument("--allowance", type=float, default=0.0,
+                    help="with --final: seconds charged in advance (an upload attempt's hard limit, or a backoff sleep)")
     ap.add_argument("--prior", nargs="*", default=[])
     ap.add_argument("--out", required=True); ap.add_argument("--caps", required=True)
     ap.add_argument("--stage"); ap.add_argument("--since", type=float); ap.add_argument("--every", type=float, default=5.0)
@@ -271,7 +287,7 @@ def main(argv=None):
             if o:
                 L.stage, L.t_last = o["stage"], o["t_last"]; L.check()
         elif a.cmd == "close":
-            L.close(final=a.final, allowance=a.allowance)
+            L.close(final=a.final, allowance=a.allowance, since=a.since)
         else:
             while True:
                 r = watchdog_once(a.out, caps, rate)

@@ -26,7 +26,8 @@ step() { echo "=== $(date -u +%FT%TZ) $*"; }
 
 upload() {
   # Upload $OUT and verify every file on the dataset. Returns non-zero on any failure or mismatch (round 3).
-  "$PY" - "$OUT" <<'PYX'
+  # UPLOAD_TIMEOUT (seconds; 0 = none) is a hard limit on the attempt (round 5: final attempts are charged in advance).
+  timeout "${UPLOAD_TIMEOUT:-0}" "$PY" - "$OUT" <<'PYX'
 import os, sys
 from pathlib import Path
 from huggingface_hub import HfApi
@@ -58,6 +59,26 @@ upload_until_verified() {
 
 ledger() { python3 "$SRC/gates/S10/run/ledger.py" "$1" --out "$OUT" --caps "$SRC/gates/S10/run/caps_approved.json" "${@:2}"; }
 
+FINAL_ATTEMPT_S=${STPT_FINAL_ATTEMPT_S:-300}               # hard limit of one final upload attempt
+FINAL_BACKOFF=${STPT_FINAL_BACKOFF:-"30 60 120 240 480"}   # sleeps between final attempts
+
+final_ledger_upload() {
+  # Required (round 5): the upload that carries the final ledger, verified like every upload. Before each attempt the
+  # ledger is charged through that attempt's hard limit, and before each sleep through the sleep, so the ledger an
+  # attempt uploads already covers all billable time up to that attempt's end. Returns non-zero if every attempt fails.
+  local b
+  ledger close --final --allowance "$FINAL_ATTEMPT_S" --since "$POD_T0" >/dev/null 2>&1 || return 1
+  UPLOAD_TIMEOUT=$FINAL_ATTEMPT_S upload && return 0
+  for b in $FINAL_BACKOFF; do
+    echo "final ledger upload failed; retrying in $b s"
+    ledger close --final --allowance "$b" --since "$POD_T0" >/dev/null 2>&1 || return 1
+    sleep "$b"
+    ledger close --final --allowance "$FINAL_ATTEMPT_S" --since "$POD_T0" >/dev/null 2>&1 || return 1
+    UPLOAD_TIMEOUT=$FINAL_ATTEMPT_S upload && return 0
+  done
+  return 1
+}
+
 finish() {
   # $1: exit status to report. The pod is never deleted here. The ledger stays open (and the watchdog running) through
   # the final uploads, so their time is charged (round 4); the last close is final.
@@ -65,16 +86,18 @@ finish() {
   [ -n "${UPL:-}" ] && kill "$UPL" 2>/dev/null
   ledger reopen --no-check >/dev/null 2>&1
   if upload_until_verified; then
-    touch "$OUT/DONE"; upload_until_verified || echo "DONE marker not uploaded (records are verified)"
+    touch "$OUT/DONE"
     [ -n "${WDOG:-}" ] && kill "$WDOG" 2>/dev/null
-    ledger close --final --allowance 120 >/dev/null 2>&1   # all upload time charged; 120 s in advance for the next one
-    upload_until_verified || echo "final ledger not uploaded (records are verified)"   # the dataset gets the final ledger
-    rm -f "$MARKER"
-    step "uploads verified; UPLOAD_PENDING cleared; exit $rc"
-    exit "$rc"
+    if final_ledger_upload; then                        # records, DONE and the final ledger, verified (round 5)
+      rm -f "$MARKER"
+      step "uploads verified, final ledger included; UPLOAD_PENDING cleared; exit $rc"
+      exit "$rc"
+    fi
+    step "FINAL LEDGER NOT UPLOADED: UPLOAD_PENDING kept; the pod will be stopped, not deleted, and its volume kept"
+    exit 5
   fi
   [ -n "${WDOG:-}" ] && kill "$WDOG" 2>/dev/null
-  ledger close --final --allowance 120 >/dev/null 2>&1
+  ledger close --final --since "$POD_T0" >/dev/null 2>&1
   step "UPLOAD NOT VERIFIED: UPLOAD_PENDING kept; the pod will be stopped, not deleted, and its volume kept"
   exit 5
 }
@@ -105,20 +128,24 @@ mkdir -p "$OUT/logs"; touch /tmp/pod_driven
 export HF_HOME=/root/hf HF_HUB_DISABLE_TELEMETRY=1 PIP_DISABLE_PIP_VERSION_CHECK=1 TOKENIZERS_PARALLELISM=false
 exec > >(tee -a "$OUT/logs/driver.log") 2>&1
 
-if [ -e "$MARKER" ]; then                       # a previous run on this volume ended without a verified upload
-  step "recovery: UPLOAD_PENDING from an earlier run; uploading only (no paid work)"
-  python3 -m pip install -q uv >/dev/null 2>&1 || python3 -m pip install -q --break-system-packages uv >/dev/null 2>&1
-  python3 -m uv venv -q -p 3.11 /root/venv && python3 -m uv pip install -q -p $PY "huggingface-hub==1.10.2" >/dev/null 2>&1
-  ok=1
-  for d in "$WS"/out/*/; do OUT=${d%/}; STPT_RUN_ID=$(basename "$OUT"); export STPT_RUN_ID; upload_until_verified || ok=0; done
-  [ $ok = 1 ] && { rm -f "$MARKER"; step "recovery: all uploads verified"; exit 0; }
-  step "recovery: uploads still not verified; UPLOAD_PENDING kept"; exit 5
-fi
+RECOVERY=0; [ -e "$MARKER" ] && RECOVERY=1         # a previous run on this volume ended without a verified upload
 step "payload"
 mkdir -p "$SRC" && echo "$STPT_PAYLOAD_B64" | base64 -d > /root/payload.tar.gz
 GOT=$(sha256sum /root/payload.tar.gz | cut -d' ' -f1)
-[ "$GOT" = "$STPT_PAYLOAD_SHA256" ] || { echo "STOP: payload sha256 $GOT != $STPT_PAYLOAD_SHA256"; rm -f "$MARKER"; exit 3; }
+[ "$GOT" = "$STPT_PAYLOAD_SHA256" ] || { echo "STOP: payload sha256 $GOT != $STPT_PAYLOAD_SHA256"; [ $RECOVERY = 1 ] && exit 5; exit 3; }
 tar -xzf /root/payload.tar.gz -C "$SRC" && echo "payload verified ${GOT:0:16}"
+if [ $RECOVERY = 1 ]; then
+  step "recovery: UPLOAD_PENDING from an earlier run; uploading only (no paid work); this pod's time is charged"
+  python3 -m pip install -q uv >/dev/null 2>&1 || python3 -m pip install -q --break-system-packages uv >/dev/null 2>&1
+  python3 -m uv venv -q -p 3.11 /root/venv && python3 -m uv pip install -q -p $PY "huggingface-hub==1.10.2" >/dev/null 2>&1
+  ok=1
+  for d in "$WS"/out/*/; do
+    OUT=${d%/}; STPT_RUN_ID=$(basename "$OUT"); export STPT_RUN_ID
+    final_ledger_upload || ok=0                         # charged from this pod's start; records and ledger verified
+  done
+  [ $ok = 1 ] && { rm -f "$MARKER"; step "recovery: all uploads verified, final ledgers included"; exit 0; }
+  step "recovery: uploads still not verified; UPLOAD_PENDING kept"; exit 5
+fi
 CAPS=$SRC/gates/S10/run/caps_approved.json
 if [ -n "${STPT_PRIOR_RUNS:-}" ]; then              # cumulative caps across pods: earlier ledgers are required
   PRIORS=()

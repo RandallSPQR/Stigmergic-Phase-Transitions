@@ -1,0 +1,39 @@
+{
+ "script": "osf/addendum1/reviewer_cases/stpt_final_upload_de1cb9a.py (reviewer's, verbatim)",
+ "on_de1cb9a": {
+  "final_upload_fails": {
+   "exit": 0,
+   "marker_kept": false,
+   "local_ledger_final": true,
+   "remote_ledger_final": false,
+   "final_upload_allowance_s": 120.0,
+   "final_upload_retry_sleep_s": 930
+  },
+  "final_upload_succeeds_on_last_retry": {
+   "exit": 0,
+   "marker_kept": false,
+   "local_ledger_final": true,
+   "remote_ledger_final": true,
+   "final_upload_allowance_s": 120.0,
+   "final_upload_retry_sleep_s": 930
+  }
+ },
+ "on_fixed_tree": {
+  "final_upload_fails": {
+   "exit": 5,
+   "marker_kept": true,
+   "local_ledger_final": true,
+   "remote_ledger_final": false,
+   "final_upload_allowance_s": 2730.0,
+   "final_upload_retry_sleep_s": 930
+  },
+  "final_upload_succeeds_on_last_retry": {
+   "exit": 0,
+   "marker_kept": false,
+   "local_ledger_final": true,
+   "remote_ledger_final": true,
+   "final_upload_allowance_s": 2730.0,
+   "final_upload_retry_sleep_s": 930
+  }
+ }
+}

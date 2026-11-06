@@ -28,6 +28,9 @@ Criteria, fixed before the run (each must hold):
   D11 round 4 (the reviewer's script on 0778869, run verbatim): an acknowledged 80% flag lets a new pod resume; the time
      after a driver exits (final uploads) is charged and the watchdog stops at the cap; a readout without its mass
      stops the run on the first attempt (no retry, not a missing call).
+  D12 round 5 (the reviewer's script on de1cb9a, run verbatim): when every final ledger upload fails, finish() exits 5
+     and keeps UPLOAD_PENDING (the pod is kept); when the sixth attempt succeeds, the uploaded ledger is final and was
+     charged in advance for six attempts at their hard limit plus every backoff sleep.
   D5 refusals: failed environment (pipeline pin) check -> stop before any model call; unknown model; a stage without
      a cap; a cluster that is not one of the 61 frozen clusters; an undrawn arm.
 """
@@ -309,8 +312,12 @@ def main():
         for nm in ("runpodctl", "curl"):
             b_ = t / "bin" / nm; b_.write_text(f"#!/bin/sh\necho {nm} \"$@\" >> {t}/pod_commands.log\n"); b_.chmod(0o755)
         ws = t / "ws"; (ws / "out/run1").mkdir(parents=True); (ws / "out/run1/rec.json").write_text("{}"); (ws / "UPLOAD_PENDING").write_text("")
+        src = t / "src"; (src / "gates/S10/run").mkdir(parents=True)
+        (src / "gates/S10/run/ledger.py").write_text((ROOT / "gates/S10/run/ledger.py").read_text())
+        (src / "gates/S10/run/caps_approved.json").write_text(json.dumps({"status": "APPROVED", "caps_usd": {CORE: 100.0}, "usd_per_gpu_hour": RATE}))
         env = {**os.environ, "PATH": f"{t / 'bin'}:{os.environ['PATH']}", "STPT_WORKSPACE": str(ws), "STPT_RUN_ID": "run1",
-               "STPT_PY": str(stub), "STPT_SRC": str(ROOT), "S10_SOURCE_ONLY": "1", "STPT_MODELS": MODEL}
+               "STPT_PY": str(stub), "STPT_SRC": str(src), "S10_SOURCE_ONLY": "1", "STPT_MODELS": MODEL}
+        env.pop("STPT_ACK", None)
         p = subprocess.run(["bash", "-c", f'source "{sh}"; sleep() {{ :; }}; finish 0'], env=env, capture_output=True, text=True)
         r9[f"finish_upload_{'ok' if ok else 'failed'}"] = {"exit": p.returncode, "marker_kept": (ws / "UPLOAD_PENDING").exists(),
                                                           "DONE": (ws / "out/run1/DONE").exists(),
@@ -364,6 +371,18 @@ def main():
                    and r11["actual_adapter_missing_mass"]["stopped"] and r11["actual_adapter_missing_mass"]["attempts"] == 1)
     out["criteria"]["D11"] = r11
     print("D11", r11, flush=True)
+
+    # ---- D12 round 5: the reviewer's script, verbatim
+    p12 = subprocess.run([sys.executable, str(ROOT / "osf/addendum1/reviewer_cases/stpt_final_upload_de1cb9a.py"), str(ROOT)],
+                         capture_output=True, text=True, timeout=300)
+    o12 = json.loads(p12.stdout) if p12.returncode == 0 else {}
+    r12 = {k: {x: y for x, y in v.items() if x not in ("stdout", "stderr")} for k, v in o12.items()}
+    f12, s12 = r12.get("final_upload_fails", {}), r12.get("final_upload_succeeds_on_last_retry", {})
+    r12["pass"] = (f12.get("exit") == 5 and f12.get("marker_kept") and not f12.get("remote_ledger_final")
+                   and s12.get("exit") == 0 and not s12.get("marker_kept") and s12.get("remote_ledger_final")
+                   and s12.get("final_upload_allowance_s", 0) >= s12.get("final_upload_retry_sleep_s", 1e9) + 6 * 300)
+    out["criteria"]["D12"] = r12
+    print("D12", r12, flush=True)
 
     # ---- D5 refusals
     r = {}

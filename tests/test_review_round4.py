@@ -85,9 +85,12 @@ def test_driver_close_is_not_the_end_of_billing(tmp_path):
     clk.t = 1100
     L2 = LG.Ledger(tmp_path / "ledger.json", {STAGE: 0.2}, 3.6, lambda: clk.t, session="p"); L2.close(final=True)
     assert abs(L2.spent(STAGE) - 1.1) < 1e-9
-    clk.t = 5000                                                                    # after the final close: nothing
-    L3 = LG.Ledger(tmp_path / "ledger.json", {STAGE: 0.2}, 3.6, lambda: clk.t, session="p"); L3.close(final=True)
-    assert abs(L3.spent(STAGE) - 1.1) < 1e-9 and LG.watchdog_once(tmp_path, {STAGE: 0.2}, 3.6, now=6000) is None
+    LG.stop_file(tmp_path, STAGE).unlink()                                          # (written by the check above)
+    assert LG.watchdog_once(tmp_path, {STAGE: 0.2}, 3.6, now=6000) is None          # after a final close the watchdog idles
+    assert not LG.stop_file(tmp_path, STAGE).exists()
+    clk.t = 5000                                    # a pod restarted at 4900 (recovery) closes again: only its own 100 s
+    L3 = LG.Ledger(tmp_path / "ledger.json", {STAGE: 0.2}, 3.6, lambda: clk.t, session="p2"); L3.close(final=True, since=4900)
+    assert abs(L3.spent(STAGE) - 1.2) < 1e-9
 
 
 def test_pod_finish_meters_its_uploads(tmp_path):
@@ -103,16 +106,16 @@ def test_pod_finish_meters_its_uploads(tmp_path):
     stub = tmp_path / "py"                                                          # the upload: record the ledger it saw
     stub.write_text(f"#!/bin/sh\ncat > /dev/null\ncp {out}/ledger.json {tmp_path}/seen_$$.json\nsleep 1\nexit 0\n"); stub.chmod(0o755)
     env = {**os.environ, "STPT_WORKSPACE": str(ws), "STPT_RUN_ID": "run1", "STPT_PY": str(stub), "STPT_SRC": str(src),
-           "S10_SOURCE_ONLY": "1", "STPT_MODELS": M, "STPT_POD_SESSION": "p"}
+           "S10_SOURCE_ONLY": "1", "STPT_MODELS": M, "STPT_POD_SESSION": "p", "STPT_FINAL_ATTEMPT_S": "300"}
     env.pop("STPT_ACK", None)
     p = subprocess.run(["bash", "-c", f'source "{SH}"; finish 0'], env=env, capture_output=True, text=True, timeout=120)
     assert p.returncode == 0, p.stdout + p.stderr
     seen = [json.loads(f.read_text()) for f in sorted(tmp_path.glob("seen_*.json"), key=lambda f: f.stat().st_mtime_ns)]
-    assert seen and all(s["open"] and s["open"]["stage"] == STAGE for s in seen[:-1])  # open during every metered upload
+    assert seen and all(s["open"] and s["open"]["stage"] == STAGE for s in seen[:-1])  # open during the records upload
     d = json.loads((out / "ledger.json").read_text())
-    assert d["closed"]["final"] and d["final_upload_allowance_s"] == 120
-    assert d["spent_usd"][STAGE] >= 3.0 + 120                                     # gap + uploads + the last upload's allowance
-    assert len(seen) == 3 and seen[-1]["closed"]["final"]                           # records, DONE, then the final ledger
+    assert d["closed"]["final"] and d["final_upload_allowance_s"] == 300
+    assert d["spent_usd"][STAGE] >= 3.0 + 300                                     # gap + records upload + the final attempt's limit
+    assert len(seen) == 2 and seen[-1]["closed"]["final"] and seen[-1] == d         # records, then records + DONE + final ledger
 
 
 def test_one_stages_stop_does_not_block_another(tmp_path):

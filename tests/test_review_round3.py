@@ -36,8 +36,12 @@ def _finish(tmp, upload_ok):
         b = bindir / name; b.write_text(f"#!/bin/sh\necho {name} \"$@\" >> {tmp}/pod_commands.log\n"); b.chmod(0o755)
     ws = tmp / "ws"; (ws / "out/run1").mkdir(parents=True, exist_ok=True); (ws / "out/run1/rec.json").write_text("{}")
     (ws / "UPLOAD_PENDING").write_text("")
+    src = tmp / "src"; (src / "gates/S10/run").mkdir(parents=True, exist_ok=True)
+    (src / "gates/S10/run/ledger.py").write_text((ROOT / "gates/S10/run/ledger.py").read_text())
+    (src / "gates/S10/run/caps_approved.json").write_text(json.dumps({"status": "APPROVED", "caps_usd": {f"{M}:core": 100.0}, "usd_per_gpu_hour": 3.6}))
     env = {**os.environ, "PATH": f"{bindir}:{os.environ['PATH']}", "STPT_WORKSPACE": str(ws), "STPT_RUN_ID": "run1",
-           "STPT_PY": str(stub), "STPT_SRC": str(ROOT), "S10_SOURCE_ONLY": "1", "STPT_MODELS": M}
+           "STPT_PY": str(stub), "STPT_SRC": str(src), "S10_SOURCE_ONLY": "1", "STPT_MODELS": M}
+    env.pop("STPT_ACK", None)
     p = subprocess.run(["bash", "-c", f'source "{SH}"; sleep() {{ :; }}; finish 0'], env=env, capture_output=True, text=True)
     log = (tmp / "pod_commands.log").read_text().splitlines() if (tmp / "pod_commands.log").exists() else []
     return p.returncode, (ws / "UPLOAD_PENDING").exists(), (ws / "out/run1/DONE").exists(), log, p.stdout
