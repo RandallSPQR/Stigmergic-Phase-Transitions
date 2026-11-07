@@ -68,3 +68,17 @@ def test_payload_split_across_variables(tmp_path, case):
     p = subprocess.run(["bash", "-c", f'source "{SH}"; fetch_payload {tmp_path}/got.tar.gz; echo "rc=$?"'], env=env,
                        capture_output=True, text=True, timeout=60)
     assert ("rc=0" in p.stdout) == (case == "ok")
+
+
+@pytest.mark.parametrize("good", [True, False])
+def test_dataset_payload_stored_as_base64(tmp_path, good):
+    src = tmp_path / "remote.b64"; src.write_text(base64.b64encode(P if good else P + b"x").decode())
+    b = tmp_path / "bin"; b.mkdir()
+    (b / "curl").write_text(f'#!/bin/bash\nout=""; while [ $# -gt 0 ]; do [ "$1" = -o ] && out=$2; shift; done; cp {src} "$out"\n')
+    (b / "curl").chmod(0o755)
+    env = {**os.environ, "PATH": f"{b}:{os.environ['PATH']}", "S10_SOURCE_ONLY": "1", "STPT_WORKSPACE": str(tmp_path), "STPT_RUN_ID": "r",
+           "STPT_MODELS": "gemma-2-9b-it", "STPT_PAYLOAD_SHA256": SHA, "STPT_RESULTS_REPO": "o/d", "HF_TOKEN": "x",
+           "STPT_PAYLOAD_HF_PATH": "stpt/S10/payload/p.b64"}
+    p = subprocess.run(["bash", "-c", f'source "{SH}"; sleep() {{ :; }}; fetch_payload {tmp_path}/got.tar.gz; echo "rc=$?"'],
+                       env=env, capture_output=True, text=True, timeout=60)
+    assert ("rc=0" in p.stdout) == good and (not good or (tmp_path / "got.tar.gz").read_bytes() == P)

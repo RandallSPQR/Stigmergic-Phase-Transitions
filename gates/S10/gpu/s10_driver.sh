@@ -123,10 +123,14 @@ fetch_payload() {
   local dest=$1 i
   if [ -n "${STPT_PAYLOAD_HF_PATH:-}" ]; then
     for i in 1 2 3 4 5; do
-      curl -sfL -H "Authorization: Bearer $HF_TOKEN" -o "$dest" \
+      curl -sfL -H "Authorization: Bearer $HF_TOKEN" -o "$dest.dl" \
         "https://huggingface.co/datasets/$STPT_RESULTS_REPO/resolve/main/$STPT_PAYLOAD_HF_PATH" && break
       echo "payload download attempt $i failed"; sleep $((i * 10))
     done
+    case "$STPT_PAYLOAD_HF_PATH" in                    # stored as base64 text (an ordinary dataset file) or as bytes
+      *.b64) base64 -d "$dest.dl" > "$dest" 2>/dev/null; rm -f "$dest.dl";;
+      *) mv -f "$dest.dl" "$dest" 2>/dev/null;;
+    esac
   elif [ -n "${STPT_PAYLOAD_B64_PARTS:-}" ]; then        # split across variables, each under the 128 KiB limit
     local k v all=""
     for k in $(seq 1 "$STPT_PAYLOAD_B64_PARTS"); do
