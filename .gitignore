@@ -2,3 +2,5 @@ __pycache__/
 *.pyc
 .venv/
 .env
+gates/S10/run/payload.b64
+gates/S10/run/payload.tar.gz

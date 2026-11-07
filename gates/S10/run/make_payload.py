@@ -2,7 +2,8 @@
 a tar, with its sha256. CPU only.
 
   python gates/S10/run/make_payload.py CAPS_APPROVED.json -> prints {"sha256", "bytes", "files"}; writes
-                                                             gates/S10/run/payload.b64 (not committed)
+                                                             gates/S10/run/payload.b64 and payload.tar.gz (not committed;
+                                                             the .tar.gz is uploaded to stpt/S10/payload/<sha256>.tar.gz)
 The caps file must carry status "APPROVED" (the owner's approval of gates/S10/run/caps_proposed.json or of a revision).
 """
 import base64
@@ -31,6 +32,7 @@ def main():
         ti = tarfile.TarInfo("gates/S10/run/caps_approved.json"); ti.size = len(data); tf.addfile(ti, io.BytesIO(data))
     raw = buf.getvalue()
     (ROOT / "gates/S10/run/payload.b64").write_text(base64.b64encode(raw).decode())
+    (ROOT / "gates/S10/run/payload.tar.gz").write_bytes(raw)   # A41: delivered through the private results dataset
     print(json.dumps({"sha256": hashlib.sha256(raw).hexdigest(), "bytes": len(raw), "files": FILES + ["gates/S10/run/caps_approved.json"]}))
 
 

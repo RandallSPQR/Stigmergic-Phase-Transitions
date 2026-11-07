@@ -1,7 +1,8 @@
 #!/bin/bash
 # S10 confirmatory collection on the pod (review #4; addendum 1, rounds 2-3). NOT YET RUN: needs the owner's explicit OK.
 # Launched by gates/S0/gpu/launch.py --data-safe --driver gates/S10/gpu/s10_driver.sh --extra-env STPT_PAYLOAD_B64 ...
-# Env: HF_TOKEN (RunPod secret), STPT_RESULTS_REPO, STPT_RUN_ID, PIPE_COMMIT, STPT_COMMIT, STPT_PAYLOAD_B64,
+# Env: HF_TOKEN (RunPod secret), STPT_RESULTS_REPO, STPT_RUN_ID, PIPE_COMMIT, STPT_COMMIT, STPT_PAYLOAD_HF_PATH (or
+#      STPT_PAYLOAD_B64 for a payload under 128 KiB),
 #      STPT_PAYLOAD_SHA256, STPT_MODELS, STPT_STAGES (default "core"), STPT_BLOCKS, STPT_ACK, USD_PER_GPU_HOUR,
 #      STPT_PRIOR_RUNS (run IDs of earlier pods of this collection: their ledgers make the caps cumulative, and their
 #      finished records are restored so finished blocks are not run again).
@@ -114,6 +115,26 @@ paid() {
   return $rc
 }
 
+fetch_payload() {
+  # The payload (code and the 61 frozen clusters) comes from the private results dataset when STPT_PAYLOAD_HF_PATH is
+  # set (A41: at 146,636 base64 characters it exceeds Linux's 128 KiB limit for one environment string), otherwise
+  # from STPT_PAYLOAD_B64 as before. Either way it is used only if its sha256 is STPT_PAYLOAD_SHA256.
+  local dest=$1 i
+  if [ -n "${STPT_PAYLOAD_HF_PATH:-}" ]; then
+    for i in 1 2 3 4 5; do
+      curl -sfL -H "Authorization: Bearer $HF_TOKEN" -o "$dest" \
+        "https://huggingface.co/datasets/$STPT_RESULTS_REPO/resolve/main/$STPT_PAYLOAD_HF_PATH" && break
+      echo "payload download attempt $i failed"; sleep $((i * 10))
+    done
+  else
+    echo "$STPT_PAYLOAD_B64" | base64 -d > "$dest"
+  fi
+  [ -s "$dest" ] || { echo "STOP: no payload"; return 1; }
+  local got; got=$(sha256sum "$dest" | cut -d' ' -f1)
+  [ "$got" = "$STPT_PAYLOAD_SHA256" ] || { echo "STOP: payload sha256 $got != $STPT_PAYLOAD_SHA256"; return 1; }
+  echo "payload verified ${got:0:16}"
+}
+
 first_stage() {
   local m=${STPT_MODELS%% *}
   case " gemma-2-9b-it qwen3.5-9b gemma-3-27b-it qwen3.5-27b " in
@@ -130,10 +151,9 @@ exec > >(tee -a "$OUT/logs/driver.log") 2>&1
 
 RECOVERY=0; [ -e "$MARKER" ] && RECOVERY=1         # a previous run on this volume ended without a verified upload
 step "payload"
-mkdir -p "$SRC" && echo "$STPT_PAYLOAD_B64" | base64 -d > /root/payload.tar.gz
-GOT=$(sha256sum /root/payload.tar.gz | cut -d' ' -f1)
-[ "$GOT" = "$STPT_PAYLOAD_SHA256" ] || { echo "STOP: payload sha256 $GOT != $STPT_PAYLOAD_SHA256"; [ $RECOVERY = 1 ] && exit 5; exit 3; }
-tar -xzf /root/payload.tar.gz -C "$SRC" && echo "payload verified ${GOT:0:16}"
+mkdir -p "$SRC"
+fetch_payload /root/payload.tar.gz || { [ $RECOVERY = 1 ] && exit 5; exit 3; }
+tar -xzf /root/payload.tar.gz -C "$SRC"
 if [ $RECOVERY = 1 ]; then
   step "recovery: UPLOAD_PENDING from an earlier run; uploading only (no paid work); this pod's time is charged"
   python3 -m pip install -q uv >/dev/null 2>&1 || python3 -m pip install -q --break-system-packages uv >/dev/null 2>&1
