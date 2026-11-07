@@ -1,0 +1,76 @@
+{
+ "approved_by": "owner",
+ "approved_on": "2026-11-07",
+ "caps_usd": {
+  "gemma-2-9b-it:core": 12.18,
+  "gemma-2-9b-it:secondary": 5.22,
+  "gemma-3-27b-it:core": 24.15,
+  "gemma-3-27b-it:secondary": 18.95,
+  "llama-3.1-8b-it:secondary": 15.68,
+  "qwen3.5-27b:core": 26.65,
+  "qwen3.5-27b:secondary": 19.69,
+  "qwen3.5-9b:core": 14.02,
+  "qwen3.5-9b:secondary": 7.47
+ },
+ "doc": "Stage caps approved by the owner on 2026-11-07 (coordination record D51). Each stage is flagged at 80% (the driver and the watchdog stop until the owner acknowledges) and stopped at 100%.",
+ "drawn_arm_counts": {
+  "T1": 16,
+  "rule_ii": 12,
+  "self_reset": 33,
+  "variant_runs": {
+   "gemma-2-9b-it": 11,
+   "gemma-3-27b-it": 32,
+   "llama-3.1-8b-it": 23,
+   "qwen3.5-27b": 28,
+   "qwen3.5-9b": 18
+  }
+ },
+ "estimate_usd_unscaled": {
+  "gemma-2-9b-it:core": 12.28,
+  "gemma-2-9b-it:secondary": 5.5,
+  "gemma-3-27b-it:core": 24.34,
+  "gemma-3-27b-it:secondary": 19.99,
+  "llama-3.1-8b-it:secondary": 16.54,
+  "qwen3.5-27b:core": 26.86,
+  "qwen3.5-27b:secondary": 20.77,
+  "qwen3.5-9b:core": 14.13,
+  "qwen3.5-9b:secondary": 7.88
+ },
+ "flag_fraction": 0.8,
+ "inputs": {
+  "s9_cost_assumptions": {
+   "calls_per_cluster_at_H": 7950.0,
+   "clusters_per_start": 4,
+   "failed_pod_margin": 0.1,
+   "per_model_seconds_per_S8_cluster": {
+    "gemma-2-9b-it": 197.14999999999998,
+    "gemma-3-27b-it": 452.61666666666673,
+    "llama-3.1-8b-it": 160.71666666666667,
+    "qwen3.5-27b": 505.9000000000001,
+    "qwen3.5-9b": 236.36666666666667
+   },
+   "secondary_shares": {
+    "T1": 0.2,
+    "llama": 1.0,
+    "rule_ii": 0.2,
+    "variant_wordings_per_variant": 0.2
+   },
+   "self_reset_share": 0.5,
+   "start_overhead_s_per_start_per_model": 240,
+   "usd_per_gpu_hour": 2.49
+  }
+ },
+ "source": "gates/S10/run/caps_proposed.json (figures unchanged)",
+ "status": "APPROVED",
+ "totals": {
+  "accepted_all_arms_usd": 144,
+  "accepted_core_usd": 77,
+  "caps_all_arms_usd": 144.01,
+  "caps_core_usd": 77.0,
+  "estimate_all_arms_usd": 148.28,
+  "estimate_core_usd": 77.61,
+  "scale_core": 0.9922,
+  "scale_secondary": 0.948
+ },
+ "usd_per_gpu_hour": 2.49
+}
