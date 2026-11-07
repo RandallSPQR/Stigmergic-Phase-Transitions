@@ -25,3 +25,8 @@ class HfApi:
     def list_repo_tree(self, repo_id, repo_type, path_in_repo, recursive=True):
         root = Path(os.environ["FAKE_HF_REMOTE"])
         return [_F(str(p.relative_to(root)), p.stat().st_size) for p in (root / path_in_repo).rglob("*") if p.is_file()]
+
+
+def snapshot_download(repo_id, repo_type=None, allow_patterns=None, local_dir=None, **kw):
+    """Stand-in: the local remote folder (FAKE_HF_REMOTE) plays the downloaded snapshot."""
+    return os.environ["FAKE_HF_REMOTE"]

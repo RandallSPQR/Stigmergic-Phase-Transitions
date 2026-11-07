@@ -164,13 +164,35 @@ class Ledger:
         pods. Acknowledgements are not carried over: the owner gives them again."""
         if any(v > 0 for v in self.d["spent_usd"].values()) or self.d.get("prior_runs"):
             raise Stop("seed refused: this ledger already has spend or priors")
-        self.d["prior_runs"] = []
+        # A44: every run in the chain is counted once, with its own spend: a listed prior that was itself seeded
+        # contributes its spend minus what it inherited, and the runs it inherited from are added by their run IDs
+        # (unless listed themselves), so listing the newest run alone, or all of them, gives the same total.
+        import re
+        rid = lambda name: (re.search(r"prior_ledger_(.+)\.json$", str(name)) or re.search(r"([^/]+)$", str(name))).group(1)
+        own_by_run, flags = {}, {}
         for name, prior in priors:
+            inherited = {}
+            for pr in prior.get("prior_runs", []):
+                for k, v in pr.get("spent_usd", {}).items():
+                    inherited[k] = inherited.get(k, 0.0) + float(v)
+            own = {}
             for k, v in prior.get("spent_usd", {}).items():
-                self.d["spent_usd"][k] = self.d["spent_usd"].get(k, 0.0) + float(v)
+                o = float(v) - inherited.get(k, 0.0)
+                if o < -1e-9:
+                    raise Stop(f"seed refused: prior ledger {name} reports less spend than its own priors for {k}")
+                own[k] = max(0.0, o)
+            own_by_run[rid(name)] = own
+            for pr in prior.get("prior_runs", []):
+                own_by_run.setdefault(rid(pr["ledger"]), {k: float(v) for k, v in pr.get("spent_usd", {}).items()})
             for k, v in prior.get("flagged", {}).items():
-                self.d["flagged"][k] = self.d["flagged"].get(k) or v
-            self.d["prior_runs"].append({"ledger": name, "spent_usd": prior.get("spent_usd", {})})
+                flags[k] = flags.get(k) or v
+        self.d["prior_runs"] = []
+        for run, own in sorted(own_by_run.items()):
+            for k, v in own.items():
+                self.d["spent_usd"][k] = self.d["spent_usd"].get(k, 0.0) + v
+            self.d["prior_runs"].append({"ledger": f"prior_ledger_{run}.json", "spent_usd": own})
+        for k, v in flags.items():
+            self.d["flagged"][k] = self.d["flagged"].get(k) or v
         self.save()
 
 

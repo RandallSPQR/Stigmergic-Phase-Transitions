@@ -151,6 +151,32 @@ fetch_payload() {
   echo "payload verified ${got:0:16}"
 }
 
+restore_prior_records() {
+  # Copy the final records (<model>/rec_*.json.gz) of every run in STPT_PRIOR_RUNS into $OUT, so finished blocks are not
+  # run again. A44: the script goes to a file, not stdin (a background paid phase gets an empty stdin, which made the
+  # earlier version do nothing and exit 0), and the step fails unless every record found is in place afterwards.
+  local f=/root/restore_prior_records.py
+  [ -w /root ] || f="$OUT/.restore_prior_records.py"
+  cat > "$f" <<'PYX'
+import os, shutil, sys
+from pathlib import Path
+from huggingface_hub import snapshot_download
+out = Path(sys.argv[1]); repo = os.environ["STPT_RESULTS_REPO"]; found = placed = 0
+for run in os.environ["STPT_PRIOR_RUNS"].split():
+    d = Path(snapshot_download(repo, repo_type="dataset", allow_patterns=[f"stpt/S10/{run}/*/rec_*.json.gz"]))
+    for p in sorted((d / "stpt/S10" / run).glob("*/rec_*.json.gz")):
+        found += 1
+        dst = out / p.parent.name / p.name
+        if not dst.exists():
+            dst.parent.mkdir(parents=True, exist_ok=True); shutil.copy2(p, dst)
+            print("restored", run, p.parent.name, p.name)
+        placed += dst.exists() and dst.stat().st_size > 0
+print(f"restore: {found} records found in {os.environ['STPT_PRIOR_RUNS']}, {placed} in place")
+sys.exit(0 if placed == found else 1)
+PYX
+  paid "$PY" "$f" "$OUT"
+}
+
 first_stage() {
   local m=${STPT_MODELS%% *}
   case " gemma-2-9b-it qwen3.5-9b gemma-3-27b-it qwen3.5-27b " in
@@ -208,19 +234,7 @@ paid bash -c "python3 -m uv venv -q -p 3.11 /root/venv && python3 -m uv pip inst
 export CACHES="/root/.cache/vllm /tmp/torchinductor_root /root/.triton /root/.cache/flashinfer /root/.nv /root/.cache/torch /root/.cache/triton"
 export LINEUP_VLLM_PYTHON=$VPY
 if [ -n "${STPT_PRIOR_RUNS:-}" ]; then              # restore finished records of earlier pods (never rerun them)
-  paid $PY - "$OUT" <<'PYX' || { echo "STOP: earlier records could not be restored"; exit 3; }
-import os, shutil, sys
-from pathlib import Path
-from huggingface_hub import snapshot_download
-out = Path(sys.argv[1]); repo = os.environ["STPT_RESULTS_REPO"]
-for run in os.environ["STPT_PRIOR_RUNS"].split():
-    d = Path(snapshot_download(repo, repo_type="dataset", allow_patterns=[f"stpt/S10/{run}/*/rec_*.json.gz"]))
-    for p in (d / "stpt/S10" / run).glob("*/rec_*.json.gz"):
-        dst = out / p.parent.name / p.name
-        if not dst.exists():
-            dst.parent.mkdir(parents=True, exist_ok=True); shutil.copy2(p, dst)
-            print("restored", run, p.parent.name, p.name)
-PYX
+  restore_prior_records || { echo "STOP: earlier records could not be restored"; finish 3; }
 fi
 touch "$MARKER"                                   # from here on, records exist that must reach the dataset
 ( while sleep 300; do upload >/dev/null 2>&1; done ) & UPL=$!
