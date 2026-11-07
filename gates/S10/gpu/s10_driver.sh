@@ -34,9 +34,13 @@ from pathlib import Path
 from huggingface_hub import HfApi
 out = Path(sys.argv[1]); repo = os.environ["STPT_RESULTS_REPO"]; dest = f"stpt/S10/{os.environ['STPT_RUN_ID']}"
 api = HfApi()
-api.upload_folder(repo_id=repo, repo_type="dataset", folder_path=str(out), path_in_repo=dest, commit_message="S10 confirmatory")
+# A43: intermediate block copies (<model>/blocks/...) that no longer exist locally are removed from the dataset in the
+# same commit, so after a block is finalized only its final records (<model>/rec_*.json.gz) remain there.
+api.upload_folder(repo_id=repo, repo_type="dataset", folder_path=str(out), path_in_repo=dest, commit_message="S10 confirmatory",
+                  delete_patterns=["*/blocks/**"])
 remote = {f.path[len(dest) + 1:]: getattr(f, "size", None) for f in api.list_repo_tree(repo, repo_type="dataset", path_in_repo=dest, recursive=True)}
-bad = []
+local = {str(p.relative_to(out)) for p in out.rglob("*") if p.is_file()}
+bad = [r for r in remote if "/blocks/" in "/" + r and r not in local]      # stale intermediates must be gone
 for p in out.rglob("*"):
     if p.is_file() and not p.name.endswith(".tmp"):
         rel = str(p.relative_to(out))
