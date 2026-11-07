@@ -1,8 +1,8 @@
 #!/bin/bash
 # S10 confirmatory collection on the pod (review #4; addendum 1, rounds 2-3). NOT YET RUN: needs the owner's explicit OK.
 # Launched by gates/S0/gpu/launch.py --data-safe --driver gates/S10/gpu/s10_driver.sh --extra-env STPT_PAYLOAD_B64 ...
-# Env: HF_TOKEN (RunPod secret), STPT_RESULTS_REPO, STPT_RUN_ID, PIPE_COMMIT, STPT_COMMIT, STPT_PAYLOAD_HF_PATH (or
-#      STPT_PAYLOAD_B64 for a payload under 128 KiB),
+# Env: HF_TOKEN (RunPod secret), STPT_RESULTS_REPO, STPT_RUN_ID, PIPE_COMMIT, STPT_COMMIT, STPT_PAYLOAD_HF_PATH, or
+#      STPT_PAYLOAD_B64_PARTS + STPT_PAYLOAD_B64_1..N, or STPT_PAYLOAD_B64 for a payload under 128 KiB,
 #      STPT_PAYLOAD_SHA256, STPT_MODELS, STPT_STAGES (default "core"), STPT_BLOCKS, STPT_ACK, USD_PER_GPU_HOUR,
 #      STPT_PRIOR_RUNS (run IDs of earlier pods of this collection: their ledgers make the caps cumulative, and their
 #      finished records are restored so finished blocks are not run again).
@@ -116,9 +116,10 @@ paid() {
 }
 
 fetch_payload() {
-  # The payload (code and the 61 frozen clusters) comes from the private results dataset when STPT_PAYLOAD_HF_PATH is
-  # set (A41: at 146,636 base64 characters it exceeds Linux's 128 KiB limit for one environment string), otherwise
-  # from STPT_PAYLOAD_B64 as before. Either way it is used only if its sha256 is STPT_PAYLOAD_SHA256.
+  # The payload (code and the 61 frozen clusters; A41: at 146,636 base64 characters it exceeds Linux's 128 KiB limit
+  # for one environment string) comes from the private results dataset when STPT_PAYLOAD_HF_PATH is set, from
+  # STPT_PAYLOAD_B64_1..N when STPT_PAYLOAD_B64_PARTS=N is set (each part under the limit), otherwise from
+  # STPT_PAYLOAD_B64 as before. Either way it is used only if its sha256 is STPT_PAYLOAD_SHA256.
   local dest=$1 i
   if [ -n "${STPT_PAYLOAD_HF_PATH:-}" ]; then
     for i in 1 2 3 4 5; do
@@ -126,6 +127,13 @@ fetch_payload() {
         "https://huggingface.co/datasets/$STPT_RESULTS_REPO/resolve/main/$STPT_PAYLOAD_HF_PATH" && break
       echo "payload download attempt $i failed"; sleep $((i * 10))
     done
+  elif [ -n "${STPT_PAYLOAD_B64_PARTS:-}" ]; then        # split across variables, each under the 128 KiB limit
+    local k v all=""
+    for k in $(seq 1 "$STPT_PAYLOAD_B64_PARTS"); do
+      v="STPT_PAYLOAD_B64_$k"; [ -n "${!v:-}" ] || { echo "STOP: payload part $k missing"; return 1; }
+      all+="${!v}"
+    done
+    printf '%s' "$all" | base64 -d > "$dest"
   else
     echo "$STPT_PAYLOAD_B64" | base64 -d > "$dest"
   fi

@@ -52,3 +52,19 @@ def test_failed_download_is_refused(tmp_path):
 def test_environment_payload_still_works(tmp_path, good):
     out = _run(tmp_path, P, SHA if good else "0" * 64, hf=False)
     assert ("rc=0" in out) == good
+
+
+@pytest.mark.parametrize("case", ["ok", "part_missing", "parts_reordered"])
+def test_payload_split_across_variables(tmp_path, case):
+    b64 = base64.b64encode(P).decode(); n = 3; k = -(-len(b64) // n)
+    parts = [b64[i * k:(i + 1) * k] for i in range(n)]
+    if case == "parts_reordered":
+        parts[0], parts[1] = parts[1], parts[0]
+    env = {**os.environ, "S10_SOURCE_ONLY": "1", "STPT_WORKSPACE": str(tmp_path), "STPT_RUN_ID": "r", "STPT_MODELS": "gemma-2-9b-it",
+           "STPT_PAYLOAD_SHA256": SHA, "STPT_PAYLOAD_B64_PARTS": str(n)}
+    for i, part in enumerate(parts, 1):
+        if not (case == "part_missing" and i == 2):
+            env[f"STPT_PAYLOAD_B64_{i}"] = part
+    p = subprocess.run(["bash", "-c", f'source "{SH}"; fetch_payload {tmp_path}/got.tar.gz; echo "rc=$?"'], env=env,
+                       capture_output=True, text=True, timeout=60)
+    assert ("rc=0" in p.stdout) == (case == "ok")
