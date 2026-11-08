@@ -1,0 +1,51 @@
+{
+ "model": "gemma-2-9b-it",
+ "final_run": "20261107T2359Z",
+ "earlier_runs": [
+  "20261107T1948Z",
+  "20261107T1913Z"
+ ],
+ "records": 61,
+ "verified": 61,
+ "arms": {
+  "primary": 61
+ },
+ "records_by_origin": {
+  "20261107T1948Z": 48,
+  "20261107T2359Z": 13
+ },
+ "server_starts": 16,
+ "scheduled_blocks": 16,
+ "model_calls": 483150,
+ "missing_calls": 0,
+ "non_ab_mass": {
+  "n": 483150,
+  "max": 0.011219288,
+  "mean": 0.0020010346568663977
+ },
+ "letter_share_A_as_A_by_start": {
+  "min": 0.5,
+  "max": 0.5
+ },
+ "ledger": {
+  "spent_usd": {
+   "gemma-2-9b-it:core": 10.850396213629205
+  },
+  "closed_final": true,
+  "prior_runs": [
+   "prior_ledger_20261107T1913Z.json",
+   "prior_ledger_20261107T1936Z.json",
+   "prior_ledger_20261107T1936Z-adjustment.json",
+   "prior_ledger_20261107T1948Z.json",
+   "prior_ledger_20261107T1948Z-adjustment.json"
+  ],
+  "flagged": {},
+  "acked": {
+   "gemma-2-9b-it:core": true
+  }
+ },
+ "done_marker": true,
+ "stop_files": [],
+ "problems": [],
+ "passed": true
+}

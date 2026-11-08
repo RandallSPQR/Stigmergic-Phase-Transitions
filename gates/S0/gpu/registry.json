@@ -265,6 +265,75 @@
    "cost_per_hr": 2.49,
    "repo": "RandallSPQR/stpt-gate-artifacts",
    "ended": "terminated 2026-11-03T00:23:25.944700+00:00: run DONE and uploaded"
+  },
+  "mqqjgsx5mcntl6": {
+   "name": "stpt-s10-driver-20261107T1913Z",
+   "run_id": "20261107T1913Z",
+   "created": "2026-11-07T19:13:43.602290+00:00",
+   "hours_cap": 1.5,
+   "deadline": "2026-11-07T20:43:43.602290+00:00",
+   "gpu_set": "rtxpro6000",
+   "price_cap_usd_h": 2.49,
+   "max_cost_usd": 3.74,
+   "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+   "cost_per_hr": 2.49,
+   "repo": "RandallSPQR/stpt-gate-artifacts",
+   "ended": "gone at 2026-11-07T19:36:19.379711+00:00 (self-stop or terminated)"
+  },
+  "zy2vw8m9vi1dl1": {
+   "name": "stpt-s10-driver-20261107T1936Z",
+   "run_id": "20261107T1936Z",
+   "created": "2026-11-07T19:36:31.863740+00:00",
+   "hours_cap": 4.5,
+   "deadline": "2026-11-08T00:06:31.863740+00:00",
+   "gpu_set": "rtxpro6000",
+   "price_cap_usd_h": 2.49,
+   "max_cost_usd": 11.21,
+   "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+   "cost_per_hr": 2.49,
+   "repo": "RandallSPQR/stpt-gate-artifacts",
+   "ended": "terminated 2026-11-07T19:44:39.171639+00:00: restore step did nothing (heredoc stdin lost in a background paid phase); block 1 was being re-run; stopped before any duplicate record was finalized"
+  },
+  "tdh9cb9dl0y206": {
+   "name": "stpt-s10-driver-20261107T1948Z",
+   "run_id": "20261107T1948Z",
+   "created": "2026-11-07T19:48:35.029099+00:00",
+   "hours_cap": 4.5,
+   "deadline": "2026-11-08T00:18:35.029099+00:00",
+   "gpu_set": "rtxpro6000",
+   "price_cap_usd_h": 2.49,
+   "max_cost_usd": 11.21,
+   "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+   "cost_per_hr": 2.49,
+   "repo": "RandallSPQR/stpt-gate-artifacts",
+   "ended": "gone at 2026-11-07T23:22:59.061786+00:00 (self-stop or terminated)"
+  },
+  "mpb57fm8bmgmgq": {
+   "name": "stpt-s10-driver-20261107T2359Z",
+   "run_id": "20261107T2359Z",
+   "created": "2026-11-07T23:59:45.660160+00:00",
+   "hours_cap": 2.0,
+   "deadline": "2026-11-08T01:59:45.660160+00:00",
+   "gpu_set": "rtxpro6000",
+   "price_cap_usd_h": 2.49,
+   "max_cost_usd": 4.98,
+   "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+   "cost_per_hr": 2.49,
+   "repo": "RandallSPQR/stpt-gate-artifacts",
+   "ended": "gone at 2026-11-08T00:48:07.760261+00:00 (self-stop or terminated)"
+  },
+  "rx0912hrj1e93l": {
+   "name": "stpt-s10-driver-20261108T0048Z",
+   "run_id": "20261108T0048Z",
+   "created": "2026-11-08T00:48:32.162540+00:00",
+   "hours_cap": 6.5,
+   "deadline": "2026-11-08T07:18:32.162540+00:00",
+   "gpu_set": "rtxpro6000",
+   "price_cap_usd_h": 2.49,
+   "max_cost_usd": 16.19,
+   "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+   "cost_per_hr": 2.49,
+   "repo": "RandallSPQR/stpt-gate-artifacts"
   }
  }
 }
