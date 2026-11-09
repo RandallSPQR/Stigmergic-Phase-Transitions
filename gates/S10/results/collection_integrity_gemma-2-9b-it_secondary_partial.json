@@ -1,0 +1,54 @@
+{
+ "model": "gemma-2-9b-it",
+ "stage": "secondary",
+ "final_run": "20261109T2109Z",
+ "earlier_runs": [],
+ "records": 29,
+ "scheduled": 39,
+ "verified": 29,
+ "arms": {
+  "wording": 8,
+  "T1": 13,
+  "rule_ii": 8
+ },
+ "records_by_origin": {
+  "20261109T2109Z": 29
+ },
+ "server_starts": 11,
+ "scheduled_blocks": 11,
+ "model_calls": 208650,
+ "missing_calls": 0,
+ "non_ab_mass": {
+  "n": 208650,
+  "max": 0.009729606,
+  "mean": 0.0019726641689432065
+ },
+ "letter_share_A_as_A_by_start": {
+  "min": 0.5,
+  "max": 0.5
+ },
+ "code_versions": {
+  "7dbfe38 / payload d4e01345": 29
+ },
+ "cluster_manifest_sha256": [
+  "dcdac6768510baa8b417945abab5206b9bd06a96322392374e174170058c351d"
+ ],
+ "pin_sets": 1,
+ "ledger": {
+  "spent_usd": {
+   "gemma-2-9b-it:secondary": 5.259293112615742
+  },
+  "closed_final": true,
+  "prior_runs": [],
+  "flagged": {},
+  "acked": {
+   "gemma-2-9b-it:secondary": true
+  }
+ },
+ "done_marker": true,
+ "stop_files": [],
+ "problems": [
+  "missing 10 of 39 scheduled records, e.g. [(47, 'rule_ii'), (50, 'wording:w5'), (51, 'wording:w5'), (53, 'T1'), (54, 'T1')]"
+ ],
+ "passed": false
+}
