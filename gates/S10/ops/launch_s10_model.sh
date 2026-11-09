@@ -4,11 +4,11 @@
 # Env: STPT_ACK (optional): the owner's acknowledged 80% flags, passed to the pod (e.g. gemma-2-9b-it:core).
 #      STPT_STAGE (optional): core (default) or secondary.
 # Run code: stpt-run-v1.2.1 (3404b7e). The pod script, the launcher and the payload's code files must be identical to
-# it; the payload (built at COMMIT) differs from v1.2.1's only in the caps file (D58). STPT_COMMIT records COMMIT.
+# it; the payload (built at COMMIT) differs from v1.2.1's only in the caps file (D58, D59). STPT_COMMIT records COMMIT.
 cd "$(dirname "$0")/../../.."
 TAG=3404b7e02a119d72871b30c1272c9d420d811391
-COMMIT=7dbfe382cf901d90d4bd9f3750f5b0bb789f3127
-SHA=d4e0134534e29ce3c818a1aee2cee22f56f8dc117caa7ad17ffa613e46ebe66d
+COMMIT=2f7bf0e24e48841005b84f3da737e1c85c0a292e
+SHA=f26677a4b04cb9f28c789752fdcbd70ff0dc3e545f26af975e45bc697a245bbf
 git diff --quiet "$TAG" -- gates/S10/gpu/s10_driver.sh gates/S0/gpu/launch.py pins.yaml stpt/__init__.py stpt/board.py \
   stpt/prompts.py gates/S10/s10_core.py gates/S10/run/driver.py gates/S10/run/ledger.py gates/S10/run/pod.py \
   gates/S10/clusters/MANIFEST.json gates/S10/clusters/confirmatory_clusters.json analysis/results/t_options.json \

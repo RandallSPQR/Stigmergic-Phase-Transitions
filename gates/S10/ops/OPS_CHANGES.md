@@ -49,6 +49,9 @@ Reconstructed from the session's command log; times UTC.
     `d4e01345…`, built at `7dbfe38`); `STPT_COMMIT` = `7dbfe38`; it refuses to launch unless the pod script, `launch.py`
     and the payload's code files are identical to `stpt-run-v1.2.1` (`3404b7e`) and the caps file to `7dbfe38`.
 
+11. Launcher, after D59 (secondary caps raised): payload rebuilt with the new caps file (sha256 `f26677a4…`, built
+    at `2f7bf0e`); `STPT_COMMIT` = `2f7bf0e`; the same checks against `stpt-run-v1.2.1` and the caps file.
+
 ## Integrity coverage
 
 The integrity check reads only the records, ledgers and markers on the dataset, never the watcher's or launcher's
