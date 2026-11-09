@@ -15,6 +15,9 @@
 # Metering (round 3): the ledger opens at this script's first line, so installation, downloads, server starts, model
 # calls and teardown are all charged; the watchdog (gates/S10/run/ledger.py) enforces the caps during every paid phase
 # and never terminates an upload.
+# Setup failures (operational change after A52): a stop in setup, before UPLOAD_PENDING exists, makes the pod delete
+# itself; setup_stop() first uploads the run folder's small files (logs, and the ledger closed final when one is open)
+# with a stdlib uploader, so the failing step is visible on the dataset.
 POD_T0=$(date +%s.%N)
 set -uo pipefail
 WS=${STPT_WORKSPACE:-/workspace}
@@ -23,7 +26,57 @@ OUT=$WS/out/$STPT_RUN_ID
 PY=${STPT_PY:-/root/venv/bin/python}; VPY=/root/venv_vllm_lineup/bin/python
 SRC=${STPT_SRC:-/root/stpt}
 export STPT_POD_SESSION="${STPT_RUN_ID}-$(date +%s%N)"
+HF_EP=${HF_ENDPOINT:-https://huggingface.co}
 step() { echo "=== $(date -u +%FT%TZ) $*"; }
+
+upload_setup_logs() {
+  # Stdlib only (setup may fail before any venv exists, or before the payload is unpacked): commit the run folder's
+  # small files (no *.gz, none over 5 MB) through the dataset's commit API, then check each is listed with its size
+  # (the live log's size may grow). Returns non-zero if every attempt fails.
+  timeout "${STPT_SETUP_UPLOAD_TIMEOUT:-300}" python3 - "$OUT" <<'PYX'
+import base64, json, os, sys, time, urllib.request
+from pathlib import Path
+out = Path(sys.argv[1]); ep = os.environ.get("HF_ENDPOINT", "https://huggingface.co").rstrip("/")
+repo = os.environ["STPT_RESULTS_REPO"]; run = os.environ["STPT_RUN_ID"]; dest = f"stpt/S10/{run}"
+H = {"Authorization": f"Bearer {os.environ.get('HF_TOKEN', '')}", "User-Agent": "stpt-s10-setup/1.0"}
+files = {str(p.relative_to(out)): p.read_bytes() for p in sorted(out.rglob("*"))
+         if p.is_file() and not p.name.endswith(".gz") and p.stat().st_size <= 5_000_000}
+lines = [{"key": "header", "value": {"summary": f"S10 setup failure: logs of {run}", "description": ""}}]
+lines += [{"key": "file", "value": {"path": f"{dest}/{r}", "encoding": "base64", "content": base64.b64encode(b).decode()}}
+          for r, b in files.items()]
+body = "\n".join(json.dumps(x) for x in lines).encode()
+for wait in [0] + [int(x) for x in os.environ.get("STPT_SETUP_UPLOAD_BACKOFF", "15 45").split()]:
+    time.sleep(wait)
+    try:
+        req = urllib.request.Request(f"{ep}/api/datasets/{repo}/commit/main", data=body, method="POST",
+                                     headers={**H, "Content-Type": "application/x-ndjson"})
+        urllib.request.urlopen(req, timeout=120).read()
+        req = urllib.request.Request(f"{ep}/api/datasets/{repo}/tree/main/{dest}?recursive=true", headers=H)
+        remote = {f["path"][len(dest) + 1:]: f.get("size") for f in json.load(urllib.request.urlopen(req, timeout=60))
+                  if f.get("type") == "file"}
+        bad = [r for r, b in files.items() if r not in remote or (r != "logs/driver.log" and remote[r] != len(b))]
+        if not bad:
+            print(f"setup logs uploaded and verified: {len(files)} files"); sys.exit(0)
+        print("setup log upload not verified:", bad[:5])
+    except Exception as e:
+        print("setup log upload attempt failed:", type(e).__name__, str(e)[:200])
+sys.exit(1)
+PYX
+}
+
+setup_stop() {
+  # $1: exit status; the rest: the reason. For a stop before UPLOAD_PENDING exists (the pod then deletes itself): the
+  # reason goes to SETUP_FAILED, an open ledger is closed final (charged through this upload's hard limit), and the
+  # small files are uploaded; the exit status is the setup failure's whether or not the upload succeeds.
+  local rc=$1; shift
+  echo "STOP: $*"; echo "$*" > "$OUT/SETUP_FAILED"
+  if [ -e "$OUT/ledger.json" ] && [ -f "$SRC/gates/S10/run/ledger.py" ]; then
+    ledger close --final --allowance "${STPT_SETUP_UPLOAD_TIMEOUT:-300}" --since "$POD_T0" >/dev/null 2>&1
+  fi
+  sleep 1                                       # let the logging tee catch up before the log is read
+  upload_setup_logs || echo "setup logs NOT uploaded"
+  exit "$rc"
+}
 
 upload() {
   # Upload $OUT and verify every file on the dataset. Returns non-zero on any failure or mismatch (round 3).
@@ -128,7 +181,7 @@ fetch_payload() {
   if [ -n "${STPT_PAYLOAD_HF_PATH:-}" ]; then
     for i in 1 2 3 4 5; do
       curl -sfL -H "Authorization: Bearer $HF_TOKEN" -o "$dest.dl" \
-        "https://huggingface.co/datasets/$STPT_RESULTS_REPO/resolve/main/$STPT_PAYLOAD_HF_PATH" && break
+        "$HF_EP/datasets/$STPT_RESULTS_REPO/resolve/main/$STPT_PAYLOAD_HF_PATH" && break
       echo "payload download attempt $i failed"; sleep $((i * 10))
     done
     case "$STPT_PAYLOAD_HF_PATH" in                    # stored as base64 text (an ordinary dataset file) or as bytes
@@ -194,8 +247,9 @@ exec > >(tee -a "$OUT/logs/driver.log") 2>&1
 RECOVERY=0; [ -e "$MARKER" ] && RECOVERY=1         # a previous run on this volume ended without a verified upload
 step "payload"
 mkdir -p "$SRC"
-fetch_payload /root/payload.tar.gz || { [ $RECOVERY = 1 ] && exit 5; exit 3; }
-tar -xzf /root/payload.tar.gz -C "$SRC"
+PAYLOAD=${STPT_PAYLOAD_FILE:-/root/payload.tar.gz}
+fetch_payload "$PAYLOAD" || { [ $RECOVERY = 1 ] && exit 5; setup_stop 3 "payload not available or not verified"; }
+tar -xzf "$PAYLOAD" -C "$SRC"
 if [ $RECOVERY = 1 ]; then
   step "recovery: UPLOAD_PENDING from an earlier run; uploading only (no paid work); this pod's time is charged"
   python3 -m pip install -q uv >/dev/null 2>&1 || python3 -m pip install -q --break-system-packages uv >/dev/null 2>&1
@@ -213,24 +267,25 @@ if [ -n "${STPT_PRIOR_RUNS:-}" ]; then              # cumulative caps across pod
   PRIORS=()
   for R in $STPT_PRIOR_RUNS; do
     curl -sf -H "Authorization: Bearer $HF_TOKEN" -o "$OUT/prior_ledger_$R.json" \
-      "https://huggingface.co/datasets/$STPT_RESULTS_REPO/resolve/main/stpt/S10/$R/ledger.json" \
-      || { echo "STOP: ledger of earlier run $R not available; refusing to start without its spend"; exit 3; }
+      "$HF_EP/datasets/$STPT_RESULTS_REPO/resolve/main/stpt/S10/$R/ledger.json" \
+      || setup_stop 3 "ledger of earlier run $R not available; refusing to start without its spend"
     PRIORS+=("$OUT/prior_ledger_$R.json")
   done
-  python3 "$SRC/gates/S10/run/ledger.py" seed --out "$OUT" --caps "$CAPS" --prior "${PRIORS[@]}" || exit 3
+  python3 "$SRC/gates/S10/run/ledger.py" seed --out "$OUT" --caps "$CAPS" --prior "${PRIORS[@]}" \
+    || setup_stop 3 "earlier ledgers could not be seeded"
 fi
 CUR_STAGE=$(first_stage)
 python3 "$SRC/gates/S10/run/ledger.py" open --out "$OUT" --caps "$CAPS" --stage "$CUR_STAGE" --since "$POD_T0" \
-  || { echo "STOP: ledger refused the first stage (no paid work done)"; exit 3; }
+  || setup_stop 3 "ledger refused the first stage (no paid work done)"
 python3 "$SRC/gates/S10/run/ledger.py" watchdog --out "$OUT" --caps "$CAPS" > "$OUT/logs/watchdog.log" 2>&1 & WDOG=$!
 
 step "stack"
 nvidia-smi --query-gpu=name,driver_version,memory.total --format=csv,noheader | tee "$OUT/gpu.txt"
 python3 -m pip install -q uv >/dev/null 2>&1 || python3 -m pip install -q --break-system-packages uv >/dev/null 2>&1
 paid bash -c "python3 -m uv venv -q -p 3.11 /root/venv_vllm_lineup && python3 -m uv pip install -q -p $VPY 'vllm==0.19.1' 'torch==2.10.0' 'transformers==5.5.3' 'tokenizers==0.22.2' 'huggingface-hub==1.10.2'" > "$OUT/logs/pip_vllm.log" 2>&1 \
-  || { echo "STOP: install (no records yet)"; exit 3; }
+  || setup_stop 3 "install failed (no records yet); see logs/pip_*.log"
 paid bash -c "python3 -m uv venv -q -p 3.11 /root/venv && python3 -m uv pip install -q -p $PY 'transformers==5.17.0' jinja2 pyyaml numpy 'huggingface-hub==1.10.2' 'sae-ethos-pipeline @ git+https://github.com/RandallSPQR/SAE-Ethos-Calibration@$PIPE_COMMIT'" > "$OUT/logs/pip_pipe.log" 2>&1 \
-  || { echo "STOP: install (no records yet)"; exit 3; }
+  || setup_stop 3 "install failed (no records yet); see logs/pip_*.log"
 export CACHES="/root/.cache/vllm /tmp/torchinductor_root /root/.triton /root/.cache/flashinfer /root/.nv /root/.cache/torch /root/.cache/triton"
 export LINEUP_VLLM_PYTHON=$VPY
 if [ -n "${STPT_PRIOR_RUNS:-}" ]; then              # restore finished records of earlier pods (never rerun them)
