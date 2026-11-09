@@ -1,8 +1,10 @@
 {
  "model": "qwen3.5-27b",
+ "stage": "core",
  "final_run": "20261109T0504Z",
  "earlier_runs": [],
  "records": 61,
+ "scheduled": 61,
  "verified": 61,
  "arms": {
   "primary": 61
@@ -23,6 +25,13 @@
   "min": 0.5,
   "max": 0.5
  },
+ "code_versions": {
+  "8f22f97 / payload 4f137411": 61
+ },
+ "cluster_manifest_sha256": [
+  "dcdac6768510baa8b417945abab5206b9bd06a96322392374e174170058c351d"
+ ],
+ "pin_sets": 1,
  "ledger": {
   "spent_usd": {
    "qwen3.5-27b:core": 22.809801088710593
