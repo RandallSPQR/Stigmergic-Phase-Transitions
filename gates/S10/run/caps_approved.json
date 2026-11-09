@@ -10,7 +10,7 @@
   "qwen3.5-27b:core": 26.65,
   "qwen3.5-27b:secondary": 19.69,
   "qwen3.5-9b:core": 14.02,
-  "qwen3.5-9b:secondary": 7.47
+  "qwen3.5-9b:secondary": 8.47
  },
  "doc": "Stage caps approved by the owner on 2026-11-07 (coordination record D51). Each stage is flagged at 80% (the driver and the watchdog stop until the owner acknowledges) and stopped at 100%.",
  "drawn_arm_counts": {
@@ -65,12 +65,21 @@
  "totals": {
   "accepted_all_arms_usd": 144,
   "accepted_core_usd": 77,
-  "caps_all_arms_usd": 144.01,
+  "caps_all_arms_usd": 145.01,
   "caps_core_usd": 77.0,
   "estimate_all_arms_usd": 148.28,
   "estimate_core_usd": 77.61,
   "scale_core": 0.9922,
   "scale_secondary": 0.948
  },
- "usd_per_gpu_hour": 2.49
+ "usd_per_gpu_hour": 2.49,
+ "amendments": [
+  {
+   "on": "2026-11-09",
+   "decision": "D58",
+   "by": "owner",
+   "change": "qwen3.5-9b:secondary 7.47 -> 8.47 (+$1); caps_all_arms_usd 144.01 -> 145.01; every other cap unchanged",
+   "reason": "the secondary-stage projection (about $7.4, scaled from the core stages' actual spend) sat at the approved cap"
+  }
+ ]
 }
