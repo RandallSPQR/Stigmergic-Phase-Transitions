@@ -45,6 +45,10 @@ Reconstructed from the session's command log; times UTC.
    code versions, cluster manifest and pins recorded in each record. Rerun on the four core stages: all 18 earlier
    fields identical, all passed (results files updated with the new fields).
 
+10. Launcher, after D58 (Qwen3.5-9B secondary cap +$1): the payload is rebuilt with the new caps file (sha256
+    `d4e01345…`, built at `7dbfe38`); `STPT_COMMIT` = `7dbfe38`; it refuses to launch unless the pod script, `launch.py`
+    and the payload's code files are identical to `stpt-run-v1.2.1` (`3404b7e`) and the caps file to `7dbfe38`.
+
 ## Integrity coverage
 
 The integrity check reads only the records, ledgers and markers on the dataset, never the watcher's or launcher's
