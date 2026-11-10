@@ -419,6 +419,19 @@
    "cost_per_hr": 2.49,
    "repo": "RandallSPQR/stpt-gate-artifacts",
    "ended": "gone at 2026-11-10T00:33:30.079359+00:00 (self-stop or terminated)"
+  },
+  "lr237xetxlxlfn": {
+   "name": "stpt-s10-driver-20261110T0033Z",
+   "run_id": "20261110T0033Z",
+   "created": "2026-11-10T00:33:34.100292+00:00",
+   "hours_cap": 5.0,
+   "deadline": "2026-11-10T05:33:34.100292+00:00",
+   "gpu_set": "rtxpro6000",
+   "price_cap_usd_h": 2.49,
+   "max_cost_usd": 12.45,
+   "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+   "cost_per_hr": 2.49,
+   "repo": "RandallSPQR/stpt-gate-artifacts"
   }
  }
 }
