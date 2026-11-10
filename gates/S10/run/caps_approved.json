@@ -10,7 +10,7 @@
   "qwen3.5-27b:core": 26.65,
   "qwen3.5-27b:secondary": 25.75,
   "qwen3.5-9b:core": 14.02,
-  "qwen3.5-9b:secondary": 11.9
+  "qwen3.5-9b:secondary": 14.0
  },
  "doc": "Stage caps approved by the owner on 2026-11-07 (coordination record D51). Each stage is flagged at 80% (the driver and the watchdog stop until the owner acknowledges) and stopped at 100%.",
  "drawn_arm_counts": {
@@ -65,7 +65,7 @@
  "totals": {
   "accepted_all_arms_usd": 144,
   "accepted_core_usd": 77,
-  "caps_all_arms_usd": 166.2,
+  "caps_all_arms_usd": 168.3,
   "caps_core_usd": 77.0,
   "estimate_all_arms_usd": 148.28,
   "estimate_core_usd": 77.61,
@@ -87,6 +87,13 @@
    "by": "owner",
    "change": "gemma-2-9b-it:secondary 5.22 -> 7.65; qwen3.5-9b:secondary 8.47 -> 11.9; gemma-3-27b-it:secondary 18.95 -> 26.3; qwen3.5-27b:secondary 19.69 -> 25.75; llama-3.1-8b-it:secondary 15.68 -> 17.6; caps_all_arms_usd -> 166.2; core caps unchanged",
    "reason": "secondary branches measured at about 1.4x the core branch time (Gemma-2-9B secondary run, A57); caps set to the projections plus 10%"
+  },
+  {
+   "on": "2026-11-10",
+   "decision": "D60",
+   "by": "owner",
+   "change": "qwen3.5-9b:secondary 11.9 -> 14.0; caps_all_arms_usd -> 168.3",
+   "reason": "the first Qwen3.5-9B secondary pod ran on a host about 2x slower; it was stopped and the stage relaunched, its spend still counting"
   }
  ]
 }
