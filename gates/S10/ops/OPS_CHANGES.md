@@ -59,6 +59,9 @@ Reconstructed from the session's command log; times UTC.
     it at once and charges its lifetime in `<run>-adjustment` (whole minutes plus 2 at $2.49/h, plus $0.02), listed as a
     prior run of the next attempt. Used once (first attempt landed elsewhere).
 
+14. `relaunch_avoiding_machine.sh` takes the model, hours and prior runs as arguments (used for Gemma-3-27B secondary
+    and later stages).
+
 ## Integrity coverage
 
 The integrity check reads only the records, ledgers and markers on the dataset, never the watcher's or launcher's
