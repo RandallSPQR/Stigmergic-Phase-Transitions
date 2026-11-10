@@ -431,7 +431,8 @@
    "max_cost_usd": 12.45,
    "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
    "cost_per_hr": 2.49,
-   "repo": "RandallSPQR/stpt-gate-artifacts"
+   "repo": "RandallSPQR/stpt-gate-artifacts",
+   "ended": "terminated 2026-11-10T02:05:46.533994+00:00: slow host (about 2x slower per branch than the same model on earlier pods; GPU about 33% busy); owner approved stop and relaunch (D60); blocks 1-3 (7 runs) uploaded"
   }
  }
 }

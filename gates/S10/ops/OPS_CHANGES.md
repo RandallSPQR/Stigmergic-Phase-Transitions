@@ -52,6 +52,9 @@ Reconstructed from the session's command log; times UTC.
 11. Launcher, after D59 (secondary caps raised): payload rebuilt with the new caps file (sha256 `f26677a4…`, built
     at `2f7bf0e`); `STPT_COMMIT` = `2f7bf0e`; the same checks against `stpt-run-v1.2.1` and the caps file.
 
+12. Launcher, after D60 (Qwen3.5-9B secondary cap $14.00): payload rebuilt (sha256 `5cf79ede…`, built at `6bb30eb`);
+    `STPT_COMMIT` = `6bb30eb`; the same checks.
+
 ## Integrity coverage
 
 The integrity check reads only the records, ledgers and markers on the dataset, never the watcher's or launcher's
