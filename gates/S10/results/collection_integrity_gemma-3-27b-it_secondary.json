@@ -1,0 +1,52 @@
+{
+ "model": "gemma-3-27b-it",
+ "stage": "secondary",
+ "final_run": "20261110T1231Z",
+ "earlier_runs": [],
+ "records": 60,
+ "scheduled": 60,
+ "verified": 60,
+ "arms": {
+  "wording": 32,
+  "T1": 16,
+  "rule_ii": 12
+ },
+ "records_by_origin": {
+  "20261110T1231Z": 60
+ },
+ "server_starts": 16,
+ "scheduled_blocks": 16,
+ "model_calls": 439200,
+ "missing_calls": 0,
+ "non_ab_mass": {
+  "n": 439200,
+  "max": 9.1661e-05,
+  "mean": 2.3874178051001822e-08
+ },
+ "letter_share_A_as_A_by_start": {
+  "min": 0.5,
+  "max": 0.5
+ },
+ "code_versions": {
+  "6bb30eb / payload 5cf79ede": 60
+ },
+ "cluster_manifest_sha256": [
+  "dcdac6768510baa8b417945abab5206b9bd06a96322392374e174170058c351d"
+ ],
+ "pin_sets": 1,
+ "ledger": {
+  "spent_usd": {
+   "gemma-3-27b-it:secondary": 20.275928347863864
+  },
+  "closed_final": true,
+  "prior_runs": [],
+  "flagged": {},
+  "acked": {
+   "gemma-3-27b-it:secondary": true
+  }
+ },
+ "done_marker": true,
+ "stop_files": [],
+ "problems": [],
+ "passed": true
+}
