@@ -55,6 +55,10 @@ Reconstructed from the session's command log; times UTC.
 12. Launcher, after D60 (Qwen3.5-9B secondary cap $14.00): payload rebuilt (sha256 `5cf79ede…`, built at `6bb30eb`);
     `STPT_COMMIT` = `6bb30eb`; the same checks.
 
+13. `relaunch_avoiding_machine.sh` (D61): relaunches a stage and, if the new pod lands on a named slow machine, deletes
+    it at once and charges its lifetime in `<run>-adjustment` (whole minutes plus 2 at $2.49/h, plus $0.02), listed as a
+    prior run of the next attempt. Used once (first attempt landed elsewhere).
+
 ## Integrity coverage
 
 The integrity check reads only the records, ledgers and markers on the dataset, never the watcher's or launcher's
