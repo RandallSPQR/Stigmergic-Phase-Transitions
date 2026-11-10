@@ -1,0 +1,58 @@
+{
+ "model": "gemma-2-9b-it",
+ "stage": "secondary",
+ "final_run": "20261109T2349Z",
+ "earlier_runs": [
+  "20261109T2109Z"
+ ],
+ "records": 39,
+ "scheduled": 39,
+ "verified": 39,
+ "arms": {
+  "wording": 11,
+  "T1": 16,
+  "rule_ii": 12
+ },
+ "records_by_origin": {
+  "20261109T2349Z": 10,
+  "20261109T2109Z": 29
+ },
+ "server_starts": 15,
+ "scheduled_blocks": 15,
+ "model_calls": 278550,
+ "missing_calls": 0,
+ "non_ab_mass": {
+  "n": 278550,
+  "max": 0.009729606,
+  "mean": 0.0019749423028432955
+ },
+ "letter_share_A_as_A_by_start": {
+  "min": 0.5,
+  "max": 0.5
+ },
+ "code_versions": {
+  "7dbfe38 / payload d4e01345": 29,
+  "2f7bf0e / payload f26677a4": 10
+ },
+ "cluster_manifest_sha256": [
+  "dcdac6768510baa8b417945abab5206b9bd06a96322392374e174170058c351d"
+ ],
+ "pin_sets": 1,
+ "ledger": {
+  "spent_usd": {
+   "gemma-2-9b-it:secondary": 7.172967150167638
+  },
+  "closed_final": true,
+  "prior_runs": [
+   "prior_ledger_20261109T2109Z.json"
+  ],
+  "flagged": {},
+  "acked": {
+   "gemma-2-9b-it:secondary": true
+  }
+ },
+ "done_marker": true,
+ "stop_files": [],
+ "problems": [],
+ "passed": true
+}
