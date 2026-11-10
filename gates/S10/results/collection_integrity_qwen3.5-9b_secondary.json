@@ -1,0 +1,62 @@
+{
+ "model": "qwen3.5-9b",
+ "stage": "secondary",
+ "final_run": "20261110T0237Z",
+ "earlier_runs": [
+  "20261110T0208Z",
+  "20261110T0033Z"
+ ],
+ "records": 46,
+ "scheduled": 46,
+ "verified": 46,
+ "arms": {
+  "wording": 18,
+  "T1": 16,
+  "rule_ii": 12
+ },
+ "records_by_origin": {
+  "20261110T0237Z": 39,
+  "20261110T0208Z": 7
+ },
+ "server_starts": 14,
+ "scheduled_blocks": 14,
+ "model_calls": 332100,
+ "missing_calls": 0,
+ "non_ab_mass": {
+  "n": 332100,
+  "max": 0.051063848,
+  "mean": 0.009232854191391146
+ },
+ "letter_share_A_as_A_by_start": {
+  "min": 0.5,
+  "max": 0.5
+ },
+ "code_versions": {
+  "2f7bf0e / payload f26677a4": 7,
+  "6bb30eb / payload 5cf79ede": 39
+ },
+ "cluster_manifest_sha256": [
+  "dcdac6768510baa8b417945abab5206b9bd06a96322392374e174170058c351d"
+ ],
+ "pin_sets": 1,
+ "ledger": {
+  "spent_usd": {
+   "qwen3.5-9b:secondary": 12.065074094802101
+  },
+  "closed_final": true,
+  "prior_runs": [
+   "prior_ledger_20261110T0033Z.json",
+   "prior_ledger_20261110T0033Z-adjustment.json",
+   "prior_ledger_20261110T0208Z.json",
+   "prior_ledger_20261110T0208Z-adjustment.json"
+  ],
+  "flagged": {},
+  "acked": {
+   "qwen3.5-9b:secondary": true
+  }
+ },
+ "done_marker": true,
+ "stop_files": [],
+ "problems": [],
+ "passed": true
+}
