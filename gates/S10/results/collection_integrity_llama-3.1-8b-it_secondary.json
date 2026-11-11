@@ -1,0 +1,53 @@
+{
+ "model": "llama-3.1-8b-it",
+ "stage": "secondary",
+ "final_run": "20261111T1158Z",
+ "earlier_runs": [],
+ "records": 112,
+ "scheduled": 112,
+ "verified": 112,
+ "arms": {
+  "primary": 61,
+  "wording": 23,
+  "T1": 16,
+  "rule_ii": 12
+ },
+ "records_by_origin": {
+  "20261111T1158Z": 112
+ },
+ "server_starts": 16,
+ "scheduled_blocks": 16,
+ "model_calls": 853500,
+ "missing_calls": 0,
+ "non_ab_mass": {
+  "n": 853500,
+  "max": 0.003349048,
+  "mean": 9.155620670415934e-05
+ },
+ "letter_share_A_as_A_by_start": {
+  "min": 0.5,
+  "max": 0.5
+ },
+ "code_versions": {
+  "6bb30eb / payload 5cf79ede": 112
+ },
+ "cluster_manifest_sha256": [
+  "dcdac6768510baa8b417945abab5206b9bd06a96322392374e174170058c351d"
+ ],
+ "pin_sets": 1,
+ "ledger": {
+  "spent_usd": {
+   "llama-3.1-8b-it:secondary": 15.881454592700994
+  },
+  "closed_final": true,
+  "prior_runs": [],
+  "flagged": {},
+  "acked": {
+   "llama-3.1-8b-it:secondary": true
+  }
+ },
+ "done_marker": true,
+ "stop_files": [],
+ "problems": [],
+ "passed": true
+}
