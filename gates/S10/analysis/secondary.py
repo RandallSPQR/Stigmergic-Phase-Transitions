@@ -137,7 +137,8 @@ def require_unblinding(coord: Path, decision: str) -> dict:
     cells = [c.strip() for c in row[1].strip().strip("|").split("|")]
     if row[0] != "Accepted":
         raise Refused(f"decision {decision} is not in the accepted decisions")
-    if len(cells) < 5 or not cells[3].startswith(UNBLIND_TITLE + " ") or not cells[-1].startswith("owner"):
+    if (len(cells) < 5 or not cells[3].startswith(UNBLIND_TITLE + " ")
+            or cells[-1].split(",", 1)[0].strip() != "owner"):
         raise Refused(f"decision {decision} is not the owner's S10 unblinding decision")
     tags = set(TAG_IN_ROW.findall(cells[3]))
     if len(tags) != 1:
@@ -453,12 +454,14 @@ def wording_consistency(table, F, opts=OPTIONS):
 
 def conclusions(table, models, opts=OPTIONS):
     est = {k: pooled(table, models, k) for k in CONTRASTS}
-    if any(est[k] is None or est[k]["p_two_sided"] is None for k in CONTRASTS):
-        raise Refused(f"subset {models}: an estimate could not be fitted")
-    p = {k: est[k]["p_two_sided"] for k in CONTRASTS}
+    fitted = {k: est[k] is not None and est[k]["p_two_sided"] is not None for k in CONTRASTS}
+    # Keep the planned two-contrast Holm family even when a fit is unavailable.
+    # An unavailable contrast cannot reject or support equivalence; retain its estimate and reason.
+    p = {k: est[k]["p_two_sided"] if fitted[k] else 1.0 for k in CONTRASTS}
     sig = CA.holm(p) if opts["B_subset_conclusion"] == "holm_tost" else {k: p[k] <= 0.05 for k in CONTRASTS}
-    return {k: {"estimate": _summ(est[k]), "significant": bool(sig[k]),
-                "decision": CA.decide(bool(sig[k]), est[k]["tost_equivalent"])} for k in CONTRASTS}
+    return {k: {"estimate": _summ(est[k]), "significant": bool(sig[k]) if fitted[k] else None,
+                "decision": CA.decide(bool(sig[k]), est[k]["tost_equivalent"]) if fitted[k] else None}
+            for k in CONTRASTS}
 
 
 def sensitivity(table, primary_decisions=None, opts=OPTIONS):
@@ -467,7 +470,8 @@ def sensitivity(table, primary_decisions=None, opts=OPTIONS):
         r = conclusions(table, models, opts)
         if primary_decisions:
             for k in CONTRASTS:
-                r[k]["differs_from_primary"] = r[k]["decision"] != primary_decisions[k]
+                r[k]["differs_from_primary"] = (r[k]["decision"] != primary_decisions[k]
+                                                 if r[k]["decision"] is not None else None)
         out[name] = r
     out["size_contrasts"] = {name: {k: _summ(paired_difference(table, (a, "primary"), (b, "primary"), k))
                                     for k in CONTRASTS} for name, (a, b) in SIZE_PAIRS.items()}
@@ -530,8 +534,11 @@ def trajectories(table):
         if not prim:
             continue
         L, B = np.array([o["traj_live"] for o in prim]), np.array([o["traj_blind"] for o in prim])
-        P = np.array([b["traj_pulsed"] for o in prim for b in o.get("branches", [])])
-        U = np.array([b["traj_unpulsed"] for o in prim for b in o.get("branches", [])])
+        # The two directions share a cluster and random stream; average them before computing an interval.
+        P = np.array([np.mean([b["traj_pulsed"] for b in o["branches"]], axis=0)
+                      for o in prim if o.get("branches")])
+        U = np.array([np.mean([b["traj_unpulsed"] for b in o["branches"]], axis=0)
+                      for o in prim if o.get("branches")])
 
         def band(X):
             mu, se = X.mean(0), X.std(0, ddof=1) / math.sqrt(len(X)) if len(X) > 1 else np.zeros(X.shape[1])
@@ -909,6 +916,15 @@ def load_predictions(coord: Path):
     return P
 
 
+def _ols_slope(xs, ys):
+    """OLS slope with an intercept; undefined when the predictor has no variation."""
+    x, y = np.asarray(xs, dtype=float), np.asarray(ys, dtype=float)
+    if np.ptp(x) == 0:
+        return None
+    dx, dy = x - x.mean(), y - y.mean()
+    return float(dx @ dy / (dx @ dx))
+
+
 def model_check(table, P, theta_pooled=None, theta_per_model=None):
     """Item 10 (R§8). The sealed predictions are of the arithmetic mean over the 61 clusters of each simulated study
     (gates/S10/predictions.py: per model the mean over clusters; pooled the mean of the four confirmatory models'
@@ -952,13 +968,13 @@ def model_check(table, P, theta_pooled=None, theta_per_model=None):
                 xs.append(mean[idx]); ys.append(o[k]); ins.append(lo[idx] <= o[k] <= hi[idx])
             if len(xs) > 2:
                 out["per_cluster"].setdefault(m, {})[k] = {
-                    "share_inside_90": float(np.mean(ins)), "slope_obs_on_pred": float(np.polyfit(xs, ys, 1)[0]),
+                    "share_inside_90": float(np.mean(ins)), "slope_obs_on_pred": _ols_slope(xs, ys),
                     "n": len(xs), "mean_width_90": float(np.mean(np.array(hi) - np.array(lo)))}
                 if m in CONF:
                     allin += ins; xs_all += xs; ys_all += ys
         if len(xs_all) > 2:
             out["per_cluster"].setdefault("confirmatory_models_pooled", {})[k] = {
-                "share_inside_90": float(np.mean(allin)), "slope_obs_on_pred": float(np.polyfit(xs_all, ys_all, 1)[0]),
+                "share_inside_90": float(np.mean(allin)), "slope_obs_on_pred": _ols_slope(xs_all, ys_all),
                 "n": len(xs_all)}
     return out
 

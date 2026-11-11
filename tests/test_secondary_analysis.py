@@ -594,3 +594,82 @@ def test_model_check_with_synthetic_predictions():
     pooled = r["per_cluster"]["confirmatory_models_pooled"]["board"]
     assert pooled["share_inside_90"] == 0.5 and pooled["n"] == 40           # four models, Llama left out
     assert "all_models" not in r["per_cluster"]
+
+
+# Independent blind review: synthetic regression cases.
+def test_unblinding_rejects_an_author_with_only_an_owner_prefix(tmp_path, code_repo):
+    coord = _coord(tmp_path, [OWNER_ROW.replace('| owner |', '| ownerbot |')])
+    with pytest.raises(S.Refused):
+        S.require_unblinding(coord, 'D99')
+
+
+def test_degenerate_subset_retains_estimates_and_other_contrasts():
+    table = {}
+    for m in S.SUBSETS['27b_only']:
+        for j in range(1, 13):
+            table[(m, j, 'primary')] = {
+                'board': 0.0, 'persistence': 0.1 + 0.002 * j,
+                'server_start': f'{m}/s{(j - 1) // 4}'}
+    result = S.conclusions(table, S.SUBSETS['27b_only'])
+    board = result['board']
+    assert board['estimate']['theta'] == 0.0
+    assert board['estimate']['ci95'] is None and board['estimate']['degenerate']
+    assert board['significant'] is None and board['decision'] is None
+    assert result['persistence']['estimate']['ci95'] is not None
+    assert result['persistence']['decision'] == 'effect'
+
+
+def test_unfitted_contrast_does_not_shrink_the_holm_family(monkeypatch):
+    fitted = {'theta': 0.04, 'se': 0.02, 'df': 10, 'ci95': [-0.004, 0.084],
+              'ci90': [0.004, 0.076], 'p_two_sided': 0.04,
+              'tost_equivalent': False, 'n_clusters': 12}
+    unknown = dict(fitted, theta=0.0, se=None, df=None, ci95=None, ci90=None,
+                   p_two_sided=None, tost_equivalent=None, degenerate='every value equal; no fit')
+    monkeypatch.setattr(S, 'pooled', lambda table, models, key: fitted if key == 'board' else unknown)
+    result = S.sensitivity({}, {k: 'effect' for k in S.CONTRASTS})
+    for name in S.SUBSETS:
+        assert result[name]['board']['significant'] is False  # p=.04 must still face two-test Holm
+        assert result[name]['persistence']['decision'] is None
+        assert result[name]['persistence']['differs_from_primary'] is None
+
+
+def test_recipient_bands_use_clusters_as_the_independent_units():
+    model, table = S.ALL[0], {}
+    for j, x in enumerate([0.2, 0.4, 0.6, 0.8], 1):
+        branch = {'traj_pulsed': [x] * 9, 'traj_unpulsed': [x] * 9}
+        table[(model, j, 'primary')] = {
+            'traj_live': [x] * 31, 'traj_blind': [x] * 31,
+            'branches': [copy.deepcopy(branch), copy.deepcopy(branch)]}
+    result = S.trajectories(table)[model]
+    half_width = 1.96 * np.std([0.2, 0.4, 0.6, 0.8], ddof=1) / math.sqrt(4)
+    for name in ('recipients_pulsed', 'recipients_unpulsed'):
+        assert result[name]['mean'][0] == pytest.approx(0.5)
+        assert result[name]['lo95'][0] == pytest.approx(0.5 - half_width)
+        assert result[name]['hi95'][0] == pytest.approx(0.5 + half_width)
+    # Opposite branch deviations cancel within every cluster: no between-cluster variation remains.
+    for o in table.values():
+        o['branches'][1]['traj_pulsed'] = [1.0 - x for x in o['branches'][0]['traj_pulsed']]
+    band = S.trajectories(table)[model]['recipients_pulsed']
+    assert band['lo95'][0] == pytest.approx(0.5)
+    assert band['hi95'][0] == pytest.approx(0.5)
+
+
+@pytest.mark.parametrize('predicted', [0.0, 0.25])
+def test_model_check_reports_an_undefined_slope_without_losing_coverage(predicted):
+    clusters, table = [1, 2, 3, 4], {}
+    P = {'clusters': clusters, 'pooled_confirmatory': {}, 'per_model': {},
+         'per_cluster_mean': {}, 'per_cluster_p05_p95': {}}
+    interval = {'p05': -0.1, 'p95': 0.1}
+    for k in S.CONTRASTS:
+        P['pooled_confirmatory'][k] = dict(interval)
+    for m in S.ALL:
+        P['per_model'][m] = {k: dict(interval) for k in S.CONTRASTS}
+        P['per_cluster_mean'][m] = {k: [predicted] * 4 for k in S.CONTRASTS}
+        P['per_cluster_p05_p95'][m] = {k: [[-0.1] * 4, [0.1] * 4] for k in S.CONTRASTS}
+        for j in clusters:
+            table[(m, j, 'primary')] = {k: 0.01 * j for k in S.CONTRASTS}
+    result = S.model_check(table, P)
+    for m in S.ALL + ['confirmatory_models_pooled']:
+        for k in S.CONTRASTS:
+            assert result['per_cluster'][m][k]['slope_obs_on_pred'] is None
+            assert result['per_cluster'][m][k]['share_inside_90'] == 1.0
