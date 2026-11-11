@@ -165,8 +165,8 @@ bound. A mismatch means a harness or serving problem."
   **2 · √(s_drift² + SE_a² + SE_b²)**, where:
   - s_drift is the S4 between-start SD in probability, p(1 − p) · √(var_start_offset + var_probe_x_start) / T, from
     `gates/S4/results/s4_variance_components.json`, at p = the mean of the two cell values;
-  - SE is each cell's standard error across contexts. **Reading (review): group-robust (cluster-robust) across
-    clusters**, SE² = G/(G − 1) · Σ_g (n_g (ȳ_g − ȳ))² / n², with the cell value still the mean over its calls.
+  - SE is each cell's standard error across contexts: **group-robust (cluster-robust) across clusters** (review;
+    confirmed by the owner as the intended meaning, D64), SE² = G/(G − 1) · Σ_g (n_g (ȳ_g − ȳ))² / n², with the cell value still the mean over its calls.
     - Why not a per-call SE: identical prompts recur. The mock had 36,000 blind calls and 400 distinct prompts. Each
       first call repeats a blind-board prompt, and pulsed-branch calls mostly repeat the live run's call at the same
       step. A per-call SE flagged mismatches on a perfect mock harness: Gemma-2 10 of 79 cells, Qwen3.5-9B 3 of 79.

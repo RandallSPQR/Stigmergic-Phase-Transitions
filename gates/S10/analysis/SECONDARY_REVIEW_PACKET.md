@@ -1,5 +1,7 @@
 # S10 secondary analyses: review packet (blind; D62, D63)
 
+**Unblinding gate (owner, D64).** No unblinding until this code is finalized by the reviewer and pushed under a tag.
+
 **For the checker.** The code was written and tested before any confirmatory outcome was computed or seen. Please
 review it on mock records and synthetic data only. Do not open any S10 run folder or record (`rec_c*.json.gz`), and
 do not download from the dataset. The loader refuses real records until the owner records the unblinding decision, but
@@ -40,8 +42,7 @@ To try any function on mock data, build records as `tests/test_secondary_analysi
    - the content-A sign and the `letter_of_content` handling;
    - T scaling;
    - the claim that the first calls use the same prompt as the blind board.
-3. The H bound (`_stats`, `compare_cells`): the group-robust SE reading of "standard error across contexts" (owner to
-   confirm, below).
+3. The H bound (`_stats`, `compare_cells`): the group-robust SE (the owner's meaning, D64).
 4. The choice-E cross-check (`self_social_crosscheck`): the start states and the full − contacts-off difference.
 5. The estimators:
    - block labels (pairs of starts for pooled and paired values);
@@ -53,8 +54,9 @@ To try any function on mock data, build records as `tests/test_secondary_analysi
 6. The unblinding guard (`require_unblinding`, `load_records`): can anything but a committed, accepted owner row titled
    exactly "S10 unblinding authorised" unlock it?
 
-## For the owner to confirm (readings of D63 the code takes)
-- **H, "each cell's standard error across contexts".** Read as a group-robust SE across clusters. A per-call SE
+## Readings of D63 the code takes
+- **H, "each cell's standard error across contexts".** A group-robust SE across clusters, **confirmed by the owner
+  as the intended meaning (D64)**. A per-call SE
   treats repeated identical prompts as independent: on a perfect mock harness it flagged 10 of 79 Gemma-2 cells and 3
   of 79 Qwen3.5-9B cells, against 0 of 79 for both with the group-robust SE. With the group-robust SE a planted
   response fault (0.3 nats toward the reference, during the pulse only) is flagged in 25 of 25 cells.
@@ -70,7 +72,7 @@ To try any function on mock data, build records as `tests/test_secondary_analysi
 | # | finding | disposition |
 |---|---|---|
 | 1 | E cross-check simulated from the self-reset state (already the social part) | fixed: starts from the pulsed restoration state; the self-reset analogue is reported beside it; test: zero simulated social when contacts do not matter |
-| 2 | H standard errors assumed distinct prompts per call; false mismatches on a perfect harness | fixed: group-robust SE across clusters (to confirm, above); negative controls added |
+| 2 | H standard errors assumed distinct prompts per call; false mismatches on a perfect harness | fixed: group-robust SE across clusters (confirmed, D64); negative controls added |
 | 3 | a model or arm absent altogether passed a full run | fixed: every scheduled (model, arm) required |
 | 4 | identical duplicate records refused; the cluster in the file name unchecked | fixed |
 | 5 | the frozen REML can raise `ValueError` on near-degenerate sets | fixed: reported as degenerate, not fitted |
