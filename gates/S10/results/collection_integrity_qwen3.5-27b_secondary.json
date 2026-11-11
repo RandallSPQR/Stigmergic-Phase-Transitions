@@ -1,0 +1,52 @@
+{
+ "model": "qwen3.5-27b",
+ "stage": "secondary",
+ "final_run": "20261110T2037Z",
+ "earlier_runs": [],
+ "records": 56,
+ "scheduled": 56,
+ "verified": 56,
+ "arms": {
+  "wording": 28,
+  "T1": 16,
+  "rule_ii": 12
+ },
+ "records_by_origin": {
+  "20261110T2037Z": 56
+ },
+ "server_starts": 15,
+ "scheduled_blocks": 15,
+ "model_calls": 408600,
+ "missing_calls": 0,
+ "non_ab_mass": {
+  "n": 408600,
+  "max": 0.002832165,
+  "mean": 0.0002970862260744004
+ },
+ "letter_share_A_as_A_by_start": {
+  "min": 0.5,
+  "max": 0.5
+ },
+ "code_versions": {
+  "6bb30eb / payload 5cf79ede": 56
+ },
+ "cluster_manifest_sha256": [
+  "dcdac6768510baa8b417945abab5206b9bd06a96322392374e174170058c351d"
+ ],
+ "pin_sets": 1,
+ "ledger": {
+  "spent_usd": {
+   "qwen3.5-27b:secondary": 18.641125138757626
+  },
+  "closed_final": true,
+  "prior_runs": [],
+  "flagged": {},
+  "acked": {
+   "qwen3.5-27b:secondary": true
+  }
+ },
+ "done_marker": true,
+ "stop_files": [],
+ "problems": [],
+ "passed": true
+}
