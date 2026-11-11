@@ -12,7 +12,7 @@ the rule is yours to keep as well.
 |---|---|
 | `gates/S10/analysis/SECONDARY_ANALYSIS_SPEC.md` | the specification: items 1–11, the owner's choices A–H (D63), the readings the code takes, implementation notes |
 | `gates/S10/analysis/secondary.py` | the code under review |
-| `tests/test_secondary_analysis.py` | 38 tests: blinding guard, record-level identities on mock records, estimators on synthetic tables, negative controls |
+| `tests/test_secondary_analysis.py` | 44 tests: blinding guard, record-level identities on mock records, estimators on synthetic tables, negative controls |
 | `gates/S10/analysis/confirmatory.py` | the frozen confirmatory analysis it builds on (`outcomes`, `replay`, `infer`, `holm`, `decide`); not under review |
 | `gates/S10/s10_core.py` | record layout: `compact` rows, the init rows in `run_cluster`, pulses, self-reset |
 | `osf/PREREGISTRATION.md` §5, §6, §8 | what is registered |
@@ -84,6 +84,24 @@ To try any function on mock data, build records as `tests/test_secondary_analysi
 | — | omissions: item 11 mass and letter balance; per-model transmission − override; pool size per branch; development-form story range; record code versions | added |
 | — | the model check compared θ with predictions of the arithmetic mean | fixed: arithmetic mean, θ beside |
 | — | `check_arm` allowed one start to serve two blocks | fixed |
+
+## Second review (independent, blind, of `a9525b2`) and what changed
+The reviewer worked from the bundle `stpt-secondary-review-a9525b2.tar.gz` (sha256 `629cf3b4…1923`) and supplied
+`stpt_secondary_a9525b2_review.diff` (sha256 `f119a176…d01b`). The patch was applied unchanged at `42c7264`.
+- Its 6 regression tests fail on `a9525b2` and pass with the patch.
+- Full suite: 246 pass.
+- The freeze check passes.
+
+| # | finding | disposition |
+|---|---|---|
+| 1 | the guard accepted an author cell beginning with "owner" (e.g. "ownerbot") | fixed: the author token must be exactly "owner" (a qualifier may follow a comma) |
+| 2 | a degenerate subset contrast aborted the whole report | fixed: reported with no fit or decision; the two-test Holm family is kept (p = 1 for the unfitted contrast) |
+| 3 | recipient trajectory bands treated the two pulsed branches of a cluster as independent | fixed: branches are averaged within each cluster first |
+| 4 | constant predicted means crashed the model check or gave a spurious slope | fixed: the slope is null when the predictor does not vary |
+
+The reviewer also independently recomputed five pulse-window quantities on fresh mock branches: immediate response,
+ITT persistence, end-of-window persistence, and propagation from onset and after restoration. All agreed within
+1e-12. The reviewer found no further defect in choices A–H.
 
 ## Known limits (stated, not fixed)
 - The within-study H comparisons pool contexts that differ in mix between conditions (different sweeps, agents and

@@ -14,8 +14,9 @@ name the tag of the reviewer-finalized code (tag `<name>`). The repository the a
 
 The output records the decision row, the record's commit, the tag and the code commit. This map is the reference the code is checked against.
 
-**Review.** An independent blind review (mock and synthetic data only) found 8 defects and 5 omissions in the first
-version; all are fixed here. The corrections that touch a D63 choice are:
+**Review.** A first independent blind review (mock and synthetic data only) found 8 defects and 5 omissions; all are
+fixed. A second independent blind review of `a9525b2` found 4 more defects and supplied a patch. It was applied
+unchanged at `42c7264`. The corrections that touch a D63 choice are:
 - E's starting state;
 - H's standard error;
 - the model check's observed statistic and its pooling.
@@ -207,7 +208,8 @@ bound. A mismatch means a harness or serving problem."
   model.
 - Support trajectories: per model, the mean over clusters of live and blind support at each sweep 0–30, with 95%
   intervals across clusters; and the recipients' share voting the pulse direction, pulsed and unpulsed, at each sweep
-  from t0 (the onset share, common to both) to t0 + D + W. Figures and tables only.
+  from t0 (the onset share, common to both) to t0 + D + W. The recipients' two pulsed branches are averaged within each
+  cluster before the interval, so clusters are the independent units (second review). Figures and tables only.
 
 ## 10. The model check (R§8)
 Against the sealed predictions (`gates/S10/sealed/s10_predictions.json.gz.b64`, opened at the freeze; its sha256 is
@@ -216,7 +218,8 @@ checked first):
 - the share of per-model estimates inside their 90% intervals (five models × two contrasts);
 - per-cluster calibration: the share of (model, cluster) values inside their per-cluster 90% intervals, and the slope
   of observed on predicted per-cluster means (ordinary least squares), by model and pooled over the **four
-  confirmatory models only** (review: Llama is never pooled, D24);
+  confirmatory models only** (review: Llama is never pooled, D24). The slope is null when the predicted means do not
+  vary; coverage and widths are still reported (second review);
 - the predictive intervals' widths.
 
 **Observed statistic (review).** The sealed predictions are of each simulated study's arithmetic mean over the 61
@@ -249,6 +252,11 @@ code that produced the records (commit, payload, cluster manifest, pins, from ea
 - An estimate needs at least 3 clusters. With fewer, it is reported as absent.
 - Some sets have no variation, or so little that the frozen REML fit fails (for example one nonzero value in
   singleton blocks). Such a set is reported with no interval, marked "degenerate", and is not fitted.
+- In the subset sensitivity analyses (B), a degenerate contrast is reported with no significance and no decision.
+  The two-test Holm family is kept, with p = 1 for the unfitted contrast, so the other contrast is not tested alone
+  (second review).
+- The author cell of the unblinding row must be "owner", optionally followed by a comma and a qualifier ("owner, …")
+  (second review).
 - Every record's identity is checked against the protocol before use: model, cluster, arm, T, wording, initial
   wording, rule, run key, parameters, not a mock, and the file name.
 - Each scheduled block must run in one server start, and each start serves one block.
