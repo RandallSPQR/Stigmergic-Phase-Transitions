@@ -1,9 +1,11 @@
 # S10 secondary analyses: specification map (written blind; owner's instruction D62)
 
 **Status:** written on 2026-11-11 while collection was finishing. No confirmatory outcome had been computed or seen by
-anyone. The code (`gates/S10/analysis/secondary.py`) is developed and tested on **mock records and synthetic data
-only**. Its loader refuses real records until the owner records an unblinding decision. This map is the reference the
-code is checked against.
+anyone. The owner decided choices A–H blind, before unblinding (D63; A–G as proposed, F with a sign statement added, H
+amended); this map states them as decided. The code (`gates/S10/analysis/secondary.py`) is developed and tested on
+**mock records and synthetic data only** (`tests/test_secondary_analysis.py`). Its loader refuses real records unless
+the coordination record holds an owner decision whose title begins **"S10 unblinding authorised"**. A row that only
+mentions unblinding, such as D62 or D63, does not count. This map is the reference the code is checked against.
 
 **Sources.** Registration `osf/PREREGISTRATION.md` §5, §6, §8 (cited "R§"); `analysis/PULSE_SETTINGS.md` (D26);
 `analysis/SECONDARY_INFORMED_SPLIT.md` (D19); `analysis/PROMPT_SENSITIVITY.md` (D20, D21);
@@ -33,23 +35,23 @@ on that model's 61 primary-arm values, blocked by that model's server starts. No
 For each model and each variant wording drawn for it (`wording:<w>` arms, on its drawn clusters), both contrasts with
 the same model. **Consistency** for a model: all its estimates (W3 and each variant) have the same sign and their 95%
 intervals overlap; otherwise "wording-dependent". Report the count of consistent models.
-- **Decision needed (A).** Which W3 estimate to compare: (a) the model's W3 estimate on all 61 clusters (item 1), or
-  (b) its W3 estimate on the same clusters as the variant. *Proposed: (a) for the consistency rule, as the registration
-  compares "estimates in each wording"; (b) reported beside it as a paired check.*
+- **Choice A (D63).** The consistency rule uses the model's 61-cluster W3 estimate (item 1). Reported prominently
+  beside it, for each variant, the **same-cluster paired comparison**: the per-cluster difference variant − W3 on the
+  variant's clusters (confirmatory model; block label = the pair of starts). Also the W3 estimate on those clusters and
+  the consistency rule applied to it.
 - W2's structural failure and the wording-fragility finding are reported from `gates/S3/S3_REPORT.md` (no new
   computation).
 
 ## 3. Sensitivity analyses (R§6; D20, D21, D24)
 - **Without Qwen3.5-9B** (three models) and **27B models alone** (two models): `confirmatory.subset_estimate` for each
   contrast. The registration asks whether the **conclusion** (rejection, equivalence or neither) changes.
-  - **Decision needed (B).** Which test gives the "conclusion": (a) the primary's procedure applied within the subset
-    (Holm across the two contrasts at 0.05, plus the TOST), or (b) an unadjusted two-sided test at 0.05 plus the TOST.
-    *Proposed: (a), so the comparison with the primary is like for like.*
+  - **Choice B (D63).** The primary's procedure within each subset: Holm across the two contrasts at 0.05, plus the
+    TOST, through `confirmatory.decide`. Each subset's decision is set beside the primary's.
 - **Within-family size contrasts** (D21a): per cluster `d_j = effect(27B, j) − effect(9B, j)` for Gemma and for Qwen,
   with the confirmatory model.
-  - **Decision needed (C).** D21a says "the difference between the two models' per-model estimates". Per-cluster
-    pairing on the shared clusters is the same point estimate and a correct interval. The block label for a cluster
-    is then the pair of the two models' starts, as in the primary. *Proposed: per-cluster differences.*
+  - **Choice C (D63).** Per-cluster differences with the confirmatory model. D21a says "the difference between the two
+    models' per-model estimates"; pairing on the shared clusters gives the same point estimate and a correct interval.
+    The block label for a cluster is the pair of the two models' starts, as in the primary.
 - **Comprehension moderator** (D21b): a table of the five models' per-model estimates beside each model's W3 held-out
   comprehension (the mean and the minimum of its three accuracies, and its fragility type;
   `gates/S3/results/heldout_summary.json`). No tests, no slopes.
@@ -73,9 +75,8 @@ same windows as the confirmatory outcome (pulse at t0 = 5 sweeps, D = 3 sweeps o
 - **Propagation:** the pool is every agent at graph distance ≥ 2 from every recipient of that branch (not a recipient
   and not a recipient's neighbour), as in `analysis/pulse_design.py` (`prop = ~closed`). Its share voting the pulse
   direction, pulsed minus unpulsed, mean of the two branches.
-  - **Decision needed (D).** Over which steps: (a) the D + W sweeps from pulse onset, as `pulse_design.py` averaged
-    it, or (b) the W sweeps after restoration, as persistence. *Proposed: (a), the registered simulation's definition;
-    (b) reported beside it.*
+  - **Choice D (D63).** Over the D + W sweeps from pulse onset, as `pulse_design.py` averaged it, with the W window
+    after restoration reported beside it.
   - "Never exposed": only recipients ever see altered displays, so the pool is never exposed by construction. Its size
     per branch is reported.
 - **Self/social decomposition** (D26; on the 33 self-reset clusters): social = the recipients' share voting the pulse
@@ -86,51 +87,86 @@ same windows as the confirmatory outcome (pulse at t0 = 5 sweeps, D = 3 sweeps o
     re-estimated from this study's own live updates (item 8), simulate from each self-reset cluster's state at
     restoration in two ways: with the full kernel, and with the contact terms off (every agent responds as on the blind
     board) after restoration. Report the simulated social part and compare it with the measured one, by model.
-  - **Decision needed (E).** The registration does not say how the simulated recipients' "contact terms off" is
-    implemented. *Proposed: recipients and everyone else use the blind-board kernel cell for their type and own vote
-    after restoration; the simulated social part is the full-kernel persistence minus the contacts-off persistence.
-    Reported as a model-based check only, by model, with the bootstrap spread over runs.*
+  - **Choice E (D63).** After restoration every agent (recipients and the rest) uses the blind-board kernel cell for
+    its type and own vote. The simulated social part is the full-kernel persistence minus the contacts-off persistence,
+    each against the unpulsed restoration state on the same random stream. It is a model-based check only, reported by
+    model with the per-cluster values. Kernels: this study's live and blind main-run cells (item 8). A cell never seen
+    takes the mean of its type and own-vote cells. 200 simulation runs per self-reset cluster (an implementation
+    setting, not fixed by D63).
 
 ## 6. Decision-noise secondary regime T = 1 (R§6; D23)
 - **The T1 arm** (16 drawn clusters): both contrasts per model with the same model, and the paired difference
   T1 − primary on those clusters.
-  - **Decision needed (F).** The registration lists only the three "pre-registered reports" below under this heading.
-    *Proposed: report the T1 arm's per-model estimates and the paired T1 − primary differences as descriptive
-    secondary results, with no conclusion attached.*
+  - **Choice F (D63).** The T1 arm's per-model estimates and the paired T1 − primary differences are descriptive
+    secondary results, with no conclusion attached. **For each T = 1 estimate, whether its sign matches the primary's**:
+    the model's 61-cluster primary estimate (the reference, as in A), with the same-cluster primary beside it.
 - **Calibration's generalisation:** each model's probability of following a lone 9/10 report, against Bayes 0.90,
   from this study's own informed first calls (blind, evidence-only, at the primary T). The 3/5 source is not in the
   confirmatory evidence (sources 3/4 and 9/10 only), so the 3/5 figure is reported from development
-  (`analysis/results/t_checks.json`), marked as such. Also the 3/4 figure against 0.75 as the anchor's check.
+  (`analysis/results/t_checks.json`), marked as such. Also the 3/4 figure against 0.75 as the anchor's check. Reported
+  two ways: the mean probability over calls, and σ(mean reference logit / T), development's form (`t_checks.py`),
+  with the range over stories.
 - **Llama as the weakly social agent:** the contact response measured on this study's live uninformed calls: the
   change in P(vote A) from 0 to 4 displayed contacts showing A, averaged over own vote, for every model (the
   development figure was 0.20 for Llama, 0.59–0.77 for the others).
 - **Gemma-3-27B at T ≈ 10.4:** checks G1 (contact gradient), G2 (saturation) and G6 (conflict), recomputed on this
-  study's live calls exactly as `T_CALIBRATION_CHECKS.md` defines them. G3–G5 and G7 need the S4 probe design and are
-  reported from development only.
+  study's primary-arm main-run calls as `analysis/t_checks.py` computed them on the S4 probes:
+  - G1 on uninformed live calls; flagged unless strictly increasing for both own votes.
+  - G2 on every live and blind call, as the share with |ℓ|/T > ln 99.
+  - G6 on informed live calls whose report is shown by at most one of the four contacts.
+  - Gemma-3-27B is compared with the other four models, Llama included.
+  - G3–G5 and G7 need the S4 probe design and are reported from development only.
 
 ## 7. Initial-vote rule (ii) arm (R§6; D25)
 On the 12 rule-(ii) clusters, per model: the live support trajectory under rule (ii) minus rule (i) (the primary arm on
 the same cluster), at every sweep 0–30; the same for the blind board (expected to agree within about 0.003 by two
 updates per agent); and the board effect under rule (ii) with its paired difference from rule (i).
-- **Decision needed (G).** "Especially in the early rounds": *proposed: the mean live difference over sweeps 1–5
-  (before the pulse time) as the summary, with the full trajectory shown.*
+- **Choice G (D63).** "Especially in the early rounds": the mean live difference over sweeps 1–5 (before the pulse
+  time) as the summary, estimated with the confirmatory model, with the full trajectory shown.
 
-## 8. Kernel consistency (R§6; the kickoff brief)
+## 8. Kernel consistency (R§6; the kickoff brief; choice H as amended, D63)
 The brief: "Kernels re-estimated from live-run updates within each condition (blind, live, during and after pulses),
 on configuration cells with a pre-specified minimum count, must match the battery kernel within the restart-drift
 bound. A mismatch means a harness or serving problem."
 - **Cells:** as the S9 kernel tables: agent type (uninformed; informed 3/4; informed 9/10) × own vote agrees with the
   reference (report's option for informed agents; own vote for uninformed) × displayed contacts showing the reference
-  (0–4; none on the blind board). The cell value is the mean exact readout probability σ(ℓ_ref / T).
-- **Conditions:** blind main runs; live main runs; pulsed branches while the pulse is on (the displayed contacts as
-  recorded); pulsed branches after restoration.
-- **Battery:** the S4 W3 live probes and the S5 W3 blind probes, at the model's T (the battery used to fit the
-  development kernels in `analysis/pulse_design.py`).
-- **Decision needed (H).** The minimum count and the bound were never fixed. *Proposed: minimum 30 calls per cell;
-  bound = 2 × the S4 between-start standard deviation in vote probability at the cell's battery value, i.e.
-  2 · p(1 − p) · √(var_start_offset + var_probe_x_start) / T from `gates/S4/results/s4_variance_components.json`.
-  A cell outside the bound is listed as a mismatch; the report gives the count of cells checked and of mismatches per
-  model and condition. No outcome depends on it.*
+  (0–4; none on the blind board). The cell value is the mean exact readout probability σ(ℓ_ref / T) over its calls.
+- **Conditions** (primary arm, the same confirmatory stories):
+  - blind main runs;
+  - live main runs;
+  - pulsed branches while the pulse is on (the displayed contacts as recorded);
+  - pulsed branches after restoration;
+  - the informed agents' first calls, which use the W3 blind-board prompt with the placeholder as own vote
+    (`s10_core.initial_state`). These give the blind board a comparison within the study.
+- **Main check, within this study (D63).** The conditions' kernels are compared with each other on the cells they
+  share:
+  - blind vs first calls (informed cells);
+  - live vs pulse-on;
+  - live vs post-restoration;
+  - pulse-on vs post-restoration.
+
+  A cell is checked when it has at least **30 calls on each side**. Bound:
+  **2 · √(s_drift² + SE_a² + SE_b²)**, where:
+  - s_drift is the S4 between-start SD in probability, p(1 − p) · √(var_start_offset + var_probe_x_start) / T, from
+    `gates/S4/results/s4_variance_components.json`, at p = the mean of the two cell values;
+  - SE is each cell's standard error across contexts.
+
+  A cell outside the bound is a mismatch. The report gives the cells checked and the mismatches per model and
+  comparison, with every cell's values.
+- **Secondary: the battery comparison (D63).** Each condition is compared with the development battery at the model's
+  T, with the same bound formula: the drift SD combined with the S10 cell's SE and the battery cell's SE.
+  - Live conditions are compared with the S4 W3 live probes. These are start-averaged over all six starts, the
+    battery used to fit the development kernels in `analysis/pulse_design.py`.
+  - Blind conditions are compared with the S5 W3 blind probes (one start).
+  - A battery context's value is the mean over its layouts. A battery cell needs at least 2 contexts for an SE (an
+    implementation setting).
+  - A mismatch here reads **"harness or story dependence"**, since the battery used development stories.
+- **Readings the code takes of D63 (for the check):**
+  - "Combined" is taken as root-sum-of-squares inside the factor 2.
+  - A context on the S10 side is one call: every call's prompt is distinct. Calls within a run are not independent,
+    so these SEs are on the small side, and the bound with them.
+  - Missing calls are left out.
+  - No outcome depends on this check.
 
 ## 9. Final-sweep board effect and trajectories (R§6)
 - The board effect at the final sweep (30), live minus blind (`confirmatory.outcomes` "board_final"), pooled and per
@@ -155,14 +191,23 @@ balance per start. (These come from the integrity checks already run; repeated i
 
 ---
 
-## Decisions needed from the owner before unblinding
-| | item | proposed |
+## Decisions (owner, D63, made blind before unblinding)
+| | item | decided |
 |---|---|---|
-| A | W3 comparator for wording consistency | the model's 61-cluster W3 estimate; same-cluster W3 beside it |
-| B | "conclusion" in the subset sensitivity analyses | the primary's procedure within the subset (Holm + TOST) |
+| A | W3 comparator for wording consistency | the model's 61-cluster W3 estimate; the same-cluster paired comparison reported prominently beside it |
+| B | "conclusion" in the subset sensitivity analyses | the primary's procedure within each subset (Holm + TOST) |
 | C | size contrasts | per-cluster differences with the confirmatory model |
 | D | propagation window | D + W sweeps from onset (as `pulse_design.py`); W window beside it |
-| E | "contact terms off" in the cross-check | blind-board kernel cells after restoration; model-based check only |
-| F | T1 arm | per-model estimates and paired T1 − primary differences, descriptive |
+| E | "contact terms off" in the cross-check | blind-board kernel cells for all agents after restoration; model-based check only |
+| F | T1 arm | per-model estimates and paired T1 − primary differences, descriptive; for each T = 1 estimate, whether its sign matches the primary's |
 | G | "early rounds" in the rule (ii) comparison | mean live difference over sweeps 1–5; full trajectory shown |
-| H | kernel consistency | ≥ 30 calls per cell; bound 2 × S4 between-start SD in probability |
+| H | kernel consistency | amended: main check within this study across conditions (bound 2 × S4 between-start SD in probability combined with each cell's SE; ≥ 30 calls per cell); secondary the battery comparison (drift SD and both sides' SEs), a mismatch read as harness or story dependence |
+
+## Implementation notes (not design choices)
+- An estimate needs at least 3 clusters. With fewer, it is reported as absent.
+- When every value in a set is equal, the frozen REML fit is undefined. The value is then reported with no interval,
+  marked "degenerate", and is not fitted.
+- Every record's identity is checked against the protocol before use: model, cluster, arm, T, wording, initial
+  wording, rule, run key, parameters, not a mock, and one server start per scheduled block. A full run also requires
+  exactly the scheduled clusters of every arm.
+- Usage, and the tests, are in the module's docstring and `tests/test_secondary_analysis.py`.
