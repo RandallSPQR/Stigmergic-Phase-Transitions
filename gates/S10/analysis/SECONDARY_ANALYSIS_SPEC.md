@@ -4,8 +4,18 @@
 anyone. The owner decided choices A–H blind, before unblinding (D63; A–G as proposed, F with a sign statement added, H
 amended); this map states them as decided. The code (`gates/S10/analysis/secondary.py`) is developed and tested on
 **mock records and synthetic data only** (`tests/test_secondary_analysis.py`). Its loader refuses real records unless
-the coordination record holds an owner decision whose title begins **"S10 unblinding authorised"**. A row that only
-mentions unblinding, such as D62 or D63, does not count. This map is the reference the code is checked against.
+the coordination record (a git clone) holds, **committed and in its "Accepted" table**, an owner decision whose bold
+title is exactly **"S10 unblinding authorised"**. A row that only mentions unblinding (such as D62 or D63), a
+qualified title, a proposed row or an uncommitted edit does not count. The output records the decision row and the
+record's commit. This map is the reference the code is checked against.
+
+**Review.** An independent blind review (mock and synthetic data only) found 8 defects and 5 omissions in the first
+version; all are fixed here. The corrections that touch a D63 choice are:
+- E's starting state;
+- H's standard error;
+- the model check's observed statistic and its pooling.
+
+They are marked "(review)" below.
 
 **Sources.** Registration `osf/PREREGISTRATION.md` §5, §6, §8 (cited "R§"); `analysis/PULSE_SETTINGS.md` (D26);
 `analysis/SECONDARY_INFORMED_SPLIT.md` (D19); `analysis/PROMPT_SENSITIVITY.md` (D20, D21);
@@ -88,11 +98,17 @@ same windows as the confirmatory outcome (pulse at t0 = 5 sweeps, D = 3 sweeps o
     restoration in two ways: with the full kernel, and with the contact terms off (every agent responds as on the blind
     board) after restoration. Report the simulated social part and compare it with the measured one, by model.
   - **Choice E (D63).** After restoration every agent (recipients and the rest) uses the blind-board kernel cell for
-    its type and own vote. The simulated social part is the full-kernel persistence minus the contacts-off persistence,
-    each against the unpulsed restoration state on the same random stream. It is a model-based check only, reported by
-    model with the per-cluster values. Kernels: this study's live and blind main-run cells (item 8). A cell never seen
-    takes the mean of its type and own-vote cells. 200 simulation runs per self-reset cluster (an implementation
-    setting, not fixed by D63).
+    its type and own vote.
+    - Both simulations start from the **pulsed branch's state at restoration, with no reset** (review: the first
+      version started from the self-reset state, which already isolates the social part).
+    - Full-kernel persistence = pulsed − unpulsed with contacts. Contacts-off persistence ("self") = the same with
+      contacts off. Each is taken against the unpulsed state at the same step, on the same random stream.
+    - Simulated social = full − self, compared with the measured social part, by model and per cluster.
+    - Beside it: the kernel analogue of the self-reset branch (recipients reset, full kernel, minus unpulsed).
+    - Kernels: this study's live and blind main-run cells (item 8). A cell never seen takes the mean of its type and
+      own-vote cells.
+    - 200 simulation runs per self-reset cluster (an implementation setting, not fixed by D63).
+    - It is a model-based check only.
 
 ## 6. Decision-noise secondary regime T = 1 (R§6; D23)
 - **The T1 arm** (16 drawn clusters): both contrasts per model with the same model, and the paired difference
@@ -149,7 +165,13 @@ bound. A mismatch means a harness or serving problem."
   **2 · √(s_drift² + SE_a² + SE_b²)**, where:
   - s_drift is the S4 between-start SD in probability, p(1 − p) · √(var_start_offset + var_probe_x_start) / T, from
     `gates/S4/results/s4_variance_components.json`, at p = the mean of the two cell values;
-  - SE is each cell's standard error across contexts.
+  - SE is each cell's standard error across contexts. **Reading (review): group-robust (cluster-robust) across
+    clusters**, SE² = G/(G − 1) · Σ_g (n_g (ȳ_g − ȳ))² / n², with the cell value still the mean over its calls.
+    - Why not a per-call SE: identical prompts recur. The mock had 36,000 blind calls and 400 distinct prompts. Each
+      first call repeats a blind-board prompt, and pulsed-branch calls mostly repeat the live run's call at the same
+      step. A per-call SE flagged mismatches on a perfect mock harness: Gemma-2 10 of 79 cells, Qwen3.5-9B 3 of 79.
+    - With the group-robust SE: 0 of 79 for both; Llama 2 of 67, about what a 2-SD bound gives by chance.
+    - A cell needs calls from at least 5 clusters on each side (an implementation setting).
 
   A cell outside the bound is a mismatch. The report gives the cells checked and the mismatches per model and
   comparison, with every cell's values.
@@ -163,17 +185,24 @@ bound. A mismatch means a harness or serving problem."
   - A mismatch here reads **"harness or story dependence"**, since the battery used development stories.
 - **Readings the code takes of D63 (for the check):**
   - "Combined" is taken as root-sum-of-squares inside the factor 2.
-  - A context on the S10 side is one call: every call's prompt is distinct. Calls within a run are not independent,
-    so these SEs are on the small side, and the bound with them.
+  - "Across contexts" is taken as group-robust across clusters on the S10 side, and across contexts (one value each)
+    on the battery side.
   - Missing calls are left out.
   - No outcome depends on this check.
+- **What it can and cannot see** (mock negative controls, `tests/test_secondary_analysis.py`):
+  - A response fault confined to one condition is flagged in every checked cell: 0.3 nats toward the reference
+    while the pulse is on gave 25 of 25 cells for both models tested; clean data gave 0.
+  - A fault that favours one fixed content option (A) mostly widens the cells' spread and moves their means little,
+    because cells are defined relative to the reference. A 0.5-nat shift was flagged in 1–2 of 25 cells; a 1-nat
+    shift in 3–4.
+  - Letter bias is balanced out of the cells. It is reported by item 11's letter balance per start instead.
 
 ## 9. Final-sweep board effect and trajectories (R§6)
 - The board effect at the final sweep (30), live minus blind (`confirmatory.outcomes` "board_final"), pooled and per
   model.
 - Support trajectories: per model, the mean over clusters of live and blind support at each sweep 0–30, with 95%
   intervals across clusters; and the recipients' share voting the pulse direction, pulsed and unpulsed, at each sweep
-  from t0 to t0 + D + W. Figures and tables only.
+  from t0 (the onset share, common to both) to t0 + D + W. Figures and tables only.
 
 ## 10. The model check (R§8)
 Against the sealed predictions (`gates/S10/sealed/s10_predictions.json.gz.b64`, opened at the freeze; its sha256 is
@@ -181,13 +210,21 @@ checked first):
 - whether each observed pooled estimate (both contrasts) lies inside its 90% predictive interval;
 - the share of per-model estimates inside their 90% intervals (five models × two contrasts);
 - per-cluster calibration: the share of (model, cluster) values inside their per-cluster 90% intervals, and the slope
-  of observed on predicted per-cluster means (ordinary least squares, by model and pooled);
+  of observed on predicted per-cluster means (ordinary least squares), by model and pooled over the **four
+  confirmatory models only** (review: Llama is never pooled, D24);
 - the predictive intervals' widths.
+
+**Observed statistic (review).** The sealed predictions are of each simulated study's arithmetic mean over the 61
+clusters (`gates/S10/predictions.py`): per model, the mean over clusters; pooled, the mean of the four confirmatory
+models' means. The observed value compared with them is the same arithmetic mean. The confirmatory model's θ
+(REML, block-weighted) is reported beside it.
 A gap is reported as a model discrepancy, not a test of either hypothesis (R§8).
 
 ## 11. Execution descriptives (R§5 "Missing data")
-Missing calls by condition (initial, live, blind, pulsed, self-reset) and model; non-A/B mass summaries; letter
-balance per start. (These come from the integrity checks already run; repeated in the secondary report.)
+Missing calls by condition (initial, live, blind, pulsed, self-reset) and model; non-A/B mass (mean, 99th percentile,
+max) by condition; letter balance per server start (share of main-run calls showing content A as letter A); and the
+code that produced the records (commit, payload, cluster manifest, pins, from each record's manifest), by model.
+(The integrity checks already cover these; they are repeated in the secondary report.)
 
 ---
 
@@ -205,9 +242,12 @@ balance per start. (These come from the integrity checks already run; repeated i
 
 ## Implementation notes (not design choices)
 - An estimate needs at least 3 clusters. With fewer, it is reported as absent.
-- When every value in a set is equal, the frozen REML fit is undefined. The value is then reported with no interval,
-  marked "degenerate", and is not fitted.
+- Some sets have no variation, or so little that the frozen REML fit fails (for example one nonzero value in
+  singleton blocks). Such a set is reported with no interval, marked "degenerate", and is not fitted.
 - Every record's identity is checked against the protocol before use: model, cluster, arm, T, wording, initial
-  wording, rule, run key, parameters, not a mock, and one server start per scheduled block. A full run also requires
-  exactly the scheduled clusters of every arm.
+  wording, rule, run key, parameters, not a mock, and the file name.
+- Each scheduled block must run in one server start, and each start serves one block.
+- A full run requires every scheduled (model, arm) pair and exactly its scheduled clusters. A model whose secondary
+  folder is left out is refused.
+- An identical copy of a record in two listed folders is accepted; differing copies are refused.
 - Usage, and the tests, are in the module's docstring and `tests/test_secondary_analysis.py`.

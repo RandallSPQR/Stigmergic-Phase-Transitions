@@ -4,9 +4,11 @@ only: no S10 record is read. CPU only.
 Three groups: (1) the loader refuses real records without the owner's unblinding decision; (2) record-level quantities
 on mock records satisfy identities against confirmatory.outcomes and the frozen layout; (3) the estimators recover
 planted values in synthetic tables."""
+import copy
 import gzip
 import json
 import math
+import subprocess
 import sys
 from collections import deque
 from pathlib import Path
@@ -46,12 +48,19 @@ def table(recs):
 
 # ---------------------------------------------------------------- (1) blinding
 OWNER_ROW = "| D99 | 2026-11-12 | StPT | **S10 unblinding authorised** (owner). Text. | owner |"
+HEAD = "| # | date | scope | decision | by |\n|---|---|---|---|---|\n"
 
 
-def _coord(tmp_path, rows):
-    d = tmp_path / "coord"
+def _coord(tmp_path, rows, proposed=(), commit=True, name="coord"):
+    d = tmp_path / name
     d.mkdir()
-    (d / "DECISIONS.md").write_text("| # | date | scope | decision | by |\n|---|---|---|---|---|\n" + "\n".join(rows) + "\n")
+    (d / "DECISIONS.md").write_text("# Decisions\n\n## Accepted\n" + HEAD + "\n".join(rows) + "\n\n## Proposed\n" + HEAD
+                                    + "\n".join(proposed) + "\n")
+    if commit:
+        g = ["git", "-C", str(d), "-c", "user.name=t", "-c", "user.email=t@t"]
+        subprocess.run(["git", "init", "-q", str(d)], check=True)
+        subprocess.run(g + ["add", "DECISIONS.md"], check=True)
+        subprocess.run(g + ["commit", "-q", "-m", "t"], check=True)
     return d
 
 
@@ -69,6 +78,7 @@ def _run_dir(tmp_path, rec, name):
     (["| D63 | 2026-11-11 | StPT | **Secondary-analysis decisions, made blind before unblinding** (owner). | owner |"], "D63"),
     (["| D99 | 2026-11-12 | StPT | **S10 unblinding authorised** (owner). | Claude |"], "D99"),
     (["| D98 | 2026-11-12 | StPT | Text that says S10 unblinding authorised, not as the title. | owner |"], "D98"),
+    (["| D99 | 2026-11-12 | StPT | **S10 unblinding authorised once the review is closed** (pending). | owner |"], "D99"),
     ([OWNER_ROW], "D98"),
 ])
 def test_loader_refuses_without_the_owners_unblinding_decision(tmp_path, recs, rows, decision):
@@ -76,6 +86,19 @@ def test_loader_refuses_without_the_owners_unblinding_decision(tmp_path, recs, r
     run = _run_dir(tmp_path, recs[(m, j, a)], f"rec_c{j}__{a}.json.gz")
     with pytest.raises(S.Refused):
         S.load_records({m: [str(run)]}, _coord(tmp_path, rows), decision)
+
+
+def test_guard_refuses_proposed_uncommitted_and_unversioned(tmp_path, recs):
+    with pytest.raises(S.Refused):                                         # in the Proposed table
+        S.require_unblinding(_coord(tmp_path, [], proposed=[OWNER_ROW], name="c1"), "D99")
+    with pytest.raises(S.Refused):                                         # not a git clone
+        S.require_unblinding(_coord(tmp_path, [OWNER_ROW], commit=False, name="c2"), "D99")
+    d = _coord(tmp_path, [], name="c3")                                    # committed without, edited locally to add it
+    (d / "DECISIONS.md").write_text((d / "DECISIONS.md").read_text().replace("## Proposed", OWNER_ROW + "\n\n## Proposed"))
+    with pytest.raises(S.Refused):
+        S.require_unblinding(d, "D99")
+    ok = S.require_unblinding(_coord(tmp_path, [OWNER_ROW.replace("| owner |", "| owner, StPT session |")], name="c4"), "D99")
+    assert ok["row"].startswith("| D99 |") and len(ok["coordination_commit"]) == 40
 
 
 def test_the_real_coordination_record_does_not_unblind():
@@ -95,8 +118,18 @@ def test_loader_reads_with_the_decision_and_checks_names(tmp_path, recs):
     run = _run_dir(tmp_path, recs[(m, j, a)], f"rec_c{j}__wording-w5.json.gz")
     got = S.load_records({m: [str(run)]}, coord, "D99")
     assert list(got) == [(m, j, a)] and got[(m, j, a)]["live"] == recs[(m, j, a)]["live"]
-    (run / m / f"rec_c{j}__wording-w5.json.gz").rename(run / m / f"rec_c{j}__T1.json.gz")
-    with pytest.raises(S.Refused):
+    assert list(S.load_records({m: [str(run), str(run)]}, coord, "D99")) == [(m, j, a)]     # identical copy: accepted
+    other = tmp_path / "other"
+    (other / m).mkdir(parents=True)
+    changed = dict(recs[(m, j, a)], seconds=-1.0)
+    (other / m / f"rec_c{j}__wording-w5.json.gz").write_bytes(gzip.compress(json.dumps({"model": m, "result": changed}).encode()))
+    with pytest.raises(S.Refused):                                                     # a different copy: refused
+        S.load_records({m: [str(run), str(other)]}, coord, "D99")
+    (run / m / f"rec_c{j}__wording-w5.json.gz").rename(run / m / f"rec_c{j + 1}__wording-w5.json.gz")
+    with pytest.raises(S.Refused):                                                     # cluster in the name differs
+        S.load_records({m: [str(run)]}, coord, "D99")
+    (run / m / f"rec_c{j + 1}__wording-w5.json.gz").rename(run / m / f"rec_c{j}__T1.json.gz")
+    with pytest.raises(S.Refused):                                                     # arm in the name differs
         S.load_records({m: [str(run)]}, coord, "D99")
 
 
@@ -155,14 +188,20 @@ def test_branch_quantities(recs, table):
         assert abs(np.mean([b["immediate"] for b in o["branches"]]) - o["immediate"]) < 1e-12
         for b, p in zip(o["branches"], r["pulses"]):
             assert b["pool"] == N - len(set(p["recipients"]) | {x for i in p["recipients"] for x in F[k[1]]["adj"][i]})
-            assert 0 <= b["exposure"] <= 1 and len(b["traj_pulsed"]) == D_W()
+            assert 0 <= b["exposure"] <= 1 and len(b["traj_pulsed"]) == D_W() + 1
+            assert b["traj_pulsed"][0] == b["traj_unpulsed"][0]                         # onset share, before the pulse
         if r.get("self_reset"):
             n_sr += 1
             b = o["branches"][r["self_reset"]["pulse_index"]]
             assert abs(o["social"] + o["self"] - b["itt"]) < 1e-12
             st = o["self_reset_state"]
-            for i in st["recipients"]:                     # recipients restored to their votes at pulse onset
-                assert st["restoration_votes"][i] == r["pulses"][r["self_reset"]["pulse_index"]]["votes_at_pulse"][i]
+            p = r["pulses"][r["self_reset"]["pulse_index"]]
+            for i in st["recipients"]:                     # reset state: recipients back to their votes at pulse onset
+                assert st["reset_votes"][i] == p["votes_at_pulse"][i]
+            vt0 = CA.replay(r["initial_votes"], r["live"][:CA.PRM["t0"] * N])[0]
+            assert st["pulsed_restoration_votes"] == CA.replay(vt0, p["rows"][:CA.PRM["D"] * N])[0]
+            assert [st["reset_votes"][i] for i in range(N) if i not in st["recipients"]] == \
+                [st["pulsed_restoration_votes"][i] for i in range(N) if i not in st["recipients"]]
         else:
             assert "social" not in o
     assert n_sr > 0
@@ -234,7 +273,8 @@ def test_kernel_cells(recs):
             for p in r["pulses"]:
                 n_rows["pulse_on"] += CA.PRM["D"] * N; n_rows["post_restoration"] += CA.PRM["W"] * N
     for c, n in n_rows.items():
-        assert sum(len(v) for v in K[c].values()) == n
+        assert sum(len(x) for v in K[c].values() for x in v.values()) == n
+        assert all(set(v) <= set(J) for v in K[c].values())                  # grouped by cluster
     assert all(cell[2] is None for c in ("blind", "init") for cell in K[c])
     assert all(cell[2] in range(5) for c in ("live", "pulse_on", "post_restoration") for cell in K[c])
     assert {cell[0] for cell in K["init"]} <= {"3/4", "9/10"}
@@ -245,7 +285,43 @@ def test_kernel_cells(recs):
     row = r["live"][0]
     cell, ref = S._cell(info, row[1], row[2], row[3], True)
     p = S._sig((row[5] if ref == "A" else -row[5]) / r["T"])
-    assert ref == (info["fav"][row[1]] or row[2]) and cell[2] == row[3].count(ref) and p in K["live"][cell]
+    assert ref == (info["fav"][row[1]] or row[2]) and cell[2] == row[3].count(ref) and p in K["live"][cell][1]
+
+
+def test_kernel_check_detects_a_planted_harness_fault(recs):
+    """Negative control. The mock kernel is one function of the prompt in every condition, so the within-study check
+    should pass; shifting every call's logit 0.3 nats toward the cell's reference option while the pulse is on (a
+    response fault confined to one condition) must be detected."""
+    m = "gemma-2-9b-it"
+    sub = {k: r for k, r in recs.items() if k[0] == m}
+    opts = dict(S.OPTIONS, H_min_clusters=3)
+    clean = S.kernel_consistency(sub, F, opts, battery=False)[m]["within_study"]
+    assert sum(v["mismatches"] for v in clean.values()) == 0 and clean["live_vs_pulse_on"]["cells_checked"] > 10
+    bad = copy.deepcopy(sub)
+    for (_, j, _), r in bad.items():
+        info = S.cluster_info(F[j])
+        for p in r.get("pulses") or []:
+            for row in p["rows"][:CA.PRM["D"] * N]:
+                ref = info["fav"][row[1]] or row[2]
+                row[5] += 0.3 * r["T"] * (1 if ref == "A" else -1)
+    faulty = S.kernel_consistency(bad, F, opts, battery=False)[m]["within_study"]
+    n = faulty["live_vs_pulse_on"]["cells_checked"]
+    assert faulty["live_vs_pulse_on"]["mismatches"] == n and faulty["pulse_on_vs_post_restoration"]["mismatches"] == n
+    assert faulty["live_vs_post_restoration"]["mismatches"] == 0 and faulty["blind_vs_init"]["mismatches"] == 0
+
+
+def test_cross_check_is_zero_when_contacts_do_not_matter(recs, table, monkeypatch):
+    """Choice E: if the live kernel ignores the contacts and equals the blind one, full and contacts-off runs coincide
+    on the same random stream, so the simulated social part is exactly 0; the self-reset analogue need not be."""
+    def flat(records, F_, model):
+        return {"live": {(t, a, k): 0.3 + 0.4 * a for t in ("none", "3/4", "9/10") for a in (0, 1) for k in range(5)},
+                "blind": {(t, a, None): 0.3 + 0.4 * a for t in ("none", "3/4", "9/10") for a in (0, 1)}}
+    monkeypatch.setattr(S, "_kernel_tables", flat)
+    sub = {k: v for k, v in table.items() if k[0] == "qwen3.5-9b"}
+    out = S.self_social_crosscheck(sub, recs, F, dict(S.OPTIONS, E_sim_reps=3))["qwen3.5-9b"]
+    assert out["n_clusters"] >= 3
+    assert all(r["simulated_social"] == 0.0 for r in out["per_cluster"])
+    assert any(r["simulated_self_reset_branch"] != 0.0 for r in out["per_cluster"])
 
 
 def test_run_all_end_to_end(recs):
@@ -269,7 +345,20 @@ def test_run_all_end_to_end(recs):
         assert set(res["rule_ii"][m]["early_sweeps"]) == {1, 5}
     assert res["wording"]["n_models_with_variants"] == 5
     assert res["persistence"]["propagation_primary_window"] == "propagation_onset"
+    ex = res["execution"]["gemma-2-9b-it"]
+    assert ex["mass"]["live"]["n"] == ex["calls"]["live"] and ex["missing"]["live"] == 0
+    assert sum(v["calls"] for v in ex["letter_balance_by_start"].values()) == ex["calls"]["live"] + ex["calls"]["blind"]
+    assert all(0.3 < v["share_a_as_a"] < 0.7 for v in ex["letter_balance_by_start"].values())
+    assert "transmission_minus_override" in res["informed_split"]["per_model"]
     json.dumps(res, default=lambda x: x.item())
+
+
+def test_full_run_needs_every_scheduled_arm(recs):
+    with pytest.raises(S.Refused):
+        S.run_all(recs, F, full=True)                                         # 10 of 61 clusters
+    with pytest.raises(S.Refused):                                             # a model's secondary arms all absent
+        S.run_all({k: v for k, v in recs.items() if not (k[0] == "qwen3.5-9b" and k[2] != "primary")}, F, full=True)
+    assert set(S.expected_arms(F)) >= {(k[0], k[2]) for k in recs}
 
 
 # ---------------------------------------------------------------- (3) estimators on synthetic tables
@@ -363,12 +452,11 @@ def test_rule_ii_early_difference():
 
 def test_compare_cells_bound():
     rng = np.random.default_rng(3)
-    A = {("none", 1, 2): list(rng.normal(0.6, 0.05, 400)), ("3/4", 0, 1): list(rng.normal(0.4, 0.05, 400)),
-         ("9/10", 1, 4): list(rng.normal(0.9, 0.01, 20))}
-    B = {("none", 1, 2): list(rng.normal(0.6, 0.05, 400)), ("3/4", 0, 1): list(rng.normal(0.47, 0.05, 400)),
-         ("9/10", 1, 4): list(rng.normal(0.5, 0.01, 400))}
+    g = lambda mu, sd, n, G=20: {c: list(rng.normal(mu, sd, n // G)) for c in range(G)}
+    A = {("none", 1, 2): g(0.6, 0.05, 400), ("3/4", 0, 1): g(0.4, 0.05, 400), ("9/10", 1, 4): g(0.9, 0.01, 20, 4)}
+    B = {("none", 1, 2): g(0.6, 0.05, 400), ("3/4", 0, 1): g(0.47, 0.05, 400), ("9/10", 1, 4): g(0.5, 0.01, 400)}
     m = "gemma-2-9b-it"                                    # zero between-start drift: the bound is the SEs alone
-    r = S.compare_cells(m, A, B, 30, 30, 2.0)
+    r = S.compare_cells(m, A, B, (30, 5), (30, 5), 2.0)
     assert r["cells_checked"] == 2 and r["mismatches"] == 1                 # the 20-call cell is not checked
     row = {tuple(c["cell"]): c for c in r["cells"]}
     assert row[("none", 1, 2)]["within"] and not row[("3/4", 0, 1)]["within"]
@@ -376,7 +464,7 @@ def test_compare_cells_bound():
     assert abs(c["bound"] - 2 * math.sqrt(c["drift_sd"] ** 2 + c["se_a"] ** 2 + c["se_b"] ** 2)) < 1e-15
     m2 = max(CA.ALL_MODELS, key=lambda x: S.drift_sd_prob(x, 0.5))          # a model with between-start drift
     assert S.drift_sd_prob(m2, 0.5) > 0
-    r2 = S.compare_cells(m2, A, B, 30, 30, 2.0)
+    r2 = S.compare_cells(m2, A, B, (30, 5), (30, 5), 2.0)
     assert all(c["bound"] > row[tuple(c["cell"])]["bound"] for c in r2["cells"])
 
 
@@ -391,10 +479,26 @@ def test_battery_cells_shape():
     b = S.battery_cells("qwen3.5-9b")
     assert all(cell[2] is None for cell in b["blind"]) and all(cell[2] in range(5) for cell in b["live"])
     assert {cell[0] for cell in b["blind"]} == {"none", "3/5", "3/4", "9/10"}
-    assert sum(len(v) for v in b["blind"].values()) == 84            # S5 contexts (all blind, all W3)
+    assert sum(len(v) for v in b["blind"].values()) == 84            # S5 contexts (all blind, all W3), one group each
     s4 = json.loads((ROOT / "gates/S4/probes/s4_contexts.json").read_text())
     assert sum(len(v) for v in b["live"].values()) == sum(1 for c in s4 if c["live"])
-    assert all(0 < x < 1 for v in b["live"].values() for x in v)
+    assert all(len(x) == 1 and 0 < x[0] < 1 for v in b["live"].values() for x in v.values())
+
+
+def test_cluster_robust_se():
+    one = {c: [0.5 + 0.01 * c] for c in range(10)}                 # one value per group: SD / sqrt(G)
+    mu, se, n, G = S._stats(one)
+    v = [0.5 + 0.01 * c for c in range(10)]
+    assert abs(se - np.std(v, ddof=1) / math.sqrt(10)) < 1e-15 and n == G == 10
+    dup = {c: [0.5 + 0.01 * c] * 50 for c in range(10)}            # the same values repeated: the SE does not shrink
+    assert abs(S._stats(dup)[1] - se) < 1e-12
+
+
+def test_estimate_survives_a_near_degenerate_set():
+    vals = {j: (0.05 if j == 12 else 0.0) for j in range(1, 13)}
+    labels = {j: ("a" if j <= 4 else "b" if j <= 8 else f"s{j}") for j in vals}
+    e = S.estimate(vals, labels)
+    assert e["theta"] is not None and (e.get("degenerate") or e["se"] > 0)
 
 
 def test_model_check_with_synthetic_predictions():
@@ -409,12 +513,17 @@ def test_model_check_with_synthetic_predictions():
         P["per_cluster_p05_p95"][m] = {k: [[0.01 * j - 0.02 for j in clusters], [0.01 * j + 0.02 for j in clusters]]
                                        for k in S.CONTRASTS}
         for j in clusters:
-            t[(m, j, "primary")] = {"board": 0.01 * j + (0.05 if j > 5 else 0.0), "persistence": 0.01 * j}
-    obs = {m: {"board": 0.05, "persistence": 0.2} for m in CA.ALL_MODELS}
-    r = S.model_check(t, P, {"board": 0.05, "persistence": 0.2}, obs)
-    assert r["pooled"]["board"]["inside_90"] and not r["pooled"]["persistence"]["inside_90"]
-    assert r["share_per_model_inside_90"] == 0.5
+            off = 1.0 if m == "llama-3.1-8b-it" else 0.0                  # Llama far off: never pooled
+            t[(m, j, "primary")] = {"board": 0.01 * j + (0.05 if j > 5 else 0.0) + off, "persistence": 0.01 * j + 0.2}
+    r = S.model_check(t, P, {"board": 0.07, "persistence": 0.25})
+    # observed = arithmetic mean over clusters (as the predictions); board 0.08 inside, persistence 0.255 outside
+    assert abs(r["pooled"]["board"]["observed_mean"] - 0.08) < 1e-12 and r["pooled"]["board"]["inside_90"]
+    assert not r["pooled"]["persistence"]["inside_90"] and r["pooled"]["board"]["theta_confirmatory_model"] == 0.07
+    assert r["per_model"]["llama-3.1-8b-it"]["board"]["inside_90"] is False
+    assert r["share_per_model_inside_90"] == 0.4                          # four board values of ten
     pc = r["per_cluster"]["gemma-2-9b-it"]
     assert abs(pc["persistence"]["slope_obs_on_pred"] - 1) < 1e-9 and pc["board"]["slope_obs_on_pred"] > 1
-    assert pc["persistence"]["share_inside_90"] == 1.0 and pc["board"]["share_inside_90"] == 0.5
-    assert r["per_cluster"]["all_models"]["board"]["share_inside_90"] == 0.5
+    assert pc["persistence"]["share_inside_90"] == 0.0 and pc["board"]["share_inside_90"] == 0.5
+    pooled = r["per_cluster"]["confirmatory_models_pooled"]["board"]
+    assert pooled["share_inside_90"] == 0.5 and pooled["n"] == 40           # four models, Llama left out
+    assert "all_models" not in r["per_cluster"]

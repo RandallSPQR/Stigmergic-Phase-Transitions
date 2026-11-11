@@ -56,6 +56,7 @@ OPTIONS = {                     # SECONDARY_ANALYSIS_SPEC.md, choices A-H as the
     "G_early_sweeps": (1, 5),               # G: mean live difference over sweeps 1-5
     "H_min_count": 30,                      # H: minimum calls per cell (each side of a within-study comparison)
     "H_bound_sd": 2.0,                      # H: 2 x sqrt(drift SD^2 + both cells' SE^2)
+    "H_min_clusters": 5,                    # H: a cell's group-robust SE needs calls from >= 5 clusters (not fixed by D63)
     "H_min_battery_contexts": 2,            # H secondary: a battery cell needs 2 contexts for an SE (not fixed by D63)
 }
 SUBSETS = {"without_qwen3.5-9b": ["gemma-2-9b-it", "gemma-3-27b-it", "qwen3.5-27b"],
@@ -66,21 +67,41 @@ ACC_P = {"3/5": 0.6, "3/4": 0.75, "9/10": 0.9}
 
 
 # ---------------------------------------------------------------- blinding guard and loading
-UNBLIND_TITLE = "**S10 unblinding authorised"
+UNBLIND_TITLE = "**S10 unblinding authorised**"
 
 
-def require_unblinding(coord: Path, decision: str) -> str:
-    """The coordination record must hold the owner's decision `decision` whose bold title begins
-    "S10 unblinding authorised" (written only on the owner's explicit OK). A row that merely mentions unblinding
-    (such as D62 or D63) does not count."""
-    txt = (Path(coord) / "DECISIONS.md").read_text()
-    row = next((l for l in txt.splitlines() if l.startswith(f"| {decision} |")), None)
+def _git(coord, *args):
+    import subprocess
+    r = subprocess.run(["git", "-C", str(coord), *args], capture_output=True, text=True)
+    if r.returncode != 0:
+        raise Refused(f"coordination record: git {' '.join(args)} failed: {r.stderr.strip()[:200]}")
+    return r.stdout
+
+
+def require_unblinding(coord: Path, decision: str) -> dict:
+    """The coordination record (a git clone) must hold, committed and in its "## Accepted" table, the owner's decision
+    `decision` whose bold title is exactly "S10 unblinding authorised" (written only on the owner's explicit OK). A row
+    that merely mentions unblinding (such as D62 or D63), a qualified title, an uncommitted edit, or a row outside the
+    accepted decisions does not count. Returns the row and the record's commit."""
+    coord = Path(coord)
+    if _git(coord, "status", "--porcelain", "--", "DECISIONS.md").strip():
+        raise Refused("coordination record: DECISIONS.md has uncommitted changes")
+    txt = _git(coord, "show", "HEAD:DECISIONS.md")
+    section, row = None, None
+    for line in txt.splitlines():
+        if line.startswith("## "):
+            section = line[3:].strip()
+        elif line.startswith(f"| {decision} |"):
+            row = (section, line)
+            break
     if row is None:
         raise Refused(f"no decision {decision} in the coordination record")
-    cells = [c.strip() for c in row.strip().strip("|").split("|")]
-    if len(cells) < 5 or not cells[3].startswith(UNBLIND_TITLE) or cells[-1] != "owner":
+    cells = [c.strip() for c in row[1].strip().strip("|").split("|")]
+    if row[0] != "Accepted":
+        raise Refused(f"decision {decision} is not in the accepted decisions")
+    if len(cells) < 5 or not cells[3].startswith(UNBLIND_TITLE + " ") or not cells[-1].startswith("owner"):
         raise Refused(f"decision {decision} is not the owner's S10 unblinding decision")
-    return row
+    return {"row": row[1], "coordination_commit": _git(coord, "rev-parse", "HEAD").strip()}
 
 
 def _arm_of(name: str) -> str:
@@ -91,19 +112,21 @@ def _arm_of(name: str) -> str:
 def load_records(runs: dict, coord: Path, decision: str) -> dict:
     """{(model, cluster, arm): result} from the final run folders of each model's stages. Refuses unless unblinded."""
     require_unblinding(coord, decision)
-    out = {}
+    out, seen = {}, {}
     for model, dirs in runs.items():
         for d in dirs:
             for p in sorted((Path(d) / model).glob("rec_c*__*.json.gz")):
                 rec = json.loads(gzip.decompress(p.read_bytes()))
                 r = rec["result"]
                 key = (model, int(r["cluster"]), r["arm"])
-                if key[2] != _arm_of(p.name) or r["model"] != model:
+                if (key[2] != _arm_of(p.name) or r["model"] != model or rec.get("model", model) != model
+                        or p.name != f"rec_c{key[1]}__{key[2].replace(':', '-')}.json.gz"):
                     raise Refused(f"{p}: holds model {r['model']}, cluster {r['cluster']}, arm {r['arm']}")
-                if key in out and json.dumps(out[key], sort_keys=True) != json.dumps(r, sort_keys=True):
+                raw = json.dumps(r, sort_keys=True)
+                if key in seen and seen[key] != raw:
                     raise Refused(f"{key}: two different records")
+                seen[key] = raw
                 r = dict(r)
-                r["server_start_ids"] = r.get("server_start_ids") or {}
                 r["_manifest"] = rec.get("manifest") or {}
                 out[key] = r
     return out
@@ -175,6 +198,12 @@ def record_outcomes(res, F) -> dict:
                     "blind": sum(r[7] for r in res["blind"]),
                     "pulsed": sum(r[7] for p in res.get("pulses") or [] for r in p["rows"]),
                     "self_reset": sum(r[7] for r in (res.get("self_reset") or {}).get("rows") or [])}
+    o["mass"] = {"init": [r[6] for r in res["init"] if r[6] is not None],
+                 "live": [r[9] for r in res["live"] if r[9] is not None],
+                 "blind": [r[9] for r in res["blind"] if r[9] is not None],
+                 "pulsed": [r[9] for p in res.get("pulses") or [] for r in p["rows"] if r[9] is not None],
+                 "self_reset": [r[9] for r in (res.get("self_reset") or {}).get("rows") or [] if r[9] is not None]}
+    o["a_as_a"] = sum(r[8] for r in res["live"]) + sum(r[8] for r in res["blind"])
     o["calls"] = {"init": sum(r[3] for r in res["init"]), "live": len(res["live"]), "blind": len(res["blind"]),
                   "pulsed": sum(len(p["rows"]) for p in res.get("pulses") or []),
                   "self_reset": len((res.get("self_reset") or {}).get("rows") or [])}
@@ -199,8 +228,9 @@ def record_outcomes(res, F) -> dict:
                        "end": float(diff[-1]), "prop_onset": float(pdiff.mean()),
                        "prop_window": float(pdiff[D * N:].mean()), "pool": len(pool),
                        "exposure": sum(i in upd for i in R) / len(R),
-                       "traj_pulsed": [float(x) for x in np.array(sp)[N - 1::N]],
-                       "traj_unpulsed": [float(x) for x in np.array(su)[N - 1::N]], "_su": su})
+                       "traj_pulsed": [_share(vt0, R, d)] + [float(x) for x in np.array(sp)[N - 1::N]],
+                       "traj_unpulsed": [_share(vt0, R, d)] + [float(x) for x in np.array(su)[N - 1::N]],
+                       "_su": su})
         if abs(float(np.mean([b["itt"] for b in br])) - o["persistence"]) > 1e-12:
             raise AssertionError("ITT persistence differs from confirmatory.outcomes")
         o["end_of_window"] = float(np.mean([b["end"] for b in br]))
@@ -218,7 +248,9 @@ def record_outcomes(res, F) -> dict:
             _, _, ss = CA.replay(vr, sr["rows"], watch=p["recipients"], direction=p["direction"])
             social = float((np.array(ss) - np.array(b["_su"][D * N:])).mean())
             o["social"], o["self"] = social, b["itt"] - social
-            o["self_reset_state"] = {"restoration_votes": vr, "recipients": p["recipients"], "direction": p["direction"],
+            o["self_reset_state"] = {"recipients": p["recipients"], "direction": p["direction"],
+                                     "pulsed_restoration_votes": CA.replay(vt0, p["rows"][:D * N])[0],
+                                     "reset_votes": vr,
                                      "unpulsed_restoration_votes": CA.replay(vt0, unp[:D * N])[0]}
         for x in br:
             x.pop("_su")
@@ -251,6 +283,9 @@ def check_arm(table, model, arm, F, full=True) -> list:
         by_block[F[j]["start_block"]].add(o["server_start"])
     if any(len(v) != 1 for v in by_block.values()):
         raise Refused(f"{model} {arm}: a scheduled block ran in more than one server start")
+    starts = [next(iter(v)) for v in by_block.values()]
+    if len(set(starts)) != len(starts):
+        raise Refused(f"{model} {arm}: one server start ran more than one scheduled block")
     return have
 
 
@@ -267,7 +302,7 @@ def estimate(values: dict, labels: dict):
                 "tost_equivalent": None, "n_clusters": len(y), "degenerate": "every value equal; no fit"}
     try:
         out = CA.infer(y, [labels[j] for j in js])
-    except np.linalg.LinAlgError as e:
+    except (np.linalg.LinAlgError, ValueError, FloatingPointError, ZeroDivisionError) as e:
         return {"theta": float(np.mean(y)), "se": None, "df": None, "ci95": None, "ci90": None, "p_two_sided": None,
                 "tost_equivalent": None, "n_clusters": len(y), "degenerate": f"REML fit failed: {e}"}
     out = {k: (list(v) if isinstance(v, tuple) else v) for k, v in out.items()}
@@ -420,6 +455,8 @@ def informed_split(table):
         if a == "primary":
             o["board_transmission_minus_override"] = o["board_uninformed"] - o["board_informed"]
     out["pooled"]["transmission_minus_override"] = _summ(pooled(table, CONF, "board_transmission_minus_override"))
+    out["per_model"]["transmission_minus_override"] = {m: _summ(per_model(table, m, "board_transmission_minus_override"))
+                                                       for m in ALL}
     return out
 
 
@@ -432,8 +469,13 @@ def persistence_secondaries(table, F, records=None, opts=OPTIONS):
            "propagation_primary_window": prop}
     out["exposure"] = {m: float(np.mean([o["exposure"] for (mm, j, a), o in table.items() if mm == m and a == "primary"]))
                        for m in ALL if any(mm == m for (mm, _, _) in table)}
-    out["pool_size"] = {m: float(np.mean([x for (mm, j, a), o in table.items() if mm == m and a == "primary"
-                                          for x in o["propagation_pool"]])) for m in ALL if any(mm == m for (mm, _, _) in table)}
+    out["pool_size"] = {}
+    for m in ALL:
+        xs = [x for (mm, j, a), o in table.items() if mm == m and a == "primary" for x in o.get("propagation_pool", [])]
+        if xs:
+            out["pool_size"][m] = {"mean": float(np.mean(xs)), "min": int(min(xs)), "max": int(max(xs)), "n_branches": len(xs),
+                                   "per_branch": {f"c{j}b{i}": x for (mm, j, a), o in sorted(table.items())
+                                                  if mm == m and a == "primary" for i, x in enumerate(o.get("propagation_pool", []))}}
     if records is not None:
         out["self_social_simulation"] = self_social_crosscheck(table, records, F, opts)
     return out
@@ -494,6 +536,7 @@ def calibration_generalisation(records, F):
     out = {}
     for m in ALL:
         by_acc, by_story, lref = defaultdict(list), defaultdict(lambda: defaultdict(list)), defaultdict(list)
+        by_story_l = defaultdict(lambda: defaultdict(list))
         for (mm, j, a), r in records.items():
             if mm != m or a != "primary":
                 continue
@@ -503,10 +546,13 @@ def calibration_generalisation(records, F):
                     continue
                 p = _sig((lA if info["fav"][agent] == "A" else -lA) / r["T"])
                 lref[info["acc"][agent]].append((lA if info["fav"][agent] == "A" else -lA) / r["T"])
+                by_story_l[info["acc"][agent]][info["story"]].append(lref[info["acc"][agent]][-1])
                 by_acc[info["acc"][agent]].append(p)
                 by_story[info["acc"][agent]][info["story"]].append(p)
         res = {acc: {"mean": float(np.mean(v)), "bayes": ACC_P[acc], "signed_miss": float(np.mean(v)) - ACC_P[acc],
                      "p_at_mean_logit": _sig(float(np.mean(lref[acc]))),       # development's form: sigma(mean R / T)
+                     "per_story_range_at_mean_logit": [min(_sig(float(np.mean(x))) for x in by_story_l[acc].values()),
+                                                       max(_sig(float(np.mean(x))) for x in by_story_l[acc].values())],
                      "n": len(v), "per_story_range": [float(min(np.mean(x) for x in by_story[acc].values())),
                                                       float(max(np.mean(x) for x in by_story[acc].values()))],
                      "source": "S10 confirmatory first calls"}
@@ -610,11 +656,11 @@ def _cell(info, agent, own, shown, live):
 
 
 def kernel_cells(records, F, model, conditions=CONDITIONS):
-    """{condition: {cell: [P(vote the reference) at T, one per call]}} from the model's primary-arm calls.
+    """{condition: {cell: {cluster: [P(vote the reference) at T, one per call]}}} from the model's primary-arm calls.
     blind / live: the main runs; pulse_on / post_restoration: the pulsed branches during the D pulse sweeps (displayed
     contacts as recorded) and in the W sweeps after restoration; init: the informed agents' first calls (the W3 blind
     board prompt, own vote = placeholder; s10_core.initial_state). Missing calls are left out."""
-    out = {c: defaultdict(list) for c in conditions}
+    out = {c: defaultdict(lambda: defaultdict(list)) for c in conditions}
     for (m, j, a), r in records.items():
         if m != model or a != "primary":
             continue
@@ -629,12 +675,12 @@ def kernel_cells(records, F, model, conditions=CONDITIONS):
                 if row[7]:
                     continue
                 cell, ref = _cell(info, row[1], row[2], row[3], live)
-                out[cond][cell].append(_sig((row[5] if ref == "A" else -row[5]) / T))
+                out[cond][cell][j].append(_sig((row[5] if ref == "A" else -row[5]) / T))
         if "init" in out:
             for agent, ph, _vote, call, lA, miss, _mass in r["init"]:
                 if call and not miss:
                     cell, ref = _cell(info, agent, ph, "", False)
-                    out["init"][cell].append(_sig((lA if ref == "A" else -lA) / T))
+                    out["init"][cell][j].append(_sig((lA if ref == "A" else -lA) / T))
     return out
 
 
@@ -645,14 +691,14 @@ def battery_cells(model):
     sys.path.insert(0, str(ROOT / "gates/S4"))
     import analyse_s4 as A4
     T = CA.primary_T(model)
-    out = {"live": defaultdict(list), "blind": defaultdict(list)}
+    out = {"live": defaultdict(dict), "blind": defaultdict(dict)}         # {cell: {context: [value]}}
 
     def add(kind, c, vals):
         ref = c["report_favours"] if c["informed"] else c["own_vote"]
         typ = c["report_accuracy"] if c["informed"] else "none"
         mref = (c["contacts_A"] if ref == "A" else 4 - c["contacts_A"]) if kind == "live" else None
-        out[kind][(typ, int(c["own_vote"] == ref), mref)].append(
-            float(np.mean([_sig((lA if ref == "A" else -lA) / T) for lA in vals])))
+        out[kind][(typ, int(c["own_vote"] == ref), mref)][c["context_id"]] = [
+            float(np.mean([_sig((lA if ref == "A" else -lA) / T) for lA in vals]))]
 
     probes, runs = A4.load([ROOT / "gates/S4/artifacts/20261102T1535Z", ROOT / "gates/S4/artifacts/20261102T1535Zb"])
     ctx = {c["context_id"]: c for c in json.loads((ROOT / "gates/S4/probes/s4_contexts.json").read_text())}
@@ -687,26 +733,34 @@ def drift_sd_prob(model, p):
     return p * (1 - p) * sd_nats / CA.primary_T(model)
 
 
-def _stats(v):
-    n = len(v)
-    return float(np.mean(v)), (float(np.std(v, ddof=1)) / math.sqrt(n) if n > 1 else None), n
+def _stats(groups):
+    """groups: {group: [values]}. The mean over all values and its group-robust (cluster-robust) standard error:
+    SE^2 = G / (G - 1) * sum_g (n_g (mean_g - mean))^2 / n^2. Groups are clusters on the S10 side (identical prompts
+    recur within a cluster, and calls in a run are dependent) and contexts on the battery side (one value each, where
+    the formula reduces to SD / sqrt(G))."""
+    vals = [x for v in groups.values() for x in v]
+    n, G = len(vals), len(groups)
+    mu = float(np.mean(vals))
+    if G < 2:
+        return mu, None, n, G
+    ss = sum((len(v) * (float(np.mean(v)) - mu)) ** 2 for v in groups.values())
+    return mu, math.sqrt(G / (G - 1) * ss) / n, n, G
 
 
 def compare_cells(model, A, B, min_a, min_b, k):
-    """Cells present in both with enough values; bound = k * sqrt(drift_sd(p)^2 + se_A^2 + se_B^2), p = the mean of the
-    two cell values (choice H, D63: the S4 between-start SD in probability combined with each cell's SE across
-    contexts)."""
+    """A, B: {cell: {group: [values]}}; min_a, min_b: (minimum values, minimum groups). Cells present in both with
+    enough values and groups; bound = k * sqrt(drift_sd(p)^2 + se_A^2 + se_B^2), p = the mean of the two cell values
+    (choice H, D63: the S4 between-start SD in probability combined with each cell's SE across contexts)."""
     rows = []
     for cell in sorted(set(A) & set(B), key=str):
-        if len(A[cell]) < min_a or len(B[cell]) < min_b:
-            continue
-        (ma, sa, na), (mb, sb, nb) = _stats(A[cell]), _stats(B[cell])
-        if sa is None or sb is None:
+        (ma, sa, na, ga), (mb, sb, nb, gb) = _stats(A[cell]), _stats(B[cell])
+        if na < min_a[0] or ga < min_a[1] or nb < min_b[0] or gb < min_b[1] or sa is None or sb is None:
             continue
         drift = drift_sd_prob(model, (ma + mb) / 2)
         bound = k * math.sqrt(drift ** 2 + sa ** 2 + sb ** 2)
-        rows.append({"cell": list(cell), "a": ma, "se_a": sa, "n_a": na, "b": mb, "se_b": sb, "n_b": nb,
-                     "difference": ma - mb, "drift_sd": drift, "bound": bound, "within": bool(abs(ma - mb) <= bound)})
+        rows.append({"cell": list(cell), "a": ma, "se_a": sa, "n_a": na, "groups_a": ga, "b": mb, "se_b": sb, "n_b": nb,
+                     "groups_b": gb, "difference": ma - mb, "drift_sd": drift, "bound": bound,
+                     "within": bool(abs(ma - mb) <= bound)})
     return {"cells_checked": len(rows), "mismatches": sum(not r["within"] for r in rows), "cells": rows}
 
 
@@ -716,18 +770,19 @@ def kernel_consistency(records, F, opts=OPTIONS, battery=True):
     post-restoration), each cell with >= H_min_count calls on both sides. Secondary: each condition against the
     development battery (live conditions vs S4 W3 live probes; blind conditions vs S5 W3 blind probes); a mismatch
     there reads "harness or story dependence" (the battery used development stories)."""
-    k, nmin = opts["H_bound_sd"], opts["H_min_count"]
+    k = opts["H_bound_sd"]
+    nmin = (opts["H_min_count"], opts["H_min_clusters"])
     out = {}
     for m in ALL:
         if not any(mm == m and a == "primary" for (mm, _, a) in records):
             continue
         K = kernel_cells(records, F, m)
-        res = {"counts": {c: {str(cell): len(v) for cell, v in K[c].items()} for c in CONDITIONS},
+        res = {"counts": {c: {str(cell): sum(len(x) for x in v.values()) for cell, v in K[c].items()} for c in CONDITIONS},
                "within_study": {f"{a}_vs_{b}": compare_cells(m, K[a], K[b], nmin, nmin, k) for a, b in WITHIN_PAIRS}}
         res["within_study_mismatches"] = sum(v["mismatches"] for v in res["within_study"].values())
         if battery:
             bat = battery_cells(m)
-            res["battery"] = {c: compare_cells(m, K[c], bat[BATTERY_FOR[c]], nmin, opts["H_min_battery_contexts"], k)
+            res["battery"] = {c: compare_cells(m, K[c], bat[BATTERY_FOR[c]], nmin, (1, opts["H_min_battery_contexts"]), k)
                               for c in CONDITIONS}
             res["battery_mismatches"] = sum(v["mismatches"] for v in res["battery"].values())
             res["battery_mismatch_reading"] = "harness or story dependence"
@@ -738,7 +793,7 @@ def kernel_consistency(records, F, opts=OPTIONS, battery=True):
 def _kernel_tables(records, F, model):
     """Live and blind kernel tables (mean P(vote reference) by cell) from the model's live and blind main runs."""
     cells = kernel_cells(records, F, model, conditions=("live", "blind"))
-    return {c: {cell: float(np.mean(v)) for cell, v in cells[c].items()} for c in cells}
+    return {c: {cell: _stats(v)[0] for cell, v in cells[c].items()} for c in cells}
 
 
 def _p_ref(K, info, i, own, nb_votes, live):
@@ -765,34 +820,42 @@ def _simulate(K, info, votes, steps, rng, live_after, watch, direction):
 
 
 def self_social_crosscheck(table, records, F, opts=OPTIONS):
-    """Item 5 cross-check: from each self-reset cluster's restoration state, simulate W sweeps with the full live
-    kernel and with the contact terms off (choice E: blind-board cells); simulated social = full - off, each against
-    the unpulsed restoration state with the same random stream."""
+    """Item 5 cross-check (D26; choice E, D63). From each self-reset cluster's pulsed-branch state at restoration (no
+    reset), simulate the W sweeps after restoration with this study's live kernel (full) and with the contact terms off
+    (every agent on its blind-board cell); each against the unpulsed state at the same step, on the same random
+    stream. Simulated persistence: full = pulsed - unpulsed with contacts; self = the same with contacts off;
+    simulated social = full - self, compared with the measured social part. Beside it, the direct kernel analogue of
+    the self-reset branch (recipients reset to their onset votes, full kernel, minus the unpulsed run). Model-based
+    check only."""
     out = {}
     for m in ALL:
-        keys = [(mm, j, a) for (mm, j, a), o in table.items() if mm == m and a == "primary" and o.get("self_reset_state")]
+        keys = sorted((mm, j, a) for (mm, j, a), o in table.items() if mm == m and a == "primary" and o.get("self_reset_state"))
         if not keys:
             continue
         K = _kernel_tables(records, F, m)
-        sims, meas = [], []
+        rows = []
         for k in keys:
-            o = table[k]
-            s = o["self_reset_state"]
+            o, s = table[k], table[k]["self_reset_state"]
             info = cluster_info(F[k[1]])
-            full, off = [], []
+            full, off, reset = [], [], []
             for rep in range(opts["E_sim_reps"]):
                 seed = int.from_bytes(hashlib.sha256(f"selfsocial-{m}-{k[1]}-{rep}".encode()).digest()[:8], "big")
-                args = (W * N, s["recipients"], s["direction"])
-                fp = _simulate(K, info, s["restoration_votes"], args[0], np.random.default_rng(seed), True, args[1], args[2])
-                fu = _simulate(K, info, s["unpulsed_restoration_votes"], args[0], np.random.default_rng(seed), True, args[1], args[2])
-                op = _simulate(K, info, s["restoration_votes"], args[0], np.random.default_rng(seed), False, args[1], args[2])
-                ou = _simulate(K, info, s["unpulsed_restoration_votes"], args[0], np.random.default_rng(seed), False, args[1], args[2])
-                full.append(fp - fu); off.append(op - ou)
-            sims.append(float(np.mean(full) - np.mean(off)))
-            meas.append(o["social"])
-        out[m] = {"n_clusters": len(keys), "simulated_social_mean": float(np.mean(sims)),
-                  "measured_social_mean": float(np.mean(meas)),
-                  "per_cluster": [{"cluster": k[1], "simulated": a, "measured": b} for k, a, b in zip(keys, sims, meas)]}
+
+                def sim(votes, contacts):
+                    return _simulate(K, info, votes, W * N, np.random.default_rng(seed), contacts, s["recipients"],
+                                     s["direction"])
+                fu, ou = sim(s["unpulsed_restoration_votes"], True), sim(s["unpulsed_restoration_votes"], False)
+                full.append(sim(s["pulsed_restoration_votes"], True) - fu)
+                off.append(sim(s["pulsed_restoration_votes"], False) - ou)
+                reset.append(sim(s["reset_votes"], True) - fu)
+            rows.append({"cluster": k[1], "simulated_persistence": float(np.mean(full)),
+                         "simulated_self": float(np.mean(off)), "simulated_social": float(np.mean(full) - np.mean(off)),
+                         "simulated_self_reset_branch": float(np.mean(reset)), "measured_social": o["social"],
+                         "measured_self": o["self"]})
+        out[m] = {"n_clusters": len(keys), "reps_per_cluster": opts["E_sim_reps"],
+                  **{f"{x}_mean": float(np.mean([r[x] for r in rows])) for x in
+                     ("simulated_social", "simulated_self", "simulated_self_reset_branch", "measured_social", "measured_self")},
+                  "per_cluster": rows}
     return out
 
 
@@ -804,24 +867,36 @@ def load_predictions(coord: Path):
     return P
 
 
-def model_check(table, P, pooled_obs: dict, per_model_obs: dict):
-    """pooled_obs[contrast] = observed pooled estimate (the primary's theta); per_model_obs[m][contrast] = theta."""
-    out = {"pooled": {}, "per_model": {}, "per_cluster": {}, "widths": {}}
+def model_check(table, P, theta_pooled=None, theta_per_model=None):
+    """Item 10 (R§8). The sealed predictions are of the arithmetic mean over the 61 clusters of each simulated study
+    (gates/S10/predictions.py: per model the mean over clusters; pooled the mean of the four confirmatory models'
+    means), so the observed statistic compared with them is the same arithmetic mean; the confirmatory model's theta
+    (REML, block-weighted) is reported beside it. Per-cluster calibration by model, and pooled over the four
+    confirmatory models only (Llama is never pooled, D24)."""
+    out = {"pooled": {}, "per_model": {}, "per_cluster": {}}
+    cl = [c if isinstance(c, int) else c["cluster"] for c in P["clusters"]]
+
+    def amean(m, k):
+        v = [table[(m, j, "primary")][k] for j in cl if (m, j, "primary") in table]
+        return float(np.mean(v)) if len(v) == len(cl) else None
     for k in CONTRASTS:
         v = P["pooled_confirmatory"][k]
-        out["pooled"][k] = {"observed": pooled_obs[k], "p05": v["p05"], "p95": v["p95"],
-                            "inside_90": bool(v["p05"] <= pooled_obs[k] <= v["p95"]), "width_90": v["p95"] - v["p05"]}
+        ms = [amean(m, k) for m in CONF]
+        obs = None if None in ms else float(np.mean(ms))
+        out["pooled"][k] = {"observed_mean": obs, "theta_confirmatory_model": (theta_pooled or {}).get(k),
+                            "p05": v["p05"], "p95": v["p95"], "width_90": v["p95"] - v["p05"],
+                            "inside_90": None if obs is None else bool(v["p05"] <= obs <= v["p95"])}
     inside = []
     for m in ALL:
         for k in CONTRASTS:
             v = P["per_model"][m][k]
-            obs = per_model_obs[m][k]
-            ok = bool(v["p05"] <= obs <= v["p95"])
+            obs = amean(m, k)
+            ok = None if obs is None else bool(v["p05"] <= obs <= v["p95"])
             inside.append(ok)
-            out["per_model"].setdefault(m, {})[k] = {"observed": obs, "p05": v["p05"], "p95": v["p95"], "inside_90": ok,
-                                                     "width_90": v["p95"] - v["p05"]}
-    out["share_per_model_inside_90"] = float(np.mean(inside))
-    cl = [c if isinstance(c, int) else c["cluster"] for c in P["clusters"]]
+            out["per_model"].setdefault(m, {})[k] = {
+                "observed_mean": obs, "theta_confirmatory_model": ((theta_per_model or {}).get(m) or {}).get(k),
+                "p05": v["p05"], "p95": v["p95"], "inside_90": ok, "width_90": v["p95"] - v["p05"]}
+    out["share_per_model_inside_90"] = None if None in inside else float(np.mean(inside))
     for k in CONTRASTS:
         allin, xs_all, ys_all = [], [], []
         for m in ALL:
@@ -834,30 +909,66 @@ def model_check(table, P, pooled_obs: dict, per_model_obs: dict):
                     continue
                 xs.append(mean[idx]); ys.append(o[k]); ins.append(lo[idx] <= o[k] <= hi[idx])
             if len(xs) > 2:
-                slope = float(np.polyfit(xs, ys, 1)[0])
-                out["per_cluster"].setdefault(m, {})[k] = {"share_inside_90": float(np.mean(ins)), "slope_obs_on_pred": slope,
-                                                          "n": len(xs), "mean_width_90": float(np.mean(np.array(hi) - np.array(lo)))}
-                allin += ins; xs_all += xs; ys_all += ys
+                out["per_cluster"].setdefault(m, {})[k] = {
+                    "share_inside_90": float(np.mean(ins)), "slope_obs_on_pred": float(np.polyfit(xs, ys, 1)[0]),
+                    "n": len(xs), "mean_width_90": float(np.mean(np.array(hi) - np.array(lo)))}
+                if m in CONF:
+                    allin += ins; xs_all += xs; ys_all += ys
         if len(xs_all) > 2:
-            out["per_cluster"].setdefault("all_models", {})[k] = {"share_inside_90": float(np.mean(allin)),
-                                                                 "slope_obs_on_pred": float(np.polyfit(xs_all, ys_all, 1)[0])}
+            out["per_cluster"].setdefault("confirmatory_models_pooled", {})[k] = {
+                "share_inside_90": float(np.mean(allin)), "slope_obs_on_pred": float(np.polyfit(xs_all, ys_all, 1)[0]),
+                "n": len(xs_all)}
     return out
 
 
 # ---------------------------------------------------------------- item 11 and the full report
-def execution(table):
-    out = defaultdict(lambda: defaultdict(lambda: {"calls": 0, "missing": 0}))
-    for (m, j, a), o in table.items():
-        for cond in o["calls"]:
-            out[m][cond]["calls"] += o["calls"][cond]
-            out[m][cond]["missing"] += o["missing"][cond]
-    return {m: dict(v) for m, v in out.items()}
+def execution(table, records=None):
+    """Item 11: calls and missing calls by condition; non-A/B mass by condition (mean, 99th percentile, max); letter
+    balance per server start (share of main-run calls with content A shown as letter A); and the code that produced
+    the records (manifest: commit, payload, cluster manifest, pins), by model."""
+    out = {}
+    for m in ALL:
+        ks = [k for k in table if k[0] == m]
+        if not ks:
+            continue
+        r = {"calls": {}, "missing": {}, "mass": {}, "letter_balance_by_start": {}}
+        for cond in table[ks[0]]["calls"]:
+            r["calls"][cond] = sum(table[k]["calls"][cond] for k in ks)
+            r["missing"][cond] = sum(table[k]["missing"][cond] for k in ks)
+            xs = [x for k in ks for x in table[k]["mass"][cond]]
+            r["mass"][cond] = ({"mean": float(np.mean(xs)), "p99": float(np.quantile(xs, 0.99)), "max": float(max(xs)),
+                                "n": len(xs)} if xs else None)
+        by = defaultdict(lambda: [0, 0])
+        for k in ks:
+            by[table[k]["server_start"]][0] += table[k]["a_as_a"]
+            by[table[k]["server_start"]][1] += table[k]["calls"]["live"] + table[k]["calls"]["blind"]
+        r["letter_balance_by_start"] = {st: {"share_a_as_a": a / n, "calls": n} for st, (a, n) in sorted(by.items())}
+        if records is not None:
+            ver = defaultdict(int)
+            for k in ks:
+                man = records[k].get("_manifest") or {}
+                ver[json.dumps({x: man.get(x) for x in ("stpt_commit", "payload_sha256", "cluster_manifest_sha256", "pins")},
+                               sort_keys=True)] += 1
+            r["code_versions"] = [{"manifest": json.loads(v), "records": n} for v, n in sorted(ver.items())]
+        out[m] = r
+    return out
+
+
+def expected_arms(F):
+    """Every (model, arm) the protocol schedules on at least one frozen cluster."""
+    return sorted({(m, a) for m in ALL for c in F.values() for a in RC.arms_for(c, m)})
 
 
 def run_all(records, F, *, primary_result=None, predictions=None, full=True, opts=OPTIONS, simulate=True, battery=True):
-    """Every secondary item. primary_result: confirmatory.primary(...) output (for item 3's comparison and item 10)."""
+    """Every secondary item. primary_result: confirmatory.primary(...) output (for item 3's comparison and item 10).
+    full=True: every scheduled (model, arm, cluster) must be present, and nothing else."""
     table = outcome_table(records, F)
-    for (m, a) in sorted({(m, a) for (m, _, a) in table}):
+    have = {(m, a) for (m, _, a) in table}
+    if full:
+        exp = set(expected_arms(F))
+        if have != exp:
+            raise Refused(f"(model, arm) pairs missing: {sorted(exp - have)}; not scheduled: {sorted(have - exp)}")
+    for (m, a) in sorted(have):
         check_arm(table, m, a, F, full=full)
     pm = per_model_estimates(table)
     res = {"options": {k: list(v) if isinstance(v, tuple) else v for k, v in opts.items()},
@@ -875,11 +986,12 @@ def run_all(records, F, *, primary_result=None, predictions=None, full=True, opt
            "board_final": {"pooled": _summ(pooled(table, CONF, "board_final")),
                            "per_model": {m: _summ(per_model(table, m, "board_final")) for m in ALL}},
            "trajectories": trajectories(table),
-           "execution": execution(table)}
-    if predictions is not None and primary_result is not None:
-        res["model_check"] = model_check(table, predictions,
-                                         {k: primary_result[k]["conditional"]["theta"] for k in CONTRASTS},
-                                         {m: {k: pm[m][k]["theta"] for k in CONTRASTS} for m in ALL})
+           "execution": execution(table, records)}
+    if predictions is not None:
+        res["model_check"] = model_check(
+            table, predictions,
+            {k: primary_result[k]["conditional"]["theta"] for k in CONTRASTS} if primary_result else None,
+            {m: {k: (pm[m][k] or {}).get("theta") for k in CONTRASTS} for m in ALL})
     return res
 
 
@@ -890,6 +1002,7 @@ def main(argv=None):
     ap.add_argument("--runs", required=True)
     ap.add_argument("--out", required=True)
     a = ap.parse_args(argv)
+    gate = require_unblinding(Path(a.coord), a.decision)
     runs = json.loads(Path(a.runs).read_text())
     records = load_records(runs, Path(a.coord), a.decision)
     F = frozen_clusters()
@@ -900,8 +1013,9 @@ def main(argv=None):
     primary_result = CA.primary(prim_tab)
     res = run_all(records, F, primary_result=primary_result, predictions=load_predictions(Path(a.coord)))
     res["primary_conclusions_for_comparison"] = {k: primary_result[k]["decision"] for k in CONTRASTS}
-    res["unblinding_decision"] = a.decision
-    Path(a.out).write_text(json.dumps(res, indent=1, default=lambda x: x if not isinstance(x, np.generic) else x.item()))
+    res["unblinding"] = {"decision": a.decision, **gate}
+    res["runs"] = runs
+    Path(a.out).write_text(json.dumps(res, indent=1, default=lambda x: x.item() if isinstance(x, np.generic) else str(x)))
     print(f"written {a.out}")
 
 
