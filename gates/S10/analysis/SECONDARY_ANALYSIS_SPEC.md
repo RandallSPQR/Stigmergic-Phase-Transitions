@@ -6,8 +6,13 @@ amended); this map states them as decided. The code (`gates/S10/analysis/seconda
 **mock records and synthetic data only** (`tests/test_secondary_analysis.py`). Its loader refuses real records unless
 the coordination record (a git clone) holds, **committed and in its "Accepted" table**, an owner decision whose bold
 title is exactly **"S10 unblinding authorised"**. A row that only mentions unblinding (such as D62 or D63), a
-qualified title, a proposed row or an uncommitted edit does not count. The output records the decision row and the
-record's commit. This map is the reference the code is checked against.
+qualified title, a proposed row or an uncommitted edit does not count. **Tag check (owner, D64):** the row must
+name the tag of the reviewer-finalized code (tag `<name>`). The repository the analysis runs from must be:
+- checked out exactly at that tag's commit;
+- free of modified tracked files and of untracked Python files;
+- matched by the tag on `origin`, at the same commit (pushed, not only local).
+
+The output records the decision row, the record's commit, the tag and the code commit. This map is the reference the code is checked against.
 
 **Review.** An independent blind review (mock and synthetic data only) found 8 defects and 5 omissions in the first
 version; all are fixed here. The corrections that touch a D63 choice are:

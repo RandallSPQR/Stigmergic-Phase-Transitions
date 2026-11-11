@@ -12,7 +12,7 @@ the rule is yours to keep as well.
 |---|---|
 | `gates/S10/analysis/SECONDARY_ANALYSIS_SPEC.md` | the specification: items 1–11, the owner's choices A–H (D63), the readings the code takes, implementation notes |
 | `gates/S10/analysis/secondary.py` | the code under review |
-| `tests/test_secondary_analysis.py` | 37 tests: blinding guard, record-level identities on mock records, estimators on synthetic tables, negative controls |
+| `tests/test_secondary_analysis.py` | 38 tests: blinding guard, record-level identities on mock records, estimators on synthetic tables, negative controls |
 | `gates/S10/analysis/confirmatory.py` | the frozen confirmatory analysis it builds on (`outcomes`, `replay`, `infer`, `holm`, `decide`); not under review |
 | `gates/S10/s10_core.py` | record layout: `compact` rows, the init rows in `run_cluster`, pulses, self-reset |
 | `osf/PREREGISTRATION.md` §5, §6, §8 | what is registered |
@@ -51,8 +51,10 @@ To try any function on mock data, build records as `tests/test_secondary_analysi
    - the wording consistency rule;
    - T1 sign flags;
    - the model check's observed statistic.
-6. The unblinding guard (`require_unblinding`, `load_records`): can anything but a committed, accepted owner row titled
-   exactly "S10 unblinding authorised" unlock it?
+6. The unblinding guard (`require_unblinding`, `require_tagged_code`, `load_records`). Can anything unlock it but
+   both of these?
+   - a committed, accepted owner row titled exactly "S10 unblinding authorised" that names one tag;
+   - the code running exactly at that tag, unmodified, with the tag on `origin` at the same commit (D64)?
 
 ## Readings of D63 the code takes
 - **H, "each cell's standard error across contexts".** A group-robust SE across clusters, **confirmed by the owner

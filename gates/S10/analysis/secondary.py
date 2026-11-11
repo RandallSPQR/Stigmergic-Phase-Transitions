@@ -3,7 +3,8 @@
 Specification: gates/S10/analysis/SECONDARY_ANALYSIS_SPEC.md (items 1-11; choices A-H as the owner decided them blind,
 D63, in OPTIONS below). This module was developed and tested on mock records and synthetic data only
 (tests/test_secondary_analysis.py). Its loader (load_records) refuses real records unless the coordination record holds
-an owner decision whose title begins "S10 unblinding authorised" (UNBLIND_TITLE).
+an owner decision titled exactly "S10 unblinding authorised" (UNBLIND_TITLE) that names the tag of the reviewer-finalized
+code, and unless this module runs from that tag as pushed to origin (require_tagged_code; owner, D64).
 
 Every record passes confirmatory.verify_record (full recomputation; via confirmatory.outcomes) before any value is
 taken from it. Every estimate uses the confirmatory model (confirmatory.infer: server-start block random intercept,
@@ -24,6 +25,7 @@ import gzip
 import hashlib
 import json
 import math
+import re
 import sys
 from collections import defaultdict
 from pathlib import Path
@@ -70,19 +72,55 @@ ACC_P = {"3/5": 0.6, "3/4": 0.75, "9/10": 0.9}
 UNBLIND_TITLE = "**S10 unblinding authorised**"
 
 
-def _git(coord, *args):
+CODE_REPO = ROOT                 # the repository this module runs from (tests point it at a temporary repository)
+TAG_IN_ROW = re.compile(r"tag `([^`\s]+)`")
+
+
+def _git(coord, *args, what="coordination record"):
     import subprocess
     r = subprocess.run(["git", "-C", str(coord), *args], capture_output=True, text=True)
     if r.returncode != 0:
-        raise Refused(f"coordination record: git {' '.join(args)} failed: {r.stderr.strip()[:200]}")
+        raise Refused(f"{what}: git {' '.join(args)} failed: {r.stderr.strip()[:200]}")
     return r.stdout
+
+
+def require_tagged_code(tag: str, repo=None) -> dict:
+    """The owner's condition (D64): the analysis runs only from the reviewer-finalized code pushed under `tag`.
+    The repository this module runs from must be checked out exactly at the tag's commit, with no tracked file
+    modified and no untracked Python file, and the tag must exist on the remote `origin` at the same commit
+    (pushed, not only local). Returns the tag and commit."""
+    repo = Path(repo or CODE_REPO)
+
+    def g(*args):
+        return _git(repo, *args, what="analysis code")
+    head = g("rev-parse", "HEAD").strip()
+    try:
+        tagged = g("rev-parse", f"refs/tags/{tag}^{{commit}}").strip()
+    except Refused:
+        raise Refused(f"analysis code: no tag {tag} in {repo} (fetch the tags first)") from None
+    if head != tagged:
+        raise Refused(f"analysis code: checked out at {head[:7]}, not at tag {tag} ({tagged[:7]})")
+    if g("status", "--porcelain", "--untracked-files=no").strip():
+        raise Refused("analysis code: tracked files are modified")
+    if g("ls-files", "--others", "--exclude-standard", "--", "*.py").strip():
+        raise Refused("analysis code: untracked Python files are present")
+    remote = {}
+    for line in g("ls-remote", "--tags", "origin", f"refs/tags/{tag}", f"refs/tags/{tag}^{{}}").splitlines():
+        sha, ref = line.split("\t")
+        remote[ref] = sha
+    pushed = remote.get(f"refs/tags/{tag}^{{}}") or remote.get(f"refs/tags/{tag}")
+    if pushed != tagged:
+        raise Refused(f"analysis code: tag {tag} is not on origin at {tagged[:7]} (pushed: {(pushed or 'no')[:7]})")
+    return {"tag": tag, "code_commit": head}
 
 
 def require_unblinding(coord: Path, decision: str) -> dict:
     """The coordination record (a git clone) must hold, committed and in its "## Accepted" table, the owner's decision
     `decision` whose bold title is exactly "S10 unblinding authorised" (written only on the owner's explicit OK). A row
     that merely mentions unblinding (such as D62 or D63), a qualified title, an uncommitted edit, or a row outside the
-    accepted decisions does not count. Returns the row and the record's commit."""
+    accepted decisions does not count. The row must name the tag of the reviewer-finalized analysis code
+    (tag `<name>`), and this module must run from that tag as pushed (require_tagged_code; D64). Returns the row, the
+    record's commit, the tag and the code commit."""
     coord = Path(coord)
     if _git(coord, "status", "--porcelain", "--", "DECISIONS.md").strip():
         raise Refused("coordination record: DECISIONS.md has uncommitted changes")
@@ -101,7 +139,11 @@ def require_unblinding(coord: Path, decision: str) -> dict:
         raise Refused(f"decision {decision} is not in the accepted decisions")
     if len(cells) < 5 or not cells[3].startswith(UNBLIND_TITLE + " ") or not cells[-1].startswith("owner"):
         raise Refused(f"decision {decision} is not the owner's S10 unblinding decision")
-    return {"row": row[1], "coordination_commit": _git(coord, "rev-parse", "HEAD").strip()}
+    tags = set(TAG_IN_ROW.findall(cells[3]))
+    if len(tags) != 1:
+        raise Refused(f"decision {decision} must name exactly one tag of the analysis code (as: tag `<name>`)")
+    code = require_tagged_code(tags.pop())
+    return {"row": row[1], "coordination_commit": _git(coord, "rev-parse", "HEAD").strip(), **code}
 
 
 def _arm_of(name: str) -> str:

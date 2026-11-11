@@ -47,7 +47,8 @@ def table(recs):
 
 
 # ---------------------------------------------------------------- (1) blinding
-OWNER_ROW = "| D99 | 2026-11-12 | StPT | **S10 unblinding authorised** (owner). Text. | owner |"
+TAG = "stpt-secondary-v1"
+OWNER_ROW = f"| D99 | 2026-11-12 | StPT | **S10 unblinding authorised** (owner). Code at tag `{TAG}`. | owner |"
 HEAD = "| # | date | scope | decision | by |\n|---|---|---|---|---|\n"
 
 
@@ -62,6 +63,34 @@ def _coord(tmp_path, rows, proposed=(), commit=True, name="coord"):
         subprocess.run(g + ["add", "DECISIONS.md"], check=True)
         subprocess.run(g + ["commit", "-q", "-m", "t"], check=True)
     return d
+
+
+def _git(d, *args):
+    subprocess.run(["git", "-C", str(d), "-c", "user.name=t", "-c", "user.email=t@t", *args], check=True,
+                   capture_output=True)
+
+
+def _code_repo(tmp_path, tag=TAG, push=True, name="code"):
+    """A stand-in for the analysis repository: a clone of a local 'origin', one commit, an annotated tag."""
+    origin, work = tmp_path / f"{name}-origin.git", tmp_path / name
+    subprocess.run(["git", "init", "-q", "--bare", str(origin)], check=True)
+    subprocess.run(["git", "init", "-q", str(work)], check=True)
+    (work / "analysis.py").write_text("x = 1\n")
+    _git(work, "add", "analysis.py")
+    _git(work, "commit", "-q", "-m", "code")
+    _git(work, "remote", "add", "origin", str(origin))
+    _git(work, "push", "-q", "origin", "HEAD:refs/heads/main")
+    _git(work, "tag", "-a", tag, "-m", "reviewed")
+    if push:
+        _git(work, "push", "-q", "origin", f"refs/tags/{tag}")
+    return work
+
+
+@pytest.fixture
+def code_repo(tmp_path, monkeypatch):
+    w = _code_repo(tmp_path)
+    monkeypatch.setattr(S, "CODE_REPO", w)
+    return w
 
 
 def _run_dir(tmp_path, rec, name):
@@ -81,14 +110,14 @@ def _run_dir(tmp_path, rec, name):
     (["| D99 | 2026-11-12 | StPT | **S10 unblinding authorised once the review is closed** (pending). | owner |"], "D99"),
     ([OWNER_ROW], "D98"),
 ])
-def test_loader_refuses_without_the_owners_unblinding_decision(tmp_path, recs, rows, decision):
+def test_loader_refuses_without_the_owners_unblinding_decision(tmp_path, recs, code_repo, rows, decision):
     m, j, a = "gemma-2-9b-it", 1, "primary"
     run = _run_dir(tmp_path, recs[(m, j, a)], f"rec_c{j}__{a}.json.gz")
     with pytest.raises(S.Refused):
         S.load_records({m: [str(run)]}, _coord(tmp_path, rows), decision)
 
 
-def test_guard_refuses_proposed_uncommitted_and_unversioned(tmp_path, recs):
+def test_guard_refuses_proposed_uncommitted_and_unversioned(tmp_path, recs, code_repo):
     with pytest.raises(S.Refused):                                         # in the Proposed table
         S.require_unblinding(_coord(tmp_path, [], proposed=[OWNER_ROW], name="c1"), "D99")
     with pytest.raises(S.Refused):                                         # not a git clone
@@ -99,6 +128,44 @@ def test_guard_refuses_proposed_uncommitted_and_unversioned(tmp_path, recs):
         S.require_unblinding(d, "D99")
     ok = S.require_unblinding(_coord(tmp_path, [OWNER_ROW.replace("| owner |", "| owner, StPT session |")], name="c4"), "D99")
     assert ok["row"].startswith("| D99 |") and len(ok["coordination_commit"]) == 40
+    assert ok["tag"] == TAG and len(ok["code_commit"]) == 40
+
+
+def test_guard_requires_the_code_at_the_pushed_tag(tmp_path, monkeypatch):
+    """D64: no unblinding until the reviewer-finalized code is pushed under a tag, and the analysis runs from it."""
+    coord = _coord(tmp_path, [OWNER_ROW])
+    no_tag = _coord(tmp_path, [OWNER_ROW.replace(f"Code at tag `{TAG}`.", "Code reviewed.")], name="c-notag")
+    two = _coord(tmp_path, [OWNER_ROW.replace(f"`{TAG}`.", f"`{TAG}` or tag `other`.")], name="c-two")
+
+    def refused(repo, c=coord):
+        monkeypatch.setattr(S, "CODE_REPO", repo)
+        with pytest.raises(S.Refused):
+            S.require_unblinding(c, "D99")
+    good = _code_repo(tmp_path, name="good")
+    refused(good, no_tag)                                                   # the row names no tag
+    refused(good, two)                                                      # the row names two tags
+    refused(_code_repo(tmp_path, tag="stpt-secondary-v0", name="other-tag"))   # the named tag does not exist
+    refused(_code_repo(tmp_path, push=False, name="unpushed"))             # the tag exists only locally
+    later = _code_repo(tmp_path, name="later")                              # a commit after the tag is checked out
+    (later / "analysis.py").write_text("x = 2\n")
+    _git(later, "commit", "-q", "-am", "after review")
+    refused(later)
+    dirty = _code_repo(tmp_path, name="dirty")                              # a tracked file modified
+    (dirty / "analysis.py").write_text("x = 3\n")
+    refused(dirty)
+    extra = _code_repo(tmp_path, name="extra")                              # an untracked Python file (could shadow)
+    (extra / "confirmatory.py").write_text("")
+    refused(extra)
+    moved = _code_repo(tmp_path, name="moved")                              # origin's tag is on another commit
+    (moved / "analysis.py").write_text("x = 4\n")
+    _git(moved, "commit", "-q", "-am", "x")
+    _git(moved, "tag", "-f", "-a", TAG, "-m", "moved")
+    _git(moved, "push", "-q", "-f", "origin", f"refs/tags/{TAG}")            # origin now has the tag on the new commit
+    _git(moved, "reset", "-q", "--hard", "HEAD~1")
+    _git(moved, "tag", "-f", "-a", TAG, "-m", "back")
+    refused(moved)
+    monkeypatch.setattr(S, "CODE_REPO", good)
+    assert S.require_unblinding(coord, "D99")["tag"] == TAG
 
 
 def test_the_real_coordination_record_does_not_unblind():
@@ -112,7 +179,7 @@ def test_the_real_coordination_record_does_not_unblind():
                 S.require_unblinding(coord, row.split("|")[1].strip())
 
 
-def test_loader_reads_with_the_decision_and_checks_names(tmp_path, recs):
+def test_loader_reads_with_the_decision_and_checks_names(tmp_path, recs, code_repo):
     m, j, a = "gemma-2-9b-it", 3, "wording:w5"
     coord = _coord(tmp_path, [OWNER_ROW])
     run = _run_dir(tmp_path, recs[(m, j, a)], f"rec_c{j}__wording-w5.json.gz")
