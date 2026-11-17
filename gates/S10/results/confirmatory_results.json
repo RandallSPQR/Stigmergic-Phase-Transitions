@@ -1,0 +1,158 @@
+{
+ "analysis": "S10 confirmatory analysis, as registered (osf/PREREGISTRATION.md section 5)",
+ "functions": [
+  "confirmatory.outcomes",
+  "confirmatory.primary"
+ ],
+ "unblinding": {
+  "decision": "D65",
+  "row": "| D65 | 2026-11-17 | StPT | **S10 unblinding authorised** (owner). The owner authorises unblinding of the S10 data against tag `stpt-secondary-v1` (Zenodo version DOI 10.5281/zenodo.24148547; OSF Addendum 2, `osf/addendum2/ADDENDUM_2.md`, posted on the registration, DOI 10.17605/OSF.IO/SM8XR). The owner's message gave commit `278d530`; the tag is at `8f9e3b0ba94cbea61ee99718a97a1190dfc960b6`, which differs from `278d530` only by the two addendum 2 documentation files (analysis and run code byte-identical), and the analysis runs from the tag as authorised. Order: (1) check out exactly the tag; verify the sealed-predictions hash and `osf/verify_freeze.py` before loading any real record; (2) run the confirmatory analysis exactly as registered (both contrasts pooled over the four confirmatory models, REML with the block random effect, Satterthwaite df, Holm across the two, TOST at \u00b10.03) and report each contrast's estimate, interval, p, TOST result and decision label; (3) stop and report before anything else; (4) on the owner's OK, the secondary analyses per the specification (A\u2013H as decided), then the model check. Numbers only from results files; no re-analysis, re-specification or exploratory cut before the registered results are reported. | owner |",
+  "coordination_commit": "1cacd542f8b0f3016602142d63535ca74e0f9b05",
+  "tag": "stpt-secondary-v1",
+  "code_commit": "8f9e3b0ba94cbea61ee99718a97a1190dfc960b6"
+ },
+ "runs": {
+  "gemma-2-9b-it": "stpt/S10/20261107T2359Z",
+  "qwen3.5-9b": "stpt/S10/20261108T1439Z",
+  "gemma-3-27b-it": "stpt/S10/20261108T1722Z",
+  "qwen3.5-27b": "stpt/S10/20261109T0504Z"
+ },
+ "records": 244,
+ "missing_calls_by_model_and_condition": {
+  "gemma-2-9b-it": {
+   "init": 0,
+   "live": 0,
+   "blind": 0,
+   "pulsed": 0,
+   "self_reset": 0
+  },
+  "gemma-3-27b-it": {
+   "init": 0,
+   "live": 0,
+   "blind": 0,
+   "pulsed": 0,
+   "self_reset": 0
+  },
+  "qwen3.5-27b": {
+   "init": 0,
+   "live": 0,
+   "blind": 0,
+   "pulsed": 0,
+   "self_reset": 0
+  },
+  "qwen3.5-9b": {
+   "init": 0,
+   "live": 0,
+   "blind": 0,
+   "pulsed": 0,
+   "self_reset": 0
+  }
+ },
+ "constants": {
+  "equivalence_bound": 0.03,
+  "family_alpha": 0.05,
+  "tost_alpha": 0.05
+ },
+ "result": {
+  "board": {
+   "conditional": {
+    "theta": 0.06509562841530048,
+    "se": 0.004936358664561882,
+    "var_resid": 0.0014864258487768606,
+    "var_groups": [
+     1.1429182969935258e-17
+    ],
+    "df_satterthwaite": 60.0,
+    "df": 60.0,
+    "t": 13.186972997448905,
+    "p_two_sided": 2.222672791217908e-19,
+    "ci90": [
+     0.056848706415588,
+     0.07334255041501295
+    ],
+    "ci95": [
+     0.05522144092989612,
+     0.07496981590070484
+    ],
+    "tost_equivalent": false
+   },
+   "n_clusters": 61,
+   "generalisation": {
+    "theta": 0.06509562841530053,
+    "se": 0.004936358749333822,
+    "var_resid": 0.0014864258998295418,
+    "var_groups": [
+     4.248354255291589e-18,
+     1.639881652798946e-17
+    ],
+    "df_satterthwaite": 59.99998649100333,
+    "df": 59.99998649100333,
+    "t": 13.186972770989428,
+    "p_two_sided": 2.222683951262722e-19,
+    "ci90": [
+     0.05684870624484586,
+     0.0733425505857552
+    ],
+    "ci95": [
+     0.05522144071460107,
+     0.074969816116
+    ],
+    "tost_equivalent": false
+   },
+   "holm_significant": true,
+   "decision": "effect"
+  },
+  "persistence": {
+   "conditional": {
+    "theta": 0.0642646828480297,
+    "se": 0.004029336012803102,
+    "var_resid": 0.0009027237637793236,
+    "var_groups": [
+     2.2203485542377718e-05
+    ],
+    "df_satterthwaite": 14.841062956106814,
+    "df": 14.841062956106814,
+    "t": 15.9491992337771,
+    "p_two_sided": 9.548738127363211e-11,
+    "ci90": [
+     0.05719608307791474,
+     0.07133328261814467
+    ],
+    "ci95": [
+     0.05566833876367068,
+     0.07286102693238873
+    ],
+    "tost_equivalent": false
+   },
+   "n_clusters": 61,
+   "generalisation": {
+    "theta": 0.06435673354559292,
+    "se": 0.004601432993903864,
+    "var_resid": 0.0007089954093643434,
+    "var_groups": [
+     3.1960817963058884e-05,
+     0.00018831018068527533
+    ],
+    "df_satterthwaite": 14.997232064250465,
+    "df": 14.997232064250465,
+    "t": 13.986237250624953,
+    "p_two_sided": 5.20412970739594e-10,
+    "ci90": [
+     0.056290092033208776,
+     0.07242337505797705
+    ],
+    "ci95": [
+     0.054548853621334006,
+     0.07416461346985183
+    ],
+    "tost_equivalent": false
+   },
+   "holm_significant": true,
+   "decision": "effect"
+  },
+  "blocks": {
+   "n_recorded_starts": 16,
+   "matches_scheduled_blocks": true
+  }
+ }
+}
